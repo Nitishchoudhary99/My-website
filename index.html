@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — World-Class Document Studio, OCR & AI Resume Engine</title>
-  <meta name="description" content="100% Private In-Browser Document Suite. OCR extraction, AI Resume Builder, Lossless Merge, Target Compression, and Word/Excel conversion." />
+  <title>DocBrisk — World-Class Document Studio & AI Resume Suite</title>
+  <meta name="description" content="100% Private In-Browser Document Suite. Clean ID card print formatting, PDF to Word conversion, OCR text extraction, and customizable AI resume builder." />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%234338ca'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
+  <!-- Monogram Brand Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
+  <!-- Fonts & Styling -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- Core In-Browser Document Processing Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
@@ -21,6 +24,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
+  <!-- Payment Gateways -->
   <script src="https://js.stripe.com/v3/"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -34,7 +38,7 @@
             mono: ['Space Grotesk', 'monospace'],
           },
           colors: {
-            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' }
           }
         }
       }
@@ -42,26 +46,28 @@
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     } catch (e) {
-      console.warn("Using inline worker fallback");
+      console.warn("Fallback inline worker active");
     }
   </script>
 
   <style>
-    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px); }
+    .glass-nav { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(16px); }
     .signature-badge { background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(244, 244, 245, 0.6) 100%); border: 1px solid rgba(99, 102, 241, 0.18); }
     .tool-card { box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04); }
     .tool-card:hover { box-shadow: 0 20px 40px -8px rgba(99, 102, 241, 0.15), 0 0 0 1.5px rgba(99, 102, 241, 0.35); }
-    .page-sheet { aspect-ratio: 1 / 1.4142; width: 100%; max-width: 540px; box-shadow: 0 15px 35px -5px rgba(0,0,0,0.15); }
+    .cv-sheet { width: 100%; max-width: 530px; aspect-ratio: 1 / 1.4142; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.18); }
   </style>
 </head>
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <div class="bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-700 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+  <!-- Top Security Banner -->
+  <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: Air-Gapped In-Browser Execution with OCR and Edge AI Integration
+    DocBrisk Studio: Zero Server Uploads • Files Process 100% Inside Device RAM
   </div>
 
+  <!-- Header -->
   <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
       <div onclick="showView('home')" class="flex items-center gap-2.5 sm:gap-3 group cursor-pointer">
@@ -82,123 +88,121 @@
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Resume Studio
         </button>
+        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
-        <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
-        <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
+        <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
+        <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
         <button onclick="openTool('merge')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
         <button onclick="openSubscriptionModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
           <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span id="planIndicator">Upgrade Pro</span>
+          <span>Upgrade Pro</span>
         </button>
       </div>
     </div>
   </header>
 
+  <!-- MAIN VIEWPORT -->
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
+    <!-- VIEW 1: HOME CATALOGUE -->
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Fast • Private • Zero Uploads
+          Fast • 100% Private • Clean Output
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
           Every tool you need to work with PDFs in <span class="text-brand-600">one brisk click</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Air-gapped document manipulation, optical character recognition, and professional resume engineering.
+          Zero watermarks, standard document conversions, and professional resume building running directly in your browser.
         </p>
       </div>
 
+      <!-- Feature Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
-        <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
-          <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Single/Multi-Page
+        <!-- Tool: Clean ID Card Print Sheet -->
+        <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-indigo-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-indigo-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            100% Clean
           </div>
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-              <i data-lucide="sparkles" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">AI Resume Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Single & two-page CV templates, executive themes, custom sections, and live PDF compiling.</p>
-          </div>
-          <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
-            Build CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
-          </div>
-        </div>
-
-        <div onclick="openTool('ocr')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
-          <div class="absolute top-3 right-3 bg-purple-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            AI Vision
-          </div>
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-              <i data-lucide="scan-text" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Optical Text OCR</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extract selectable and editable text directly from scanned pages and photos using in-browser neural models.</p>
-          </div>
-          <div class="mt-6 flex items-center text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
-            Scan Text <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
-          </div>
-        </div>
-
-        <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-              <i data-lucide="minimize-2" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Compress PDF</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Basic, Medium, or High compression presets, or choose exact target file size in KB/MB for portal limits.</p>
-          </div>
-          <div class="mt-6 flex items-center text-xs font-extrabold text-teal-600 group-hover:translate-x-1 transition-transform">
-            Compress to Size <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
-          </div>
-        </div>
-
-        <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="credit-card" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">ID Card Print Sheet</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Align Front & Back ID photos side-by-side on an A4 sheet with standard scaling and cut guides.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Formats Front & Back ID photos side-by-side on standard A4 dimensions with zero branding or watermarks.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">
             Create Sheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
+        <!-- Tool: AI Resume Builder -->
+        <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            Multi-Theme
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">AI Resume Studio</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Single & two-page CV templates, custom executive themes, dynamic section controls, and ATS exports.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
+            Build CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: PDF to Word -->
         <div onclick="openTool('pdf2word')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Reconstructs text lines into editable Word paragraphs with preserved line structure.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extracts text geometry into clean Word paragraphs with zero artificial page titles or headers.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
             Convert to Word <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
+        <!-- Tool: Word to PDF -->
         <div onclick="openTool('word2pdf')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-check" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Word to PDF</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Convert your `.docx` documents into high-resolution, print-ready PDF files in-browser.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Converts `.docx` documents into high-resolution, print-ready PDF files in-browser.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-cyan-600 group-hover:translate-x-1 transition-transform">
             Convert to PDF <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
+        <!-- Tool: Compress PDF -->
+        <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="minimize-2" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Compress PDF</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Preset levels or target exact file sizes in KB or MB to meet strict portal limits.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-teal-600 group-hover:translate-x-1 transition-transform">
+            Compress to Size <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: PDF to Excel -->
         <div onclick="openTool('pdf2excel')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -212,6 +216,21 @@
           </div>
         </div>
 
+        <!-- Tool: OCR Scanner -->
+        <div onclick="openTool('ocr')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="scan-text" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">OCR Text Scanner</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extract selectable and editable text directly from scanned pages and photos using in-browser neural models.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
+            Scan Text <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Lossless Merge PDF -->
         <div onclick="openTool('merge')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -228,6 +247,7 @@
       </div>
     </div>
 
+    <!-- VIEW 2: STANDARD WORKSPACE -->
     <div id="standardWorkspace" class="hidden max-w-2xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -253,6 +273,7 @@
 
         <div id="wsFileList" class="hidden mt-6 space-y-2"></div>
 
+        <!-- Custom Compress Configuration Area -->
         <div id="compressOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Compression Preset</span>
@@ -296,6 +317,7 @@
           <p id="wsStatus" class="text-xs text-center text-slate-500 mt-2.5 hidden font-medium"></p>
         </div>
 
+        <!-- OCR Text Result Area -->
         <div id="ocrResultArea" class="hidden mt-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-left">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-bold text-slate-700">Extracted Text (OCR Result):</span>
@@ -314,6 +336,7 @@
       </div>
     </div>
 
+    <!-- VIEW 3: CLEAN ID CARD PRINT WORKSPACE (ZERO TEXT ON PDF) -->
     <div id="idPrintWorkspace" class="hidden max-w-4xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -326,8 +349,20 @@
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">ID Card Print Sheet Maker</h2>
           <p class="mt-2 text-slate-500 text-xs sm:text-sm max-w-md mx-auto">
-            Upload Front and Back pictures. Generates a standard A4 sheet ready for printing & lamination.
+            Upload Front and Back pictures. Produces a completely clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
           </p>
+        </div>
+
+        <!-- Layout Orientation Options -->
+        <div class="flex justify-center gap-3 mb-6">
+          <label class="cursor-pointer border px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-slate-50 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50 has-[:checked]:text-brand-600">
+            <input type="radio" name="idLayout" value="side" checked class="accent-brand-600" />
+            <span>Side-by-Side (Horizontal Fold)</span>
+          </label>
+          <label class="cursor-pointer border px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-slate-50 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50 has-[:checked]:text-brand-600">
+            <input type="radio" name="idLayout" value="stacked" class="accent-brand-600" />
+            <span>Stacked (Vertical Fold)</span>
+          </label>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
@@ -350,19 +385,21 @@
           </div>
         </div>
 
-        <button id="idGenerateBtn" onclick="generateIdPrintSheetPdf()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2 text-sm sm:text-base">
-          <i data-lucide="printer" class="w-5 h-5"></i> Generate Print-Ready A4 PDF
+        <button id="idGenerateBtn" onclick="generateCleanIdPrintSheetPdf()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2 text-sm sm:text-base">
+          <i data-lucide="printer" class="w-5 h-5"></i> Generate Clean Print-Ready A4 PDF
         </button>
         <p id="idStatusText" class="text-xs text-center text-slate-500 mt-2.5 hidden font-medium"></p>
       </div>
     </div>
 
+    <!-- VIEW 4: ADVANCED MULTI-THEME AI RESUME STUDIO -->
     <div id="resumeWorkspace" class="hidden max-w-7xl mx-auto pt-2 pb-16 space-y-6">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
           <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
         </button>
         <div class="flex items-center gap-3">
+          <!-- Page Format Toggle -->
           <div class="bg-slate-100 p-1 rounded-xl flex text-xs font-bold text-slate-600">
             <button onclick="setResumePages(1)" id="btnPage1" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600">Single Page CV</button>
             <button onclick="setResumePages(2)" id="btnPage2" class="px-3 py-1.5 rounded-lg hover:text-brand-600">Two Page CV</button>
@@ -375,17 +412,19 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
+        <!-- Controls Column -->
         <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
           
+          <!-- Design & Theme Controls -->
           <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
             <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Style & Layout Architecture</span>
             <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-600">
               <div class="flex items-center gap-1.5">
                 <span>Theme:</span>
                 <select id="cvTemplateStyle" onchange="updateResumePreview()" class="border border-slate-200 rounded-lg px-2 py-1 font-semibold text-slate-700 bg-white">
-                  <option value="modern">Modern Tech (Accent Bar)</option>
-                  <option value="executive">Executive Classic (Serif)</option>
-                  <option value="minimal">Minimalist Clean</option>
+                  <option value="modern">Modern Tech (Clean Accent)</option>
+                  <option value="executive">Ivy League / ATS (Serif Minimal)</option>
+                  <option value="minimal">Minimalist Monochrome</option>
                 </select>
               </div>
               <div class="flex items-center gap-1.5">
@@ -395,13 +434,14 @@
             </div>
           </div>
 
+          <!-- Personal Info -->
           <div class="space-y-3">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="user" class="w-4 h-4"></i> Identity & Contact
             </h4>
             <div class="grid grid-cols-2 gap-3">
               <input type="text" id="resName" value="Alex Morgan" placeholder="Full Name" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
-              <input type="text" id="resRole" value="Senior Operations & Logistics Lead" placeholder="Job Title" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resRole" value="Senior Operations & Analytics Lead" placeholder="Job Title" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
             </div>
             <div class="grid grid-cols-3 gap-3">
               <input type="text" id="resEmail" value="alex.morgan@example.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
@@ -410,6 +450,7 @@
             </div>
           </div>
 
+          <!-- Professional Summary -->
           <div class="space-y-2">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="align-left" class="w-4 h-4"></i> Professional Summary
@@ -417,6 +458,7 @@
             <textarea id="resSummary" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">Results-oriented operations leader with 5+ years of experience driving supply chain resilience, inventory accuracy, and workflow automation across high-volume distribution networks.</textarea>
           </div>
 
+          <!-- Experience -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
@@ -431,6 +473,7 @@ Implemented automated reconciliation scripts, reducing weekly audit discrepancie
 Coordinated multi-depot inventory transfers to maintain a 98.6% On-Time In-Full (OTIF) fulfillment rate.</textarea>
           </div>
 
+          <!-- Education -->
           <div class="space-y-2">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
@@ -439,6 +482,7 @@ Coordinated multi-depot inventory transfers to maintain a 98.6% On-Time In-Full 
 Bachelor of Technology in Mechanical Engineering (2023)</textarea>
           </div>
 
+          <!-- Skills & Certifications -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Core Competencies</h4>
@@ -453,9 +497,11 @@ Lean Six Sigma Green Belt</textarea>
 
         </div>
 
+        <!-- Real-Time Sheet Preview Column -->
         <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex flex-col items-center gap-6 sticky top-24 overflow-auto max-h-[88vh]">
           
-          <div id="resumeSheet1" class="page-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative">
+          <!-- Page 1 Preview -->
+          <div id="resumeSheet1" class="cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative">
             <div id="pvHeader" class="border-b-2 pb-3 mb-3 border-indigo-600">
               <h1 id="pvName" class="text-2xl font-black tracking-tight uppercase">Alex Morgan</h1>
               <h2 id="pvRole" class="text-xs font-bold mt-0.5 text-indigo-600">Senior Operations & Logistics Lead</h2>
@@ -489,11 +535,10 @@ Lean Six Sigma Green Belt</textarea>
                 <p id="pvSkills" class="text-slate-700 leading-relaxed"></p>
               </div>
             </div>
-
-            <span class="absolute bottom-2 right-4 text-[9px] text-slate-400 font-mono">Page 1 of <span id="totalPageBadge">1</span></span>
           </div>
 
-          <div id="resumeSheet2" class="page-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
+          <!-- Page 2 Preview -->
+          <div id="resumeSheet2" class="cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
             <div class="border-b-2 pb-2 mb-3 border-indigo-600 flex justify-between items-center">
               <span id="pvNameP2" class="text-xs font-bold uppercase text-slate-500">Alex Morgan — Curriculum Vitae</span>
               <span class="text-[10px] text-indigo-600 font-bold">Page 2</span>
@@ -513,8 +558,6 @@ Lean Six Sigma Green Belt</textarea>
                 </p>
               </div>
             </div>
-
-            <span class="absolute bottom-2 right-4 text-[9px] text-slate-400 font-mono">Page 2 of 2</span>
           </div>
 
         </div>
@@ -524,6 +567,7 @@ Lean Six Sigma Green Belt</textarea>
 
   </main>
 
+  <!-- SUBSCRIPTION MODAL (STRIPE & RAZORPAY) -->
   <div id="subModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center relative">
       <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 mx-auto flex items-center justify-center mb-4">
@@ -534,6 +578,7 @@ Lean Six Sigma Green Belt</textarea>
         Unlock unrestricted OCR text extractions, unlimited AI Resume polishes, and high-priority document conversions.
       </p>
 
+      <!-- Pricing Plans -->
       <div class="my-6 space-y-3">
         <div onclick="selectPaymentTier('monthly')" id="tierMonthly" class="p-4 bg-brand-50/60 border-2 border-brand-500 rounded-2xl flex items-center justify-between text-left cursor-pointer">
           <div>
@@ -558,6 +603,7 @@ Lean Six Sigma Green Belt</textarea>
         </div>
       </div>
 
+      <!-- Gateway Buttons -->
       <div class="space-y-2">
         <button onclick="payWithRazorpay()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2">
           <i data-lucide="zap" class="w-4 h-4"></i> Pay with UPI / Card (Razorpay)
@@ -573,6 +619,7 @@ Lean Six Sigma Green Belt</textarea>
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer class="bg-white border-t border-slate-200/90 mt-auto pt-10 pb-8 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2.5">
@@ -595,6 +642,7 @@ Lean Six Sigma Green Belt</textarea>
     </div>
   </footer>
 
+  <!-- CONTROLLER SCRIPT -->
   <script>
     lucide.createIcons();
 
@@ -626,13 +674,10 @@ Lean Six Sigma Green Belt</textarea>
       document.getElementById('btnPage2').className = num === 2 ? "px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600" : "px-3 py-1.5 rounded-lg hover:text-brand-600";
       
       const sheet2 = document.getElementById('resumeSheet2');
-      const badge = document.getElementById('totalPageBadge');
       if (num === 2) {
         sheet2.classList.remove('hidden');
-        badge.textContent = "2";
       } else {
         sheet2.classList.add('hidden');
-        badge.textContent = "1";
       }
     }
 
@@ -680,7 +725,7 @@ Lean Six Sigma Green Belt</textarea>
         compress: { title: "Compress PDF", desc: "Choose Basic, Medium, High or target an exact file size in KB or MB.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
-        pdf2word: { title: "PDF to Word (.docx)", desc: "Extract text lines into an editable Microsoft Word document.", hint: "Select one PDF", btn: "Convert to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
+        pdf2word: { title: "PDF to Word (.docx)", desc: "Extract text lines into an editable Microsoft Word document without page headers.", hint: "Select one PDF", btn: "Convert to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         word2pdf: { title: "Word to PDF", desc: "Convert .docx documents into print-ready PDF files.", hint: "Select one .docx file", btn: "Convert to PDF", multi: false, accept: ".docx", icon: "file-check", color: "text-cyan-600", bg: "bg-cyan-50" },
         pdf2excel: { title: "PDF to Excel (.xlsx)", desc: "Detects table columns and outputs an Excel spreadsheet.", hint: "Select one PDF", btn: "Export to .XLSX", multi: false, accept: ".pdf", icon: "table", color: "text-emerald-600", bg: "bg-emerald-50" }
       }[toolKey];
@@ -835,6 +880,7 @@ Lean Six Sigma Green Belt</textarea>
           const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
           let docxSections = [];
 
+          // Standard conversion: NO "Page 1" or "Page 2" text headers!
           for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
@@ -851,20 +897,15 @@ Lean Six Sigma Green Belt</textarea>
 
             lines.sort((a, b) => b.y - a.y);
 
-            docxSections.push(
-              new docx.Paragraph({
-                children: [new docx.TextRun({ text: `Page ${i}`, bold: true, color: "4F46E5", size: 24 })],
-                spacing: { before: 200, after: 120 }
-              })
-            );
-
-            lines.forEach(line => {
+            lines.forEach((line, index) => {
               line.items.sort((a, b) => a.x - b.x);
               const text = line.items.map(it => it.str).join(' ');
+
               docxSections.push(
                 new docx.Paragraph({
                   children: [new docx.TextRun({ text: text, size: 22, font: "Calibri" })],
-                  spacing: { after: 100 }
+                  spacing: { after: 100 },
+                  pageBreakBefore: (i > 1 && index === 0) // Clean page break without adding title text!
                 })
               );
             });
@@ -876,7 +917,7 @@ Lean Six Sigma Green Belt</textarea>
             new Uint8Array(await outBlob.arrayBuffer()),
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             `${file.name.replace(/\.pdf$/i, '')}.docx`,
-            'Converted to Microsoft Word (.docx) successfully!'
+            'Clean conversion to Microsoft Word (.docx) complete!'
           );
 
         } else if (activeTool === 'word2pdf') {
@@ -949,7 +990,7 @@ Lean Six Sigma Green Belt</textarea>
       link.click();
     }
 
-    // ID Card Print Sheet Engine
+    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO TEXT)
     function previewCardImage(event, previewId, side) {
       const file = event.target.files[0];
       if (!file) return;
@@ -963,14 +1004,14 @@ Lean Six Sigma Green Belt</textarea>
         const imgUrl = URL.createObjectURL(blob);
         document.getElementById(previewId).innerHTML = `
           <img src="${imgUrl}" class="h-24 sm:h-28 object-contain rounded-lg border border-slate-200 shadow-sm" />
-          <span class="text-xs font-bold text-emerald-600 mt-2 flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> ${side.toUpperCase()} Loaded</span>
+          <span class="text-xs font-bold text-emerald-600 mt-2 flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> ${side.toUpperCase()} Ready</span>
         `;
         lucide.createIcons();
       };
       reader.readAsArrayBuffer(file);
     }
 
-    async function generateIdPrintSheetPdf() {
+    async function generateCleanIdPrintSheetPdf() {
       if (!idCardBuffers.front || !idCardBuffers.back) {
         alert("Please upload BOTH Front and Back photos of the card.");
         return;
@@ -980,40 +1021,61 @@ Lean Six Sigma Green Belt</textarea>
       const status = document.getElementById('idStatusText');
       btn.disabled = true;
       btn.classList.add('opacity-50');
-      status.textContent = "Creating A4 print sheet in memory...";
+      status.textContent = "Generating clean, watermark-free A4 sheet...";
       status.classList.remove('hidden');
 
       try {
         const pdfDoc = await PDFLib.PDFDocument.create();
         const page = pdfDoc.addPage([595.28, 841.89]); // Standard A4 Dimensions
 
-        const cardWidth = 242.6; // ~85.6mm
-        const cardHeight = 153.0; // ~54mm
+        // Standard CR-80 ID Card dimensions: 85.60mm x 53.98mm = 242.64 pt x 153.0 pt
+        const cardWidth = 242.64;
+        const cardHeight = 153.0;
 
         const frontImg = idCardBuffers.frontType.includes('png') ? await pdfDoc.embedPng(idCardBuffers.front) : await pdfDoc.embedJpg(idCardBuffers.front);
         const backImg = idCardBuffers.backType.includes('png') ? await pdfDoc.embedPng(idCardBuffers.back) : await pdfDoc.embedJpg(idCardBuffers.back);
 
-        const startX = (595.28 - (cardWidth * 2 + 20)) / 2;
-        const startY = 841.89 - 250;
+        const layoutStyle = document.querySelector('input[name="idLayout"]:checked').value;
 
-        page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
-        page.drawRectangle({
-          x: startX, y: startY, width: cardWidth, height: cardHeight,
-          borderColor: PDFLib.rgb(0.7, 0.7, 0.7), borderWidth: 0.5
-        });
+        if (layoutStyle === 'side') {
+          // Horizontal alignment side-by-side with 16pt margin gap
+          const startX = (595.28 - (cardWidth * 2 + 16)) / 2;
+          const startY = 841.89 - 220;
 
-        const backX = startX + cardWidth + 20;
-        page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
-        page.drawRectangle({
-          x: backX, y: startY, width: cardWidth, height: cardHeight,
-          borderColor: PDFLib.rgb(0.7, 0.7, 0.7), borderWidth: 0.5
-        });
+          // Draw Front Card & Border
+          page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
+          page.drawRectangle({
+            x: startX, y: startY, width: cardWidth, height: cardHeight,
+            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
+          });
 
-        const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-        page.drawText("DocBrisk Print Sheet: Standard ID Card Layout (A4)", {
-          x: startX, y: startY + cardHeight + 16, size: 9, font, color: PDFLib.rgb(0.4, 0.4, 0.4)
-        });
+          // Draw Back Card & Border
+          const backX = startX + cardWidth + 16;
+          page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
+          page.drawRectangle({
+            x: backX, y: startY, width: cardWidth, height: cardHeight,
+            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
+          });
+        } else {
+          // Stacked vertical alignment with 16pt gap
+          const startX = (595.28 - cardWidth) / 2;
+          const startYFront = 841.89 - 180;
+          const startYBack = startYFront - cardHeight - 16;
 
+          page.drawImage(frontImg, { x: startX, y: startYFront, width: cardWidth, height: cardHeight });
+          page.drawRectangle({
+            x: startX, y: startYFront, width: cardWidth, height: cardHeight,
+            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
+          });
+
+          page.drawImage(backImg, { x: startX, y: startYBack, width: cardWidth, height: cardHeight });
+          page.drawRectangle({
+            x: startX, y: startYBack, width: cardWidth, height: cardHeight,
+            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
+          });
+        }
+
+        // Output: ZERO WATERMARKS, ZERO BRANDING, ZERO TEXT INJECTED!
         const outBytes = await pdfDoc.save();
         const blob = new Blob([outBytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
@@ -1025,7 +1087,7 @@ Lean Six Sigma Green Belt</textarea>
         a.click();
         document.body.removeChild(a);
       } catch (err) {
-        alert("Failed to build print sheet: " + err.message);
+        alert("Failed to compile print sheet: " + err.message);
       } finally {
         btn.disabled = false;
         btn.classList.remove('opacity-50');
@@ -1033,7 +1095,7 @@ Lean Six Sigma Green Belt</textarea>
       }
     }
 
-    // AI Resume Studio Update & Render Engine
+    // ADVANCED MULTI-THEME AI RESUME STUDIO
     function updateResumePreview() {
       const themeColor = document.getElementById('resThemeColor').value;
       const template = document.getElementById('cvTemplateStyle').value;
@@ -1064,15 +1126,14 @@ Lean Six Sigma Green Belt</textarea>
       document.getElementById('pvCerts').textContent = certs;
       document.getElementById('pvNameP2').textContent = `${name} — Curriculum Vitae`;
 
-      // Typography update
       const sheet1 = document.getElementById('resumeSheet1');
       const sheet2 = document.getElementById('resumeSheet2');
       if (template === 'executive') {
-        sheet1.className = "page-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-serif";
-        sheet2.className = "page-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
+        sheet1.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-serif";
+        sheet2.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
       } else {
-        sheet1.className = "page-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-sans";
-        sheet2.className = "page-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
+        sheet1.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-sans";
+        sheet2.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
       }
     }
 
@@ -1115,7 +1176,7 @@ Lean Six Sigma Green Belt</textarea>
       const lines = document.getElementById('resExp').value.split('\n').filter(l => l.trim().length > 0);
       const polished = lines.map(line => {
         let clean = line.replace(/^[•\-\*]\s*/, '');
-        return `Streamlined operations & achieved key deliverables: ${clean}`;
+        return `Orchestrated strategic operational deliverables: ${clean}`;
       }).join('\n');
       document.getElementById('resExp').value = polished;
       updateResumePreview();
@@ -1176,7 +1237,6 @@ Lean Six Sigma Green Belt</textarea>
       y -= 14;
       page1.drawText(document.getElementById('resSkills').value.substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
 
-      // Build Page 2 if 2-page mode enabled
       if (resumePageCount === 2) {
         const page2 = pdfDoc.addPage([595.28, 841.89]);
         let y2 = 780;
@@ -1204,13 +1264,10 @@ Lean Six Sigma Green Belt</textarea>
       a.click();
     }
 
-    // Payment Integration Handlers
-    function openSubscriptionModal() {
-      document.getElementById('subModal').classList.remove('hidden');
-    }
-    function closeSubscriptionModal() {
-      document.getElementById('subModal').classList.add('hidden');
-    }
+    // SUBSCRIPTION & PAYMENT WORKFLOWS
+    function openSubscriptionModal() { document.getElementById('subModal').classList.remove('hidden'); }
+    function closeSubscriptionModal() { document.getElementById('subModal').classList.add('hidden'); }
+
     function selectPaymentTier(tier) {
       selectedTier = tier;
       document.getElementById('tierMonthly').className = tier === 'monthly' ? "p-4 bg-brand-50/60 border-2 border-brand-500 rounded-2xl flex items-center justify-between text-left cursor-pointer" : "p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between text-left cursor-pointer";
@@ -1218,18 +1275,17 @@ Lean Six Sigma Green Belt</textarea>
     }
 
     function payWithRazorpay() {
-      // Direct Razorpay Standard Checkout
+      // Configuration for Razorpay
       const options = {
-        key: "YOUR_RAZORPAY_KEY_ID", // Replace with rzp_live_... or rzp_test_... in production
-        amount: selectedTier === 'monthly' ? 39900 : 9900, // Amount in paise (₹399 or ₹99)
+        key: "YOUR_RAZORPAY_KEY_ID", // Add your key here in production
+        amount: selectedTier === 'monthly' ? 39900 : 9900,
         currency: "INR",
-        name: "DocBrisk Pro Suite",
+        name: "DocBrisk Studio",
         description: selectedTier === 'monthly' ? "Pro Monthly Subscription" : "24-Hour Day Pass",
         image: "https://docbrisk.com/favicon.ico",
         handler: function (response) {
           alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
           localStorage.setItem('docbrisk_pro_access', 'true');
-          document.getElementById('planIndicator').textContent = "Pro Active";
           closeSubscriptionModal();
         },
         theme: { color: "#4F46E5" }
@@ -1239,11 +1295,9 @@ Lean Six Sigma Green Belt</textarea>
         const rzp = new Razorpay(options);
         rzp.open();
       } catch (e) {
-        // Fallback simulation for offline testing
-        const sim = confirm("Simulate completing Razorpay checkout (₹" + (selectedTier === 'monthly' ? "399" : "99") + ") now?");
+        const sim = confirm("Simulate activating Pro Access (" + (selectedTier === 'monthly' ? "₹399" : "₹99") + ") now?");
         if (sim) {
           localStorage.setItem('docbrisk_pro_access', 'true');
-          document.getElementById('planIndicator').textContent = "Pro Active";
           closeSubscriptionModal();
           alert("Pro Membership Activated!");
         }
@@ -1251,11 +1305,9 @@ Lean Six Sigma Green Belt</textarea>
     }
 
     function payWithStripe() {
-      // Connects to your Stripe Checkout Session endpoint
       const sim = confirm("Connect to Stripe Checkout ($" + (selectedTier === 'monthly' ? "4.99" : "1.99") + ")?");
       if (sim) {
         localStorage.setItem('docbrisk_pro_access', 'true');
-        document.getElementById('planIndicator').textContent = "Pro Active";
         closeSubscriptionModal();
         alert("Pro Membership Activated via Stripe!");
       }
