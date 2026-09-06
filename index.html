@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — World-Class Document Suite & Enterprise CV Engine</title>
+  <title>DocBrisk — Enterprise Document Processing Suite & CV Studio</title>
   <meta name="description" content="100% Free & Private In-Browser Document Processing Suite. PDF to Word, Word to PDF, PDF to Excel, OCR Scanner, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
 
   <!-- Monogram Brand Favicon -->
@@ -22,7 +22,7 @@
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -61,10 +61,10 @@
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Security & Status Banner -->
-  <div class="bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+  <!-- Enterprise Privacy Standard Banner -->
+  <div class="bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 text-white text-[11px] sm:text-xs font-semibold py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: 100% Client-Side Local RAM Execution • Zero Server Uploads • Fast & Free
+    Enterprise Privacy Standard: 100% In-Browser RAM Execution • Zero Cloud Retention • Absolute Business Confidentiality
   </div>
 
   <!-- Header -->
@@ -88,7 +88,7 @@
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
-        <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
         <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress</button>
         <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
@@ -116,13 +116,13 @@
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Enterprise Quality • Zero Server Leaks • 100% Free
+          Enterprise Security • Confidential Processing • 100% Free
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
           Document processing and CV building in <span class="text-brand-600">one brisk click</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Clean format conversions, neural OCR scanning, watermark-free ID card sheets, and 26 architectural resume themes engineered for modern hiring workflows.
+          Secure format conversions, neural OCR scanning, watermark-free ID card sheets, and 26 architectural resume themes engineered for professional confidentiality.
         </p>
       </div>
 
@@ -644,7 +644,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           <i data-lucide="zap" class="w-4 h-4"></i>
         </div>
         <span class="text-lg font-black text-slate-900 tracking-tight">Doc<span class="text-brand-600">Brisk</span></span>
-        <span class="ml-2 text-slate-400">&copy; 2026</span>
+        <span class="ml-2 text-slate-400">&copy; 2026. All rights reserved.</span>
       </div>
 
       <div class="signature-badge px-4 py-2.5 rounded-xl flex items-center gap-3">
@@ -653,7 +653,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         </div>
         <div class="text-left">
           <div class="text-[9px] uppercase font-bold tracking-wider text-slate-400">Architected By</div>
-          <div class="text-xs font-extrabold text-slate-800">Nitish Choudhary</div>
+          <div class="text-xs font-extrabold text-slate-800"><strong>Nitish Choudhary</strong></div>
         </div>
       </div>
     </div>
@@ -1674,7 +1674,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           let y2 = 795;
           page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
           y2 -= 10;
-          page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y: y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
 
           const renderSectionP2 = (title, text) => {
             y2 -= 20;
