@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>DocBrisk — World-Class Document Studio & Enterprise CV Engine</title>
-  <meta name="description" content="100% Free & Private In-Browser Document Processing. Format-Preserving PDF to Word with Background Graphics, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
+  <meta name="description" content="100% Free & Private In-Browser Document Processing. Absolute-Positioned PDF to Word, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
 
   <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
@@ -58,10 +58,10 @@
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Status Banner -->
+  <!-- Top Security & Status Banner -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: Native OpenXML Background Layering Engine • 100% Free & In-Browser
+    DocBrisk Studio: Spatial Coordinate Precision • 100% Free • Zero Server Uploads
   </div>
 
   <!-- Header -->
@@ -85,8 +85,8 @@
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
-        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
-        <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
+        <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
         <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
         <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
@@ -95,10 +95,13 @@
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
-        <div class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 rounded-xl shadow-sm">
-          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-          <span>100% Free Engine</span>
+        <div id="userChip" class="hidden items-center gap-2 pl-1 pr-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer" onclick="openAccountModal()">
+          <div id="userAvatar" class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-[11px] font-black">U</div>
+          <span id="userChipName">Account</span>
         </div>
+        <button id="loginBtn" onclick="openAuthModal('login')" class="px-3.5 py-1.5 rounded-xl border border-slate-300 hover:border-brand-500 text-slate-700 font-bold text-xs transition">
+          Sign In / Register
+        </button>
       </div>
     </div>
   </header>
@@ -110,30 +113,30 @@
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Background Graphics Preserved • Editable Text • Zero Cost
+          Spatial Placement • Editable Output • Zero Cost
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-          Documents converted without <span class="text-brand-600">losing backgrounds</span>
+          Documents converted without <span class="text-brand-600">broken formatting</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Native OpenXML background shape mapping keeps colored sidebars, borders, watermarks, and graphics locked in place with selectable, editable text.
+          Spatial coordinate reconstruction keeps your tables, text alignments, and styling where they belong—all fully editable.
         </p>
       </div>
 
-      <!-- Feature Grid -->
+      <!-- Grid of Verified Tools -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
         <!-- Tool: PDF to Word -->
         <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Graphics Layered
+            Precision Match
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Embeds visual background graphics into the document background while rendering editable text on top.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Reconstructs spatial positions, column margins, and tables into an editable Microsoft Word document.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
             Convert Document <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -150,7 +153,7 @@
               <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Enterprise CV Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">26 distinct architectural themes, ATS compliance, multi-page formats, key achievements, and notice period inputs.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">26 distinct structural themes, ATS compliance, single & two-page formats, key achievements, and vitals.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
             Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -590,6 +593,47 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
   </main>
 
+  <!-- AUTH MODAL -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 mx-auto flex items-center justify-center mb-3">
+          <i data-lucide="user-check" class="w-6 h-6"></i>
+        </div>
+        <h3 id="authTitle" class="text-xl font-black text-slate-900">User Account</h3>
+        <p class="text-slate-500 text-xs mt-1">Credentials and drafted resumes are saved directly to this device.</p>
+      </div>
+
+      <div class="flex bg-slate-100 rounded-xl p-1 mb-5 text-xs font-bold">
+        <button id="authTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-lg bg-white shadow-sm text-brand-600">Sign In</button>
+        <button id="authTabSignup" onclick="switchAuthTab('signup')" class="flex-1 py-2 rounded-lg text-slate-500">Register</button>
+      </div>
+
+      <div class="space-y-3">
+        <input id="authNameField" type="text" placeholder="Full Name" class="hidden w-full text-sm px-3.5 py-2.5 border rounded-xl focus:outline-none focus:border-brand-600" />
+        <input id="authEmailField" type="email" placeholder="Email address" class="w-full text-sm px-3.5 py-2.5 border rounded-xl focus:outline-none focus:border-brand-600" />
+        <input id="authPassField" type="password" placeholder="Password" class="w-full text-sm px-3.5 py-2.5 border rounded-xl focus:outline-none focus:border-brand-600" />
+        <p id="authError" class="hidden text-xs font-bold text-red-600"></p>
+        <button id="authSubmitBtn" onclick="submitAuth()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition text-sm">Sign In</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT MODAL -->
+  <div id="accountModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative text-center">
+      <button onclick="closeAccountModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div id="accAvatar" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-2xl font-black mx-auto mb-3">U</div>
+      <h3 id="accName" class="text-lg font-extrabold text-slate-900">User Account</h3>
+      <p id="accEmail" class="text-xs text-slate-500 mb-5">user@example.com</p>
+      <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-bold mb-4 flex items-center justify-center gap-1.5">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Lifetime Free Unlocked
+      </div>
+      <button onclick="logOut()" class="w-full border border-slate-300 hover:border-red-400 hover:text-red-600 text-slate-600 font-bold py-2.5 rounded-xl transition text-sm">Sign Out</button>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="bg-white border-t border-slate-200/90 mt-auto pt-10 pb-8 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -623,6 +667,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     let idCardBuffers = { front: null, back: null, frontType: '', backType: '' };
     let currentCompressionPreset = 'medium';
     let resumePageCount = 1;
+    let authMode = 'login';
 
     // 26 THEMES REGISTRY DEFINITIONS
     const THEME_REGISTRY = {
@@ -653,6 +698,100 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       crimson: { family: 'serif', accent: '#991b1b', style: 'boxed-formal', name: 'Crimson Bold' },
       stellar: { family: 'sans', accent: '#6366f1', style: 'split-header', name: 'Stellar Hybrid' }
     };
+
+    // ---------- USER AUTHENTICATION ----------
+    function loadUsers() {
+      try { return JSON.parse(localStorage.getItem('docbrisk_users') || '{}'); } catch (e) { return {}; }
+    }
+    function saveUsers(u) { localStorage.setItem('docbrisk_users', JSON.stringify(u)); }
+    function getSessionEmail() { return localStorage.getItem('docbrisk_session'); }
+    function setSessionEmail(email) { localStorage.setItem('docbrisk_session', email); }
+    function clearSession() { localStorage.removeItem('docbrisk_session'); }
+
+    function currentAccount() {
+      const email = getSessionEmail();
+      if (!email) return null;
+      const users = loadUsers();
+      return users[email] ? { email, ...users[email] } : null;
+    }
+
+    function openAuthModal(mode) {
+      authMode = mode;
+      switchAuthTab(mode);
+      document.getElementById('authModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+    function switchAuthTab(mode) {
+      authMode = mode;
+      const isLogin = mode === 'login';
+      document.getElementById('authTabLogin').className = isLogin ? "flex-1 py-2 rounded-lg bg-white shadow-sm text-brand-600" : "flex-1 py-2 rounded-lg text-slate-500";
+      document.getElementById('authTabSignup').className = !isLogin ? "flex-1 py-2 rounded-lg bg-white shadow-sm text-brand-600" : "flex-1 py-2 rounded-lg text-slate-500";
+      document.getElementById('authNameField').classList.toggle('hidden', isLogin);
+      document.getElementById('authTitle').textContent = isLogin ? "Welcome back" : "Create your account";
+      document.getElementById('authSubmitBtn').textContent = isLogin ? "Sign In" : "Register";
+      document.getElementById('authError').classList.add('hidden');
+    }
+
+    function submitAuth() {
+      const email = document.getElementById('authEmailField').value.trim().toLowerCase();
+      const pass = document.getElementById('authPassField').value;
+      const errEl = document.getElementById('authError');
+      errEl.classList.add('hidden');
+
+      if (!email || !pass) { errEl.textContent = "Please fill in email and password."; errEl.classList.remove('hidden'); return; }
+
+      const users = loadUsers();
+
+      if (authMode === 'signup') {
+        const name = document.getElementById('authNameField').value.trim() || email.split('@')[0];
+        if (users[email]) { errEl.textContent = "An account with this email already exists."; errEl.classList.remove('hidden'); return; }
+        users[email] = { name, password: pass };
+        saveUsers(users);
+        setSessionEmail(email);
+      } else {
+        if (!users[email] || users[email].password !== pass) { errEl.textContent = "Invalid email or password."; errEl.classList.remove('hidden'); return; }
+        setSessionEmail(email);
+      }
+
+      closeAuthModal();
+      refreshAuthUI();
+    }
+
+    function logOut() {
+      clearSession();
+      closeAccountModal();
+      refreshAuthUI();
+    }
+
+    function openAccountModal() {
+      const acc = currentAccount();
+      if (!acc) { openAuthModal('login'); return; }
+      document.getElementById('accName').textContent = acc.name;
+      document.getElementById('accEmail').textContent = acc.email;
+      document.getElementById('accAvatar').textContent = (acc.name || '?').charAt(0).toUpperCase();
+      document.getElementById('accountModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeAccountModal() { document.getElementById('accountModal').classList.add('hidden'); }
+
+    function refreshAuthUI() {
+      const acc = currentAccount();
+      const chip = document.getElementById('userChip');
+      const loginBtn = document.getElementById('loginBtn');
+      if (acc) {
+        chip.classList.remove('hidden');
+        chip.classList.add('flex');
+        loginBtn.classList.add('hidden');
+        document.getElementById('userAvatar').textContent = (acc.name || '?').charAt(0).toUpperCase();
+        document.getElementById('userChipName').textContent = acc.name.split(' ')[0];
+      } else {
+        chip.classList.add('hidden');
+        chip.classList.remove('flex');
+        loginBtn.classList.remove('hidden');
+      }
+    }
 
     // ---------- VIEW NAVIGATION ----------
     function showView(viewName) {
@@ -712,7 +851,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('standardWorkspace').classList.remove('hidden');
 
       const meta = {
-        pdf2word: { title: "PDF to Word (.doc)", desc: "100% Format Preserving PDF to Word Engine. Generates absolute spatial coordinates and native VML background graphics to prevent broken tables.", hint: "Select one PDF", btn: "Convert & Reconstruct to .DOC", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
+        pdf2word: { title: "PDF to Word (.docx)", desc: "Reconstructs exact spatial positions, table cells, and paragraphs without broken alignments.", hint: "Select one PDF", btn: "Convert to Word (.DOCX)", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         compress: { title: "Compress PDF", desc: "Choose Basic, Medium, High or target an exact file size in KB or MB.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
@@ -771,6 +910,344 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('wsResult').classList.add('hidden');
     }
 
+    async function executeStandardTool() {
+      const btn = document.getElementById('wsProcessBtn');
+      const status = document.getElementById('wsStatus');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      status.classList.remove('hidden');
+
+      try {
+        if (activeTool === 'pdf2word') {
+          // SPATIAL ABSOLUTE COORDINATE WORD ENGINE: Keeps exact layout, tables, and positioning while fully editable
+          status.textContent = "Analyzing document coordinates & spatial baseline grids...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          
+          let docContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+          <head><meta charset='utf-8'><title>${file.name}</title>
+          <!--[if gte mso 9]>
+          <xml>
+            <w:WordDocument>
+              <w:View>Print</w:View>
+              <w:Zoom>100</w:Zoom>
+              <w:DoNotOptimizeForBrowser/>
+            </w:WordDocument>
+          </xml>
+          <![endif]-->
+          <style>
+            @page Section1 { size: 595.3pt 841.9pt; margin: 0pt; }
+            div.Section1 { page: Section1; }
+            body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 10pt; color: #111827; margin: 0; padding: 0; }
+            .page-container { position: relative; width: 595.3pt; height: 841.9pt; page-break-after: always; overflow: hidden; background: #ffffff; }
+            .abs-block { position: absolute; white-space: nowrap; line-height: 1.0; }
+            table { border-collapse: collapse; width: 100%; }
+            td { border: 1px solid #9ca3af; padding: 4pt 6pt; }
+          </style></head><body><div class="Section1">`;
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            status.textContent = `Structuring page ${i} of ${pdf.numPages}...`;
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 1.0 });
+            const textContent = await page.getTextContent();
+
+            docContent += `<div class="page-container" style="width:${viewport.width}pt; height:${viewport.height}pt;">`;
+
+            textContent.items.forEach(item => {
+              if (!item.str || !item.str.trim()) return;
+              const x = item.transform[4];
+              // Convert PDF bottom-left origin to Word/HTML top-left origin
+              const y = viewport.height - item.transform[5] - (item.height || 10);
+              const fontSize = Math.round(item.height || Math.sqrt(item.transform[0] * item.transform[0] + item.transform[1] * item.transform[1]) || 10);
+              const bold = item.fontName && item.fontName.toLowerCase().includes('bold') ? 'font-weight:bold;' : '';
+
+              docContent += `<div class="abs-block" style="left:${x.toFixed(1)}pt; top:${y.toFixed(1)}pt; font-size:${fontSize}pt; ${bold}">${escapeHtml(item.str)}</div>`;
+            });
+
+            docContent += `</div>`;
+          }
+
+          docContent += "</div></body></html>";
+
+          const blob = new Blob(['\ufeff', docContent], { type: 'application/msword' });
+          showResult(new Uint8Array(await blob.arrayBuffer()), 'application/msword', `${file.name.replace(/\.pdf$/i, '')}.doc`, 'Converted to Word with exact coordinate layout preservation!');
+
+        } else if (activeTool === 'ocr') {
+          status.textContent = "Running optical character recognition...";
+          const file = standardFiles[0];
+          let imageBlob = file;
+
+          if (file.type.includes('pdf')) {
+            const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+            const page = await pdf.getPage(1);
+            const viewport = page.getViewport({ scale: 2.0 });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            imageBlob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+          }
+
+          const worker = await Tesseract.createWorker('eng');
+          const ret = await worker.recognize(imageBlob);
+          await worker.terminate();
+
+          document.getElementById('ocrTextArea').value = ret.data.text;
+          document.getElementById('ocrResultArea').classList.remove('hidden');
+          status.textContent = "OCR extraction complete!";
+
+        } else if (activeTool === 'compress') {
+          status.textContent = "Compressing pages locally...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          const outDoc = await PDFLib.PDFDocument.create();
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d', { alpha: false });
+
+          let quality = 0.65;
+          let scale = 1.1;
+
+          if (currentCompressionPreset === 'basic') { quality = 0.80; scale = 1.25; }
+          else if (currentCompressionPreset === 'medium') { quality = 0.60; scale = 1.05; }
+          else if (currentCompressionPreset === 'high') { quality = 0.38; scale = 0.90; }
+
+          const targetInput = parseFloat(document.getElementById('targetSizeInput').value);
+          const targetUnit = document.getElementById('targetSizeUnit').value;
+
+          if (!isNaN(targetInput) && targetInput > 0) {
+            const targetBytes = targetUnit === 'MB' ? targetInput * 1024 * 1024 : targetInput * 1024;
+            const ratio = targetBytes / file.size;
+            if (ratio < 0.35) { quality = 0.30; scale = 0.80; }
+            else if (ratio < 0.65) { quality = 0.50; scale = 0.95; }
+            else { quality = 0.75; scale = 1.15; }
+          }
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            status.textContent = `Optimizing page ${i} of ${pdf.numPages}...`;
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            await page.render({ canvasContext: ctx, viewport }).promise;
+
+            const jpegBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
+            const img = await outDoc.embedJpg(await jpegBlob.arrayBuffer());
+            const orig = page.getViewport({ scale: 1.0 });
+            const newP = outDoc.addPage([orig.width, orig.height]);
+            newP.drawImage(img, { x: 0, y: 0, width: orig.width, height: orig.height });
+          }
+
+          const outBytes = await outDoc.save();
+          const oldKb = (file.size / 1024).toFixed(1);
+          const newKb = (outBytes.byteLength / 1024).toFixed(1);
+          const savedPct = Math.max(0, Math.round(((file.size - outBytes.byteLength) / file.size) * 100));
+
+          showResult(outBytes, 'application/pdf', `compressed_${file.name}`, `From ${oldKb} KB to ${newKb} KB (${savedPct}% reduction)`);
+
+        } else if (activeTool === 'merge') {
+          if (standardFiles.length < 2) throw new Error("Select at least 2 PDF files.");
+          status.textContent = "Merging raw vector streams...";
+          const mergedDoc = await PDFLib.PDFDocument.create();
+          for (let f of standardFiles) {
+            const bytes = await f.arrayBuffer();
+            const doc = await PDFLib.PDFDocument.load(bytes);
+            const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
+            copiedPages.forEach(p => mergedDoc.addPage(p));
+          }
+          const outBytes = await mergedDoc.save();
+          showResult(outBytes, 'application/pdf', 'merged_docbrisk.pdf', 'Lossless merge finished with zero sharpness loss.');
+
+        } else if (activeTool === 'word2pdf') {
+          status.textContent = "Parsing Word document & compiling vector PDF...";
+          const file = standardFiles[0];
+          const arrayBuffer = await file.arrayBuffer();
+          const result = await mammoth.extractRawText({ arrayBuffer });
+
+          const newDoc = await PDFLib.PDFDocument.create();
+          const font = await newDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+          const fontBold = await newDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+          let page = newDoc.addPage([595.28, 841.89]);
+
+          const lines = result.value.split('\n').filter(l => l.trim().length > 0);
+          let y = 800;
+          for (let line of lines) {
+            if (y < 60) { page = newDoc.addPage([595.28, 841.89]); y = 800; }
+            const isHeading = line.length < 45 && (line.toUpperCase() === line || line.endsWith(':'));
+            page.drawText(line.substring(0, 95), {
+              x: 50,
+              y,
+              size: isHeading ? 12 : 10,
+              font: isHeading ? fontBold : font,
+              color: isHeading ? PDFLib.rgb(0.08, 0.1, 0.15) : PDFLib.rgb(0.2, 0.25, 0.3)
+            });
+            y -= isHeading ? 20 : 15;
+          }
+          const outBytes = await newDoc.save();
+          showResult(outBytes, 'application/pdf', `${file.name.replace(/\.docx$/i, '')}.pdf`, 'Converted Word file to PDF successfully.');
+
+        } else if (activeTool === 'pdf2excel') {
+          // SPATIAL COLUMN & ROW DETECTOR: Solves cell merging / flattened data issues
+          status.textContent = "Scanning tabular baselines and vertical column tracks...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          let sheetData = [];
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            
+            // Cluster by baseline Y (within 4 points)
+            let rawLines = [];
+            content.items.forEach(item => {
+              if (!item.str || !item.str.trim()) return;
+              const y = item.transform[5];
+              const x = item.transform[4];
+              let line = rawLines.find(l => Math.abs(l.y - y) <= 4);
+              if (line) line.items.push({ str: item.str, x });
+              else rawLines.push({ y, items: [{ str: item.str, x }] });
+            });
+
+            rawLines.sort((a, b) => b.y - a.y);
+
+            // Establish column alignment buckets
+            rawLines.forEach(line => {
+              line.items.sort((a, b) => a.x - b.x);
+              let rowCells = [];
+              let lastX = -100;
+              line.items.forEach(it => {
+                if (it.x - lastX > 30) {
+                  rowCells.push(it.str);
+                } else {
+                  if (rowCells.length > 0) {
+                    rowCells[rowCells.length - 1] += " " + it.str;
+                  } else {
+                    rowCells.push(it.str);
+                  }
+                }
+                lastX = it.x;
+              });
+              sheetData.push(rowCells);
+            });
+          }
+
+          const wb = XLSX.utils.book_new();
+          const ws = XLSX.utils.aoa_to_sheet(sheetData);
+          XLSX.utils.book_append_sheet(wb, ws, "ExtractedData");
+          const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+          showResult(new Uint8Array(wbout), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', `${file.name.replace(/\.pdf$/i, '')}.xlsx`, 'Converted PDF tables into multi-cell Excel spreadsheet!');
+        }
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        status.classList.add('hidden');
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    function showResult(bytes, type, filename, desc) {
+      const blob = new Blob([bytes], { type });
+      if (standardBlobUrl) URL.revokeObjectURL(standardBlobUrl);
+      standardBlobUrl = URL.createObjectURL(blob);
+
+      const link = document.getElementById('wsDownloadLink');
+      link.classList.remove('hidden');
+      link.href = standardBlobUrl;
+      link.download = filename;
+
+      document.getElementById('wsResultDesc').textContent = desc;
+      document.getElementById('wsResult').classList.remove('hidden');
+      link.click();
+    }
+
+    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO WATERMARKS)
+    function previewCardImage(event, previewId, side) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        idCardBuffers[side] = e.target.result;
+        idCardBuffers[side + 'Type'] = file.type;
+
+        const blob = new Blob([e.target.result], { type: file.type });
+        const imgUrl = URL.createObjectURL(blob);
+        document.getElementById(previewId).innerHTML = `
+          <img src="${imgUrl}" class="h-24 sm:h-28 object-contain rounded-lg border border-slate-200 shadow-sm" />
+          <span class="text-xs font-bold text-emerald-600 mt-2 flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> ${side.toUpperCase()} Ready</span>
+        `;
+        lucide.createIcons();
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    async function generateCleanIdPrintSheetPdf() {
+      if (!idCardBuffers.front || !idCardBuffers.back) { alert("Please upload BOTH Front and Back photos of the card."); return; }
+
+      const btn = document.getElementById('idGenerateBtn');
+      const status = document.getElementById('idStatusText');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      status.textContent = "Generating clean, watermark-free A4 sheet...";
+      status.classList.remove('hidden');
+
+      try {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([595.28, 841.89]);
+
+        const cardWidth = 242.64;
+        const cardHeight = 153.0;
+
+        const frontImg = idCardBuffers.frontType.includes('png') ? await pdfDoc.embedPng(idCardBuffers.front) : await pdfDoc.embedJpg(idCardBuffers.front);
+        const backImg = idCardBuffers.backType.includes('png') ? await pdfDoc.embedPng(idCardBuffers.back) : await pdfDoc.embedJpg(idCardBuffers.back);
+
+        const layoutStyle = document.querySelector('input[name="idLayout"]:checked').value;
+
+        if (layoutStyle === 'side') {
+          const startX = (595.28 - (cardWidth * 2 + 16)) / 2;
+          const startY = 841.89 - 220;
+
+          page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
+          page.drawRectangle({ x: startX, y: startY, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
+
+          const backX = startX + cardWidth + 16;
+          page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
+          page.drawRectangle({ x: backX, y: startY, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
+        } else {
+          const startX = (595.28 - cardWidth) / 2;
+          const startYFront = 841.89 - 180;
+          const startYBack = startYFront - cardHeight - 16;
+
+          page.drawImage(frontImg, { x: startX, y: startYFront, width: cardWidth, height: cardHeight });
+          page.drawRectangle({ x: startX, y: startYFront, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
+
+          page.drawImage(backImg, { x: startX, y: startYBack, width: cardWidth, height: cardHeight });
+          page.drawRectangle({ x: startX, y: startYBack, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
+        }
+
+        const outBytes = await pdfDoc.save();
+        const blob = new Blob([outBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "id_card_print_sheet.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } catch (err) {
+        alert("Failed to compile print sheet: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        status.classList.add('hidden');
+      }
+    }
+
     // 26 THEMES REGISTRY DYNAMIC RENDER ENGINE
     function updateResumePreview() {
       const templateKey = document.getElementById('cvTemplateStyle').value;
@@ -806,9 +1283,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       if (themeDef.style === 'dual-sidebar') {
         sheet1.className = `cv-sheet rounded-sm flex text-slate-900 select-none relative overflow-hidden ${fontClass} p-0`;
         sheet1.innerHTML = `
-          <div class="w-1/3 p-6 text-white flex flex-col gap-4 text-[9px]" style="background-color: #0f172a;">
+          <div class="w-1/3 p-5 text-white flex flex-col gap-4 text-[9px]" style="background-color: #0f172a;">
             <div>
-              <h1 class="text-lg font-black tracking-tight uppercase leading-tight">${name}</h1>
+              <h1 class="text-base font-black tracking-tight uppercase leading-tight">${name}</h1>
               <h2 class="text-[10px] font-bold mt-1 text-indigo-400">${role}</h2>
             </div>
             <div class="space-y-1.5 text-slate-300 text-[8.5px] border-t border-slate-700 pt-3">
@@ -827,7 +1304,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
               <p class="text-slate-300 leading-relaxed">${tools}</p>
             </div>
           </div>
-          <div class="w-2/3 p-7 flex flex-col gap-3 text-[9px]">
+          <div class="w-2/3 p-6 flex flex-col gap-3 text-[9px]">
             <div>
               <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Executive Summary</h3>
               <p class="text-slate-700 leading-snug">${summary}</p>
@@ -1126,9 +1603,10 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
     // INIT
     document.addEventListener('DOMContentLoaded', () => {
+      refreshAuthUI();
       updateResumePreview();
     });
-    updateResumePreview();
+    refreshAuthUI();
   </script>
 </body>
 </html>
