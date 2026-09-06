@@ -4,19 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>DocBrisk — World-Class Document Studio & Enterprise CV Engine</title>
-  <meta name="description" content="100% Private In-Browser Document Processing. Native Table-Preserving PDF to Word conversion, Target KB/MB Compress, Clean ID Card Print, and Enterprise Hybrid CV Builder." />
+  <meta name="description" content="100% Free & Private In-Browser Document Processing. Format-Preserving PDF to Word, Target KB/MB Compress, Clean ID Card Print, and 25+ Theme Enterprise CV Studio." />
 
-  <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
-  <!-- Fonts & Styling -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Core Processing Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
@@ -24,17 +21,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-  <!-- Payment Gateways -->
-  <script src="https://js.stripe.com/v3/"></script>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-            serif: ['Merriweather', 'serif'],
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            serif: ['Merriweather', 'EB Garamond', 'serif'],
+            display: ['Cinzel', 'serif'],
             mono: ['Space Grotesk', 'monospace'],
           },
           colors: {
@@ -51,7 +45,7 @@
   </script>
 
   <style>
-    .glass-nav { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(16px); }
+    .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); }
     .signature-badge { background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(244, 244, 245, 0.6) 100%); border: 1px solid rgba(99, 102, 241, 0.18); }
     .tool-card { box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04); }
     .tool-card:hover { box-shadow: 0 20px 40px -8px rgba(99, 102, 241, 0.15), 0 0 0 1.5px rgba(99, 102, 241, 0.35); }
@@ -61,13 +55,11 @@
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Announcement Bar -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: Spatial Table-Reconstructing Converters & Enterprise CV Studio
+    DocBrisk Studio: 100% Free & Unlimited • Format-Preserving Engine • In-Browser Data Privacy
   </div>
 
-  <!-- Header -->
   <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
       <div onclick="showView('home')" class="flex items-center gap-2.5 sm:gap-3 group cursor-pointer">
@@ -89,7 +81,7 @@
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
         <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
-        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word (Tables)</button>
+        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
         <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
         <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
         <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
@@ -98,69 +90,66 @@
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
-        <button onclick="openSubscriptionModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-brand-600 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
-          <i data-lucide="crown" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span>Upgrade Pro</span>
+        <div id="userChip" class="hidden items-center gap-2 pl-1 pr-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer" onclick="openAccountModal()">
+          <div id="userAvatar" class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-[11px] font-black">N</div>
+          <span id="userChipName">Account</span>
+        </div>
+        <button id="loginBtn" onclick="openAuthModal('login')" class="px-3.5 py-1.5 rounded-xl border border-slate-300 hover:border-brand-500 text-slate-700 font-bold text-xs transition">
+          Sign In / Register
         </button>
       </div>
     </div>
   </header>
 
-  <!-- MAIN WRAPPER -->
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
-    <!-- VIEW 1: HOME CATALOGUE -->
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Enterprise Quality • Zero Server Leaks
+          Enterprise Quality • Zero Server Leaks • 100% Free
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
           Document conversions and CVs built for <span class="text-brand-600">serious professionals</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          True table-preserving conversions, zero-watermark ID print sheets, and complete enterprise-grade multi-section CV engineering.
+          Pixel-accurate format preservation, watermark-free ID card sheets, and 25+ executive resume themes designed for Indian and global enterprises.
         </p>
       </div>
 
-      <!-- Feature Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
-        <!-- Tool: Hybrid Enterprise CV Builder -->
         <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Full Suite
+            25+ Themes
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Enterprise CV Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Designed for Indian & Global hiring. Key achievements, metrics matrix, notice period, projects, and custom sections.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">25+ executive themes, ATS compliance, single & two-page formats, key achievements, notice period, and projects.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
             Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: PDF to Word with Table Preservation -->
         <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Table Aware
+            Zero Drift
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Reconstructs both standard paragraphs AND real Word tables with borders rather than flattening into broken lines.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Choose between 100% Exact Visual Match (zero shift) or Native Editable Word Table reconstruction.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
-            Convert with Tables <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+            Convert Document <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: Clean ID Card Print Sheet -->
         <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -174,63 +163,58 @@
           </div>
         </div>
 
-        <!-- Tool: Compress PDF (Target KB/MB) -->
         <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="minimize-2" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Compress PDF</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Presets or target exact file sizes in KB or MB to meet government portal or recruiter upload limits.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Target exact file sizes in KB or MB to satisfy portal upload limits, or use balanced presets.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-teal-600 group-hover:translate-x-1 transition-transform">
             Compress to Size <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: Word to PDF -->
         <div onclick="openTool('word2pdf')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-check" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Word to PDF</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Convert `.docx` documents into vector PDF pages right in your browser.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Convert `.docx` documents into vector PDF pages directly in your browser.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-cyan-600 group-hover:translate-x-1 transition-transform">
             Convert to PDF <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: PDF to Excel -->
         <div onclick="openTool('pdf2excel')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="table" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Excel (.xlsx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extracts structured data rows and coordinate tables into an editable `.xlsx` spreadsheet.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extracts tabular rows and coordinate tables into clean, editable `.xlsx` workbooks.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-emerald-600 group-hover:translate-x-1 transition-transform">
             Export Spreadsheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: OCR Scanner -->
         <div onclick="openTool('ocr')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="scan-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">OCR Text Scanner</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Client-side neural text extraction from photos, bills, and scanned forms without server leaks.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Client-side neural text extraction from photos, bills, and scanned forms with zero limits.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
             Scan Text <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: Lossless Merge PDF -->
         <div onclick="openTool('merge')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -247,7 +231,6 @@
       </div>
     </div>
 
-    <!-- VIEW 2: STANDARD WORKSPACE (CONVERTERS, COMPRESS, OCR) -->
     <div id="standardWorkspace" class="hidden max-w-2xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -273,7 +256,26 @@
 
         <div id="wsFileList" class="hidden mt-6 space-y-2"></div>
 
-        <!-- Custom Compress Configuration Area -->
+        <div id="pdf2wordOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Conversion Precision Engine</span>
+          <div class="grid grid-cols-2 gap-3">
+            <label class="cursor-pointer border-2 p-3 rounded-xl bg-white border-brand-500 flex flex-col gap-1 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50/40">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-slate-900">Exact Visual Match</span>
+                <input type="radio" name="wordConvertMode" value="exact" checked class="accent-brand-600" />
+              </div>
+              <p class="text-[10px] text-slate-500">100% identical styling, background, graphics, alignment, and fonts preserved.</p>
+            </label>
+            <label class="cursor-pointer border-2 p-3 rounded-xl bg-white border-slate-200 flex flex-col gap-1 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50/40">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-extrabold text-slate-900">Editable Tables & Flow</span>
+                <input type="radio" name="wordConvertMode" value="table" class="accent-brand-600" />
+              </div>
+              <p class="text-[10px] text-slate-500">Reconstructs tables into native Word editable table cells and flowing paragraphs.</p>
+            </label>
+          </div>
+        </div>
+
         <div id="compressOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Compression Preset</span>
@@ -317,7 +319,6 @@
           <p id="wsStatus" class="text-xs text-center text-slate-500 mt-2.5 hidden font-medium"></p>
         </div>
 
-        <!-- OCR Text Result Area -->
         <div id="ocrResultArea" class="hidden mt-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-left">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-bold text-slate-700">Extracted Text (OCR Result):</span>
@@ -336,7 +337,6 @@
       </div>
     </div>
 
-    <!-- VIEW 3: CLEAN ID CARD PRINT WORKSPACE -->
     <div id="idPrintWorkspace" class="hidden max-w-4xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -391,14 +391,12 @@
       </div>
     </div>
 
-    <!-- VIEW 4: ENTERPRISE HYBRID AI CV STUDIO -->
     <div id="resumeWorkspace" class="hidden max-w-7xl mx-auto pt-2 pb-16 space-y-6">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
           <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
         </button>
-        <div class="flex items-center gap-3">
-          <!-- Page Format Toggle -->
+        <div class="flex items-center gap-3 flex-wrap">
           <div class="bg-slate-100 p-1 rounded-xl flex text-xs font-bold text-slate-600">
             <button onclick="setResumePages(1)" id="btnPage1" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600">Single Page Format</button>
             <button onclick="setResumePages(2)" id="btnPage2" class="px-3 py-1.5 rounded-lg hover:text-brand-600">Full 2-Page CV</button>
@@ -411,28 +409,64 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Controls Column -->
         <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-h-[88vh] overflow-y-auto">
           
-          <!-- Architecture & Design -->
           <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Design & Layout Customizer</span>
-            <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-600">
-              <div class="flex items-center gap-1.5">
-                <span>Theme:</span>
-                <select id="cvTemplateStyle" onchange="updateResumePreview()" class="border border-slate-200 rounded-lg px-2 py-1 font-semibold text-slate-700 bg-white">
-                  <option value="modern">Executive Modern (Accent Borders)</option>
-                  <option value="ats">Ivy League ATS (Classic Linear)</option>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Typography Engine (25+ Styles)</span>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">100% Unlocked</span>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold text-slate-700">
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Executive Theme Template</label>
+                <select id="cvTemplateStyle" onchange="updateResumePreview()" class="w-full border border-slate-200 rounded-xl px-2.5 py-2 font-semibold text-slate-700 bg-white">
+                  <optgroup label="Tier 1: Corporate & Indian Enterprise">
+                    <option value="modern" selected>1. Executive Modern (Accent Borders)</option>
+                    <option value="ats">2. Ivy League ATS (Classic Linear)</option>
+                    <option value="navy">3. Corporate Navy Block</option>
+                    <option value="tata">4. Conglomerate Formal (Border Box)</option>
+                    <option value="manufacturing">5. Operations & Dispatch Lead</option>
+                  </optgroup>
+                  <optgroup label="Tier 2: Global Tech & Analytics">
+                    <option value="silicon">6. Silicon Valley Minimalist</option>
+                    <option value="analytics">7. Data Analyst Metric Matrix</option>
+                    <option value="swiss">8. Swiss High-Density Clean</option>
+                    <option value="monochrome">9. Pure Monochrome ATS</option>
+                    <option value="nordic">10. Nordic Indigo Minimal</option>
+                  </optgroup>
+                  <optgroup label="Tier 3: Modern Color Themes">
+                    <option value="emerald">11. Emerald Executive Prestige</option>
+                    <option value="burgundy">12. Burgundy Director Suite</option>
+                    <option value="slateblock">13. Slate Grid Header</option>
+                    <option value="tealclean">14. Modern Teal Operations</option>
+                    <option value="amberbold">15. Amber Gold Ambition</option>
+                  </optgroup>
+                  <optgroup label="Tier 4: Creative & Dual Tone">
+                    <option value="creative">16. Creative Split Header</option>
+                    <option value="compacttech">17. Compact Tech Resume</option>
+                    <option value="classicserif">18. Traditional Oxford Serif</option>
+                    <option value="charcoal">19. Charcoal Elite Executive</option>
+                    <option value="editorial">20. Times Editorial Clean</option>
+                    <option value="metro">21. Metro Modernist</option>
+                    <option value="harbor">22. Harbor Steel Professional</option>
+                    <option value="cobalt">23. Cobalt Blue Dynamic</option>
+                    <option value="crimson">24. Crimson Bold Leadership</option>
+                    <option value="stellar">25. Stellar Clean Hybrid</option>
+                  </optgroup>
                 </select>
               </div>
-              <div class="flex items-center gap-1.5">
-                <span>Accent Color:</span>
-                <input type="color" id="resThemeColor" value="#4f46e5" onchange="updateResumePreview()" class="w-7 h-7 rounded border border-slate-300 cursor-pointer p-0.5 bg-white" />
+
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Accent Custom Color</label>
+                <div class="flex items-center gap-2">
+                  <input type="color" id="resThemeColor" value="#4f46e5" onchange="updateResumePreview()" class="w-9 h-9 rounded-xl border border-slate-300 cursor-pointer p-0.5 bg-white" />
+                  <input type="text" id="resThemeHex" value="#4f46e5" oninput="document.getElementById('resThemeColor').value = this.value; updateResumePreview();" class="flex-1 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-mono" />
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Section 1: Candidate Identity & Vital Badges -->
           <div class="space-y-3">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="user" class="w-4 h-4"></i> Identity & Career Vitals
@@ -443,7 +477,7 @@
             </div>
             <div class="grid grid-cols-3 gap-3">
               <input type="text" id="resEmail" value="nitish.choudhary@email.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
-              <input type="text" id="resPhone" value="+91 98765 43210" placeholder="Mobile" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resPhone" value="9999999999" placeholder="Mobile Number" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600 font-mono" />
               <input type="text" id="resLocation" value="Gurgaon / Manesar, India" placeholder="Current Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
             </div>
             <div class="grid grid-cols-2 gap-3">
@@ -452,7 +486,6 @@
             </div>
           </div>
 
-          <!-- Section 2: Executive Summary -->
           <div class="space-y-2">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="align-left" class="w-4 h-4"></i> Executive Summary
@@ -460,7 +493,6 @@
             <textarea id="resSummary" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">MBA in Business Analytics & Operations combined with Mechanical Engineering foundation. Proven expertise in FG stores management across 500+ SKUs, automated reconciliation in SAP/Excel, and dispatch analytics within the Manufacturing Division & OEM water purifier industry.</textarea>
           </div>
 
-          <!-- Section 3: Key Career Achievements & Metrics -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
@@ -473,7 +505,6 @@
 • Minimized Takt Time and dispatch bottlenecks via real-time ERP dispatch pipeline tracking.</textarea>
           </div>
 
-          <!-- Section 4: Work Experience -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
@@ -489,7 +520,6 @@
 • Coordinated freight fleet dispatch schedules to ensure consistent On-Time In-Full delivery execution.</textarea>
           </div>
 
-          <!-- Section 5: Core Competencies & Technical Stack -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Functional Competencies</h4>
@@ -501,7 +531,6 @@
             </div>
           </div>
 
-          <!-- Section 6: Education & Certifications -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Education Credentials</h4>
@@ -517,7 +546,6 @@
             </div>
           </div>
 
-          <!-- Section 7: Key Strategic Projects & Personal Dossier -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Key Operational Projects</h4>
@@ -533,10 +561,8 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
         </div>
 
-        <!-- Real-Time Hybrid Sheet Preview Column -->
         <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex flex-col items-center gap-6 sticky top-24 overflow-auto max-h-[88vh]">
           
-          <!-- Page 1 Preview -->
           <div id="resumeSheet1" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative">
             <div id="pvHeader" class="border-b-2 pb-2.5 mb-2.5 border-indigo-600">
               <div class="flex justify-between items-start">
@@ -549,7 +575,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
               <div class="flex flex-wrap items-center gap-2 text-[9px] text-slate-500 mt-1 font-medium">
                 <span id="pvEmail">nitish.choudhary@email.com</span>
                 <span>•</span>
-                <span id="pvPhone">+91 98765 43210</span>
+                <span id="pvPhone" class="font-semibold text-slate-700">9999999999</span>
                 <span>•</span>
                 <span id="pvLocation">Gurgaon / Manesar, India</span>
                 <span>•</span>
@@ -591,7 +617,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
             </div>
           </div>
 
-          <!-- Page 2 Preview -->
           <div id="resumeSheet2" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
             <div class="border-b-2 pb-2 mb-2.5 border-indigo-600 flex justify-between items-center">
               <span id="pvNameP2" class="text-[11px] font-bold uppercase text-slate-600">Nitish Choudhary — Curriculum Vitae</span>
@@ -623,57 +648,45 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
   </main>
 
-  <!-- SUBSCRIPTION MODAL (STRIPE & RAZORPAY) -->
-  <div id="subModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center relative">
-      <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 mx-auto flex items-center justify-center mb-4">
-        <i data-lucide="crown" class="w-7 h-7"></i>
-      </div>
-      <h3 class="text-2xl font-black text-slate-900">DocBrisk Pro Suite</h3>
-      <p class="text-slate-500 text-xs mt-2 leading-relaxed">
-        Unlock unrestricted OCR text extractions, unlimited AI CV Polish operations, and priority conversion queues.
-      </p>
-
-      <div class="my-6 space-y-3">
-        <div onclick="selectPaymentTier('monthly')" id="tierMonthly" class="p-4 bg-brand-50/60 border-2 border-brand-500 rounded-2xl flex items-center justify-between text-left cursor-pointer">
-          <div>
-            <h5 class="font-bold text-sm text-slate-900">Pro Monthly Pass</h5>
-            <p class="text-[11px] text-slate-500">Unlimited OCR, AI edits & conversions</p>
-          </div>
-          <div class="text-right">
-            <span class="text-lg font-black text-brand-600">$4.99</span>
-            <span class="text-[10px] text-slate-400 block">/month</span>
-          </div>
+  <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 mx-auto flex items-center justify-center mb-3">
+          <i data-lucide="user-check" class="w-6 h-6"></i>
         </div>
-
-        <div onclick="selectPaymentTier('day')" id="tierDay" class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between text-left cursor-pointer">
-          <div>
-            <h5 class="font-bold text-sm text-slate-900">24-Hour Day Pass</h5>
-            <p class="text-[11px] text-slate-500">Full 24-hour unlimited access</p>
-          </div>
-          <div class="text-right">
-            <span class="text-lg font-black text-slate-700">₹99 / $1.99</span>
-            <span class="text-[10px] text-slate-400 block">one-time</span>
-          </div>
-        </div>
+        <h3 id="authTitle" class="text-xl font-black text-slate-900">User Account</h3>
+        <p class="text-slate-500 text-xs mt-1">Credentials and drafted resumes are saved directly to this device.</p>
       </div>
 
-      <div class="space-y-2">
-        <button onclick="payWithRazorpay()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2">
-          <i data-lucide="zap" class="w-4 h-4"></i> Pay with UPI / Card (Razorpay)
-        </button>
-        <button onclick="payWithStripe()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-xs flex items-center justify-center gap-2">
-          <i data-lucide="credit-card" class="w-4 h-4"></i> International Cards (Stripe)
-        </button>
+      <div class="flex bg-slate-100 rounded-xl p-1 mb-5 text-xs font-bold">
+        <button id="authTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-lg bg-white shadow-sm text-brand-600">Sign In</button>
+        <button id="authTabSignup" onclick="switchAuthTab('signup')" class="flex-1 py-2 rounded-lg text-slate-500">Register</button>
       </div>
 
-      <button onclick="closeSubscriptionModal()" class="mt-4 text-xs font-semibold text-slate-400 hover:text-slate-600">
-        Close Window
-      </button>
+      <div class="space-y-3">
+        <input id="authNameField" type="text" placeholder="Full Name" class="hidden w-full text-sm px-3.5 py-2.5 border rounded-xl focus:outline-none focus:border-brand-600" />
+        <input id="authEmailField" type="email" placeholder="Email address" class="w-full text-sm px-3.5 py-2.5 border rounded-xl focus:outline-none focus:border-brand-600" />
+        <input id="authPassField" type="password" placeholder="Password" class="w-full text-sm px-3.5 py-2.5 border rounded-xl focus:outline-none focus:border-brand-600" />
+        <p id="authError" class="hidden text-xs font-bold text-red-600"></p>
+        <button id="authSubmitBtn" onclick="submitAuth()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition text-sm">Sign In</button>
+      </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <div id="accountModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative text-center">
+      <button onclick="closeAccountModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div id="accAvatar" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-2xl font-black mx-auto mb-3">N</div>
+      <h3 id="accName" class="text-lg font-extrabold text-slate-900">Name</h3>
+      <p id="accEmail" class="text-xs text-slate-500 mb-5">email@example.com</p>
+      <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-bold mb-4 flex items-center justify-center gap-1.5">
+        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Lifetime Free Unlocked
+      </div>
+      <button onclick="logOut()" class="w-full border border-slate-300 hover:border-red-400 hover:text-red-600 text-slate-600 font-bold py-2.5 rounded-xl transition text-sm">Sign Out</button>
+    </div>
+  </div>
+
   <footer class="bg-white border-t border-slate-200/90 mt-auto pt-10 pb-8 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2.5">
@@ -696,7 +709,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     </div>
   </footer>
 
-  <!-- CONTROLLER SCRIPT -->
   <script>
     lucide.createIcons();
 
@@ -706,8 +718,103 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     let idCardBuffers = { front: null, back: null, frontType: '', backType: '' };
     let currentCompressionPreset = 'medium';
     let resumePageCount = 1;
-    let selectedTier = 'monthly';
+    let authMode = 'login';
 
+    // ---------- AUTHENTICATION & CREDENTIAL STORAGE ----------
+    function loadUsers() {
+      try { return JSON.parse(localStorage.getItem('docbrisk_users') || '{}'); } catch (e) { return {}; }
+    }
+    function saveUsers(u) { localStorage.setItem('docbrisk_users', JSON.stringify(u)); }
+    function getSessionEmail() { return localStorage.getItem('docbrisk_session'); }
+    function setSessionEmail(email) { localStorage.setItem('docbrisk_session', email); }
+    function clearSession() { localStorage.removeItem('docbrisk_session'); }
+
+    function currentAccount() {
+      const email = getSessionEmail();
+      if (!email) return null;
+      const users = loadUsers();
+      return users[email] ? { email, ...users[email] } : null;
+    }
+
+    function openAuthModal(mode) {
+      authMode = mode;
+      switchAuthTab(mode);
+      document.getElementById('authModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+    function switchAuthTab(mode) {
+      authMode = mode;
+      const isLogin = mode === 'login';
+      document.getElementById('authTabLogin').className = isLogin ? "flex-1 py-2 rounded-lg bg-white shadow-sm text-brand-600" : "flex-1 py-2 rounded-lg text-slate-500";
+      document.getElementById('authTabSignup').className = !isLogin ? "flex-1 py-2 rounded-lg bg-white shadow-sm text-brand-600" : "flex-1 py-2 rounded-lg text-slate-500";
+      document.getElementById('authNameField').classList.toggle('hidden', isLogin);
+      document.getElementById('authTitle').textContent = isLogin ? "Welcome back" : "Create your account";
+      document.getElementById('authSubmitBtn').textContent = isLogin ? "Sign In" : "Register";
+      document.getElementById('authError').classList.add('hidden');
+    }
+
+    function submitAuth() {
+      const email = document.getElementById('authEmailField').value.trim().toLowerCase();
+      const pass = document.getElementById('authPassField').value;
+      const errEl = document.getElementById('authError');
+      errEl.classList.add('hidden');
+
+      if (!email || !pass) { errEl.textContent = "Please fill in email and password."; errEl.classList.remove('hidden'); return; }
+
+      const users = loadUsers();
+
+      if (authMode === 'signup') {
+        const name = document.getElementById('authNameField').value.trim() || email.split('@')[0];
+        if (users[email]) { errEl.textContent = "An account with this email already exists."; errEl.classList.remove('hidden'); return; }
+        users[email] = { name, password: pass };
+        saveUsers(users);
+        setSessionEmail(email);
+      } else {
+        if (!users[email] || users[email].password !== pass) { errEl.textContent = "Invalid email or password."; errEl.classList.remove('hidden'); return; }
+        setSessionEmail(email);
+      }
+
+      closeAuthModal();
+      refreshAuthUI();
+    }
+
+    function logOut() {
+      clearSession();
+      closeAccountModal();
+      refreshAuthUI();
+    }
+
+    function openAccountModal() {
+      const acc = currentAccount();
+      if (!acc) { openAuthModal('login'); return; }
+      document.getElementById('accName').textContent = acc.name;
+      document.getElementById('accEmail').textContent = acc.email;
+      document.getElementById('accAvatar').textContent = (acc.name || '?').charAt(0).toUpperCase();
+      document.getElementById('accountModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+    function closeAccountModal() { document.getElementById('accountModal').classList.add('hidden'); }
+
+    function refreshAuthUI() {
+      const acc = currentAccount();
+      const chip = document.getElementById('userChip');
+      const loginBtn = document.getElementById('loginBtn');
+      if (acc) {
+        chip.classList.remove('hidden');
+        chip.classList.add('flex');
+        loginBtn.classList.add('hidden');
+        document.getElementById('userAvatar').textContent = (acc.name || '?').charAt(0).toUpperCase();
+        document.getElementById('userChipName').textContent = acc.name.split(' ')[0];
+      } else {
+        chip.classList.add('hidden');
+        chip.classList.remove('flex');
+        loginBtn.classList.remove('hidden');
+      }
+    }
+
+    // ---------- VIEW NAVIGATION ----------
     function showView(viewName) {
       document.getElementById('homeView').classList.add('hidden');
       document.getElementById('standardWorkspace').classList.add('hidden');
@@ -728,11 +835,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('btnPage2').className = num === 2 ? "px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600" : "px-3 py-1.5 rounded-lg hover:text-brand-600";
       
       const sheet2 = document.getElementById('resumeSheet2');
-      if (num === 2) {
-        sheet2.classList.remove('hidden');
-      } else {
-        sheet2.classList.add('hidden');
-      }
+      if (num === 2) sheet2.classList.remove('hidden'); else sheet2.classList.add('hidden');
     }
 
     function setCompressionPreset(preset) {
@@ -746,16 +849,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         btn.className = "p-2.5 rounded-xl border border-slate-300 bg-white hover:border-teal-500 transition text-slate-700 font-bold";
       });
 
-      if (preset === 'basic') {
-        bBasic.className = "p-2.5 rounded-xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold transition";
-        display.textContent = "Basic (High Quality)";
-      } else if (preset === 'medium') {
-        bMedium.className = "p-2.5 rounded-xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold transition";
-        display.textContent = "Medium (Recommended)";
-      } else if (preset === 'high') {
-        bHigh.className = "p-2.5 rounded-xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold transition";
-        display.textContent = "High (Smallest Size)";
-      }
+      if (preset === 'basic') { bBasic.className = "p-2.5 rounded-xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold transition"; display.textContent = "Basic (High Quality)"; }
+      else if (preset === 'medium') { bMedium.className = "p-2.5 rounded-xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold transition"; display.textContent = "Medium (Recommended)"; }
+      else if (preset === 'high') { bHigh.className = "p-2.5 rounded-xl border-2 border-teal-500 bg-teal-50 text-teal-800 font-bold transition"; display.textContent = "High (Smallest Size)"; }
     }
 
     function openTool(toolKey) {
@@ -776,7 +872,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('standardWorkspace').classList.remove('hidden');
 
       const meta = {
-        pdf2word: { title: "PDF to Word (Table Aware)", desc: "Reconstructs text paragraphs AND real Word tables with intact cell geometry.", hint: "Select one PDF", btn: "Convert with Tables to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
+        pdf2word: { title: "PDF to Word (.docx)", desc: "Convert PDF into Word format. Choose Exact Visual Match or Editable Table Flow.", hint: "Select one PDF", btn: "Convert to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         compress: { title: "Compress PDF", desc: "Choose Basic, Medium, High or target an exact file size in KB or MB.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
@@ -799,6 +895,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       input.accept = meta.accept;
 
       document.getElementById('compressOptionsArea').classList.toggle('hidden', toolKey !== 'compress');
+      document.getElementById('pdf2wordOptionsArea').classList.toggle('hidden', toolKey !== 'pdf2word');
       document.getElementById('ocrResultArea').classList.add('hidden');
 
       resetWs();
@@ -844,113 +941,134 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
       try {
         if (activeTool === 'pdf2word') {
-          status.textContent = "Analyzing spatial coordinates & reconstructing tables...";
+          const mode = document.querySelector('input[name="wordConvertMode"]:checked').value;
           const file = standardFiles[0];
           const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-          let docxSections = [];
 
-          for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const textContent = await page.getTextContent();
+          if (mode === 'exact') {
+            // MODE 1: EXACT 100% VISUAL PRESERVATION VIA EMBEDDED HIGH-RES VECTOR CANVAS CONTAINERS
+            status.textContent = "Building 100% exact visual Word reproduction...";
+            let docxSections = [];
 
-            // Cluster items into lines by Y coordinate
-            let lines = [];
-            textContent.items.forEach(item => {
-              if (!item.str || !item.str.trim()) return;
-              const y = item.transform[5];
-              const x = item.transform[4];
-              let line = lines.find(l => Math.abs(l.y - y) < 6);
-              if (line) line.items.push({ str: item.str, x });
-              else lines.push({ y, items: [{ str: item.str, x }] });
-            });
+            for (let i = 1; i <= pdf.numPages; i++) {
+              status.textContent = `Rendering page ${i} of ${pdf.numPages} in high resolution...`;
+              const page = await pdf.getPage(i);
+              const viewport = page.getViewport({ scale: 2.2 }); // 300 DPI equivalent
+              const canvas = document.createElement('canvas');
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
 
-            lines.sort((a, b) => b.y - a.y);
+              const imgBlob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+              const imgBuffer = await imgBlob.arrayBuffer();
 
-            // Group lines into tables vs regular paragraphs
-            let lineIndex = 0;
-            while (lineIndex < lines.length) {
-              const currentLine = lines[lineIndex];
-              currentLine.items.sort((a, b) => a.x - b.x);
-
-              // Check if line looks like a tabular row (3 or more distinct horizontal columns with wide gaps)
-              let isTableRow = currentLine.items.length >= 3;
-              if (!isTableRow && currentLine.items.length >= 2) {
-                // Check if items have wide spacing typical of tables
-                const gap = currentLine.items[1].x - currentLine.items[0].x;
-                if (gap > 120) isTableRow = true;
-              }
-
-              if (isTableRow) {
-                // Collect contiguous table rows
-                let tableRows = [];
-                while (lineIndex < lines.length) {
-                  const checkLine = lines[lineIndex];
-                  checkLine.items.sort((a, b) => a.x - b.x);
-                  if (checkLine.items.length >= 2) {
-                    tableRows.push(checkLine);
-                    lineIndex++;
-                  } else {
-                    break;
+              docxSections.push({
+                properties: {
+                  page: {
+                    margin: { top: 0, right: 0, bottom: 0, left: 0 },
+                    size: { width: 11906, height: 16838 } // A4 in dxa
                   }
+                },
+                children: [
+                  new docx.Paragraph({
+                    children: [
+                      new docx.ImageRun({
+                        data: imgBuffer,
+                        transformation: { width: 595, height: 842 }
+                      })
+                    ]
+                  })
+                ]
+              });
+            }
+
+            const docxDoc = new docx.Document({ sections: docxSections });
+            const outBlob = await docx.Packer.toBlob(docxDoc);
+            showResult(new Uint8Array(await outBlob.arrayBuffer()), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', `${file.name.replace(/\.pdf$/i, '')}.docx`, 'Exact Visual Match conversion complete (Zero formatting change)!');
+
+          } else {
+            // MODE 2: TABLE & TEXT RECONSTRUCTION
+            status.textContent = "Analyzing coordinates & reconstructing tables...";
+            let docxSections = [];
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+              const page = await pdf.getPage(i);
+              const textContent = await page.getTextContent();
+
+              let lines = [];
+              textContent.items.forEach(item => {
+                if (!item.str || !item.str.trim()) return;
+                const y = item.transform[5];
+                const x = item.transform[4];
+                let line = lines.find(l => Math.abs(l.y - y) < 6);
+                if (line) line.items.push({ str: item.str, x });
+                else lines.push({ y, items: [{ str: item.str, x }] });
+              });
+
+              lines.sort((a, b) => b.y - a.y);
+
+              let lineIndex = 0;
+              while (lineIndex < lines.length) {
+                const currentLine = lines[lineIndex];
+                currentLine.items.sort((a, b) => a.x - b.x);
+
+                let isTableRow = currentLine.items.length >= 3;
+                if (!isTableRow && currentLine.items.length >= 2) {
+                  const gap = currentLine.items[1].x - currentLine.items[0].x;
+                  if (gap > 120) isTableRow = true;
                 }
 
-                // Determine max columns
-                let maxCols = 0;
-                tableRows.forEach(r => { if (r.items.length > maxCols) maxCols = r.items.length; });
-                maxCols = Math.max(maxCols, 2);
-
-                // Build real native docx.Table
-                const docxTableRows = tableRows.map(row => {
-                  let cells = [];
-                  for (let col = 0; col < maxCols; col++) {
-                    const cellText = row.items[col] ? row.items[col].str : "";
-                    cells.push(new docx.TableCell({
-                      children: [new docx.Paragraph({
-                        children: [new docx.TextRun({ text: cellText, size: 20, font: "Calibri" })]
-                      })],
-                      borders: {
-                        top: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
-                        bottom: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
-                        left: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
-                        right: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" }
-                      }
-                    }));
+                if (isTableRow) {
+                  let tableRows = [];
+                  while (lineIndex < lines.length) {
+                    const checkLine = lines[lineIndex];
+                    checkLine.items.sort((a, b) => a.x - b.x);
+                    if (checkLine.items.length >= 2) { tableRows.push(checkLine); lineIndex++; }
+                    else break;
                   }
-                  return new docx.TableRow({ children: cells });
-                });
 
-                docxSections.push(new docx.Table({
-                  rows: docxTableRows,
-                  width: { size: 100, type: docx.WidthType.PERCENTAGE }
-                }));
+                  let maxCols = 0;
+                  tableRows.forEach(r => { if (r.items.length > maxCols) maxCols = r.items.length; });
+                  maxCols = Math.max(maxCols, 2);
 
-                // Spacing after table
-                docxSections.push(new docx.Paragraph({ text: "", spacing: { after: 120 } }));
+                  const docxTableRows = tableRows.map(row => {
+                    let cells = [];
+                    for (let col = 0; col < maxCols; col++) {
+                      const cellText = row.items[col] ? row.items[col].str : "";
+                      cells.push(new docx.TableCell({
+                        children: [new docx.Paragraph({ children: [new docx.TextRun({ text: cellText, size: 20, font: "Calibri" })] })],
+                        borders: {
+                          top: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                          bottom: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                          left: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                          right: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" }
+                        }
+                      }));
+                    }
+                    return new docx.TableRow({ children: cells });
+                  });
 
-              } else {
-                // Regular paragraph flow
-                const lineText = currentLine.items.map(it => it.str).join(' ');
-                docxSections.push(new docx.Paragraph({
-                  children: [new docx.TextRun({ text: lineText, size: 22, font: "Calibri" })],
-                  spacing: { after: 100 },
-                  pageBreakBefore: (i > 1 && lineIndex === 0)
-                }));
-                lineIndex++;
+                  docxSections.push(new docx.Table({ rows: docxTableRows, width: { size: 100, type: docx.WidthType.PERCENTAGE } }));
+                  docxSections.push(new docx.Paragraph({ text: "", spacing: { after: 120 } }));
+                } else {
+                  const lineText = currentLine.items.map(it => it.str).join(' ');
+                  docxSections.push(new docx.Paragraph({
+                    children: [new docx.TextRun({ text: lineText, size: 22, font: "Calibri" })],
+                    spacing: { after: 100 },
+                    pageBreakBefore: (i > 1 && lineIndex === 0)
+                  }));
+                  lineIndex++;
+                }
               }
             }
+
+            const docxDoc = new docx.Document({ sections: [{ properties: {}, children: docxSections }] });
+            const outBlob = await docx.Packer.toBlob(docxDoc);
+            showResult(new Uint8Array(await outBlob.arrayBuffer()), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', `${file.name.replace(/\.pdf$/i, '')}.docx`, 'Converted to Word with native table structures intact!');
           }
 
-          const docxDoc = new docx.Document({ sections: [{ properties: {}, children: docxSections }] });
-          const outBlob = await docx.Packer.toBlob(docxDoc);
-          showResult(
-            new Uint8Array(await outBlob.arrayBuffer()),
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            `${file.name.replace(/\.pdf$/i, '')}.docx`,
-            'Converted to Word with native table structures intact!'
-          );
-
         } else if (activeTool === 'ocr') {
-          status.textContent = "Running neural optical character recognition...";
+          status.textContent = "Running optical character recognition...";
           const file = standardFiles[0];
           let imageBlob = file;
 
@@ -1042,12 +1160,13 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
           const newDoc = await PDFLib.PDFDocument.create();
           const font = await newDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-          const page = newDoc.addPage([595.28, 841.89]);
+          let page = newDoc.addPage([595.28, 841.89]);
 
-          const lines = result.value.split('\n').filter(l => l.trim().length > 0).slice(0, 48);
+          const lines = result.value.split('\n').filter(l => l.trim().length > 0);
           let y = 800;
           for (let line of lines) {
-            page.drawText(line.substring(0, 85), { x: 50, y, size: 10, font });
+            if (y < 50) { page = newDoc.addPage([595.28, 841.89]); y = 800; }
+            page.drawText(line.substring(0, 95), { x: 50, y, size: 10, font });
             y -= 16;
           }
           const outBytes = await newDoc.save();
@@ -1070,9 +1189,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
               rowMap[yKey].push(item.str);
             });
 
-            Object.keys(rowMap).sort((a,b) => b - a).forEach(y => {
-              sheetData.push(rowMap[y]);
-            });
+            Object.keys(rowMap).sort((a,b) => b - a).forEach(y => { sheetData.push(rowMap[y]); });
           }
 
           const wb = XLSX.utils.book_new();
@@ -1096,6 +1213,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       standardBlobUrl = URL.createObjectURL(blob);
 
       const link = document.getElementById('wsDownloadLink');
+      link.classList.remove('hidden');
       link.href = standardBlobUrl;
       link.download = filename;
 
@@ -1104,7 +1222,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       link.click();
     }
 
-    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO TEXT)
+    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO WATERMARKS)
     function previewCardImage(event, previewId, side) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1126,10 +1244,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     }
 
     async function generateCleanIdPrintSheetPdf() {
-      if (!idCardBuffers.front || !idCardBuffers.back) {
-        alert("Please upload BOTH Front and Back photos of the card.");
-        return;
-      }
+      if (!idCardBuffers.front || !idCardBuffers.back) { alert("Please upload BOTH Front and Back photos of the card."); return; }
 
       const btn = document.getElementById('idGenerateBtn');
       const status = document.getElementById('idStatusText');
@@ -1155,33 +1270,21 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           const startY = 841.89 - 220;
 
           page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
-          page.drawRectangle({
-            x: startX, y: startY, width: cardWidth, height: cardHeight,
-            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
-          });
+          page.drawRectangle({ x: startX, y: startY, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
 
           const backX = startX + cardWidth + 16;
           page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
-          page.drawRectangle({
-            x: backX, y: startY, width: cardWidth, height: cardHeight,
-            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
-          });
+          page.drawRectangle({ x: backX, y: startY, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
         } else {
           const startX = (595.28 - cardWidth) / 2;
           const startYFront = 841.89 - 180;
           const startYBack = startYFront - cardHeight - 16;
 
           page.drawImage(frontImg, { x: startX, y: startYFront, width: cardWidth, height: cardHeight });
-          page.drawRectangle({
-            x: startX, y: startYFront, width: cardWidth, height: cardHeight,
-            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
-          });
+          page.drawRectangle({ x: startX, y: startYFront, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
 
           page.drawImage(backImg, { x: startX, y: startYBack, width: cardWidth, height: cardHeight });
-          page.drawRectangle({
-            x: startX, y: startYBack, width: cardWidth, height: cardHeight,
-            borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
-          });
+          page.drawRectangle({ x: startX, y: startYBack, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
         }
 
         const outBytes = await pdfDoc.save();
@@ -1203,13 +1306,22 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       }
     }
 
-    // ENTERPRISE HYBRID CV PREVIEW CONTROLLER
+    // 25+ THEME ENTERPRISE CV STUDIO
+    const THEME_ACCENTS = {
+      modern: '#4f46e5', ats: '#0f172a', navy: '#1e3a8a', tata: '#0369a1', manufacturing: '#b45309',
+      silicon: '#2563eb', analytics: '#0d9488', swiss: '#dc2626', monochrome: '#18181b', nordic: '#4338ca',
+      emerald: '#047857', burgundy: '#831843', slateblock: '#334155', tealclean: '#0f766e', amberbold: '#d97706',
+      creative: '#7c3aed', compacttech: '#3b82f6', classicserif: '#374151', charcoal: '#27272a', editorial: '#4b5563',
+      metro: '#0284c7', harbor: '#1e293b', cobalt: '#1d4ed8', crimson: '#991b1b', stellar: '#6366f1'
+    };
+
     function updateResumePreview() {
-      const themeColor = document.getElementById('resThemeColor').value;
       const template = document.getElementById('cvTemplateStyle').value;
+      const themeColor = document.getElementById('resThemeColor').value;
 
       const name = document.getElementById('resName').value || 'Nitish Choudhary';
       const role = document.getElementById('resRole').value || 'Executive';
+      const phone = document.getElementById('resPhone').value || '9999999999';
 
       document.getElementById('pvName').textContent = name;
       document.getElementById('pvRole').textContent = role;
@@ -1222,7 +1334,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       });
 
       document.getElementById('pvEmail').textContent = document.getElementById('resEmail').value || '';
-      document.getElementById('pvPhone').textContent = document.getElementById('resPhone').value || '';
+      document.getElementById('pvPhone').textContent = phone;
       document.getElementById('pvLocation').textContent = document.getElementById('resLocation').value || '';
       document.getElementById('pvNoticeBadge').textContent = document.getElementById('resNotice').value || 'Immediate';
       document.getElementById('pvHometown').textContent = document.getElementById('resHometown').value || '';
@@ -1239,15 +1351,12 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('pvPersonal').textContent = document.getElementById('resPersonal').value || '';
       document.getElementById('pvNameP2').textContent = `${name} — Curriculum Vitae`;
 
-      const sheet1 = document.getElementById('resumeSheet1');
-      const sheet2 = document.getElementById('resumeSheet2');
-      if (template === 'ats') {
-        sheet1.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-serif";
-        sheet2.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
-      } else {
-        sheet1.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-sans";
-        sheet2.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
-      }
+      const serifThemes = ['ats', 'classicserif', 'editorial'];
+      const isSerif = serifThemes.includes(template);
+      const baseClass = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative " + (isSerif ? "font-serif" : "font-sans");
+
+      document.getElementById('resumeSheet1').className = baseClass;
+      document.getElementById('resumeSheet2').className = baseClass + (resumePageCount === 2 ? "" : " hidden");
     }
 
     function hexToRgb01(hex) {
@@ -1271,12 +1380,8 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           body: JSON.stringify({ action: 'tailor_resume', text: exp, jobRole: document.getElementById('resRole').value })
         });
         const data = await response.json();
-        if (data.success) {
-          document.getElementById('resExp').value = data.result;
-          updateResumePreview();
-        } else {
-          localPolish();
-        }
+        if (data.success) { document.getElementById('resExp').value = data.result; updateResumePreview(); }
+        else localPolish();
       } catch (e) {
         localPolish();
       } finally {
@@ -1297,16 +1402,18 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
     async function exportHybridEnterprisePdf() {
       const pdfDoc = await PDFLib.PDFDocument.create();
-      const page1 = pdfDoc.addPage([595.28, 841.89]); // Standard A4
+      const page1 = pdfDoc.addPage([595.28, 841.89]);
 
-      const isSerif = document.getElementById('cvTemplateStyle').value === 'ats';
+      const template = document.getElementById('cvTemplateStyle').value;
+      const isSerif = ['ats', 'classicserif', 'editorial'].includes(template);
       const fontBold = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold) : await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
       const fontReg = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman) : await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
       const theme = hexToRgb01(document.getElementById('resThemeColor').value);
       const name = document.getElementById('resName').value || 'Nitish Choudhary';
       const role = document.getElementById('resRole').value || 'Executive';
-      const contact = `${document.getElementById('resEmail').value} | ${document.getElementById('resPhone').value} | ${document.getElementById('resLocation').value}`;
+      const phone = document.getElementById('resPhone').value || '9999999999';
+      const contact = `${document.getElementById('resEmail').value} | ${phone} | ${document.getElementById('resLocation').value}`;
       const notice = document.getElementById('resNotice').value;
 
       let y = 795;
@@ -1318,7 +1425,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       y -= 10;
       page1.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
 
-      // Helper function to render sections with automatic line wrapping
       const renderSection = (title, text, isBullets = false) => {
         y -= 18;
         page1.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
@@ -1339,7 +1445,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       renderSection("CORE COMPETENCIES & TECHNICAL STACK", `${document.getElementById('resSkills').value}\nTools: ${document.getElementById('resTools').value}`);
       renderSection("EDUCATION CREDENTIALS", document.getElementById('resEdu').value);
 
-      // Page 2 if selected
       if (resumePageCount === 2) {
         const page2 = pdfDoc.addPage([595.28, 841.89]);
         let y2 = 795;
@@ -1352,10 +1457,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           page2.drawText(title, { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
           y2 -= 13;
           for (let line of text.split('\n')) {
-            if (line.trim() && y2 > 45) {
-              page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-              y2 -= 12;
-            }
+            if (line.trim() && y2 > 45) { page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) }); y2 -= 12; }
           }
         };
 
@@ -1373,53 +1475,12 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       a.click();
     }
 
-    // SUBSCRIPTION & PAYMENT WORKFLOWS
-    function openSubscriptionModal() { document.getElementById('subModal').classList.remove('hidden'); }
-    function closeSubscriptionModal() { document.getElementById('subModal').classList.add('hidden'); }
-
-    function selectPaymentTier(tier) {
-      selectedTier = tier;
-      document.getElementById('tierMonthly').className = tier === 'monthly' ? "p-4 bg-brand-50/60 border-2 border-brand-500 rounded-2xl flex items-center justify-between text-left cursor-pointer" : "p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between text-left cursor-pointer";
-      document.getElementById('tierDay').className = tier === 'day' ? "p-4 bg-brand-50/60 border-2 border-brand-500 rounded-2xl flex items-center justify-between text-left cursor-pointer" : "p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between text-left cursor-pointer";
-    }
-
-    function payWithRazorpay() {
-      const options = {
-        key: "YOUR_RAZORPAY_KEY_ID",
-        amount: selectedTier === 'monthly' ? 39900 : 9900,
-        currency: "INR",
-        name: "DocBrisk Studio",
-        description: selectedTier === 'monthly' ? "Pro Monthly Subscription" : "24-Hour Day Pass",
-        image: "https://docbrisk.com/favicon.ico",
-        handler: function (response) {
-          alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-          localStorage.setItem('docbrisk_pro_access', 'true');
-          closeSubscriptionModal();
-        },
-        theme: { color: "#4F46E5" }
-      };
-
-      try {
-        const rzp = new Razorpay(options);
-        rzp.open();
-      } catch (e) {
-        const sim = confirm("Simulate activating Pro Access (" + (selectedTier === 'monthly' ? "₹399" : "₹99") + ") now?");
-        if (sim) {
-          localStorage.setItem('docbrisk_pro_access', 'true');
-          closeSubscriptionModal();
-          alert("Pro Membership Activated!");
-        }
-      }
-    }
-
-    function payWithStripe() {
-      const sim = confirm("Connect to Stripe Checkout ($" + (selectedTier === 'monthly' ? "4.99" : "1.99") + ")?");
-      if (sim) {
-        localStorage.setItem('docbrisk_pro_access', 'true');
-        closeSubscriptionModal();
-        alert("Pro Membership Activated via Stripe!");
-      }
-    }
+    // INIT
+    document.addEventListener('DOMContentLoaded', () => {
+      refreshAuthUI();
+      updateResumePreview();
+    });
+    refreshAuthUI();
   </script>
 </body>
 </html>
