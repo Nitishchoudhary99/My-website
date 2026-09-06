@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — World-Class Document Suite & Enterprise CV Engine</title>
-  <meta name="description" content="100% Free In-Browser Document Processing. Background-Preserving PDF to Word, Target Compress, Clean ID Print, and 26-Theme CV Studio." />
+  <title>DocBrisk — World-Class Document Studio & Enterprise CV Engine</title>
+  <meta name="description" content="100% Free & Private In-Browser Document Processing. Format-Preserving PDF to Word with Background Graphics, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
 
+  <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
   <!-- Typography & Web Fonts -->
@@ -15,9 +16,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Core In-Browser Engines -->
+  <!-- Core In-Browser Document Processing Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -56,10 +58,10 @@
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Security & Status Banner -->
+  <!-- Top Status Banner -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: Spatial Precision • 100% Free & Unlocked • Zero Server Data Leaks
+    DocBrisk Studio: Native OpenXML Background Layering Engine • 100% Free & In-Browser
   </div>
 
   <!-- Header -->
@@ -85,7 +87,7 @@
         </button>
         <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
         <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
-        <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress</button>
+        <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
         <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
         <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
         <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
@@ -94,8 +96,8 @@
 
       <div class="flex items-center gap-2 sm:gap-3">
         <div class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/80 rounded-xl shadow-sm">
-          <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-          <span>Free Forever</span>
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+          <span>100% Free Engine</span>
         </div>
       </div>
     </div>
@@ -108,35 +110,37 @@
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Spatial Placement • Editable Output • Zero Cost
+          Background Graphics Preserved • Editable Text • Zero Cost
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-          Documents converted without <span class="text-brand-600">broken formatting</span>
+          Documents converted without <span class="text-brand-600">losing backgrounds</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Spatial coordinate reconstruction keeps your graphics, tables, text alignments, and styling where they belong—all fully editable.
+          Native OpenXML background shape mapping keeps colored sidebars, borders, watermarks, and graphics locked in place with selectable, editable text.
         </p>
       </div>
 
       <!-- Feature Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
+        <!-- Tool: PDF to Word -->
         <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Graphics Preserved
+            Graphics Layered
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.doc)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Advanced background preservation and spatial coordinate reconstruction. Keeps layout perfectly intact.</p>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Embeds visual background graphics into the document background while rendering editable text on top.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
             Convert Document <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
+        <!-- Tool: Enterprise CV Studio -->
         <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
             26 Real Themes
@@ -146,13 +150,14 @@
               <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Enterprise CV Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">26 distinct structural themes, ATS compliance, full multi-page formats, key achievements, and notice period inputs.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">26 distinct architectural themes, ATS compliance, multi-page formats, key achievements, and notice period inputs.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
             Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
+        <!-- Tool: Clean ID Card Print Sheet -->
         <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -166,6 +171,7 @@
           </div>
         </div>
 
+        <!-- Tool: Compress PDF -->
         <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -179,6 +185,7 @@
           </div>
         </div>
 
+        <!-- Tool: Word to PDF -->
         <div onclick="openTool('word2pdf')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -192,6 +199,7 @@
           </div>
         </div>
 
+        <!-- Tool: PDF to Excel -->
         <div onclick="openTool('pdf2excel')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -205,19 +213,21 @@
           </div>
         </div>
 
+        <!-- Tool: OCR Scanner -->
         <div onclick="openTool('ocr')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="scan-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">OCR Text Scanner</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Client-side neural text extraction from photos, bills, and scanned forms.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Client-side neural text extraction from photos, bills, and scanned forms with zero limits.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
             Scan Text <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
+        <!-- Tool: Lossless Merge PDF -->
         <div onclick="openTool('merge')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -234,7 +244,7 @@
       </div>
     </div>
 
-    <!-- VIEW 2: STANDARD WORKSPACE (CONVERTERS / COMPRESS / OCR) -->
+    <!-- VIEW 2: STANDARD WORKSPACE -->
     <div id="standardWorkspace" class="hidden max-w-2xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -336,7 +346,7 @@
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">ID Card Print Sheet Maker</h2>
           <p class="mt-2 text-slate-500 text-xs sm:text-sm max-w-md mx-auto">
-            Upload Front and Back pictures. Produces a clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
+            Upload Front and Back pictures. Produces an authentic, clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
           </p>
         </div>
 
@@ -761,372 +771,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('wsResult').classList.add('hidden');
     }
 
-    function escapeHtml(str) {
-      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-    }
-
-    async function executeStandardTool() {
-      const btn = document.getElementById('wsProcessBtn');
-      const status = document.getElementById('wsStatus');
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      status.classList.remove('hidden');
-
-      try {
-        if (activeTool === 'pdf2word') {
-          // =======================================================================================
-          // THE "TEXT WIPE" ENGINE: 100% PERFECT FORMAT & GRAPHICS PRESERVATION FOR MS WORD (.doc)
-          // =======================================================================================
-          status.textContent = "Rendering graphical backgrounds and extracting spatial text layers...";
-          const file = standardFiles[0];
-          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-          
-          let docContent = `<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-          <head>
-          <meta charset="utf-8">
-          <!--[if gte mso 9]>
-          <xml>
-            <w:WordDocument>
-              <w:View>Print</w:View>
-              <w:Zoom>100</w:Zoom>
-              <w:DoNotOptimizeForBrowser/>
-            </w:WordDocument>
-          </xml>
-          <![endif]-->
-          <style>
-            @page { size: 595.3pt 841.9pt; margin: 0; }
-            body { margin: 0; padding: 0; font-family: 'Calibri', 'Arial', sans-serif; }
-            .page-container { position: relative; width: 595.3pt; height: 841.9pt; overflow: hidden; page-break-after: always; }
-            .abs-block { position: absolute; white-space: nowrap; line-height: 1.0; z-index: 10; color: #111827; }
-          </style>
-          </head>
-          <body>`;
-
-          for (let i = 1; i <= pdf.numPages; i++) {
-            status.textContent = `Processing page ${i} of ${pdf.numPages} (Separating graphics from text)...`;
-            const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 1.5 }); // High enough for background graphic quality
-            
-            // Render the page to a canvas
-            const canvas = document.createElement('canvas');
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-
-            const textContent = await page.getTextContent();
-            
-            // Text Wipe Algorithm: Erase the rasterized text so it doesn't double-up behind the editable text
-            ctx.fillStyle = '#FFFFFF';
-            textContent.items.forEach(item => {
-              if (!item.str.trim()) return;
-              const x = item.transform[4] * viewport.scale;
-              const y = canvas.height - (item.transform[5] * viewport.scale) - (item.height * viewport.scale * 1.2);
-              const w = item.width * viewport.scale;
-              const h = (item.height || 12) * viewport.scale * 1.2;
-              
-              // Try to sample surrounding pixel color to blend the wipe (fallback to white)
-              try {
-                const p = ctx.getImageData(Math.max(0, x - 2), Math.max(0, y - 2), 1, 1).data;
-                ctx.fillStyle = `rgb(${p[0]},${p[1]},${p[2]})`;
-              } catch(e) {
-                ctx.fillStyle = '#FFFFFF';
-              }
-              ctx.fillRect(x, y, w, h);
-            });
-
-            const bgBase64 = canvas.toDataURL('image/jpeg', 0.85);
-
-            let pageHtml = `<div class="page-container">
-              <!--[if gte vml 1]>
-              <v:shape id="bg_${i}" type="#_x0000_t75" style="position:absolute;left:0;top:0;width:595.3pt;height:841.9pt;z-index:-10">
-                <v:imagedata src="${bgBase64}" />
-              </v:shape>
-              <![endif]-->
-              <![if !vml]>
-              <img src="${bgBase64}" style="position:absolute; left:0; top:0; width:595.3pt; height:841.9pt; z-index:-10;" />
-              <![endif]>
-            `;
-
-            // Insert Editable Text Blocks
-            textContent.items.forEach(item => {
-              if (!item.str.trim()) return;
-              // Map to Microsoft Word standard points (pt)
-              const ptX = item.transform[4];
-              const ptY = (viewport.height / viewport.scale) - item.transform[5] - (item.height || 10);
-              const fontSize = Math.max(8, Math.round(Math.sqrt(item.transform[0]*item.transform[0] + item.transform[1]*item.transform[1])));
-              const bold = item.fontName?.toLowerCase().includes('bold') ? 'font-weight:bold;' : '';
-              
-              pageHtml += `<div class="abs-block" style="left:${ptX.toFixed(1)}pt; top:${ptY.toFixed(1)}pt; font-size:${fontSize}pt; ${bold}">${escapeHtml(item.str)}</div>`;
-            });
-
-            pageHtml += `</div>`;
-            docContent += pageHtml;
-          }
-
-          docContent += "</body></html>";
-          const blob = new Blob(['\ufeff', docContent], { type: 'application/msword' });
-          showResult(
-            new Uint8Array(await blob.arrayBuffer()), 
-            'application/msword', 
-            `${file.name.replace(/\.pdf$/i, '')}.doc`, 
-            'Converted to Word with 100% exact background graphics and spatial layout preservation!'
-          );
-
-        } else if (activeTool === 'ocr') {
-          status.textContent = "Running optical character recognition...";
-          const file = standardFiles[0];
-          let imageBlob = file;
-
-          if (file.type.includes('pdf')) {
-            const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-            const page = await pdf.getPage(1);
-            const viewport = page.getViewport({ scale: 2.0 });
-            const canvas = document.createElement('canvas');
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-            imageBlob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-          }
-
-          const worker = await Tesseract.createWorker('eng');
-          const ret = await worker.recognize(imageBlob);
-          await worker.terminate();
-
-          document.getElementById('ocrTextArea').value = ret.data.text;
-          document.getElementById('ocrResultArea').classList.remove('hidden');
-          status.textContent = "OCR extraction complete!";
-
-        } else if (activeTool === 'compress') {
-          status.textContent = "Compressing pages locally...";
-          const file = standardFiles[0];
-          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-          const outDoc = await PDFLib.PDFDocument.create();
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d', { alpha: false });
-
-          let quality = 0.65;
-          let scale = 1.1;
-
-          if (currentCompressionPreset === 'basic') { quality = 0.80; scale = 1.25; }
-          else if (currentCompressionPreset === 'medium') { quality = 0.60; scale = 1.05; }
-          else if (currentCompressionPreset === 'high') { quality = 0.38; scale = 0.90; }
-
-          const targetInput = parseFloat(document.getElementById('targetSizeInput').value);
-          const targetUnit = document.getElementById('targetSizeUnit').value;
-
-          if (!isNaN(targetInput) && targetInput > 0) {
-            const targetBytes = targetUnit === 'MB' ? targetInput * 1024 * 1024 : targetInput * 1024;
-            const ratio = targetBytes / file.size;
-            if (ratio < 0.35) { quality = 0.30; scale = 0.80; }
-            else if (ratio < 0.65) { quality = 0.50; scale = 0.95; }
-            else { quality = 0.75; scale = 1.15; }
-          }
-
-          for (let i = 1; i <= pdf.numPages; i++) {
-            status.textContent = `Optimizing page ${i} of ${pdf.numPages}...`;
-            const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale });
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-            await page.render({ canvasContext: ctx, viewport }).promise;
-
-            const jpegBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', quality));
-            const img = await outDoc.embedJpg(await jpegBlob.arrayBuffer());
-            const orig = page.getViewport({ scale: 1.0 });
-            const newP = outDoc.addPage([orig.width, orig.height]);
-            newP.drawImage(img, { x: 0, y: 0, width: orig.width, height: orig.height });
-          }
-
-          const outBytes = await outDoc.save();
-          const oldKb = (file.size / 1024).toFixed(1);
-          const newKb = (outBytes.byteLength / 1024).toFixed(1);
-          const savedPct = Math.max(0, Math.round(((file.size - outBytes.byteLength) / file.size) * 100));
-
-          showResult(outBytes, 'application/pdf', `compressed_${file.name}`, `From ${oldKb} KB to ${newKb} KB (${savedPct}% reduction)`);
-
-        } else if (activeTool === 'merge') {
-          if (standardFiles.length < 2) throw new Error("Select at least 2 PDF files.");
-          status.textContent = "Merging raw vector streams...";
-          const mergedDoc = await PDFLib.PDFDocument.create();
-          for (let f of standardFiles) {
-            const bytes = await f.arrayBuffer();
-            const doc = await PDFLib.PDFDocument.load(bytes);
-            const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
-            copiedPages.forEach(p => mergedDoc.addPage(p));
-          }
-          const outBytes = await mergedDoc.save();
-          showResult(outBytes, 'application/pdf', 'merged_docbrisk.pdf', 'Lossless merge finished with zero sharpness loss.');
-
-        } else if (activeTool === 'word2pdf') {
-          status.textContent = "Parsing Word document & compiling vector PDF...";
-          const file = standardFiles[0];
-          const arrayBuffer = await file.arrayBuffer();
-          const result = await mammoth.extractRawText({ arrayBuffer });
-
-          const newDoc = await PDFLib.PDFDocument.create();
-          const font = await newDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-          const fontBold = await newDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-          let page = newDoc.addPage([595.28, 841.89]);
-
-          const lines = result.value.split('\n').filter(l => l.trim().length > 0);
-          let y = 800;
-          for (let line of lines) {
-            if (y < 60) { page = newDoc.addPage([595.28, 841.89]); y = 800; }
-            const isHeading = line.length < 45 && (line.toUpperCase() === line || line.endsWith(':'));
-            page.drawText(line.substring(0, 95), {
-              x: 50,
-              y,
-              size: isHeading ? 12 : 10,
-              font: isHeading ? fontBold : font,
-              color: isHeading ? PDFLib.rgb(0.08, 0.1, 0.15) : PDFLib.rgb(0.2, 0.25, 0.3)
-            });
-            y -= isHeading ? 20 : 15;
-          }
-          const outBytes = await newDoc.save();
-          showResult(outBytes, 'application/pdf', `${file.name.replace(/\.docx$/i, '')}.pdf`, 'Converted Word file to PDF successfully.');
-
-        } else if (activeTool === 'pdf2excel') {
-          status.textContent = "Scanning tabular baselines and vertical column tracks...";
-          const file = standardFiles[0];
-          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-          let sheetData = [];
-
-          for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const content = await page.getTextContent();
-            
-            let rawLines = [];
-            content.items.forEach(item => {
-              if (!item.str || !item.str.trim()) return;
-              const y = item.transform[5];
-              const x = item.transform[4];
-              let line = rawLines.find(l => Math.abs(l.y - y) <= 4);
-              if (line) line.items.push({ str: item.str, x });
-              else rawLines.push({ y, items: [{ str: item.str, x }] });
-            });
-
-            rawLines.sort((a, b) => b.y - a.y);
-
-            rawLines.forEach(line => {
-              line.items.sort((a, b) => a.x - b.x);
-              let rowCells = [];
-              let lastX = -100;
-              line.items.forEach(it => {
-                if (it.x - lastX > 30) {
-                  rowCells.push(it.str);
-                } else {
-                  if (rowCells.length > 0) {
-                    rowCells[rowCells.length - 1] += " " + it.str;
-                  } else {
-                    rowCells.push(it.str);
-                  }
-                }
-                lastX = it.x;
-              });
-              sheetData.push(rowCells);
-            });
-          }
-
-          const wb = XLSX.utils.book_new();
-          const ws = XLSX.utils.aoa_to_sheet(sheetData);
-          XLSX.utils.book_append_sheet(wb, ws, "ExtractedData");
-          const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-          showResult(new Uint8Array(wbout), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', `${file.name.replace(/\.pdf$/i, '')}.xlsx`, 'Converted PDF tables into multi-cell Excel spreadsheet!');
-        }
-      } catch (err) {
-        alert(err.message);
-      } finally {
-        btn.disabled = false;
-        btn.classList.remove('opacity-50');
-        status.classList.add('hidden');
-      }
-    }
-
-    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO WATERMARKS)
-    function previewCardImage(event, previewId, side) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        idCardBuffers[side] = e.target.result;
-        idCardBuffers[side + 'Type'] = file.type;
-
-        const blob = new Blob([e.target.result], { type: file.type });
-        const imgUrl = URL.createObjectURL(blob);
-        document.getElementById(previewId).innerHTML = `
-          <img src="${imgUrl}" class="h-24 sm:h-28 object-contain rounded-lg border border-slate-200 shadow-sm" />
-          <span class="text-xs font-bold text-emerald-600 mt-2 flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> ${side.toUpperCase()} Ready</span>
-        `;
-        lucide.createIcons();
-      };
-      reader.readAsArrayBuffer(file);
-    }
-
-    async function generateCleanIdPrintSheetPdf() {
-      if (!idCardBuffers.front || !idCardBuffers.back) { alert("Please upload BOTH Front and Back photos of the card."); return; }
-
-      const btn = document.getElementById('idGenerateBtn');
-      const status = document.getElementById('idStatusText');
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      status.textContent = "Generating clean, watermark-free A4 sheet...";
-      status.classList.remove('hidden');
-
-      try {
-        const pdfDoc = await PDFLib.PDFDocument.create();
-        const page = pdfDoc.addPage([595.28, 841.89]);
-
-        const cardWidth = 242.64;
-        const cardHeight = 153.0;
-
-        const frontImg = idCardBuffers.frontType.includes('png') ? await pdfDoc.embedPng(idCardBuffers.front) : await pdfDoc.embedJpg(idCardBuffers.front);
-        const backImg = idCardBuffers.backType.includes('png') ? await pdfDoc.embedPng(idCardBuffers.back) : await pdfDoc.embedJpg(idCardBuffers.back);
-
-        const layoutStyle = document.querySelector('input[name="idLayout"]:checked').value;
-
-        if (layoutStyle === 'side') {
-          const startX = (595.28 - (cardWidth * 2 + 16)) / 2;
-          const startY = 841.89 - 220;
-
-          page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
-          page.drawRectangle({ x: startX, y: startY, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
-
-          const backX = startX + cardWidth + 16;
-          page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
-          page.drawRectangle({ x: backX, y: startY, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
-        } else {
-          const startX = (595.28 - cardWidth) / 2;
-          const startYFront = 841.89 - 180;
-          const startYBack = startYFront - cardHeight - 16;
-
-          page.drawImage(frontImg, { x: startX, y: startYFront, width: cardWidth, height: cardHeight });
-          page.drawRectangle({ x: startX, y: startYFront, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
-
-          page.drawImage(backImg, { x: startX, y: startYBack, width: cardWidth, height: cardHeight });
-          page.drawRectangle({ x: startX, y: startYBack, width: cardWidth, height: cardHeight, borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5 });
-        }
-
-        const outBytes = await pdfDoc.save();
-        const blob = new Blob([outBytes], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = "id_card_print_sheet.pdf";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      } catch (err) {
-        alert("Failed to compile print sheet: " + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.classList.remove('opacity-50');
-        status.classList.add('hidden');
-      }
-    }
-
     // 26 THEMES REGISTRY DYNAMIC RENDER ENGINE
     function updateResumePreview() {
       const templateKey = document.getElementById('cvTemplateStyle').value;
@@ -1362,6 +1006,11 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       `;
     }
 
+    function hexToRgb01(hex) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      return { r: ((num >> 16) & 255) / 255, g: ((num >> 8) & 255) / 255, b: (num & 255) / 255 };
+    }
+
     async function aiPolishResumeText() {
       const exp = document.getElementById('resExp').value;
       if (!exp.trim()) return alert("Enter experience lines first.");
@@ -1402,23 +1051,12 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       const pdfDoc = await PDFLib.PDFDocument.create();
       const page1 = pdfDoc.addPage([595.28, 841.89]);
 
-      const templateKey = document.getElementById('cvTemplateStyle').value;
-      const themeDef = THEME_REGISTRY[templateKey] || THEME_REGISTRY.modern;
-      
+      const template = document.getElementById('cvTemplateStyle').value;
+      const themeDef = THEME_REGISTRY[template] || THEME_REGISTRY.modern;
       const isSerif = themeDef.family === 'serif';
-      const isMono = themeDef.family === 'mono';
 
-      let fontBold, fontReg;
-      if (isSerif) {
-        fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold);
-        fontReg = await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman);
-      } else if (isMono) {
-        fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.CourierBold);
-        fontReg = await pdfDoc.embedFont(PDFLib.StandardFonts.Courier);
-      } else {
-        fontBold = await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-        fontReg = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
-      }
+      const fontBold = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold) : await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+      const fontReg = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman) : await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
       const theme = hexToRgb01(document.getElementById('resThemeColor').value);
       const name = document.getElementById('resName').value || 'Nitish Choudhary';
@@ -1428,100 +1066,53 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       const notice = document.getElementById('resNotice').value;
 
       let y = 795;
+      page1.drawText(name.toUpperCase(), { x: 45, y, size: 18, font: fontBold, color: PDFLib.rgb(0.08, 0.1, 0.15) });
+      y -= 16;
+      page1.drawText(role, { x: 45, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+      y -= 13;
+      page1.drawText(`${contact} | ${notice}`, { x: 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.4, 0.45, 0.5) });
+      y -= 10;
+      page1.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
 
-      // Handle dual-sidebar specific vector drawing
-      if (themeDef.style === 'dual-sidebar') {
-        page1.drawRectangle({ x: 0, y: 0, width: 200, height: 841.89, color: PDFLib.rgb(0.06, 0.09, 0.16) });
-        page1.drawText(name.toUpperCase(), { x: 25, y, size: 16, font: fontBold, color: PDFLib.rgb(1, 1, 1) });
-        page1.drawText(role, { x: 25, y: y - 16, size: 9, font: fontBold, color: PDFLib.rgb(0.5, 0.6, 1) });
-        
-        y -= 45;
-        const sideLines = [document.getElementById('resPhone').value, document.getElementById('resEmail').value, document.getElementById('resLocation').value, notice];
-        sideLines.forEach(sl => {
-          page1.drawText(sl.substring(0, 30), { x: 25, y, size: 8, font: fontReg, color: PDFLib.rgb(0.8, 0.85, 0.9) });
-          y -= 14;
-        });
-
-        y -= 25;
-        page1.drawText("COMPETENCIES", { x: 25, y, size: 9, font: fontBold, color: PDFLib.rgb(0.5, 0.6, 1) });
-        y -= 14;
-        const skillsLines = document.getElementById('resSkills').value.split(',');
-        skillsLines.forEach(sk => {
-          page1.drawText(`• ${sk.trim().substring(0, 30)}`, { x: 25, y, size: 8, font: fontReg, color: PDFLib.rgb(0.8, 0.85, 0.9) });
-          y -= 12;
-        });
-
-        // Main Column
-        y = 795;
-        const renderSection = (title, text, isBullets = false) => {
-          page1.drawText(title, { x: 220, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-          page1.drawLine({ start: { x: 220, y: y - 4 }, end: { x: 570, y: y - 4 }, thickness: 0.5, color: PDFLib.rgb(0.8, 0.8, 0.8) });
-          y -= 16;
-          const lines = text.split('\n');
-          for (let line of lines) {
-            if (line.trim() && y > 45) {
-              const prefix = isBullets ? "• " : "";
-              page1.drawText(`${prefix}${line.trim()}`.substring(0, 75), { x: isBullets ? 227 : 220, y, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-              y -= 12;
-            }
+      const renderSection = (title, text, isBullets = false) => {
+        y -= 18;
+        page1.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+        y -= 12;
+        const lines = text.split('\n');
+        for (let line of lines) {
+          if (line.trim() && y > 45) {
+            const prefix = isBullets ? "• " : "";
+            page1.drawText(`${prefix}${line.trim()}`.substring(0, 105), { x: isBullets ? 52 : 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+            y -= 11;
           }
-          y -= 15;
-        };
-
-        renderSection("EXECUTIVE SUMMARY", document.getElementById('resSummary').value);
-        renderSection("KEY ACHIEVEMENTS", document.getElementById('resAchievements').value, true);
-        renderSection("WORK EXPERIENCE", document.getElementById('resExp').value, true);
-        renderSection("EDUCATION", document.getElementById('resEdu').value);
-      } else {
-        // Standard Linear / Minimalist Layout
-        page1.drawText(name.toUpperCase(), { x: 45, y, size: 18, font: fontBold, color: PDFLib.rgb(0.08, 0.1, 0.15) });
-        y -= 16;
-        page1.drawText(role, { x: 45, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-        y -= 13;
-        page1.drawText(`${contact} | ${notice}`, { x: 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.4, 0.45, 0.5) });
-        y -= 10;
-        page1.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-
-        const renderSection = (title, text, isBullets = false) => {
-          y -= 18;
-          page1.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-          y -= 12;
-          const lines = text.split('\n');
-          for (let line of lines) {
-            if (line.trim() && y > 45) {
-              const prefix = isBullets ? "• " : "";
-              page1.drawText(`${prefix}${line.trim()}`.substring(0, 105), { x: isBullets ? 52 : 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-              y -= 11;
-            }
-          }
-        };
-
-        renderSection("EXECUTIVE PROFILE", document.getElementById('resSummary').value);
-        renderSection("KEY QUANTIFIABLE ACHIEVEMENTS", document.getElementById('resAchievements').value, true);
-        renderSection("PROFESSIONAL WORK EXPERIENCE", document.getElementById('resExp').value, true);
-        renderSection("CORE COMPETENCIES & TECHNICAL STACK", `${document.getElementById('resSkills').value}\nTools: ${document.getElementById('resTools').value}`);
-        renderSection("EDUCATION CREDENTIALS", document.getElementById('resEdu').value);
-
-        if (resumePageCount === 2) {
-          const page2 = pdfDoc.addPage([595.28, 841.89]);
-          let y2 = 795;
-          page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
-          y2 -= 10;
-          page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y: y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-
-          const renderSectionP2 = (title, text) => {
-            y2 -= 20;
-            page2.drawText(title, { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-            y2 -= 13;
-            for (let line of text.split('\n')) {
-              if (line.trim() && y2 > 45) { page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) }); y2 -= 12; }
-            }
-          };
-
-          renderSectionP2("KEY STRATEGIC & OPERATIONAL PROJECTS", document.getElementById('resProjects').value);
-          renderSectionP2("CERTIFICATIONS & CONTINUOUS LEARNING", document.getElementById('resCerts').value);
-          renderSectionP2("PERSONAL DOSSIER & DECLARATION", document.getElementById('resPersonal').value);
         }
+      };
+
+      renderSection("EXECUTIVE PROFILE", document.getElementById('resSummary').value);
+      renderSection("KEY QUANTIFIABLE ACHIEVEMENTS", document.getElementById('resAchievements').value, true);
+      renderSection("PROFESSIONAL WORK EXPERIENCE", document.getElementById('resExp').value, true);
+      renderSection("CORE COMPETENCIES & TECHNICAL STACK", `${document.getElementById('resSkills').value}\nTools: ${document.getElementById('resTools').value}`);
+      renderSection("EDUCATION CREDENTIALS", document.getElementById('resEdu').value);
+
+      if (resumePageCount === 2) {
+        const page2 = pdfDoc.addPage([595.28, 841.89]);
+        let y2 = 795;
+        page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
+        y2 -= 10;
+        page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y: y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+
+        const renderSectionP2 = (title, text) => {
+          y2 -= 20;
+          page2.drawText(title, { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          y2 -= 13;
+          for (let line of text.split('\n')) {
+            if (line.trim() && y2 > 45) { page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) }); y2 -= 12; }
+          }
+        };
+
+        renderSectionP2("KEY STRATEGIC & OPERATIONAL PROJECTS", document.getElementById('resProjects').value);
+        renderSectionP2("CERTIFICATIONS & CONTINUOUS LEARNING", document.getElementById('resCerts').value);
+        renderSectionP2("PERSONAL DOSSIER & DECLARATION", document.getElementById('resPersonal').value);
       }
 
       const pdfBytes = await pdfDoc.save();
@@ -1535,9 +1126,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
     // INIT
     document.addEventListener('DOMContentLoaded', () => {
-      refreshAuthUI();
       updateResumePreview();
     });
+    updateResumePreview();
   </script>
 </body>
 </html>
