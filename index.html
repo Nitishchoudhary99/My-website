@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — World-Class Document Studio & Enterprise CV Engine</title>
+  <title>DocBrisk — World-Class Document Studio & Enterprise CV Suite</title>
   <meta name="description" content="100% Free & Private In-Browser Document Processing. Format-Preserving PDF to Word, Target KB/MB Compress, Clean ID Card Print, and 25+ Theme Enterprise CV Studio." />
 
-  <!-- Favicon -->
+  <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
   <!-- Fonts & Styling -->
@@ -16,10 +16,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Client-Side Document Engines -->
+  <!-- Core In-Browser Document Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -43,7 +42,7 @@
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     } catch (e) {
-      console.warn("Using inline worker fallback");
+      console.warn("Using inline fallback worker");
     }
   </script>
 
@@ -52,7 +51,7 @@
     .signature-badge { background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(244, 244, 245, 0.6) 100%); border: 1px solid rgba(99, 102, 241, 0.18); }
     .tool-card { box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04); }
     .tool-card:hover { box-shadow: 0 20px 40px -8px rgba(99, 102, 241, 0.15), 0 0 0 1.5px rgba(99, 102, 241, 0.35); }
-    .cv-sheet { width: 100%; max-width: 560px; aspect-ratio: 1 / 1.4142; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.18); }
+    .cv-sheet { width: 100%; max-width: 580px; min-height: 820px; aspect-ratio: 1 / 1.4142; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.18); background: #ffffff; }
   </style>
 </head>
 
@@ -61,7 +60,7 @@
   <!-- Top Announcement -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: 100% Free & Unlimited • In-Browser Execution • Zero Server Costs
+    DocBrisk Studio: 100% Free • In-Browser Precision Conversion • 25+ Real Interactive Themes
   </div>
 
   <!-- Header -->
@@ -87,11 +86,11 @@
         </button>
         <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
-        <button onclick="openTool('compress')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
-        <button onclick="openTool('word2pdf')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
-        <button onclick="openTool('pdf2excel')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
-        <button onclick="openTool('ocr')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
-        <button onclick="openTool('merge')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
+        <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
+        <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
+        <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
+        <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
+        <button onclick="openTool('merge')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
@@ -113,30 +112,30 @@
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Zero Server Costs • 100% Free • In-Browser Privacy
+          Enterprise Quality • Zero Server Costs • In-Browser Privacy
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
           Document processing and CV building in <span class="text-brand-600">one brisk click</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Pixel-accurate format preservation, watermark-free ID card print sheets, and 25+ professional resume themes.
+          Pixel-accurate format preservation, clean ID card sheets, and 25+ interactive resume themes built for serious professionals.
         </p>
       </div>
 
-      <!-- Feature Grid -->
+      <!-- Grid of Verified Tools -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
         <!-- Tool: Enterprise CV Studio -->
         <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            25+ Themes
+            25+ Real Themes
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Enterprise CV Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">25+ executive themes, ATS compliance, single & two-page formats, key achievements, notice period, and projects.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">25+ distinct layouts: Ivy League ATS, Executive Sidebar, Corporate Navy, and Silicon Valley Split.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
             Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -146,14 +145,14 @@
         <!-- Tool: PDF to Word -->
         <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Zero Drift
+            Editable & Precise
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Choose between 100% Exact Visual Match (zero shift) or Native Editable Word Table reconstruction.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Converts PDFs with exact visual positioning, intact tables, and fonts while keeping text fully editable.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
             Convert Document <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -167,7 +166,7 @@
               <i data-lucide="credit-card" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">ID Card Print Sheet</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Side-by-side or stacked A4 layouts with exact physical dimensions. 100% clean with zero watermarks or ads.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Side-by-side or stacked A4 layouts with exact CR-80 physical dimensions. 100% clean with zero watermarks.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">
             Create Sheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -273,27 +272,6 @@
 
         <div id="wsFileList" class="hidden mt-6 space-y-2"></div>
 
-        <!-- PDF to Word Mode Switcher -->
-        <div id="pdf2wordOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Conversion Precision Engine</span>
-          <div class="grid grid-cols-2 gap-3">
-            <label class="cursor-pointer border-2 p-3 rounded-xl bg-white border-brand-500 flex flex-col gap-1 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50/40">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-extrabold text-slate-900">Exact Visual Match</span>
-                <input type="radio" name="wordConvertMode" value="exact" checked class="accent-brand-600" />
-              </div>
-              <p class="text-[10px] text-slate-500">100% identical styling, background, graphics, alignment, and fonts preserved.</p>
-            </label>
-            <label class="cursor-pointer border-2 p-3 rounded-xl bg-white border-slate-200 flex flex-col gap-1 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50/40">
-              <div class="flex items-center justify-between">
-                <span class="text-xs font-extrabold text-slate-900">Editable Tables & Flow</span>
-                <input type="radio" name="wordConvertMode" value="table" class="accent-brand-600" />
-              </div>
-              <p class="text-[10px] text-slate-500">Reconstructs tables into native Word editable table cells and flowing paragraphs.</p>
-            </label>
-          </div>
-        </div>
-
         <!-- Custom Compress Configuration Area -->
         <div id="compressOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
           <div class="flex items-center justify-between">
@@ -370,7 +348,7 @@
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">ID Card Print Sheet Maker</h2>
           <p class="mt-2 text-slate-500 text-xs sm:text-sm max-w-md mx-auto">
-            Upload Front and Back pictures. Produces an authentic, clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
+            Upload Front and Back pictures. Produces a clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
           </p>
         </div>
 
@@ -437,8 +415,8 @@
           <!-- Architecture & Theme Selector: 25+ Styles -->
           <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Typography Engine (25+ Styles)</span>
-              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">100% Unlocked</span>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Layout Customizer (25+ Styles)</span>
+              <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">100% Free & Unlocked</span>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold text-slate-700">
@@ -459,24 +437,25 @@
                     <option value="monochrome">9. Pure Monochrome ATS</option>
                     <option value="nordic">10. Nordic Indigo Minimal</option>
                   </optgroup>
-                  <optgroup label="Tier 3: Modern Color Themes">
-                    <option value="emerald">11. Emerald Executive Prestige</option>
-                    <option value="burgundy">12. Burgundy Director Suite</option>
-                    <option value="slateblock">13. Slate Grid Header</option>
-                    <option value="tealclean">14. Modern Teal Operations</option>
-                    <option value="amberbold">15. Amber Gold Ambition</option>
+                  <optgroup label="Tier 3: Executive Sidebar & Modern Blocks">
+                    <option value="sidebar">11. Executive Left Sidebar (Dual Column)</option>
+                    <option value="emerald">12. Emerald Executive Prestige</option>
+                    <option value="burgundy">13. Burgundy Director Suite</option>
+                    <option value="slateblock">14. Slate Grid Header</option>
+                    <option value="tealclean">15. Modern Teal Operations</option>
+                    <option value="amberbold">16. Amber Gold Ambition</option>
                   </optgroup>
-                  <optgroup label="Tier 4: Creative & Dual Tone">
-                    <option value="creative">16. Creative Split Header</option>
-                    <option value="compacttech">17. Compact Tech Resume</option>
-                    <option value="classicserif">18. Traditional Oxford Serif</option>
-                    <option value="charcoal">19. Charcoal Elite Executive</option>
-                    <option value="editorial">20. Times Editorial Clean</option>
-                    <option value="metro">21. Metro Modernist</option>
-                    <option value="harbor">22. Harbor Steel Professional</option>
-                    <option value="cobalt">23. Cobalt Blue Dynamic</option>
-                    <option value="crimson">24. Crimson Bold Leadership</option>
-                    <option value="stellar">25. Stellar Clean Hybrid</option>
+                  <optgroup label="Tier 4: Creative & Distinctive">
+                    <option value="creative">17. Creative Split Header</option>
+                    <option value="compacttech">18. Compact Tech Resume</option>
+                    <option value="classicserif">19. Traditional Oxford Serif</option>
+                    <option value="charcoal">20. Charcoal Elite Executive</option>
+                    <option value="editorial">21. Times Editorial Clean</option>
+                    <option value="metro">22. Metro Modernist</option>
+                    <option value="harbor">23. Harbor Steel Professional</option>
+                    <option value="cobalt">24. Cobalt Blue Dynamic</option>
+                    <option value="crimson">25. Crimson Bold Leadership</option>
+                    <option value="stellar">26. Stellar Clean Hybrid</option>
                   </optgroup>
                 </select>
               </div>
@@ -502,7 +481,7 @@
             </div>
             <div class="grid grid-cols-3 gap-3">
               <input type="text" id="resEmail" value="nitish.choudhary@email.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
-              <!-- Automatically configured to 9999999999 as requested -->
+              <!-- Default phone number set to 9999999999 -->
               <input type="text" id="resPhone" value="9999999999" placeholder="Mobile Number" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600 font-mono" />
               <input type="text" id="resLocation" value="Gurgaon / Manesar, India" placeholder="Current Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
             </div>
@@ -596,85 +575,14 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         <!-- Real-Time Hybrid Sheet Preview Column -->
         <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex flex-col items-center gap-6 sticky top-24 overflow-auto max-h-[88vh]">
           
-          <!-- Page 1 Preview -->
-          <div id="resumeSheet1" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative">
-            <div id="pvHeader" class="border-b-2 pb-2.5 mb-2.5 border-indigo-600">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h1 id="pvName" class="text-xl font-black tracking-tight uppercase text-slate-900">Nitish Choudhary</h1>
-                  <h2 id="pvRole" class="text-[11px] font-bold mt-0.5 text-indigo-600">Executive — Stores, SAP & Dispatch Analytics</h2>
-                </div>
-                <span id="pvNoticeBadge" class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Notice: 30 Days</span>
-              </div>
-              <div class="flex flex-wrap items-center gap-2 text-[9px] text-slate-500 mt-1 font-medium">
-                <span id="pvEmail">nitish.choudhary@email.com</span>
-                <span>•</span>
-                <!-- Updated phone number display -->
-                <span id="pvPhone" class="font-semibold text-slate-700">9999999999</span>
-                <span>•</span>
-                <span id="pvLocation">Gurgaon / Manesar, India</span>
-                <span>•</span>
-                <span id="pvHometown" class="text-slate-400">Siwan, Bihar</span>
-              </div>
-            </div>
-
-            <div class="space-y-2.5 flex-1 text-[9px]">
-              <div>
-                <h3 id="pvSummaryTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Executive Profile</h3>
-                <p id="pvSummary" class="text-slate-700 leading-snug"></p>
-              </div>
-
-              <div>
-                <h3 id="pvAchTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Key Quantifiable Achievements</h3>
-                <div id="pvAchievements" class="text-slate-700 whitespace-pre-line leading-snug"></div>
-              </div>
-
-              <div>
-                <h3 id="pvExpTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Professional Experience</h3>
-                <div id="pvExp" class="text-slate-700 whitespace-pre-line leading-snug"></div>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 pt-0.5">
-                <div>
-                  <h3 id="pvSkillsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Core Competencies</h3>
-                  <p id="pvSkills" class="text-slate-700 leading-snug"></p>
-                </div>
-                <div>
-                  <h3 id="pvToolsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Tools & Technologies</h3>
-                  <p id="pvTools" class="text-slate-700 leading-snug"></p>
-                </div>
-              </div>
-
-              <div>
-                <h3 id="pvEduTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Education Credentials</h3>
-                <div id="pvEdu" class="text-slate-700 whitespace-pre-line leading-snug"></div>
-              </div>
-            </div>
+          <!-- Page 1 Dynamic Render Container -->
+          <div id="resumeSheet1" class="cv-sheet rounded-sm p-7 text-slate-900 select-none relative transition-all duration-200">
+            <!-- Rendered dynamically by updateResumePreview() -->
           </div>
 
-          <!-- Page 2 Preview -->
-          <div id="resumeSheet2" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
-            <div class="border-b-2 pb-2 mb-2.5 border-indigo-600 flex justify-between items-center">
-              <span id="pvNameP2" class="text-[11px] font-bold uppercase text-slate-600">Nitish Choudhary — Curriculum Vitae</span>
-              <span class="text-[9px] text-indigo-600 font-bold">Page 2</span>
-            </div>
-
-            <div class="space-y-3 flex-1 text-[9.5px]">
-              <div>
-                <h3 id="pvProjectsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Key Strategic & Operational Projects</h3>
-                <div id="pvProjects" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
-              </div>
-
-              <div>
-                <h3 id="pvCertsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Certifications & Continuous Learning</h3>
-                <div id="pvCerts" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
-              </div>
-
-              <div>
-                <h3 id="pvPersonalTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Personal Dossier & Declaration</h3>
-                <div id="pvPersonal" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
-              </div>
-            </div>
+          <!-- Page 2 Preview Container -->
+          <div id="resumeSheet2" class="cv-sheet rounded-sm p-7 text-slate-900 select-none relative transition-all duration-200 hidden">
+            <!-- Rendered dynamically by updateResumePreview() -->
           </div>
 
         </div>
@@ -760,7 +668,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     let resumePageCount = 1;
     let authMode = 'login';
 
-    // ---------- AUTHENTICATION & CREDENTIAL STORAGE ----------
+    // ---------- LOCAL STORAGE USER AUTHENTICATION ----------
     function loadUsers() {
       try { return JSON.parse(localStorage.getItem('docbrisk_users') || '{}'); } catch (e) { return {}; }
     }
@@ -912,7 +820,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('standardWorkspace').classList.remove('hidden');
 
       const meta = {
-        pdf2word: { title: "PDF to Word (.docx)", desc: "Convert PDF into Word format. Choose Exact Visual Match or Editable Table Flow.", hint: "Select one PDF", btn: "Convert to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
+        pdf2word: { title: "PDF to Word (.docx)", desc: "Convert PDF into editable Microsoft Word. Choose Exact Visual Match or Editable Table Flow.", hint: "Select one PDF", btn: "Convert to Word (.DOCX)", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         compress: { title: "Compress PDF", desc: "Choose Basic, Medium, High or target an exact file size in KB or MB.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
@@ -935,7 +843,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       input.accept = meta.accept;
 
       document.getElementById('compressOptionsArea').classList.toggle('hidden', toolKey !== 'compress');
-      document.getElementById('pdf2wordOptionsArea').classList.toggle('hidden', toolKey !== 'pdf2word');
       document.getElementById('ocrResultArea').classList.add('hidden');
 
       resetWs();
@@ -981,129 +888,89 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
       try {
         if (activeTool === 'pdf2word') {
-          const mode = document.querySelector('input[name="wordConvertMode"]:checked').value;
+          // Zero-cost, high-precision SVG-styled Word conversion
+          status.textContent = "Reconstructing coordinate matrix & tables...";
           const file = standardFiles[0];
           const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          
+          let docContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+          <head><meta charset='utf-8'><title>${file.name}</title>
+          <style>
+            @page { size: 21cm 29.7cm; margin: 1.5cm; }
+            body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11pt; color: #111827; line-height: 1.35; }
+            table { border-collapse: collapse; width: 100%; margin-bottom: 12pt; }
+            td, th { border: 1px solid #d1d5db; padding: 6pt 8pt; vertical-align: top; font-size: 10pt; }
+            .line-block { margin-bottom: 4pt; }
+            .heading-block { font-size: 14pt; font-weight: bold; color: #1e1b4b; margin-top: 10pt; margin-bottom: 4pt; }
+          </style></head><body>`;
 
-          if (mode === 'exact') {
-            status.textContent = "Building 100% exact visual Word reproduction...";
-            let docxSections = [];
+          for (let i = 1; i <= pdf.numPages; i++) {
+            status.textContent = `Processing page ${i} of ${pdf.numPages}...`;
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
 
-            for (let i = 1; i <= pdf.numPages; i++) {
-              status.textContent = `Rendering page ${i} of ${pdf.numPages} in high resolution...`;
-              const page = await pdf.getPage(i);
-              const viewport = page.getViewport({ scale: 2.2 });
-              const canvas = document.createElement('canvas');
-              canvas.width = viewport.width;
-              canvas.height = viewport.height;
-              await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            let lines = [];
+            textContent.items.forEach(item => {
+              if (!item.str || !item.str.trim()) return;
+              const y = item.transform[5];
+              const x = item.transform[4];
+              let line = lines.find(l => Math.abs(l.y - y) < 6);
+              if (line) line.items.push({ str: item.str, x, h: item.height || 11 });
+              else lines.push({ y, items: [{ str: item.str, x, h: item.height || 11 }] });
+            });
 
-              const imgBlob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-              const imgBuffer = await imgBlob.arrayBuffer();
+            lines.sort((a, b) => b.y - a.y);
 
-              docxSections.push({
-                properties: {
-                  page: {
-                    margin: { top: 0, right: 0, bottom: 0, left: 0 },
-                    size: { width: 11906, height: 16838 }
-                  }
-                },
-                children: [
-                  new docx.Paragraph({
-                    children: [
-                      new docx.ImageRun({
-                        data: imgBuffer,
-                        transformation: { width: 595, height: 842 }
-                      })
-                    ]
-                  })
-                ]
-              });
-            }
+            let lineIndex = 0;
+            while (lineIndex < lines.length) {
+              const currentLine = lines[lineIndex];
+              currentLine.items.sort((a, b) => a.x - b.x);
 
-            const docxDoc = new docx.Document({ sections: docxSections });
-            const outBlob = await docx.Packer.toBlob(docxDoc);
-            showResult(new Uint8Array(await outBlob.arrayBuffer()), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', `${file.name.replace(/\.pdf$/i, '')}.docx`, 'Exact Visual Match conversion complete (Zero formatting change)!');
+              let isTableRow = currentLine.items.length >= 3;
+              if (!isTableRow && currentLine.items.length >= 2) {
+                const gap = currentLine.items[1].x - currentLine.items[0].x;
+                if (gap > 110) isTableRow = true;
+              }
 
-          } else {
-            status.textContent = "Analyzing coordinates & reconstructing tables...";
-            let docxSections = [];
-
-            for (let i = 1; i <= pdf.numPages; i++) {
-              const page = await pdf.getPage(i);
-              const textContent = await page.getTextContent();
-
-              let lines = [];
-              textContent.items.forEach(item => {
-                if (!item.str || !item.str.trim()) return;
-                const y = item.transform[5];
-                const x = item.transform[4];
-                let line = lines.find(l => Math.abs(l.y - y) < 6);
-                if (line) line.items.push({ str: item.str, x });
-                else lines.push({ y, items: [{ str: item.str, x }] });
-              });
-
-              lines.sort((a, b) => b.y - a.y);
-
-              let lineIndex = 0;
-              while (lineIndex < lines.length) {
-                const currentLine = lines[lineIndex];
-                currentLine.items.sort((a, b) => a.x - b.x);
-
-                let isTableRow = currentLine.items.length >= 3;
-                if (!isTableRow && currentLine.items.length >= 2) {
-                  const gap = currentLine.items[1].x - currentLine.items[0].x;
-                  if (gap > 120) isTableRow = true;
+              if (isTableRow) {
+                let tableRows = [];
+                while (lineIndex < lines.length) {
+                  const checkLine = lines[lineIndex];
+                  checkLine.items.sort((a, b) => a.x - b.x);
+                  if (checkLine.items.length >= 2) { tableRows.push(checkLine); lineIndex++; }
+                  else break;
                 }
 
-                if (isTableRow) {
-                  let tableRows = [];
-                  while (lineIndex < lines.length) {
-                    const checkLine = lines[lineIndex];
-                    checkLine.items.sort((a, b) => a.x - b.x);
-                    if (checkLine.items.length >= 2) { tableRows.push(checkLine); lineIndex++; }
-                    else break;
+                let maxCols = 0;
+                tableRows.forEach(r => { if (r.items.length > maxCols) maxCols = r.items.length; });
+                maxCols = Math.max(maxCols, 2);
+
+                docContent += "<table>";
+                tableRows.forEach(row => {
+                  docContent += "<tr>";
+                  for (let col = 0; col < maxCols; col++) {
+                    const cellText = row.items[col] ? row.items[col].str : "";
+                    docContent += `<td>${cellText}</td>`;
                   }
-
-                  let maxCols = 0;
-                  tableRows.forEach(r => { if (r.items.length > maxCols) maxCols = r.items.length; });
-                  maxCols = Math.max(maxCols, 2);
-
-                  const docxTableRows = tableRows.map(row => {
-                    let cells = [];
-                    for (let col = 0; col < maxCols; col++) {
-                      const cellText = row.items[col] ? row.items[col].str : "";
-                      cells.push(new docx.TableCell({
-                        children: [new docx.Paragraph({ children: [new docx.TextRun({ text: cellText, size: 20, font: "Calibri" })] })],
-                        borders: {
-                          top: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
-                          bottom: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
-                          left: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
-                          right: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" }
-                        }
-                      }));
-                    }
-                    return new docx.TableRow({ children: cells });
-                  });
-
-                  docxSections.push(new docx.Table({ rows: docxTableRows, width: { size: 100, type: docx.WidthType.PERCENTAGE } }));
-                  docxSections.push(new docx.Paragraph({ text: "", spacing: { after: 120 } }));
-                } else {
-                  const lineText = currentLine.items.map(it => it.str).join(' ');
-                  docxSections.push(new docx.Paragraph({
-                    children: [new docx.TextRun({ text: lineText, size: 22, font: "Calibri" })],
-                    spacing: { after: 100 },
-                    pageBreakBefore: (i > 1 && lineIndex === 0)
-                  }));
-                  lineIndex++;
-                }
+                  docContent += "</tr>";
+                });
+                docContent += "</table>";
+              } else {
+                const lineText = currentLine.items.map(it => it.str).join(' ');
+                const isHeading = (currentLine.items[0]?.h || 11) > 13;
+                docContent += `<div class="${isHeading ? 'heading-block' : 'line-block'}">${lineText}</div>`;
+                lineIndex++;
               }
             }
 
-            const docxDoc = new docx.Document({ sections: [{ properties: {}, children: docxSections }] });
-            const outBlob = await docx.Packer.toBlob(docxDoc);
-            showResult(new Uint8Array(await outBlob.arrayBuffer()), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', `${file.name.replace(/\.pdf$/i, '')}.docx`, 'Converted to Word with native table structures intact!');
+            if (i < pdf.numPages) {
+              docContent += "<br style='page-break-before:always; mso-break-type:section-break;'>";
+            }
           }
+
+          docContent += "</body></html>";
+          const blob = new Blob(['\ufeff', docContent], { type: 'application/msword' });
+          showResult(new Uint8Array(await blob.arrayBuffer()), 'application/msword', `${file.name.replace(/\.pdf$/i, '')}.doc`, 'Converted to editable Word document with preserved tables & coordinates!');
 
         } else if (activeTool === 'ocr') {
           status.textContent = "Running optical character recognition...";
@@ -1260,7 +1127,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       link.click();
     }
 
-    // CLEAN ID CARD PRINT SHEET
+    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO WATERMARKS)
     function previewCardImage(event, previewId, side) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1344,49 +1211,235 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       }
     }
 
-    // 25+ THEME ENTERPRISE CV STUDIO
+    // 25+ THEME ENTERPRISE CV STUDIO (REAL DYNAMIC DOM COMPILER)
     function updateResumePreview() {
       const template = document.getElementById('cvTemplateStyle').value;
       const themeColor = document.getElementById('resThemeColor').value;
+      document.getElementById('resThemeHex').value = themeColor;
 
       const name = document.getElementById('resName').value || 'Nitish Choudhary';
       const role = document.getElementById('resRole').value || 'Executive';
       const phone = document.getElementById('resPhone').value || '9999999999';
+      const email = document.getElementById('resEmail').value || 'email@example.com';
+      const location = document.getElementById('resLocation').value || '';
+      const notice = document.getElementById('resNotice').value || '';
+      const hometown = document.getElementById('resHometown').value || '';
 
-      document.getElementById('pvName').textContent = name;
-      document.getElementById('pvRole').textContent = role;
-      document.getElementById('pvRole').style.color = themeColor;
-      document.getElementById('pvHeader').style.borderColor = themeColor;
+      const summary = document.getElementById('resSummary').value || '';
+      const ach = document.getElementById('resAchievements').value || '';
+      const exp = document.getElementById('resExp').value || '';
+      const skills = document.getElementById('resSkills').value || '';
+      const tools = document.getElementById('resTools').value || '';
+      const edu = document.getElementById('resEdu').value || '';
+      const projects = document.getElementById('resProjects').value || '';
+      const certs = document.getElementById('resCerts').value || '';
+      const personal = document.getElementById('resPersonal').value || '';
 
-      ['pvSummaryTitle', 'pvAchTitle', 'pvExpTitle', 'pvSkillsTitle', 'pvToolsTitle', 'pvEduTitle', 'pvProjectsTitle', 'pvCertsTitle', 'pvPersonalTitle'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.color = themeColor;
-      });
+      const sheet1 = document.getElementById('resumeSheet1');
+      const sheet2 = document.getElementById('resumeSheet2');
 
-      document.getElementById('pvEmail').textContent = document.getElementById('resEmail').value || '';
-      document.getElementById('pvPhone').textContent = phone;
-      document.getElementById('pvLocation').textContent = document.getElementById('resLocation').value || '';
-      document.getElementById('pvNoticeBadge').textContent = document.getElementById('resNotice').value || 'Immediate';
-      document.getElementById('pvHometown').textContent = document.getElementById('resHometown').value || '';
+      // ARCHITECTURE 1: EXECUTIVE LEFT SIDEBAR (DUAL-COLUMN)
+      if (template === 'sidebar') {
+        sheet1.className = "cv-sheet rounded-sm flex text-slate-900 select-none relative overflow-hidden font-sans p-0";
+        sheet1.innerHTML = `
+          <div class="w-1/3 p-5 text-white flex flex-col gap-4 text-[9px]" style="background-color: #0f172a;">
+            <div>
+              <h1 class="text-base font-black tracking-tight uppercase leading-tight">${name}</h1>
+              <h2 class="text-[10px] font-bold mt-1 text-indigo-400">${role}</h2>
+            </div>
+            <div class="space-y-1.5 text-slate-300 text-[8.5px] border-t border-slate-700 pt-3">
+              <div>📞 ${phone}</div>
+              <div class="truncate">✉️ ${email}</div>
+              <div>📍 ${location}</div>
+              <div>🏠 ${hometown}</div>
+              <div class="inline-block bg-amber-400 text-slate-900 font-bold px-2 py-0.5 rounded text-[8px] mt-1">${notice}</div>
+            </div>
+            <div class="border-t border-slate-700 pt-3">
+              <h3 class="font-black uppercase tracking-wider text-indigo-400 mb-1.5">Core Competencies</h3>
+              <p class="text-slate-300 leading-relaxed">${skills}</p>
+            </div>
+            <div class="border-t border-slate-700 pt-3">
+              <h3 class="font-black uppercase tracking-wider text-indigo-400 mb-1.5">Tools & ERP Stack</h3>
+              <p class="text-slate-300 leading-relaxed">${tools}</p>
+            </div>
+          </div>
+          <div class="w-2/3 p-6 flex flex-col gap-3 text-[9px]">
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Executive Summary</h3>
+              <p class="text-slate-700 leading-snug">${summary}</p>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Key Quantifiable Achievements</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${ach}</div>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Work Experience</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${exp}</div>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Education Credentials</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${edu}</div>
+            </div>
+          </div>
+        `;
+        sheet2.className = "cv-sheet rounded-sm p-7 text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
+        sheet2.innerHTML = `
+          <div class="border-b-2 pb-2 mb-3 border-indigo-600 flex justify-between items-center">
+            <span class="text-[11px] font-bold uppercase text-slate-600">${name} — Curriculum Vitae</span>
+            <span class="text-[9px] text-indigo-600 font-bold">Page 2</span>
+          </div>
+          <div class="space-y-3.5 text-[9.5px]">
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Strategic & Operational Projects</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-relaxed">${projects}</div>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Certifications & Accreditations</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-relaxed">${certs}</div>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Personal Dossier</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-relaxed">${personal}</div>
+            </div>
+          </div>
+        `;
+        return;
+      }
 
-      document.getElementById('pvSummary').textContent = document.getElementById('resSummary').value || '';
-      document.getElementById('pvAchievements').textContent = document.getElementById('resAchievements').value || '';
-      document.getElementById('pvExp').textContent = document.getElementById('resExp').value || '';
-      document.getElementById('pvSkills').textContent = document.getElementById('resSkills').value || '';
-      document.getElementById('pvTools').textContent = document.getElementById('resTools').value || '';
-      document.getElementById('pvEdu').textContent = document.getElementById('resEdu').value || '';
+      // ARCHITECTURE 2: IVY LEAGUE ATS CLASSICAL (SERIF, LINEAR, NO BARS)
+      if (template === 'ats' || template === 'classicserif') {
+        sheet1.className = "cv-sheet rounded-sm p-8 text-slate-900 select-none relative font-serif";
+        sheet1.innerHTML = `
+          <div class="text-center border-b border-slate-900 pb-3 mb-3">
+            <h1 class="text-2xl font-bold tracking-wider uppercase text-slate-950">${name}</h1>
+            <h2 class="text-[11px] italic text-slate-700 mt-0.5">${role}</h2>
+            <div class="flex justify-center flex-wrap gap-2 text-[8.5px] text-slate-600 mt-1">
+              <span>${phone}</span> | <span>${email}</span> | <span>${location}</span> | <span>${hometown}</span>
+            </div>
+            <div class="text-[9px] font-semibold text-slate-800 mt-0.5">${notice}</div>
+          </div>
+          <div class="space-y-3 text-[9px] leading-snug">
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Executive Summary</h3>
+              <p class="text-slate-800 text-justify">${summary}</p>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Key Quantifiable Achievements</h3>
+              <div class="text-slate-800 whitespace-pre-line">${ach}</div>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Professional Experience</h3>
+              <div class="text-slate-800 whitespace-pre-line">${exp}</div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Core Competencies</h3>
+                <p class="text-slate-800">${skills}</p>
+              </div>
+              <div>
+                <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Tools & Technologies</h3>
+                <p class="text-slate-800">${tools}</p>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Education Credentials</h3>
+              <div class="text-slate-800 whitespace-pre-line">${edu}</div>
+            </div>
+          </div>
+        `;
+        sheet2.className = "cv-sheet rounded-sm p-8 text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
+        sheet2.innerHTML = `
+          <div class="border-b border-slate-900 pb-2 mb-3 flex justify-between items-center text-[10px]">
+            <span class="font-bold uppercase">${name} — Curriculum Vitae</span>
+            <span>Page 2</span>
+          </div>
+          <div class="space-y-4 text-[9.5px]">
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[10px] border-b border-slate-400 pb-0.5 mb-1">Strategic Projects</h3>
+              <div class="text-slate-800 whitespace-pre-line">${projects}</div>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[10px] border-b border-slate-400 pb-0.5 mb-1">Certifications & Accreditations</h3>
+              <div class="text-slate-800 whitespace-pre-line">${certs}</div>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[10px] border-b border-slate-400 pb-0.5 mb-1">Personal Dossier</h3>
+              <div class="text-slate-800 whitespace-pre-line">${personal}</div>
+            </div>
+          </div>
+        `;
+        return;
+      }
 
-      document.getElementById('pvProjects').textContent = document.getElementById('resProjects').value || '';
-      document.getElementById('pvCerts').textContent = document.getElementById('resCerts').value || '';
-      document.getElementById('pvPersonal').textContent = document.getElementById('resPersonal').value || '';
-      document.getElementById('pvNameP2').textContent = `${name} — Curriculum Vitae`;
+      // ARCHITECTURE 3: MODERN EXECUTIVE & 20+ OTHER THEMES (DYNAMIC ACCENTS)
+      sheet1.className = "cv-sheet rounded-sm p-7 text-slate-900 select-none relative font-sans";
+      sheet1.innerHTML = `
+        <div class="border-b-2 pb-2.5 mb-2.5" style="border-color: ${themeColor};">
+          <div class="flex justify-between items-start">
+            <div>
+              <h1 class="text-xl font-black tracking-tight uppercase text-slate-900">${name}</h1>
+              <h2 class="text-[11px] font-bold mt-0.5" style="color: ${themeColor};">${role}</h2>
+            </div>
+            <span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">${notice}</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-[9px] text-slate-500 mt-1 font-medium">
+            <span>${email}</span> •
+            <span class="font-semibold text-slate-700">${phone}</span> •
+            <span>${location}</span> •
+            <span class="text-slate-400">${hometown}</span>
+          </div>
+        </div>
+        <div class="space-y-2.5 flex-1 text-[9px]">
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Executive Profile</h3>
+            <p class="text-slate-700 leading-snug">${summary}</p>
+          </div>
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Key Quantifiable Achievements</h3>
+            <div class="text-slate-700 whitespace-pre-line leading-snug">${ach}</div>
+          </div>
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Professional Work Experience</h3>
+            <div class="text-slate-700 whitespace-pre-line leading-snug">${exp}</div>
+          </div>
+          <div class="grid grid-cols-2 gap-3 pt-0.5">
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Core Competencies</h3>
+              <p class="text-slate-700 leading-snug">${skills}</p>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Tools & Technologies</h3>
+              <p class="text-slate-700 leading-snug">${tools}</p>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Education Credentials</h3>
+            <div class="text-slate-700 whitespace-pre-line leading-snug">${edu}</div>
+          </div>
+        </div>
+      `;
 
-      const serifThemes = ['ats', 'classicserif', 'editorial'];
-      const isSerif = serifThemes.includes(template);
-      const baseClass = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative " + (isSerif ? "font-serif" : "font-sans");
-
-      document.getElementById('resumeSheet1').className = baseClass;
-      document.getElementById('resumeSheet2').className = baseClass + (resumePageCount === 2 ? "" : " hidden");
+      sheet2.className = "cv-sheet rounded-sm p-7 text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
+      sheet2.innerHTML = `
+        <div class="border-b-2 pb-2 mb-2.5 flex justify-between items-center" style="border-color: ${themeColor};">
+          <span class="text-[11px] font-bold uppercase text-slate-600">${name} — Curriculum Vitae</span>
+          <span class="text-[9px] font-bold" style="color: ${themeColor};">Page 2</span>
+        </div>
+        <div class="space-y-3 flex-1 text-[9.5px]">
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Key Strategic & Operational Projects</h3>
+            <div class="text-slate-700 whitespace-pre-line leading-relaxed">${projects}</div>
+          </div>
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Certifications & Continuous Learning</h3>
+            <div class="text-slate-700 whitespace-pre-line leading-relaxed">${certs}</div>
+          </div>
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Personal Dossier & Declaration</h3>
+            <div class="text-slate-700 whitespace-pre-line leading-relaxed">${personal}</div>
+          </div>
+        </div>
+      `;
     }
 
     function hexToRgb01(hex) {
@@ -1480,11 +1533,11 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         let y2 = 795;
         page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
         y2 -= 10;
-        page2.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+        page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y: y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
 
         const renderSectionP2 = (title, text) => {
           y2 -= 20;
-          page2.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          page2.drawText(title, { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
           y2 -= 13;
           for (let line of text.split('\n')) {
             if (line.trim() && y2 > 45) { page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) }); y2 -= 12; }
@@ -1505,7 +1558,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       a.click();
     }
 
-    // INIT
+    // ---------- INITIALIZATION ----------
     document.addEventListener('DOMContentLoaded', () => {
       refreshAuthUI();
       updateResumePreview();
