@@ -6,14 +6,17 @@
   <title>DocBrisk — World-Class Document Studio & Enterprise CV Engine</title>
   <meta name="description" content="100% Free & Private In-Browser Document Processing. Format-Preserving PDF to Word, Target KB/MB Compress, Clean ID Card Print, and 25+ Theme Enterprise CV Studio." />
 
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
+  <!-- Fonts & Styling -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- Client-Side Document Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
@@ -40,7 +43,7 @@
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     } catch (e) {
-      console.warn("Fallback inline worker active");
+      console.warn("Using inline worker fallback");
     }
   </script>
 
@@ -55,11 +58,13 @@
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
+  <!-- Top Announcement -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: 100% Free & Unlimited • Format-Preserving Engine • In-Browser Data Privacy
+    DocBrisk Studio: 100% Free & Unlimited • In-Browser Execution • Zero Server Costs
   </div>
 
+  <!-- Header -->
   <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
       <div onclick="showView('home')" class="flex items-center gap-2.5 sm:gap-3 group cursor-pointer">
@@ -80,13 +85,13 @@
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
-        <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
-        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
-        <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
-        <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
-        <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
-        <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
-        <button onclick="openTool('merge')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
+        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
+        <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('compress')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
+        <button onclick="openTool('word2pdf')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
+        <button onclick="openTool('pdf2excel')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
+        <button onclick="openTool('ocr')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
+        <button onclick="openTool('merge')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
@@ -101,23 +106,27 @@
     </div>
   </header>
 
+  <!-- MAIN WRAPPER -->
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
+    <!-- VIEW 1: HOME CATALOGUE -->
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Enterprise Quality • Zero Server Leaks • 100% Free
+          Zero Server Costs • 100% Free • In-Browser Privacy
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-          Document conversions and CVs built for <span class="text-brand-600">serious professionals</span>
+          Document processing and CV building in <span class="text-brand-600">one brisk click</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Pixel-accurate format preservation, watermark-free ID card sheets, and 25+ executive resume themes designed for Indian and global enterprises.
+          Pixel-accurate format preservation, watermark-free ID card print sheets, and 25+ professional resume themes.
         </p>
       </div>
 
+      <!-- Feature Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
+        <!-- Tool: Enterprise CV Studio -->
         <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
             25+ Themes
@@ -134,6 +143,7 @@
           </div>
         </div>
 
+        <!-- Tool: PDF to Word -->
         <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
             Zero Drift
@@ -150,6 +160,7 @@
           </div>
         </div>
 
+        <!-- Tool: Clean ID Card Print Sheet -->
         <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -163,6 +174,7 @@
           </div>
         </div>
 
+        <!-- Tool: Compress PDF -->
         <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -176,6 +188,7 @@
           </div>
         </div>
 
+        <!-- Tool: Word to PDF -->
         <div onclick="openTool('word2pdf')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -189,6 +202,7 @@
           </div>
         </div>
 
+        <!-- Tool: PDF to Excel -->
         <div onclick="openTool('pdf2excel')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -202,6 +216,7 @@
           </div>
         </div>
 
+        <!-- Tool: OCR Scanner -->
         <div onclick="openTool('ocr')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -215,6 +230,7 @@
           </div>
         </div>
 
+        <!-- Tool: Lossless Merge PDF -->
         <div onclick="openTool('merge')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
@@ -231,6 +247,7 @@
       </div>
     </div>
 
+    <!-- VIEW 2: STANDARD WORKSPACE -->
     <div id="standardWorkspace" class="hidden max-w-2xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -256,6 +273,7 @@
 
         <div id="wsFileList" class="hidden mt-6 space-y-2"></div>
 
+        <!-- PDF to Word Mode Switcher -->
         <div id="pdf2wordOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
           <span class="text-xs font-bold uppercase tracking-wider text-slate-500 block">Conversion Precision Engine</span>
           <div class="grid grid-cols-2 gap-3">
@@ -276,6 +294,7 @@
           </div>
         </div>
 
+        <!-- Custom Compress Configuration Area -->
         <div id="compressOptionsArea" class="hidden mt-6 p-5 bg-slate-50 border border-slate-200 rounded-2xl space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Compression Preset</span>
@@ -319,6 +338,7 @@
           <p id="wsStatus" class="text-xs text-center text-slate-500 mt-2.5 hidden font-medium"></p>
         </div>
 
+        <!-- OCR Text Result Area -->
         <div id="ocrResultArea" class="hidden mt-6 p-4 bg-slate-50 border border-slate-200 rounded-2xl text-left">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-bold text-slate-700">Extracted Text (OCR Result):</span>
@@ -337,6 +357,7 @@
       </div>
     </div>
 
+    <!-- VIEW 3: CLEAN ID CARD PRINT WORKSPACE -->
     <div id="idPrintWorkspace" class="hidden max-w-4xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -391,6 +412,7 @@
       </div>
     </div>
 
+    <!-- VIEW 4: ENTERPRISE HYBRID AI CV STUDIO (25+ THEMES) -->
     <div id="resumeWorkspace" class="hidden max-w-7xl mx-auto pt-2 pb-16 space-y-6">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
@@ -409,8 +431,10 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
+        <!-- Controls Column -->
         <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-h-[88vh] overflow-y-auto">
           
+          <!-- Architecture & Theme Selector: 25+ Styles -->
           <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
             <div class="flex items-center justify-between">
               <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Typography Engine (25+ Styles)</span>
@@ -467,6 +491,7 @@
             </div>
           </div>
 
+          <!-- Section 1: Candidate Identity & Vital Badges -->
           <div class="space-y-3">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="user" class="w-4 h-4"></i> Identity & Career Vitals
@@ -477,6 +502,7 @@
             </div>
             <div class="grid grid-cols-3 gap-3">
               <input type="text" id="resEmail" value="nitish.choudhary@email.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <!-- Automatically configured to 9999999999 as requested -->
               <input type="text" id="resPhone" value="9999999999" placeholder="Mobile Number" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600 font-mono" />
               <input type="text" id="resLocation" value="Gurgaon / Manesar, India" placeholder="Current Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
             </div>
@@ -486,6 +512,7 @@
             </div>
           </div>
 
+          <!-- Section 2: Executive Summary -->
           <div class="space-y-2">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
               <i data-lucide="align-left" class="w-4 h-4"></i> Executive Summary
@@ -493,6 +520,7 @@
             <textarea id="resSummary" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">MBA in Business Analytics & Operations combined with Mechanical Engineering foundation. Proven expertise in FG stores management across 500+ SKUs, automated reconciliation in SAP/Excel, and dispatch analytics within the Manufacturing Division & OEM water purifier industry.</textarea>
           </div>
 
+          <!-- Section 3: Key Career Achievements & Metrics -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
@@ -505,6 +533,7 @@
 • Minimized Takt Time and dispatch bottlenecks via real-time ERP dispatch pipeline tracking.</textarea>
           </div>
 
+          <!-- Section 4: Work Experience -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
@@ -520,6 +549,7 @@
 • Coordinated freight fleet dispatch schedules to ensure consistent On-Time In-Full delivery execution.</textarea>
           </div>
 
+          <!-- Section 5: Core Competencies & Technical Stack -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Functional Competencies</h4>
@@ -531,6 +561,7 @@
             </div>
           </div>
 
+          <!-- Section 6: Education & Certifications -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Education Credentials</h4>
@@ -546,6 +577,7 @@
             </div>
           </div>
 
+          <!-- Section 7: Key Strategic Projects & Personal Dossier -->
           <div class="grid grid-cols-2 gap-3">
             <div>
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Key Operational Projects</h4>
@@ -561,8 +593,10 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
         </div>
 
+        <!-- Real-Time Hybrid Sheet Preview Column -->
         <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex flex-col items-center gap-6 sticky top-24 overflow-auto max-h-[88vh]">
           
+          <!-- Page 1 Preview -->
           <div id="resumeSheet1" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative">
             <div id="pvHeader" class="border-b-2 pb-2.5 mb-2.5 border-indigo-600">
               <div class="flex justify-between items-start">
@@ -575,6 +609,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
               <div class="flex flex-wrap items-center gap-2 text-[9px] text-slate-500 mt-1 font-medium">
                 <span id="pvEmail">nitish.choudhary@email.com</span>
                 <span>•</span>
+                <!-- Updated phone number display -->
                 <span id="pvPhone" class="font-semibold text-slate-700">9999999999</span>
                 <span>•</span>
                 <span id="pvLocation">Gurgaon / Manesar, India</span>
@@ -617,6 +652,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
             </div>
           </div>
 
+          <!-- Page 2 Preview -->
           <div id="resumeSheet2" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
             <div class="border-b-2 pb-2 mb-2.5 border-indigo-600 flex justify-between items-center">
               <span id="pvNameP2" class="text-[11px] font-bold uppercase text-slate-600">Nitish Choudhary — Curriculum Vitae</span>
@@ -648,6 +684,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
   </main>
 
+  <!-- AUTH MODAL -->
   <div id="authModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
       <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -674,6 +711,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     </div>
   </div>
 
+  <!-- ACCOUNT MODAL -->
   <div id="accountModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative text-center">
       <button onclick="closeAccountModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -687,6 +725,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     </div>
   </div>
 
+  <!-- FOOTER -->
   <footer class="bg-white border-t border-slate-200/90 mt-auto pt-10 pb-8 text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-2.5">
@@ -709,6 +748,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     </div>
   </footer>
 
+  <!-- CONTROLLER SCRIPT -->
   <script>
     lucide.createIcons();
 
@@ -946,14 +986,13 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
 
           if (mode === 'exact') {
-            // MODE 1: EXACT 100% VISUAL PRESERVATION VIA EMBEDDED HIGH-RES VECTOR CANVAS CONTAINERS
             status.textContent = "Building 100% exact visual Word reproduction...";
             let docxSections = [];
 
             for (let i = 1; i <= pdf.numPages; i++) {
               status.textContent = `Rendering page ${i} of ${pdf.numPages} in high resolution...`;
               const page = await pdf.getPage(i);
-              const viewport = page.getViewport({ scale: 2.2 }); // 300 DPI equivalent
+              const viewport = page.getViewport({ scale: 2.2 });
               const canvas = document.createElement('canvas');
               canvas.width = viewport.width;
               canvas.height = viewport.height;
@@ -966,7 +1005,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
                 properties: {
                   page: {
                     margin: { top: 0, right: 0, bottom: 0, left: 0 },
-                    size: { width: 11906, height: 16838 } // A4 in dxa
+                    size: { width: 11906, height: 16838 }
                   }
                 },
                 children: [
@@ -987,7 +1026,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
             showResult(new Uint8Array(await outBlob.arrayBuffer()), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', `${file.name.replace(/\.pdf$/i, '')}.docx`, 'Exact Visual Match conversion complete (Zero formatting change)!');
 
           } else {
-            // MODE 2: TABLE & TEXT RECONSTRUCTION
             status.textContent = "Analyzing coordinates & reconstructing tables...";
             let docxSections = [];
 
@@ -1222,7 +1260,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       link.click();
     }
 
-    // CLEAN ID CARD PRINT SHEET (ZERO BRANDING / ZERO WATERMARKS)
+    // CLEAN ID CARD PRINT SHEET
     function previewCardImage(event, previewId, side) {
       const file = event.target.files[0];
       if (!file) return;
@@ -1255,7 +1293,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
       try {
         const pdfDoc = await PDFLib.PDFDocument.create();
-        const page = pdfDoc.addPage([595.28, 841.89]); // Standard A4 Dimensions
+        const page = pdfDoc.addPage([595.28, 841.89]);
 
         const cardWidth = 242.64;
         const cardHeight = 153.0;
@@ -1307,14 +1345,6 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     }
 
     // 25+ THEME ENTERPRISE CV STUDIO
-    const THEME_ACCENTS = {
-      modern: '#4f46e5', ats: '#0f172a', navy: '#1e3a8a', tata: '#0369a1', manufacturing: '#b45309',
-      silicon: '#2563eb', analytics: '#0d9488', swiss: '#dc2626', monochrome: '#18181b', nordic: '#4338ca',
-      emerald: '#047857', burgundy: '#831843', slateblock: '#334155', tealclean: '#0f766e', amberbold: '#d97706',
-      creative: '#7c3aed', compacttech: '#3b82f6', classicserif: '#374151', charcoal: '#27272a', editorial: '#4b5563',
-      metro: '#0284c7', harbor: '#1e293b', cobalt: '#1d4ed8', crimson: '#991b1b', stellar: '#6366f1'
-    };
-
     function updateResumePreview() {
       const template = document.getElementById('cvTemplateStyle').value;
       const themeColor = document.getElementById('resThemeColor').value;
@@ -1450,11 +1480,11 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         let y2 = 795;
         page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
         y2 -= 10;
-        page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y: y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+        page2.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
 
         const renderSectionP2 = (title, text) => {
           y2 -= 20;
-          page2.drawText(title, { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          page2.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
           y2 -= 13;
           for (let line of text.split('\n')) {
             if (line.trim() && y2 > 45) { page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) }); y2 -= 12; }
