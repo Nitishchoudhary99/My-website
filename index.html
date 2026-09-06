@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — World-Class Document Studio & AI Resume Suite</title>
-  <meta name="description" content="100% Private In-Browser Document Suite. Clean ID card print formatting, PDF to Word conversion, OCR text extraction, and customizable AI resume builder." />
+  <title>DocBrisk — World-Class Document Studio & Enterprise CV Engine</title>
+  <meta name="description" content="100% Private In-Browser Document Processing. Native Table-Preserving PDF to Word conversion, Target KB/MB Compress, Clean ID Card Print, and Enterprise Hybrid CV Builder." />
 
   <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
@@ -16,7 +16,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Core In-Browser Document Processing Engines -->
+  <!-- Core Processing Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
@@ -55,16 +55,16 @@
     .signature-badge { background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(244, 244, 245, 0.6) 100%); border: 1px solid rgba(99, 102, 241, 0.18); }
     .tool-card { box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04); }
     .tool-card:hover { box-shadow: 0 20px 40px -8px rgba(99, 102, 241, 0.15), 0 0 0 1.5px rgba(99, 102, 241, 0.35); }
-    .cv-sheet { width: 100%; max-width: 530px; aspect-ratio: 1 / 1.4142; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.18); }
+    .cv-sheet { width: 100%; max-width: 560px; aspect-ratio: 1 / 1.4142; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.18); }
   </style>
 </head>
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Security Banner -->
+  <!-- Top Announcement Bar -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: Zero Server Uploads • Files Process 100% Inside Device RAM
+    DocBrisk Studio: Spatial Table-Reconstructing Converters & Enterprise CV Studio
   </div>
 
   <!-- Header -->
@@ -80,17 +80,17 @@
         </div>
         <div>
           <span class="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-tight">Doc<span class="text-brand-600">Brisk</span></span>
-          <span class="block text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 -mt-0.5">Ultra Studio</span>
+          <span class="block text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 -mt-0.5">Enterprise Studio</span>
         </div>
       </div>
 
       <nav class="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl font-semibold text-xs text-slate-600">
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Resume Studio
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
-        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
+        <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
+        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word (Tables)</button>
         <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
-        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
         <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
         <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
         <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
@@ -106,71 +106,85 @@
     </div>
   </header>
 
-  <!-- MAIN VIEWPORT -->
+  <!-- MAIN WRAPPER -->
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
     <!-- VIEW 1: HOME CATALOGUE -->
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Fast • 100% Private • Clean Output
+          Enterprise Quality • Zero Server Leaks
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-          Every tool you need to work with PDFs in <span class="text-brand-600">one brisk click</span>
+          Document conversions and CVs built for <span class="text-brand-600">serious professionals</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Zero watermarks, standard document conversions, and professional resume building running directly in your browser.
+          True table-preserving conversions, zero-watermark ID print sheets, and complete enterprise-grade multi-section CV engineering.
         </p>
       </div>
 
       <!-- Feature Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
 
-        <!-- Tool: Clean ID Card Print Sheet -->
-        <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-indigo-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
-          <div class="absolute top-3 right-3 bg-indigo-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            100% Clean
+        <!-- Tool: Hybrid Enterprise CV Builder -->
+        <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            Full Suite
           </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Enterprise CV Studio</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Designed for Indian & Global hiring. Key achievements, metrics matrix, notice period, projects, and custom sections.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
+            Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: PDF to Word with Table Preservation -->
+        <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            Table Aware
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Reconstructs both standard paragraphs AND real Word tables with borders rather than flattening into broken lines.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
+            Convert with Tables <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Clean ID Card Print Sheet -->
+        <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="credit-card" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">ID Card Print Sheet</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Formats Front & Back ID photos side-by-side on standard A4 dimensions with zero branding or watermarks.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Side-by-side or stacked A4 layouts with exact physical dimensions. 100% clean with zero watermarks or ads.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">
             Create Sheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
-        <!-- Tool: AI Resume Builder -->
-        <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
-          <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Multi-Theme
-          </div>
+        <!-- Tool: Compress PDF (Target KB/MB) -->
+        <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div>
-            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="minimize-2" class="w-6 h-6"></i>
             </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">AI Resume Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Single & two-page CV templates, custom executive themes, dynamic section controls, and ATS exports.</p>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Compress PDF</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Presets or target exact file sizes in KB or MB to meet government portal or recruiter upload limits.</p>
           </div>
-          <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
-            Build CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
-          </div>
-        </div>
-
-        <!-- Tool: PDF to Word -->
-        <div onclick="openTool('pdf2word')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-              <i data-lucide="file-text" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extracts text geometry into clean Word paragraphs with zero artificial page titles or headers.</p>
-          </div>
-          <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
-            Convert to Word <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-teal-600 group-hover:translate-x-1 transition-transform">
+            Compress to Size <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
@@ -181,24 +195,10 @@
               <i data-lucide="file-check" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Word to PDF</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Converts `.docx` documents into high-resolution, print-ready PDF files in-browser.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Convert `.docx` documents into vector PDF pages right in your browser.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-cyan-600 group-hover:translate-x-1 transition-transform">
             Convert to PDF <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
-          </div>
-        </div>
-
-        <!-- Tool: Compress PDF -->
-        <div onclick="openTool('compress')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
-          <div>
-            <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-              <i data-lucide="minimize-2" class="w-6 h-6"></i>
-            </div>
-            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Compress PDF</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Preset levels or target exact file sizes in KB or MB to meet strict portal limits.</p>
-          </div>
-          <div class="mt-6 flex items-center text-xs font-extrabold text-teal-600 group-hover:translate-x-1 transition-transform">
-            Compress to Size <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
@@ -209,7 +209,7 @@
               <i data-lucide="table" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Excel (.xlsx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Detects tabular data inside document pages and outputs clean, editable `.xlsx` spreadsheets.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extracts structured data rows and coordinate tables into an editable `.xlsx` spreadsheet.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-emerald-600 group-hover:translate-x-1 transition-transform">
             Export Spreadsheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -223,7 +223,7 @@
               <i data-lucide="scan-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">OCR Text Scanner</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extract selectable and editable text directly from scanned pages and photos using in-browser neural models.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Client-side neural text extraction from photos, bills, and scanned forms without server leaks.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
             Scan Text <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -237,7 +237,7 @@
               <i data-lucide="layers" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Lossless Merge</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Combines raw vector streams directly. 100% zero blur, preserving original font vectors.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Combines raw PDF vector streams with zero downsampling and full vector clarity.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-red-600 group-hover:translate-x-1 transition-transform">
             Combine Files <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -247,7 +247,7 @@
       </div>
     </div>
 
-    <!-- VIEW 2: STANDARD WORKSPACE -->
+    <!-- VIEW 2: STANDARD WORKSPACE (CONVERTERS, COMPRESS, OCR) -->
     <div id="standardWorkspace" class="hidden max-w-2xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -336,7 +336,7 @@
       </div>
     </div>
 
-    <!-- VIEW 3: CLEAN ID CARD PRINT WORKSPACE (ZERO TEXT ON PDF) -->
+    <!-- VIEW 3: CLEAN ID CARD PRINT WORKSPACE -->
     <div id="idPrintWorkspace" class="hidden max-w-4xl mx-auto pt-2 pb-16">
       <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
         <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
@@ -349,11 +349,10 @@
           </div>
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">ID Card Print Sheet Maker</h2>
           <p class="mt-2 text-slate-500 text-xs sm:text-sm max-w-md mx-auto">
-            Upload Front and Back pictures. Produces a completely clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
+            Upload Front and Back pictures. Produces an authentic, clean A4 print sheet with exact card dimensions and cut outlines. Zero branding or text.
           </p>
         </div>
 
-        <!-- Layout Orientation Options -->
         <div class="flex justify-center gap-3 mb-6">
           <label class="cursor-pointer border px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 hover:bg-slate-50 has-[:checked]:border-brand-600 has-[:checked]:bg-brand-50 has-[:checked]:text-brand-600">
             <input type="radio" name="idLayout" value="side" checked class="accent-brand-600" />
@@ -392,7 +391,7 @@
       </div>
     </div>
 
-    <!-- VIEW 4: ADVANCED MULTI-THEME AI RESUME STUDIO -->
+    <!-- VIEW 4: ENTERPRISE HYBRID AI CV STUDIO -->
     <div id="resumeWorkspace" class="hidden max-w-7xl mx-auto pt-2 pb-16 space-y-6">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
@@ -401,11 +400,11 @@
         <div class="flex items-center gap-3">
           <!-- Page Format Toggle -->
           <div class="bg-slate-100 p-1 rounded-xl flex text-xs font-bold text-slate-600">
-            <button onclick="setResumePages(1)" id="btnPage1" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600">Single Page CV</button>
-            <button onclick="setResumePages(2)" id="btnPage2" class="px-3 py-1.5 rounded-lg hover:text-brand-600">Two Page CV</button>
+            <button onclick="setResumePages(1)" id="btnPage1" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600">Single Page Format</button>
+            <button onclick="setResumePages(2)" id="btnPage2" class="px-3 py-1.5 rounded-lg hover:text-brand-600">Full 2-Page CV</button>
           </div>
-          <button onclick="exportAdvancedResumePdf()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-brand-500/25 transition flex items-center gap-2">
-            <i data-lucide="download" class="w-4 h-4"></i> Export PDF
+          <button onclick="exportHybridEnterprisePdf()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-brand-500/25 transition flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i> Export Vector PDF
           </button>
         </div>
       </div>
@@ -413,18 +412,17 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Controls Column -->
-        <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+        <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-h-[88vh] overflow-y-auto">
           
-          <!-- Design & Theme Controls -->
+          <!-- Architecture & Design -->
           <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Style & Layout Architecture</span>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Design & Layout Customizer</span>
             <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-600">
               <div class="flex items-center gap-1.5">
                 <span>Theme:</span>
                 <select id="cvTemplateStyle" onchange="updateResumePreview()" class="border border-slate-200 rounded-lg px-2 py-1 font-semibold text-slate-700 bg-white">
-                  <option value="modern">Modern Tech (Clean Accent)</option>
-                  <option value="executive">Ivy League / ATS (Serif Minimal)</option>
-                  <option value="minimal">Minimalist Monochrome</option>
+                  <option value="modern">Executive Modern (Accent Borders)</option>
+                  <option value="ats">Ivy League ATS (Classic Linear)</option>
                 </select>
               </div>
               <div class="flex items-center gap-1.5">
@@ -434,128 +432,186 @@
             </div>
           </div>
 
-          <!-- Personal Info -->
+          <!-- Section 1: Candidate Identity & Vital Badges -->
           <div class="space-y-3">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
-              <i data-lucide="user" class="w-4 h-4"></i> Identity & Contact
+              <i data-lucide="user" class="w-4 h-4"></i> Identity & Career Vitals
             </h4>
             <div class="grid grid-cols-2 gap-3">
-              <input type="text" id="resName" value="Alex Morgan" placeholder="Full Name" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
-              <input type="text" id="resRole" value="Senior Operations & Analytics Lead" placeholder="Job Title" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resName" value="Nitish Choudhary" placeholder="Full Name" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resRole" value="Executive — Stores, SAP & Dispatch Analytics" placeholder="Designation / Headline" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
             </div>
             <div class="grid grid-cols-3 gap-3">
-              <input type="text" id="resEmail" value="alex.morgan@example.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
-              <input type="text" id="resPhone" value="+91 98765 43210" placeholder="Phone" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
-              <input type="text" id="resLocation" value="New Delhi, India" placeholder="Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resEmail" value="nitish.choudhary@email.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resPhone" value="+91 98765 43210" placeholder="Mobile" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resLocation" value="Gurgaon / Manesar, India" placeholder="Current Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <input type="text" id="resNotice" value="Notice Period: 30 Days (Immediate Available)" placeholder="Notice Period / Availability" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600 bg-amber-50/50" />
+              <input type="text" id="resHometown" value="Hometown: Siwan, Bihar" placeholder="Hometown / Permanent Address" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
             </div>
           </div>
 
-          <!-- Professional Summary -->
+          <!-- Section 2: Executive Summary -->
           <div class="space-y-2">
             <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
-              <i data-lucide="align-left" class="w-4 h-4"></i> Professional Summary
+              <i data-lucide="align-left" class="w-4 h-4"></i> Executive Summary
             </h4>
-            <textarea id="resSummary" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">Results-oriented operations leader with 5+ years of experience driving supply chain resilience, inventory accuracy, and workflow automation across high-volume distribution networks.</textarea>
+            <textarea id="resSummary" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">MBA in Business Analytics & Operations combined with Mechanical Engineering foundation. Proven expertise in FG stores management across 500+ SKUs, automated reconciliation in SAP/Excel, and dispatch analytics within the Manufacturing Division & OEM water purifier industry.</textarea>
           </div>
 
-          <!-- Experience -->
+          <!-- Section 3: Key Career Achievements & Metrics -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
-                <i data-lucide="briefcase" class="w-4 h-4"></i> Work Experience
+                <i data-lucide="trophy" class="w-4 h-4"></i> Key Career Achievements & Metrics
+              </h4>
+              <span class="text-[10px] text-slate-400 font-semibold">Metrics Driven</span>
+            </div>
+            <textarea id="resAchievements" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">• Maintained 99.4% On-Time In-Full (OTIF) dispatch rate across 500+ Finished Goods (FG) SKUs.
+• Engineered custom Excel VBA and Lambda reconciliation tools, cutting weekly audit cycles by 40%.
+• Minimized Takt Time and dispatch bottlenecks via real-time ERP dispatch pipeline tracking.</textarea>
+          </div>
+
+          <!-- Section 4: Work Experience -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
+                <i data-lucide="briefcase" class="w-4 h-4"></i> Professional Work Experience
               </h4>
               <button onclick="aiPolishResumeText()" class="text-[11px] font-black text-brand-600 bg-brand-50 hover:bg-brand-100 px-2.5 py-1 rounded-lg transition flex items-center gap-1">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Polish
               </button>
             </div>
-            <textarea id="resExp" rows="5" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">Managed end-to-end dispatch and stores management across 500+ finished goods SKUs.
-Implemented automated reconciliation scripts, reducing weekly audit discrepancies by 45%.
-Coordinated multi-depot inventory transfers to maintain a 98.6% On-Time In-Full (OTIF) fulfillment rate.</textarea>
+            <textarea id="resExp" rows="6" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">Executive — Stores, SAP & Dispatch Analytics | Livpure Smart Homes Pvt. Ltd. (Oct 2023 – Present)
+• Managed finished goods warehouse inventory operations for over 500+ active FG SKUs in OEM manufacturing.
+• Executed daily inventory allocations, stock reconciliations, and physical-vs-system audit alignment in SAP.
+• Coordinated freight fleet dispatch schedules to ensure consistent On-Time In-Full delivery execution.</textarea>
           </div>
 
-          <!-- Education -->
-          <div class="space-y-2">
-            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
-              <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
-            </h4>
-            <textarea id="resEdu" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">MBA in Operations & Business Analytics — State University (2025)
-Bachelor of Technology in Mechanical Engineering (2023)</textarea>
-          </div>
-
-          <!-- Skills & Certifications -->
+          <!-- Section 5: Core Competencies & Technical Stack -->
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Core Competencies</h4>
-              <textarea id="resSkills" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">Supply Chain Analytics, Advanced Excel, SQL, Power BI, Lean Six Sigma, Dispatch Logistics</textarea>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Functional Competencies</h4>
+              <textarea id="resSkills" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">Supply Chain Analytics, OTIF Management, EOQ, Takt Time Optimization, Stores Auditing, Fleet Dispatch Planning</textarea>
             </div>
             <div>
-              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Certifications</h4>
-              <textarea id="resCerts" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">Certified Supply Chain Analyst (CSCA)
-Lean Six Sigma Green Belt</textarea>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Tools & Technology Stack</h4>
+              <textarea id="resTools" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">SAP ERP (MM/SD), Advanced Excel (VBA, Lambda, Power Query), Power BI Dashboards, SQL, Python Fundamentals</textarea>
+            </div>
+          </div>
+
+          <!-- Section 6: Education & Certifications -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Education Credentials</h4>
+              <textarea id="resEdu" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">• MBA in Business Analytics & Operations (2025)
+• B.Tech in Mechanical Engineering (2023)
+• Diploma in Mechanical Engineering (2018)</textarea>
+            </div>
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Certifications & Accreditations</h4>
+              <textarea id="resCerts" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">• Lean Six Sigma Certification
+• Power BI & SQL for Data-Driven Analytics
+• Supply Chain Operations Analytics (Udemy)</textarea>
+            </div>
+          </div>
+
+          <!-- Section 7: Key Strategic Projects & Personal Dossier -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Key Operational Projects</h4>
+              <textarea id="resProjects" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">• Warehouse Space Re-layout: Redesigned pallet racking to improve pick speed by 18%.
+• Digital Twin Logistics Pilot: Researched virtual supply network modeling for dispatch resilience.</textarea>
+            </div>
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Personal Dossier</h4>
+              <textarea id="resPersonal" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl focus:outline-none focus:border-brand-600">Languages: English, Hindi
+Notice Period: 30 Days | Marital Status: Married</textarea>
             </div>
           </div>
 
         </div>
 
-        <!-- Real-Time Sheet Preview Column -->
+        <!-- Real-Time Hybrid Sheet Preview Column -->
         <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex flex-col items-center gap-6 sticky top-24 overflow-auto max-h-[88vh]">
           
           <!-- Page 1 Preview -->
-          <div id="resumeSheet1" class="cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative">
-            <div id="pvHeader" class="border-b-2 pb-3 mb-3 border-indigo-600">
-              <h1 id="pvName" class="text-2xl font-black tracking-tight uppercase">Alex Morgan</h1>
-              <h2 id="pvRole" class="text-xs font-bold mt-0.5 text-indigo-600">Senior Operations & Logistics Lead</h2>
-              <div class="flex flex-wrap items-center gap-2 text-[10px] text-slate-500 mt-1 font-medium">
-                <span id="pvEmail">alex.morgan@example.com</span>
+          <div id="resumeSheet1" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative">
+            <div id="pvHeader" class="border-b-2 pb-2.5 mb-2.5 border-indigo-600">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h1 id="pvName" class="text-xl font-black tracking-tight uppercase text-slate-900">Nitish Choudhary</h1>
+                  <h2 id="pvRole" class="text-[11px] font-bold mt-0.5 text-indigo-600">Executive — Stores, SAP & Dispatch Analytics</h2>
+                </div>
+                <span id="pvNoticeBadge" class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">Notice: 30 Days</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 text-[9px] text-slate-500 mt-1 font-medium">
+                <span id="pvEmail">nitish.choudhary@email.com</span>
                 <span>•</span>
                 <span id="pvPhone">+91 98765 43210</span>
                 <span>•</span>
-                <span id="pvLocation">New Delhi, India</span>
+                <span id="pvLocation">Gurgaon / Manesar, India</span>
+                <span>•</span>
+                <span id="pvHometown" class="text-slate-400">Siwan, Bihar</span>
               </div>
             </div>
 
-            <div class="space-y-3 flex-1 text-[10px]">
+            <div class="space-y-2.5 flex-1 text-[9px]">
               <div>
-                <h3 id="pvSummaryTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Professional Summary</h3>
-                <p id="pvSummary" class="text-slate-700 leading-relaxed"></p>
+                <h3 id="pvSummaryTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Executive Profile</h3>
+                <p id="pvSummary" class="text-slate-700 leading-snug"></p>
               </div>
 
               <div>
-                <h3 id="pvExpTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Work Experience</h3>
-                <div id="pvExp" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
+                <h3 id="pvAchTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Key Quantifiable Achievements</h3>
+                <div id="pvAchievements" class="text-slate-700 whitespace-pre-line leading-snug"></div>
               </div>
 
               <div>
-                <h3 id="pvEduTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Education</h3>
-                <div id="pvEdu" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
+                <h3 id="pvExpTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Professional Experience</h3>
+                <div id="pvExp" class="text-slate-700 whitespace-pre-line leading-snug"></div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 pt-0.5">
+                <div>
+                  <h3 id="pvSkillsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Core Competencies</h3>
+                  <p id="pvSkills" class="text-slate-700 leading-snug"></p>
+                </div>
+                <div>
+                  <h3 id="pvToolsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Tools & Technologies</h3>
+                  <p id="pvTools" class="text-slate-700 leading-snug"></p>
+                </div>
               </div>
 
               <div>
-                <h3 id="pvSkillsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Core Competencies</h3>
-                <p id="pvSkills" class="text-slate-700 leading-relaxed"></p>
+                <h3 id="pvEduTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 text-indigo-600 border-slate-200">Education Credentials</h3>
+                <div id="pvEdu" class="text-slate-700 whitespace-pre-line leading-snug"></div>
               </div>
             </div>
           </div>
 
           <!-- Page 2 Preview -->
-          <div id="resumeSheet2" class="cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
-            <div class="border-b-2 pb-2 mb-3 border-indigo-600 flex justify-between items-center">
-              <span id="pvNameP2" class="text-xs font-bold uppercase text-slate-500">Alex Morgan — Curriculum Vitae</span>
-              <span class="text-[10px] text-indigo-600 font-bold">Page 2</span>
+          <div id="resumeSheet2" class="cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative hidden">
+            <div class="border-b-2 pb-2 mb-2.5 border-indigo-600 flex justify-between items-center">
+              <span id="pvNameP2" class="text-[11px] font-bold uppercase text-slate-600">Nitish Choudhary — Curriculum Vitae</span>
+              <span class="text-[9px] text-indigo-600 font-bold">Page 2</span>
             </div>
 
-            <div class="space-y-3 flex-1 text-[10px]">
+            <div class="space-y-3 flex-1 text-[9.5px]">
               <div>
-                <h3 id="pvCertsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Certifications & Accreditations</h3>
+                <h3 id="pvProjectsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Key Strategic & Operational Projects</h3>
+                <div id="pvProjects" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
+              </div>
+
+              <div>
+                <h3 id="pvCertsTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Certifications & Continuous Learning</h3>
                 <div id="pvCerts" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
               </div>
 
               <div>
-                <h3 id="pvAddExpTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Key Projects & Technical Initiatives</h3>
-                <p class="text-slate-700 leading-relaxed">
-                  • Implemented automated FIFO batch tracking systems for warehouse dispatch.<br/>
-                  • Authored customized ERP/SAP operational dashboards for real-time order visibility.
-                </p>
+                <h3 id="pvPersonalTitle" class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Personal Dossier & Declaration</h3>
+                <div id="pvPersonal" class="text-slate-700 whitespace-pre-line leading-relaxed"></div>
               </div>
             </div>
           </div>
@@ -575,10 +631,9 @@ Lean Six Sigma Green Belt</textarea>
       </div>
       <h3 class="text-2xl font-black text-slate-900">DocBrisk Pro Suite</h3>
       <p class="text-slate-500 text-xs mt-2 leading-relaxed">
-        Unlock unrestricted OCR text extractions, unlimited AI Resume polishes, and high-priority document conversions.
+        Unlock unrestricted OCR text extractions, unlimited AI CV Polish operations, and priority conversion queues.
       </p>
 
-      <!-- Pricing Plans -->
       <div class="my-6 space-y-3">
         <div onclick="selectPaymentTier('monthly')" id="tierMonthly" class="p-4 bg-brand-50/60 border-2 border-brand-500 rounded-2xl flex items-center justify-between text-left cursor-pointer">
           <div>
@@ -603,7 +658,6 @@ Lean Six Sigma Green Belt</textarea>
         </div>
       </div>
 
-      <!-- Gateway Buttons -->
       <div class="space-y-2">
         <button onclick="payWithRazorpay()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl shadow-lg transition text-xs flex items-center justify-center gap-2">
           <i data-lucide="zap" class="w-4 h-4"></i> Pay with UPI / Card (Razorpay)
@@ -722,10 +776,10 @@ Lean Six Sigma Green Belt</textarea>
       document.getElementById('standardWorkspace').classList.remove('hidden');
 
       const meta = {
+        pdf2word: { title: "PDF to Word (Table Aware)", desc: "Reconstructs text paragraphs AND real Word tables with intact cell geometry.", hint: "Select one PDF", btn: "Convert with Tables to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         compress: { title: "Compress PDF", desc: "Choose Basic, Medium, High or target an exact file size in KB or MB.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
-        pdf2word: { title: "PDF to Word (.docx)", desc: "Extract text lines into an editable Microsoft Word document without page headers.", hint: "Select one PDF", btn: "Convert to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         word2pdf: { title: "Word to PDF", desc: "Convert .docx documents into print-ready PDF files.", hint: "Select one .docx file", btn: "Convert to PDF", multi: false, accept: ".docx", icon: "file-check", color: "text-cyan-600", bg: "bg-cyan-50" },
         pdf2excel: { title: "PDF to Excel (.xlsx)", desc: "Detects table columns and outputs an Excel spreadsheet.", hint: "Select one PDF", btn: "Export to .XLSX", multi: false, accept: ".pdf", icon: "table", color: "text-emerald-600", bg: "bg-emerald-50" }
       }[toolKey];
@@ -789,7 +843,113 @@ Lean Six Sigma Green Belt</textarea>
       status.classList.remove('hidden');
 
       try {
-        if (activeTool === 'ocr') {
+        if (activeTool === 'pdf2word') {
+          status.textContent = "Analyzing spatial coordinates & reconstructing tables...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          let docxSections = [];
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+
+            // Cluster items into lines by Y coordinate
+            let lines = [];
+            textContent.items.forEach(item => {
+              if (!item.str || !item.str.trim()) return;
+              const y = item.transform[5];
+              const x = item.transform[4];
+              let line = lines.find(l => Math.abs(l.y - y) < 6);
+              if (line) line.items.push({ str: item.str, x });
+              else lines.push({ y, items: [{ str: item.str, x }] });
+            });
+
+            lines.sort((a, b) => b.y - a.y);
+
+            // Group lines into tables vs regular paragraphs
+            let lineIndex = 0;
+            while (lineIndex < lines.length) {
+              const currentLine = lines[lineIndex];
+              currentLine.items.sort((a, b) => a.x - b.x);
+
+              // Check if line looks like a tabular row (3 or more distinct horizontal columns with wide gaps)
+              let isTableRow = currentLine.items.length >= 3;
+              if (!isTableRow && currentLine.items.length >= 2) {
+                // Check if items have wide spacing typical of tables
+                const gap = currentLine.items[1].x - currentLine.items[0].x;
+                if (gap > 120) isTableRow = true;
+              }
+
+              if (isTableRow) {
+                // Collect contiguous table rows
+                let tableRows = [];
+                while (lineIndex < lines.length) {
+                  const checkLine = lines[lineIndex];
+                  checkLine.items.sort((a, b) => a.x - b.x);
+                  if (checkLine.items.length >= 2) {
+                    tableRows.push(checkLine);
+                    lineIndex++;
+                  } else {
+                    break;
+                  }
+                }
+
+                // Determine max columns
+                let maxCols = 0;
+                tableRows.forEach(r => { if (r.items.length > maxCols) maxCols = r.items.length; });
+                maxCols = Math.max(maxCols, 2);
+
+                // Build real native docx.Table
+                const docxTableRows = tableRows.map(row => {
+                  let cells = [];
+                  for (let col = 0; col < maxCols; col++) {
+                    const cellText = row.items[col] ? row.items[col].str : "";
+                    cells.push(new docx.TableCell({
+                      children: [new docx.Paragraph({
+                        children: [new docx.TextRun({ text: cellText, size: 20, font: "Calibri" })]
+                      })],
+                      borders: {
+                        top: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                        bottom: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                        left: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                        right: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" }
+                      }
+                    }));
+                  }
+                  return new docx.TableRow({ children: cells });
+                });
+
+                docxSections.push(new docx.Table({
+                  rows: docxTableRows,
+                  width: { size: 100, type: docx.WidthType.PERCENTAGE }
+                }));
+
+                // Spacing after table
+                docxSections.push(new docx.Paragraph({ text: "", spacing: { after: 120 } }));
+
+              } else {
+                // Regular paragraph flow
+                const lineText = currentLine.items.map(it => it.str).join(' ');
+                docxSections.push(new docx.Paragraph({
+                  children: [new docx.TextRun({ text: lineText, size: 22, font: "Calibri" })],
+                  spacing: { after: 100 },
+                  pageBreakBefore: (i > 1 && lineIndex === 0)
+                }));
+                lineIndex++;
+              }
+            }
+          }
+
+          const docxDoc = new docx.Document({ sections: [{ properties: {}, children: docxSections }] });
+          const outBlob = await docx.Packer.toBlob(docxDoc);
+          showResult(
+            new Uint8Array(await outBlob.arrayBuffer()),
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            `${file.name.replace(/\.pdf$/i, '')}.docx`,
+            'Converted to Word with native table structures intact!'
+          );
+
+        } else if (activeTool === 'ocr') {
           status.textContent = "Running neural optical character recognition...";
           const file = standardFiles[0];
           let imageBlob = file;
@@ -811,7 +971,7 @@ Lean Six Sigma Green Belt</textarea>
 
           document.getElementById('ocrTextArea').value = ret.data.text;
           document.getElementById('ocrResultArea').classList.remove('hidden');
-          status.textContent = "OCR extraction finished!";
+          status.textContent = "OCR extraction complete!";
 
         } else if (activeTool === 'compress') {
           status.textContent = "Compressing pages locally...";
@@ -873,52 +1033,6 @@ Lean Six Sigma Green Belt</textarea>
           }
           const outBytes = await mergedDoc.save();
           showResult(outBytes, 'application/pdf', 'merged_docbrisk.pdf', 'Lossless merge finished with zero sharpness loss.');
-
-        } else if (activeTool === 'pdf2word') {
-          status.textContent = "Extracting layout into Word format...";
-          const file = standardFiles[0];
-          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
-          let docxSections = [];
-
-          // Standard conversion: NO "Page 1" or "Page 2" text headers!
-          for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const textContent = await page.getTextContent();
-            
-            let lines = [];
-            textContent.items.forEach(item => {
-              if (!item.str || !item.str.trim()) return;
-              const y = item.transform[5];
-              const x = item.transform[4];
-              let line = lines.find(l => Math.abs(l.y - y) < 6);
-              if (line) line.items.push({ str: item.str, x });
-              else lines.push({ y, items: [{ str: item.str, x }] });
-            });
-
-            lines.sort((a, b) => b.y - a.y);
-
-            lines.forEach((line, index) => {
-              line.items.sort((a, b) => a.x - b.x);
-              const text = line.items.map(it => it.str).join(' ');
-
-              docxSections.push(
-                new docx.Paragraph({
-                  children: [new docx.TextRun({ text: text, size: 22, font: "Calibri" })],
-                  spacing: { after: 100 },
-                  pageBreakBefore: (i > 1 && index === 0) // Clean page break without adding title text!
-                })
-              );
-            });
-          }
-
-          const docxDoc = new docx.Document({ sections: [{ properties: {}, children: docxSections }] });
-          const outBlob = await docx.Packer.toBlob(docxDoc);
-          showResult(
-            new Uint8Array(await outBlob.arrayBuffer()),
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            `${file.name.replace(/\.pdf$/i, '')}.docx`,
-            'Clean conversion to Microsoft Word (.docx) complete!'
-          );
 
         } else if (activeTool === 'word2pdf') {
           status.textContent = "Parsing Word document...";
@@ -1028,7 +1142,6 @@ Lean Six Sigma Green Belt</textarea>
         const pdfDoc = await PDFLib.PDFDocument.create();
         const page = pdfDoc.addPage([595.28, 841.89]); // Standard A4 Dimensions
 
-        // Standard CR-80 ID Card dimensions: 85.60mm x 53.98mm = 242.64 pt x 153.0 pt
         const cardWidth = 242.64;
         const cardHeight = 153.0;
 
@@ -1038,18 +1151,15 @@ Lean Six Sigma Green Belt</textarea>
         const layoutStyle = document.querySelector('input[name="idLayout"]:checked').value;
 
         if (layoutStyle === 'side') {
-          // Horizontal alignment side-by-side with 16pt margin gap
           const startX = (595.28 - (cardWidth * 2 + 16)) / 2;
           const startY = 841.89 - 220;
 
-          // Draw Front Card & Border
           page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
           page.drawRectangle({
             x: startX, y: startY, width: cardWidth, height: cardHeight,
             borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
           });
 
-          // Draw Back Card & Border
           const backX = startX + cardWidth + 16;
           page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
           page.drawRectangle({
@@ -1057,7 +1167,6 @@ Lean Six Sigma Green Belt</textarea>
             borderColor: PDFLib.rgb(0.75, 0.75, 0.75), borderWidth: 0.5
           });
         } else {
-          // Stacked vertical alignment with 16pt gap
           const startX = (595.28 - cardWidth) / 2;
           const startYFront = 841.89 - 180;
           const startYBack = startYFront - cardHeight - 16;
@@ -1075,7 +1184,6 @@ Lean Six Sigma Green Belt</textarea>
           });
         }
 
-        // Output: ZERO WATERMARKS, ZERO BRANDING, ZERO TEXT INJECTED!
         const outBytes = await pdfDoc.save();
         const blob = new Blob([outBytes], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
@@ -1095,45 +1203,50 @@ Lean Six Sigma Green Belt</textarea>
       }
     }
 
-    // ADVANCED MULTI-THEME AI RESUME STUDIO
+    // ENTERPRISE HYBRID CV PREVIEW CONTROLLER
     function updateResumePreview() {
       const themeColor = document.getElementById('resThemeColor').value;
       const template = document.getElementById('cvTemplateStyle').value;
 
-      const name = document.getElementById('resName').value || 'Alex Morgan';
-      const role = document.getElementById('resRole').value || 'Professional Title';
+      const name = document.getElementById('resName').value || 'Nitish Choudhary';
+      const role = document.getElementById('resRole').value || 'Executive';
 
       document.getElementById('pvName').textContent = name;
       document.getElementById('pvRole').textContent = role;
       document.getElementById('pvRole').style.color = themeColor;
       document.getElementById('pvHeader').style.borderColor = themeColor;
 
-      ['pvSummaryTitle', 'pvExpTitle', 'pvEduTitle', 'pvSkillsTitle', 'pvCertsTitle', 'pvAddExpTitle'].forEach(id => {
+      ['pvSummaryTitle', 'pvAchTitle', 'pvExpTitle', 'pvSkillsTitle', 'pvToolsTitle', 'pvEduTitle', 'pvProjectsTitle', 'pvCertsTitle', 'pvPersonalTitle'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.style.color = themeColor;
       });
 
-      document.getElementById('pvEmail').textContent = document.getElementById('resEmail').value || 'email@example.com';
-      document.getElementById('pvPhone').textContent = document.getElementById('resPhone').value || '+91 00000 00000';
-      document.getElementById('pvLocation').textContent = document.getElementById('resLocation').value || 'Location';
+      document.getElementById('pvEmail').textContent = document.getElementById('resEmail').value || '';
+      document.getElementById('pvPhone').textContent = document.getElementById('resPhone').value || '';
+      document.getElementById('pvLocation').textContent = document.getElementById('resLocation').value || '';
+      document.getElementById('pvNoticeBadge').textContent = document.getElementById('resNotice').value || 'Immediate';
+      document.getElementById('pvHometown').textContent = document.getElementById('resHometown').value || '';
 
       document.getElementById('pvSummary').textContent = document.getElementById('resSummary').value || '';
+      document.getElementById('pvAchievements').textContent = document.getElementById('resAchievements').value || '';
       document.getElementById('pvExp').textContent = document.getElementById('resExp').value || '';
-      document.getElementById('pvEdu').textContent = document.getElementById('resEdu').value || '';
       document.getElementById('pvSkills').textContent = document.getElementById('resSkills').value || '';
+      document.getElementById('pvTools').textContent = document.getElementById('resTools').value || '';
+      document.getElementById('pvEdu').textContent = document.getElementById('resEdu').value || '';
 
-      const certs = document.getElementById('resCerts').value || '';
-      document.getElementById('pvCerts').textContent = certs;
+      document.getElementById('pvProjects').textContent = document.getElementById('resProjects').value || '';
+      document.getElementById('pvCerts').textContent = document.getElementById('resCerts').value || '';
+      document.getElementById('pvPersonal').textContent = document.getElementById('resPersonal').value || '';
       document.getElementById('pvNameP2').textContent = `${name} — Curriculum Vitae`;
 
       const sheet1 = document.getElementById('resumeSheet1');
       const sheet2 = document.getElementById('resumeSheet2');
-      if (template === 'executive') {
-        sheet1.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-serif";
-        sheet2.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
+      if (template === 'ats') {
+        sheet1.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-serif";
+        sheet2.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
       } else {
-        sheet1.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-sans";
-        sheet2.className = "cv-sheet bg-white p-8 rounded-sm flex flex-col text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
+        sheet1.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-sans";
+        sheet2.className = "cv-sheet bg-white p-7 rounded-sm flex flex-col text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
       }
     }
 
@@ -1176,83 +1289,79 @@ Lean Six Sigma Green Belt</textarea>
       const lines = document.getElementById('resExp').value.split('\n').filter(l => l.trim().length > 0);
       const polished = lines.map(line => {
         let clean = line.replace(/^[•\-\*]\s*/, '');
-        return `Orchestrated strategic operational deliverables: ${clean}`;
+        return `Managed end-to-end deliverables and achieved key operational KPIs: ${clean}`;
       }).join('\n');
       document.getElementById('resExp').value = polished;
       updateResumePreview();
     }
 
-    async function exportAdvancedResumePdf() {
+    async function exportHybridEnterprisePdf() {
       const pdfDoc = await PDFLib.PDFDocument.create();
       const page1 = pdfDoc.addPage([595.28, 841.89]); // Standard A4
 
-      const template = document.getElementById('cvTemplateStyle').value;
-      const isSerif = template === 'executive';
-
+      const isSerif = document.getElementById('cvTemplateStyle').value === 'ats';
       const fontBold = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold) : await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
       const fontReg = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman) : await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
       const theme = hexToRgb01(document.getElementById('resThemeColor').value);
-      const name = document.getElementById('resName').value || 'Alex Morgan';
-      const role = document.getElementById('resRole').value || 'Professional';
+      const name = document.getElementById('resName').value || 'Nitish Choudhary';
+      const role = document.getElementById('resRole').value || 'Executive';
       const contact = `${document.getElementById('resEmail').value} | ${document.getElementById('resPhone').value} | ${document.getElementById('resLocation').value}`;
+      const notice = document.getElementById('resNotice').value;
 
-      let y = 780;
-      page1.drawText(name.toUpperCase(), { x: 50, y, size: 20, font: fontBold, color: PDFLib.rgb(0.08, 0.1, 0.15) });
-      y -= 18;
-      page1.drawText(role, { x: 50, y, size: 11, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-      y -= 14;
-      page1.drawText(contact, { x: 50, y, size: 9, font: fontReg, color: PDFLib.rgb(0.4, 0.45, 0.5) });
-      y -= 12;
-      page1.drawLine({ start: { x: 50, y }, end: { x: 545, y }, thickness: 1.5, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-
-      y -= 22;
-      page1.drawText("PROFESSIONAL SUMMARY", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-      y -= 14;
-      const summaryText = document.getElementById('resSummary').value || '';
-      page1.drawText(summaryText.substring(0, 110), { x: 50, y, size: 9, font: fontReg, color: PDFLib.rgb(0.2, 0.25, 0.3) });
-
-      y -= 22;
-      page1.drawText("WORK EXPERIENCE", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-      y -= 14;
-      for (let line of document.getElementById('resExp').value.split('\n')) {
-        if (line.trim()) {
-          page1.drawText(`• ${line.trim()}`.substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-          y -= 14;
-        }
-      }
-
+      let y = 795;
+      page1.drawText(name.toUpperCase(), { x: 45, y, size: 18, font: fontBold, color: PDFLib.rgb(0.08, 0.1, 0.15) });
       y -= 16;
-      page1.drawText("EDUCATION", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-      y -= 14;
-      for (let line of document.getElementById('resEdu').value.split('\n')) {
-        if (line.trim()) {
-          page1.drawText(line.trim().substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-          y -= 14;
-        }
-      }
+      page1.drawText(role, { x: 45, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+      y -= 13;
+      page1.drawText(`${contact} | ${notice}`, { x: 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.4, 0.45, 0.5) });
+      y -= 10;
+      page1.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
 
-      y -= 16;
-      page1.drawText("CORE COMPETENCIES", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-      y -= 14;
-      page1.drawText(document.getElementById('resSkills').value.substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-
-      if (resumePageCount === 2) {
-        const page2 = pdfDoc.addPage([595.28, 841.89]);
-        let y2 = 780;
-        page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE`, { x: 50, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
-        y2 -= 10;
-        page2.drawLine({ start: { x: 50, y: y2 }, end: { x: 545, y: y2 }, thickness: 1, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-
-        y2 -= 25;
-        page2.drawText("CERTIFICATIONS & ACCREDITATIONS", { x: 50, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
-        y2 -= 15;
-        for (let line of document.getElementById('resCerts').value.split('\n')) {
-          if (line.trim()) {
-            page2.drawText(`• ${line.trim()}`.substring(0, 95), { x: 55, y: y2, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
-            y2 -= 14;
+      // Helper function to render sections with automatic line wrapping
+      const renderSection = (title, text, isBullets = false) => {
+        y -= 18;
+        page1.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+        y -= 12;
+        const lines = text.split('\n');
+        for (let line of lines) {
+          if (line.trim() && y > 45) {
+            const prefix = isBullets ? "• " : "";
+            page1.drawText(`${prefix}${line.trim()}`.substring(0, 105), { x: isBullets ? 52 : 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+            y -= 11;
           }
         }
+      };
+
+      renderSection("EXECUTIVE PROFILE", document.getElementById('resSummary').value);
+      renderSection("KEY QUANTIFIABLE ACHIEVEMENTS", document.getElementById('resAchievements').value, true);
+      renderSection("PROFESSIONAL WORK EXPERIENCE", document.getElementById('resExp').value, true);
+      renderSection("CORE COMPETENCIES & TECHNICAL STACK", `${document.getElementById('resSkills').value}\nTools: ${document.getElementById('resTools').value}`);
+      renderSection("EDUCATION CREDENTIALS", document.getElementById('resEdu').value);
+
+      // Page 2 if selected
+      if (resumePageCount === 2) {
+        const page2 = pdfDoc.addPage([595.28, 841.89]);
+        let y2 = 795;
+        page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(0.4, 0.45, 0.5) });
+        y2 -= 10;
+        page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y: y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+
+        const renderSectionP2 = (title, text) => {
+          y2 -= 20;
+          page2.drawText(title, { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          y2 -= 13;
+          for (let line of text.split('\n')) {
+            if (line.trim() && y2 > 45) {
+              page2.drawText(line.trim().substring(0, 105), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+              y2 -= 12;
+            }
+          }
+        };
+
+        renderSectionP2("KEY STRATEGIC & OPERATIONAL PROJECTS", document.getElementById('resProjects').value);
+        renderSectionP2("CERTIFICATIONS & CONTINUOUS LEARNING", document.getElementById('resCerts').value);
+        renderSectionP2("PERSONAL DOSSIER & DECLARATION", document.getElementById('resPersonal').value);
       }
 
       const pdfBytes = await pdfDoc.save();
@@ -1260,7 +1369,7 @@ Lean Six Sigma Green Belt</textarea>
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `${name.replace(/\s+/g, '_')}_Resume.pdf`;
+      a.download = `${name.replace(/\s+/g, '_')}_Enterprise_CV.pdf`;
       a.click();
     }
 
@@ -1275,9 +1384,8 @@ Lean Six Sigma Green Belt</textarea>
     }
 
     function payWithRazorpay() {
-      // Configuration for Razorpay
       const options = {
-        key: "YOUR_RAZORPAY_KEY_ID", // Add your key here in production
+        key: "YOUR_RAZORPAY_KEY_ID",
         amount: selectedTier === 'monthly' ? 39900 : 9900,
         currency: "INR",
         name: "DocBrisk Studio",
