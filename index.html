@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — Enterprise Document Processing Suite & CV Studio</title>
-  <meta name="description" content="100% Free & Private In-Browser Document Processing Suite. PDF to Word, Word to PDF, PDF to Excel, OCR Scanner, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
+  <title>DocBrisk — World-Class Document Suite & Enterprise CV Engine</title>
+  <meta name="description" content="100% Free & Private In-Browser Document Processing Suite. PDF to Word, Word to PDF, PDF to Excel, Image to PDF, PDF to Image, OCR Scanner, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
 
   <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
@@ -88,13 +88,15 @@
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
-        <button onclick="openTool('pdf2word')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
-        <button onclick="openTool('idprint')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
-        <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress</button>
-        <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
-        <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
-        <button onclick="openTool('ocr')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
-        <button onclick="openTool('merge')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
+        <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
+        <button onclick="openTool('compress')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress</button>
+        <button onclick="openTool('word2pdf')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
+        <button onclick="openTool('img2pdf')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Image to PDF</button>
+        <button onclick="openTool('pdf2img')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Image</button>
+        <button onclick="openTool('pdf2excel')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
+        <button onclick="openTool('ocr')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">OCR Scanner</button>
+        <button onclick="openTool('merge')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3">
@@ -122,7 +124,7 @@
           Document processing and CV building in <span class="text-brand-600">one brisk click</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Secure format conversions, neural OCR scanning, watermark-free ID card sheets, and 26 architectural resume themes engineered for professional confidentiality.
+          Secure format conversions, neural OCR scanning, image-to-PDF compilation, watermark-free ID card sheets, and 26 architectural resume themes.
         </p>
       </div>
 
@@ -160,6 +162,40 @@
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
             Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Image to PDF -->
+        <div onclick="openTool('img2pdf')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-orange-500 tool-card cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-orange-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            Multi-Image
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="image-plus" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Image(s) to PDF</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Combine multiple JPG/PNG photo captures into a single clean, ordered multi-page PDF.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-orange-600 group-hover:translate-x-1 transition-transform">
+            Compile Photos <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: PDF to Image -->
+        <div onclick="openTool('pdf2img')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-pink-500 tool-card cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-pink-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            High DPI
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="image" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Image (PNG)</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Rasterize each page of a PDF document into high-resolution PNG image files instantly.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-pink-600 group-hover:translate-x-1 transition-transform">
+            Extract Images <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
           </div>
         </div>
 
@@ -858,7 +894,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
         word2pdf: { title: "Word to PDF", desc: "Convert `.docx` documents into print-ready PDF files.", hint: "Select one .docx file", btn: "Convert to PDF", multi: false, accept: ".docx", icon: "file-check", color: "text-cyan-600", bg: "bg-cyan-50" },
-        pdf2excel: { title: "PDF to Excel (.xlsx)", desc: "Extracts table boundaries and outputs an Excel spreadsheet.", hint: "Select one PDF", btn: "Export to .XLSX", multi: false, accept: ".pdf", icon: "table", color: "text-emerald-600", bg: "bg-emerald-50" }
+        pdf2excel: { title: "PDF to Excel (.xlsx)", desc: "Extracts table boundaries and outputs an Excel spreadsheet.", hint: "Select one PDF", btn: "Export to .XLSX", multi: false, accept: ".pdf", icon: "table", color: "text-emerald-600", bg: "bg-emerald-50" },
+        img2pdf: { title: "Image(s) to PDF", desc: "Combine multiple JPG/PNG photo captures into a single clean PDF.", hint: "Select images", btn: "Build PDF from Images", multi: true, accept: "image/*", icon: "image-plus", color: "text-orange-600", bg: "bg-orange-50" },
+        pdf2img: { title: "PDF to Image (PNG)", desc: "Rasterize each page of a PDF document into high-resolution PNG image files.", hint: "Select one PDF", btn: "Export Pages as PNGs", multi: false, accept: ".pdf", icon: "image", color: "text-pink-600", bg: "bg-pink-50" }
       }[toolKey];
 
       document.getElementById('wsTitle').textContent = meta.title;
@@ -1199,6 +1237,46 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           XLSX.utils.book_append_sheet(wb, ws, "ExtractedData");
           const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
           showResult(new Uint8Array(wbout), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', `${file.name.replace(/\.pdf$/i, '')}.xlsx`, 'Converted PDF tables into multi-cell Excel spreadsheet!');
+
+        } else if (activeTool === 'img2pdf') {
+          status.textContent = "Compositing images into multi-page PDF...";
+          const outDoc = await PDFLib.PDFDocument.create();
+          for (const file of standardFiles) {
+            const bytes = await file.arrayBuffer();
+            let img;
+            if (file.type.includes('png')) img = await outDoc.embedPng(bytes);
+            else img = await outDoc.embedJpg(bytes);
+            const page = outDoc.addPage([img.width, img.height]);
+            page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+          }
+          const outBytes = await outDoc.save();
+          showResult(outBytes, 'application/pdf', 'images_to_pdf.pdf', `Combined ${standardFiles.length} image(s) into one PDF.`);
+
+        } else if (activeTool === 'pdf2img') {
+          status.textContent = "Rasterizing pages to PNG...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          for (let i = 1; i <= pdf.numPages; i++) {
+            status.textContent = `Rendering page ${i} of ${pdf.numPages}...`;
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 2.0 });
+            const canvas = document.createElement('canvas');
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+            const pngBlob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+            const url = URL.createObjectURL(pngBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${file.name.replace(/\.pdf$/i, '')}_page${i}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+          status.textContent = "All pages extracted as PNG files!";
+          document.getElementById('wsResult').classList.remove('hidden');
+          document.getElementById('wsResultDesc').textContent = `Exported ${pdf.numPages} page(s) as individual PNG image downloads.`;
+          document.getElementById('wsDownloadLink').classList.add('hidden');
         }
       } catch (err) {
         alert(err.message);
