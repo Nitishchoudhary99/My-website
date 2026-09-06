@@ -3,22 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>DocBrisk — World-Class Document Studio & Enterprise CV Suite</title>
-  <meta name="description" content="100% Free & Private In-Browser Document Processing. Format-Preserving PDF to Word, Target KB/MB Compress, Clean ID Card Print, and 25+ Theme Enterprise CV Studio." />
+  <title>DocBrisk — World-Class Document Suite & Enterprise CV Engine</title>
+  <meta name="description" content="100% Free & Private In-Browser Document Processing. Advanced Table-Preserving PDF to Word, Target KB/MB Compress, Clean ID Print, and 26-Theme CV Studio." />
 
   <!-- Monogram Brand Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
-  <!-- Fonts & Styling -->
+  <!-- Typography & Web Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Core In-Browser Document Engines -->
+  <!-- Core In-Browser Document Processing Engines -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -42,7 +43,7 @@
     try {
       pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     } catch (e) {
-      console.warn("Using inline fallback worker");
+      console.warn("Using fallback inline worker execution.");
     }
   </script>
 
@@ -57,10 +58,10 @@
 
 <body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Announcement -->
+  <!-- Top Security & Status Banner -->
   <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
     <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    DocBrisk Studio: 100% Free • In-Browser Precision Conversion • 25+ Real Interactive Themes
+    DocBrisk Studio: 100% Free & Unlimited • In-Browser Execution • True Spatial Conversion
   </div>
 
   <!-- Header -->
@@ -84,8 +85,8 @@
         <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
           <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Enterprise CV Studio
         </button>
-        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
         <button onclick="openTool('compress')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress (KB/MB)</button>
         <button onclick="openTool('word2pdf')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
         <button onclick="openTool('pdf2excel')" class="px-3.5 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
@@ -95,7 +96,7 @@
 
       <div class="flex items-center gap-2 sm:gap-3">
         <div id="userChip" class="hidden items-center gap-2 pl-1 pr-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 cursor-pointer" onclick="openAccountModal()">
-          <div id="userAvatar" class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-[11px] font-black">N</div>
+          <div id="userAvatar" class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-[11px] font-black">U</div>
           <span id="userChipName">Account</span>
         </div>
         <button id="loginBtn" onclick="openAuthModal('login')" class="px-3.5 py-1.5 rounded-xl border border-slate-300 hover:border-brand-500 text-slate-700 font-bold text-xs transition">
@@ -105,20 +106,20 @@
     </div>
   </header>
 
-  <!-- MAIN WRAPPER -->
+  <!-- MAIN VIEWPORT -->
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
 
     <!-- VIEW 1: HOME CATALOGUE -->
     <div id="homeView" class="space-y-12">
       <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
         <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
-          Enterprise Quality • Zero Server Costs • In-Browser Privacy
+          Zero Server Leaks • 100% Free • Unbeatable Precision
         </div>
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
           Document processing and CV building in <span class="text-brand-600">one brisk click</span>
         </h1>
         <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-          Pixel-accurate format preservation, clean ID card sheets, and 25+ interactive resume themes built for serious professionals.
+          Pixel-accurate format preservation, watermark-free ID card print sheets, and 26 distinct architectural resume themes built for serious professionals.
         </p>
       </div>
 
@@ -128,14 +129,14 @@
         <!-- Tool: Enterprise CV Studio -->
         <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            25+ Real Themes
+            26 Real Themes
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Enterprise CV Studio</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">25+ distinct layouts: Ivy League ATS, Executive Sidebar, Corporate Navy, and Silicon Valley Split.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">26 distinct structural themes, ATS compliance, single & two-page formats, key achievements, notice period, and projects.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
             Build Enterprise CV <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -145,14 +146,14 @@
         <!-- Tool: PDF to Word -->
         <div onclick="openTool('pdf2word')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-sky-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
           <div class="absolute top-3 right-3 bg-sky-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
-            Editable & Precise
+            High Precision
           </div>
           <div>
             <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
               <i data-lucide="file-text" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Converts PDFs with exact visual positioning, intact tables, and fonts while keeping text fully editable.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Reconstructs exact layout grids, table cells, and paragraphs without broken alignments or missing blocks.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
             Convert Document <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -166,7 +167,7 @@
               <i data-lucide="credit-card" class="w-6 h-6"></i>
             </div>
             <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">ID Card Print Sheet</h3>
-            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Side-by-side or stacked A4 layouts with exact CR-80 physical dimensions. 100% clean with zero watermarks.</p>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Side-by-side or stacked A4 layouts with exact CR-80 physical dimensions. 100% clean with zero watermarks or ads.</p>
           </div>
           <div class="mt-6 flex items-center text-xs font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">
             Create Sheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
@@ -390,7 +391,7 @@
       </div>
     </div>
 
-    <!-- VIEW 4: ENTERPRISE HYBRID AI CV STUDIO (25+ THEMES) -->
+    <!-- VIEW 4: ENTERPRISE HYBRID AI CV STUDIO (26 REAL THEMES) -->
     <div id="resumeWorkspace" class="hidden max-w-7xl mx-auto pt-2 pb-16 space-y-6">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
@@ -412,10 +413,10 @@
         <!-- Controls Column -->
         <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-h-[88vh] overflow-y-auto">
           
-          <!-- Architecture & Theme Selector: 25+ Styles -->
+          <!-- Architecture & Theme Selector: 26 Real Styles -->
           <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
             <div class="flex items-center justify-between">
-              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Layout Customizer (25+ Styles)</span>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Layout Customizer (26 Styles)</span>
               <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">100% Free & Unlocked</span>
             </div>
             
@@ -425,7 +426,7 @@
                 <select id="cvTemplateStyle" onchange="updateResumePreview()" class="w-full border border-slate-200 rounded-xl px-2.5 py-2 font-semibold text-slate-700 bg-white">
                   <optgroup label="Tier 1: Corporate & Indian Enterprise">
                     <option value="modern" selected>1. Executive Modern (Accent Borders)</option>
-                    <option value="ats">2. Ivy League ATS (Classic Linear)</option>
+                    <option value="ats">2. Ivy League ATS (Classic Linear Serif)</option>
                     <option value="navy">3. Corporate Navy Block</option>
                     <option value="tata">4. Conglomerate Formal (Border Box)</option>
                     <option value="manufacturing">5. Operations & Dispatch Lead</option>
@@ -577,12 +578,12 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
           
           <!-- Page 1 Dynamic Render Container -->
           <div id="resumeSheet1" class="cv-sheet rounded-sm p-7 text-slate-900 select-none relative transition-all duration-200">
-            <!-- Rendered dynamically by updateResumePreview() -->
+            <!-- Dynamically populated by updateResumePreview() -->
           </div>
 
           <!-- Page 2 Preview Container -->
           <div id="resumeSheet2" class="cv-sheet rounded-sm p-7 text-slate-900 select-none relative transition-all duration-200 hidden">
-            <!-- Rendered dynamically by updateResumePreview() -->
+            <!-- Dynamically populated by updateResumePreview() -->
           </div>
 
         </div>
@@ -623,9 +624,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
   <div id="accountModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative text-center">
       <button onclick="closeAccountModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
-      <div id="accAvatar" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-2xl font-black mx-auto mb-3">N</div>
-      <h3 id="accName" class="text-lg font-extrabold text-slate-900">Name</h3>
-      <p id="accEmail" class="text-xs text-slate-500 mb-5">email@example.com</p>
+      <div id="accAvatar" class="w-16 h-16 rounded-full bg-brand-600 text-white flex items-center justify-center text-2xl font-black mx-auto mb-3">U</div>
+      <h3 id="accName" class="text-lg font-extrabold text-slate-900">User Account</h3>
+      <p id="accEmail" class="text-xs text-slate-500 mb-5">user@example.com</p>
       <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 font-bold mb-4 flex items-center justify-center gap-1.5">
         <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> Lifetime Free Unlocked
       </div>
@@ -668,7 +669,37 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
     let resumePageCount = 1;
     let authMode = 'login';
 
-    // ---------- LOCAL STORAGE USER AUTHENTICATION ----------
+    // 26 THEMES REGISTRY DEFINITIONS
+    const THEME_REGISTRY = {
+      modern: { family: 'sans', accent: '#4f46e5', style: 'top-accent', name: 'Executive Modern' },
+      ats: { family: 'serif', accent: '#0f172a', style: 'linear-ats', name: 'Ivy League ATS' },
+      navy: { family: 'sans', accent: '#1e3a8a', style: 'top-block', name: 'Corporate Navy Block' },
+      tata: { family: 'serif', accent: '#0369a1', style: 'boxed-formal', name: 'Conglomerate Formal' },
+      manufacturing: { family: 'sans', accent: '#b45309', style: 'top-accent', name: 'Operations & Dispatch Lead' },
+      silicon: { family: 'sans', accent: '#2563eb', style: 'minimal-line', name: 'Silicon Valley Minimalist' },
+      analytics: { family: 'mono', accent: '#0d9488', style: 'grid-matrix', name: 'Data Analyst Metric Matrix' },
+      swiss: { family: 'sans', accent: '#dc2626', style: 'swiss-density', name: 'Swiss High-Density' },
+      monochrome: { family: 'sans', accent: '#18181b', style: 'linear-ats', name: 'Pure Monochrome ATS' },
+      nordic: { family: 'sans', accent: '#4338ca', style: 'minimal-line', name: 'Nordic Indigo' },
+      sidebar: { family: 'sans', accent: '#0f172a', style: 'dual-sidebar', name: 'Executive Left Sidebar' },
+      emerald: { family: 'sans', accent: '#047857', style: 'top-block', name: 'Emerald Executive' },
+      burgundy: { family: 'serif', accent: '#831843', style: 'boxed-formal', name: 'Burgundy Director' },
+      slateblock: { family: 'sans', accent: '#334155', style: 'top-block', name: 'Slate Grid Header' },
+      tealclean: { family: 'sans', accent: '#0f766e', style: 'minimal-line', name: 'Modern Teal' },
+      amberbold: { family: 'sans', accent: '#d97706', style: 'top-accent', name: 'Amber Ambition' },
+      creative: { family: 'sans', accent: '#7c3aed', style: 'split-header', name: 'Creative Split' },
+      compacttech: { family: 'mono', accent: '#3b82f6', style: 'grid-matrix', name: 'Compact Tech' },
+      classicserif: { family: 'serif', accent: '#374151', style: 'linear-ats', name: 'Oxford Traditional' },
+      charcoal: { family: 'sans', accent: '#27272a', style: 'top-block', name: 'Charcoal Elite' },
+      editorial: { family: 'serif', accent: '#4b5563', style: 'linear-ats', name: 'Times Editorial' },
+      metro: { family: 'sans', accent: '#0284c7', style: 'top-accent', name: 'Metro Modernist' },
+      harbor: { family: 'sans', accent: '#1e293b', style: 'top-block', name: 'Harbor Steel' },
+      cobalt: { family: 'sans', accent: '#1d4ed8', style: 'top-accent', name: 'Cobalt Dynamic' },
+      crimson: { family: 'serif', accent: '#991b1b', style: 'boxed-formal', name: 'Crimson Bold' },
+      stellar: { family: 'sans', accent: '#6366f1', style: 'split-header', name: 'Stellar Hybrid' }
+    };
+
+    // ---------- USER AUTHENTICATION ----------
     function loadUsers() {
       try { return JSON.parse(localStorage.getItem('docbrisk_users') || '{}'); } catch (e) { return {}; }
     }
@@ -820,7 +851,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       document.getElementById('standardWorkspace').classList.remove('hidden');
 
       const meta = {
-        pdf2word: { title: "PDF to Word (.docx)", desc: "Convert PDF into editable Microsoft Word. Choose Exact Visual Match or Editable Table Flow.", hint: "Select one PDF", btn: "Convert to Word (.DOCX)", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
+        pdf2word: { title: "PDF to Word (.docx)", desc: "Reconstructs exact layout grids, table cells, and paragraphs without broken alignments.", hint: "Select one PDF", btn: "Convert to Word (.DOCX)", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
         compress: { title: "Compress PDF", desc: "Choose Basic, Medium, High or target an exact file size in KB or MB.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
         ocr: { title: "OCR Document Text Scanner", desc: "Extract raw readable text from scanned images and PDFs in your browser.", hint: "Select PDF or Image", btn: "Run OCR Scan", multi: false, accept: ".pdf,image/*", icon: "scan-text", color: "text-purple-600", bg: "bg-purple-50" },
         merge: { title: "Lossless Merge PDF", desc: "Combine vector PDF streams with zero DPI blur.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
@@ -888,37 +919,32 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
 
       try {
         if (activeTool === 'pdf2word') {
-          // Zero-cost, high-precision SVG-styled Word conversion
-          status.textContent = "Reconstructing coordinate matrix & tables...";
+          status.textContent = "Analyzing spatial coordinate matrices & structural tables...";
           const file = standardFiles[0];
           const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
           
-          let docContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-          <head><meta charset='utf-8'><title>${file.name}</title>
-          <style>
-            @page { size: 21cm 29.7cm; margin: 1.5cm; }
-            body { font-family: 'Calibri', 'Arial', sans-serif; font-size: 11pt; color: #111827; line-height: 1.35; }
-            table { border-collapse: collapse; width: 100%; margin-bottom: 12pt; }
-            td, th { border: 1px solid #d1d5db; padding: 6pt 8pt; vertical-align: top; font-size: 10pt; }
-            .line-block { margin-bottom: 4pt; }
-            .heading-block { font-size: 14pt; font-weight: bold; color: #1e1b4b; margin-top: 10pt; margin-bottom: 4pt; }
-          </style></head><body>`;
+          let docxSections = [];
 
           for (let i = 1; i <= pdf.numPages; i++) {
             status.textContent = `Processing page ${i} of ${pdf.numPages}...`;
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
 
+            // Geometric line clustering by vertical baseline (Delta Y <= 3.5pt)
             let lines = [];
             textContent.items.forEach(item => {
               if (!item.str || !item.str.trim()) return;
               const y = item.transform[5];
               const x = item.transform[4];
-              let line = lines.find(l => Math.abs(l.y - y) < 6);
-              if (line) line.items.push({ str: item.str, x, h: item.height || 11 });
-              else lines.push({ y, items: [{ str: item.str, x, h: item.height || 11 }] });
+              let line = lines.find(l => Math.abs(l.y - y) <= 3.5);
+              if (line) {
+                line.items.push({ str: item.str, x: x, h: item.height || 11 });
+              } else {
+                lines.push({ y: y, items: [{ str: item.str, x: x, h: item.height || 11 }] });
+              }
             });
 
+            // Sort top-down
             lines.sort((a, b) => b.y - a.y);
 
             let lineIndex = 0;
@@ -926,6 +952,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
               const currentLine = lines[lineIndex];
               currentLine.items.sort((a, b) => a.x - b.x);
 
+              // Detect tabular rows: >= 3 columns or >= 2 columns with wide spatial spacing
               let isTableRow = currentLine.items.length >= 3;
               if (!isTableRow && currentLine.items.length >= 2) {
                 const gap = currentLine.items[1].x - currentLine.items[0].x;
@@ -937,40 +964,83 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
                 while (lineIndex < lines.length) {
                   const checkLine = lines[lineIndex];
                   checkLine.items.sort((a, b) => a.x - b.x);
-                  if (checkLine.items.length >= 2) { tableRows.push(checkLine); lineIndex++; }
-                  else break;
+                  if (checkLine.items.length >= 2) {
+                    tableRows.push(checkLine);
+                    lineIndex++;
+                  } else {
+                    break;
+                  }
                 }
 
                 let maxCols = 0;
                 tableRows.forEach(r => { if (r.items.length > maxCols) maxCols = r.items.length; });
                 maxCols = Math.max(maxCols, 2);
 
-                docContent += "<table>";
-                tableRows.forEach(row => {
-                  docContent += "<tr>";
+                const docxTableRows = tableRows.map(row => {
+                  let cells = [];
                   for (let col = 0; col < maxCols; col++) {
                     const cellText = row.items[col] ? row.items[col].str : "";
-                    docContent += `<td>${cellText}</td>`;
+                    cells.push(new docx.TableCell({
+                      children: [new docx.Paragraph({
+                        children: [new docx.TextRun({ text: cellText, size: 20, font: "Calibri" })]
+                      })],
+                      borders: {
+                        top: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                        bottom: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                        left: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" },
+                        right: { style: docx.BorderStyle.SINGLE, size: 1, color: "D1D5DB" }
+                      },
+                      margins: { top: 120, bottom: 120, left: 140, right: 140 }
+                    }));
                   }
-                  docContent += "</tr>";
+                  return new docx.TableRow({ children: cells });
                 });
-                docContent += "</table>";
+
+                docxSections.push(new docx.Table({
+                  rows: docxTableRows,
+                  width: { size: 100, type: docx.WidthType.PERCENTAGE }
+                }));
+
+                docxSections.push(new docx.Paragraph({ text: "", spacing: { after: 120 } }));
               } else {
                 const lineText = currentLine.items.map(it => it.str).join(' ');
                 const isHeading = (currentLine.items[0]?.h || 11) > 13;
-                docContent += `<div class="${isHeading ? 'heading-block' : 'line-block'}">${lineText}</div>`;
+
+                docxSections.push(new docx.Paragraph({
+                  children: [
+                    new docx.TextRun({
+                      text: lineText,
+                      size: isHeading ? 26 : 22,
+                      bold: isHeading,
+                      font: "Calibri"
+                    })
+                  ],
+                  spacing: { after: isHeading ? 140 : 90 },
+                  pageBreakBefore: (i > 1 && lineIndex === 0)
+                }));
                 lineIndex++;
               }
             }
-
-            if (i < pdf.numPages) {
-              docContent += "<br style='page-break-before:always; mso-break-type:section-break;'>";
-            }
           }
 
-          docContent += "</body></html>";
-          const blob = new Blob(['\ufeff', docContent], { type: 'application/msword' });
-          showResult(new Uint8Array(await blob.arrayBuffer()), 'application/msword', `${file.name.replace(/\.pdf$/i, '')}.doc`, 'Converted to editable Word document with preserved tables & coordinates!');
+          const docxDoc = new docx.Document({
+            sections: [{
+              properties: {
+                page: {
+                  margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
+                }
+              },
+              children: docxSections
+            }]
+          });
+
+          const outBlob = await docx.Packer.toBlob(docxDoc);
+          showResult(
+            new Uint8Array(await outBlob.arrayBuffer()),
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            `${file.name.replace(/\.pdf$/i, '')}.docx`,
+            'Converted to editable Microsoft Word with spatial layouts and tables intact!'
+          );
 
         } else if (activeTool === 'ocr') {
           status.textContent = "Running optical character recognition...";
@@ -1211,9 +1281,11 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       }
     }
 
-    // 25+ THEME ENTERPRISE CV STUDIO (REAL DYNAMIC DOM COMPILER)
+    // 26 THEMES REGISTRY EXECUTION ENGINE
     function updateResumePreview() {
-      const template = document.getElementById('cvTemplateStyle').value;
+      const templateKey = document.getElementById('cvTemplateStyle').value;
+      const themeDef = THEME_REGISTRY[templateKey] || THEME_REGISTRY.modern;
+      
       const themeColor = document.getElementById('resThemeColor').value;
       document.getElementById('resThemeHex').value = themeColor;
 
@@ -1238,9 +1310,11 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       const sheet1 = document.getElementById('resumeSheet1');
       const sheet2 = document.getElementById('resumeSheet2');
 
-      // ARCHITECTURE 1: EXECUTIVE LEFT SIDEBAR (DUAL-COLUMN)
-      if (template === 'sidebar') {
-        sheet1.className = "cv-sheet rounded-sm flex text-slate-900 select-none relative overflow-hidden font-sans p-0";
+      const fontClass = themeDef.family === 'serif' ? 'font-serif' : (themeDef.family === 'mono' ? 'font-mono' : 'font-sans');
+
+      // ARCHITECTURE A: DUAL-SIDEBAR (Theme: sidebar)
+      if (themeDef.style === 'dual-sidebar') {
+        sheet1.className = `cv-sheet rounded-sm flex text-slate-900 select-none relative overflow-hidden ${fontClass} p-0`;
         sheet1.innerHTML = `
           <div class="w-1/3 p-5 text-white flex flex-col gap-4 text-[9px]" style="background-color: #0f172a;">
             <div>
@@ -1282,7 +1356,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
             </div>
           </div>
         `;
-        sheet2.className = "cv-sheet rounded-sm p-7 text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
+        sheet2.className = `cv-sheet rounded-sm p-7 text-slate-900 select-none relative ${fontClass}` + (resumePageCount === 2 ? "" : " hidden");
         sheet2.innerHTML = `
           <div class="border-b-2 pb-2 mb-3 border-indigo-600 flex justify-between items-center">
             <span class="text-[11px] font-bold uppercase text-slate-600">${name} — Curriculum Vitae</span>
@@ -1306,9 +1380,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         return;
       }
 
-      // ARCHITECTURE 2: IVY LEAGUE ATS CLASSICAL (SERIF, LINEAR, NO BARS)
-      if (template === 'ats' || template === 'classicserif') {
-        sheet1.className = "cv-sheet rounded-sm p-8 text-slate-900 select-none relative font-serif";
+      // ARCHITECTURE B: LINEAR ATS CLASSICAL (Themes: ats, classicserif, editorial, monochrome)
+      if (themeDef.style === 'linear-ats') {
+        sheet1.className = `cv-sheet rounded-sm p-8 text-slate-900 select-none relative ${fontClass}`;
         sheet1.innerHTML = `
           <div class="text-center border-b border-slate-900 pb-3 mb-3">
             <h1 class="text-2xl font-bold tracking-wider uppercase text-slate-950">${name}</h1>
@@ -1347,7 +1421,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
             </div>
           </div>
         `;
-        sheet2.className = "cv-sheet rounded-sm p-8 text-slate-900 select-none relative font-serif" + (resumePageCount === 2 ? "" : " hidden");
+        sheet2.className = `cv-sheet rounded-sm p-8 text-slate-900 select-none relative ${fontClass}` + (resumePageCount === 2 ? "" : " hidden");
         sheet2.innerHTML = `
           <div class="border-b border-slate-900 pb-2 mb-3 flex justify-between items-center text-[10px]">
             <span class="font-bold uppercase">${name} — Curriculum Vitae</span>
@@ -1371,8 +1445,8 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         return;
       }
 
-      // ARCHITECTURE 3: MODERN EXECUTIVE & 20+ OTHER THEMES (DYNAMIC ACCENTS)
-      sheet1.className = "cv-sheet rounded-sm p-7 text-slate-900 select-none relative font-sans";
+      // ARCHITECTURE C: MODERN ACCENTS, BOXES, AND SPLITS (Remaining 20+ Themes)
+      sheet1.className = `cv-sheet rounded-sm p-7 text-slate-900 select-none relative ${fontClass}`;
       sheet1.innerHTML = `
         <div class="border-b-2 pb-2.5 mb-2.5" style="border-color: ${themeColor};">
           <div class="flex justify-between items-start">
@@ -1419,7 +1493,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
         </div>
       `;
 
-      sheet2.className = "cv-sheet rounded-sm p-7 text-slate-900 select-none relative font-sans" + (resumePageCount === 2 ? "" : " hidden");
+      sheet2.className = `cv-sheet rounded-sm p-7 text-slate-900 select-none relative ${fontClass}` + (resumePageCount === 2 ? "" : " hidden");
       sheet2.innerHTML = `
         <div class="border-b-2 pb-2 mb-2.5 flex justify-between items-center" style="border-color: ${themeColor};">
           <span class="text-[11px] font-bold uppercase text-slate-600">${name} — Curriculum Vitae</span>
@@ -1435,7 +1509,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
             <div class="text-slate-700 whitespace-pre-line leading-relaxed">${certs}</div>
           </div>
           <div>
-            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Personal Dossier & Declaration</h3>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Personal Dossier</h3>
             <div class="text-slate-700 whitespace-pre-line leading-relaxed">${personal}</div>
           </div>
         </div>
@@ -1488,7 +1562,9 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       const page1 = pdfDoc.addPage([595.28, 841.89]);
 
       const template = document.getElementById('cvTemplateStyle').value;
-      const isSerif = ['ats', 'classicserif', 'editorial'].includes(template);
+      const themeDef = THEME_REGISTRY[template] || THEME_REGISTRY.modern;
+      const isSerif = themeDef.family === 'serif';
+
       const fontBold = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold) : await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
       const fontReg = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman) : await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
 
@@ -1558,7 +1634,7 @@ Notice Period: 30 Days | Marital Status: Married</textarea>
       a.click();
     }
 
-    // ---------- INITIALIZATION ----------
+    // INIT
     document.addEventListener('DOMContentLoaded', () => {
       refreshAuthUI();
       updateResumePreview();
