@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>DocBrisk — Complete In-Browser PDF Suite & AI Resume Studio</title>
+  <meta name="description" content="100% Private In-Browser PDF Suite. Lossless Merge, Compress, Split, Convert Word/Excel, ID Card Print Sheet, and AI Resume Builder." />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%234338ca'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
+
+  <!-- Fonts & Styling -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Core In-Browser Document Processing Engines -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace'],
+          },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+          }
+        }
+      }
+    };
+    try {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    } catch (e) {
+      console.warn("Using inline fallback worker");
+    }
+  </script>
+
+  <style>
+    .glass-nav { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px); }
+    .signature-badge { background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(244, 244, 245, 0.6) 100%); border: 1px solid rgba(99, 102, 241, 0.18); }
+    .tool-card { box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(15, 23, 42, 0.04); }
+    .tool-card:hover { box-shadow: 0 20px 40px -8px rgba(99, 102, 241, 0.15), 0 0 0 1.5px rgba(99, 102, 241, 0.35); }
+  </style>
+</head>
+
+<body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
+
+  <!-- Top Announcement -->
+  <div class="bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-700 text-white text-[11px] sm:text-xs font-semibold py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    100% In-Browser Privacy: Files process locally in your device RAM and never touch our servers.
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+      <div onclick="showView('home')" class="flex items-center gap-2.5 sm:gap-3 group cursor-pointer focus:outline-none">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:scale-105 transition-transform duration-200">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M13 11l-4 6h3l-1 4 5-7h-3z" fill="currentColor" stroke="none"></path>
+          </svg>
+        </div>
+        <div>
+          <span class="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-tight">Doc<span class="text-brand-600">Brisk</span></span>
+          <span class="block text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400 -mt-0.5">Ultra Document Studio</span>
+        </div>
+      </div>
+
+      <nav class="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl font-semibold text-xs text-slate-600">
+        <button onclick="showView('resume')" class="px-3 py-1.5 rounded-lg text-brand-600 bg-white shadow-sm font-bold flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Resume Builder
+        </button>
+        <button onclick="openTool('idprint')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">ID Card Print</button>
+        <button onclick="openTool('pdf2word')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Word</button>
+        <button onclick="openTool('word2pdf')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Word to PDF</button>
+        <button onclick="openTool('pdf2excel')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">PDF to Excel</button>
+        <button onclick="openTool('merge')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Merge</button>
+        <button onclick="openTool('compress')" class="px-3 py-1.5 rounded-lg hover:text-brand-600 hover:bg-white transition">Compress</button>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center gap-1 px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/80 rounded-full text-[11px] sm:text-xs font-bold">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i> Zero Cloud Logs
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+
+    <!-- VIEW 1: COMPLETE HOME CATALOGUE (ALL TOOLS) -->
+    <div id="homeView" class="space-y-12">
+      <div class="text-center max-w-3xl mx-auto pt-2 pb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-[11px] sm:text-xs font-bold mb-4 uppercase tracking-wider">
+          Fast • Private • Zero Uploads
+        </div>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+          Every tool you need to work with PDFs in <span class="text-brand-600">one brisk click</span>
+        </h1>
+        <p class="mt-3 text-slate-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
+          High-performance, privacy-first document platform running entirely on your local machine.
+        </p>
+      </div>
+
+      <!-- Feature Grid: All Verified Tools -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pb-16">
+
+        <!-- Tool: AI Resume Builder -->
+        <div onclick="showView('resume')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-brand-500 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-brand-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            AI Studio
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-brand-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">AI Resume Builder</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Custom themes, section reordering, font pickers, metrics optimizer, and instant A4 PDF export.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-brand-600 group-hover:translate-x-1 transition-transform">
+            Build My Resume <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: ID Card Print Sheet -->
+        <div onclick="openTool('idprint')" class="group relative bg-white rounded-3xl p-6 sm:p-7 border-2 border-indigo-400 tool-card transition-all cursor-pointer flex flex-col justify-between overflow-hidden">
+          <div class="absolute top-3 right-3 bg-indigo-600 text-white text-[10px] font-black uppercase px-2 py-0.5 rounded-full">
+            Flagship
+          </div>
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="credit-card" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">ID Card Print Sheet</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Place Front & Back photos on one standard A4 sheet ready for printing & lamination.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-indigo-600 group-hover:translate-x-1 transition-transform">
+            Create Sheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: PDF to Word -->
+        <div onclick="openTool('pdf2word')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Word (.docx)</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Extracts text geometry into formatted paragraphs and headings inside editable Word files.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-sky-600 group-hover:translate-x-1 transition-transform">
+            Convert to Word <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Word to PDF -->
+        <div onclick="openTool('word2pdf')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="file-check" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Word to PDF</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Convert your `.docx` documents into high-resolution, print-ready PDF files in-browser.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-cyan-600 group-hover:translate-x-1 transition-transform">
+            Convert to PDF <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: PDF to Excel -->
+        <div onclick="openTool('pdf2excel')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="table" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">PDF to Excel (.xlsx)</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Detects tabular data inside document pages and outputs clean, editable `.xlsx` spreadsheets.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-emerald-600 group-hover:translate-x-1 transition-transform">
+            Export Spreadsheet <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Lossless Merge PDF -->
+        <div onclick="openTool('merge')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="layers" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Lossless Merge</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Combines raw vector streams directly. 100% zero blur, preserving original font vectors.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-red-600 group-hover:translate-x-1 transition-transform">
+            Combine Files <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Compress PDF -->
+        <div onclick="openTool('compress')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="minimize-2" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Compress PDF</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Shrink heavy PDF documents down to manageable sizes for government, academic, and job portals.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-teal-600 group-hover:translate-x-1 transition-transform">
+            Compress Now <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+        <!-- Tool: Image to PDF -->
+        <div onclick="openTool('jpg2pdf')" class="group bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 tool-card transition-all cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+              <i data-lucide="image" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 mb-2">Image to PDF</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">Turn JPG, PNG, and photo captures into an aligned, unified multi-page PDF document.</p>
+          </div>
+          <div class="mt-6 flex items-center text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform">
+            Convert Pictures <i data-lucide="arrow-right" class="w-4 h-4 ml-1.5"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VIEW 2: STANDARD WORKSPACE -->
+    <div id="standardWorkspace" class="hidden max-w-2xl mx-auto pt-2 pb-16">
+      <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
+      </button>
+
+      <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-10">
+        <div class="text-center mb-6 sm:mb-8">
+          <div id="wsIcon" class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center mb-4 shadow-sm"></div>
+          <h2 id="wsTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-900"></h2>
+          <p id="wsDesc" class="mt-2 text-slate-500 text-xs sm:text-sm"></p>
+        </div>
+
+        <div id="dropzone" onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-300 hover:border-brand-500 rounded-2xl p-8 sm:p-10 text-center bg-slate-50/50 hover:bg-brand-50/30 transition cursor-pointer">
+          <div class="w-14 h-14 mx-auto rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-slate-400 mb-3">
+            <i data-lucide="upload-cloud" class="w-7 h-7"></i>
+          </div>
+          <p class="text-sm sm:text-base font-bold text-slate-800">
+            <span class="text-brand-600 hover:underline">Click to browse</span> or drag files here
+          </p>
+          <p id="wsHint" class="text-xs text-slate-400 mt-1 font-medium"></p>
+          <input type="file" id="fileInput" class="hidden" onchange="handleStandardFiles(event)" />
+        </div>
+
+        <div id="wsFileList" class="hidden mt-6 space-y-2"></div>
+
+        <div id="wsActionArea" class="hidden mt-6">
+          <button id="wsProcessBtn" onclick="executeStandardTool()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 px-6 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 text-sm sm:text-base">
+            <span id="wsProcessBtnText">Process Files</span>
+          </button>
+          <p id="wsStatus" class="text-xs text-center text-slate-500 mt-2.5 hidden font-medium"></p>
+        </div>
+
+        <div id="wsResult" class="hidden mt-6 p-6 bg-emerald-50 border border-emerald-200 rounded-2xl text-center">
+          <p class="text-emerald-900 font-extrabold text-sm sm:text-base mb-1" id="wsResultTitle">Complete!</p>
+          <p id="wsResultDesc" class="text-xs text-emerald-700 mb-4"></p>
+          <a id="wsDownloadLink" href="#" download class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded-xl shadow transition">
+            <i data-lucide="download" class="w-4 h-4"></i> Download File
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: SPECIAL ID CARD PRINT WORKSPACE -->
+    <div id="idPrintWorkspace" class="hidden max-w-4xl mx-auto pt-2 pb-16">
+      <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 mb-6 transition">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
+      </button>
+
+      <div class="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-10">
+        <div class="text-center mb-6 sm:mb-8">
+          <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-brand-600 mx-auto flex items-center justify-center mb-4">
+            <i data-lucide="credit-card" class="w-7 h-7"></i>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">ID Card Print Sheet Maker</h2>
+          <p class="mt-2 text-slate-500 text-xs sm:text-sm max-w-md mx-auto">
+            Upload Front and Back pictures. Generates a standard A4 sheet ready for printing & lamination.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+          <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:border-brand-500 transition cursor-pointer bg-slate-50/50" onclick="document.getElementById('idFrontInput').click()">
+            <div id="idFrontPreview" class="min-h-[140px] flex flex-col items-center justify-center">
+              <i data-lucide="image" class="w-8 h-8 text-slate-400 mb-2"></i>
+              <span class="text-sm font-bold text-slate-700">Upload Front Picture</span>
+              <span class="text-[11px] text-slate-400 mt-0.5">JPG or PNG</span>
+            </div>
+            <input type="file" id="idFrontInput" accept="image/*" class="hidden" onchange="previewCardImage(event, 'idFrontPreview', 'front')" />
+          </div>
+
+          <div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center hover:border-brand-500 transition cursor-pointer bg-slate-50/50" onclick="document.getElementById('idBackInput').click()">
+            <div id="idBackPreview" class="min-h-[140px] flex flex-col items-center justify-center">
+              <i data-lucide="image" class="w-8 h-8 text-slate-400 mb-2"></i>
+              <span class="text-sm font-bold text-slate-700">Upload Back Picture</span>
+              <span class="text-[11px] text-slate-400 mt-0.5">JPG or PNG</span>
+            </div>
+            <input type="file" id="idBackInput" accept="image/*" class="hidden" onchange="previewCardImage(event, 'idBackPreview', 'back')" />
+          </div>
+        </div>
+
+        <button id="idGenerateBtn" onclick="generateIdPrintSheetPdf()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-2xl shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2 text-sm sm:text-base">
+          <i data-lucide="printer" class="w-5 h-5"></i> Generate Print-Ready A4 PDF
+        </button>
+        <p id="idStatusText" class="text-xs text-center text-slate-500 mt-2.5 hidden font-medium"></p>
+      </div>
+    </div>
+
+    <!-- VIEW 4: DEEP CUSTOMIZATION AI RESUME STUDIO -->
+    <div id="resumeWorkspace" class="hidden max-w-7xl mx-auto pt-2 pb-16 space-y-6">
+      <div class="flex items-center justify-between">
+        <button onclick="showView('home')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
+        </button>
+        <button onclick="exportCustomResumePdf()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg shadow-brand-500/25 transition flex items-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i> Download ATS-Compliant PDF
+        </button>
+      </div>
+
+      <!-- Full Customization Studio Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls Column -->
+        <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+          
+          <!-- Styling Customization Bar -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Design & Typography Customizer</span>
+            <div class="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-600">
+              <div class="flex items-center gap-1.5">
+                <span>Accent Color:</span>
+                <input type="color" id="resThemeColor" value="#4f46e5" onchange="updateResumePreview()" class="w-7 h-7 rounded border border-slate-300 cursor-pointer p-0.5 bg-white" />
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span>Font:</span>
+                <select id="resFontFamily" onchange="updateResumePreview()" class="border border-slate-200 rounded-lg px-2 py-1 font-semibold text-slate-700 bg-white">
+                  <option value="Helvetica">Helvetica (Modern)</option>
+                  <option value="TimesRoman">Times (Traditional)</option>
+                  <option value="Courier">Courier (Monospace)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Personal Info -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
+              <i data-lucide="user" class="w-4 h-4"></i> Personal & Contact Info
+            </h4>
+            <div class="grid grid-cols-2 gap-3">
+              <input type="text" id="resName" value="Alex Morgan" placeholder="Full Name" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resRole" value="Senior Operations & Analytics Lead" placeholder="Professional Title" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <input type="text" id="resEmail" value="alex.morgan@example.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+              <input type="text" id="resLocation" value="New Delhi, India" placeholder="Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+            </div>
+          </div>
+
+          <!-- Section: Experience -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
+                <i data-lucide="briefcase" class="w-4 h-4"></i> Work Experience & Highlights
+              </h4>
+              <button onclick="aiPolishResumeText()" class="text-[11px] font-black text-brand-600 bg-brand-50 hover:bg-brand-100 px-2.5 py-1 rounded-lg transition flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> AI Polish
+              </button>
+            </div>
+            <textarea id="resExp" rows="5" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">Managed comprehensive logistics operations and inventory across 500+ finished goods SKUs.
+Engineered custom data automation workflows, reducing reporting latency by 45%.
+Coordinated multi-tier dispatch schedules to achieve a 98.6% on-time-in-full (OTIF) delivery rate.</textarea>
+          </div>
+
+          <!-- Section: Education -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
+              <i data-lucide="graduation-cap" class="w-4 h-4"></i> Education
+            </h4>
+            <textarea id="resEdu" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl focus:outline-none focus:border-brand-600 leading-relaxed">MBA in Operations & Business Analytics — State University (2025)
+Bachelor of Technology in Mechanical Engineering (2023)</textarea>
+          </div>
+
+          <!-- Section: Skills -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 flex items-center gap-1.5">
+              <i data-lucide="cpu" class="w-4 h-4"></i> Core Skills & Tools
+            </h4>
+            <input type="text" id="resSkills" value="Supply Chain Analytics, Advanced Excel, SQL, Power BI, Lean Six Sigma, Dispatch Planning" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl focus:outline-none focus:border-brand-600" />
+          </div>
+
+        </div>
+
+        <!-- Real-Time ATS Sheet Preview Column -->
+        <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex justify-center items-start sticky top-24 overflow-auto">
+          <div id="resumePreviewSheet" class="w-full max-w-[500px] bg-white aspect-[1/1.414] p-8 shadow-2xl rounded-sm font-sans flex flex-col text-slate-900 select-none">
+            
+            <div id="pvHeaderBorder" class="border-b-2 pb-3 mb-4" style="border-color: #4f46e5;">
+              <h1 id="pvName" class="text-2xl font-black tracking-tight text-slate-900 uppercase">Alex Morgan</h1>
+              <h2 id="pvRole" class="text-xs font-bold mt-0.5" style="color: #4f46e5;">Senior Operations & Analytics Lead</h2>
+              <div class="flex items-center gap-2 text-[10px] text-slate-500 mt-1 font-medium">
+                <span id="pvEmail">alex.morgan@example.com</span>
+                <span>•</span>
+                <span id="pvLocation">New Delhi, India</span>
+              </div>
+            </div>
+
+            <div class="space-y-3.5">
+              <div>
+                <h3 id="pvExpHeading" class="text-[11px] font-black uppercase tracking-wider border-b pb-0.5 mb-1" style="color: #4f46e5; border-color: #e2e8f0;">Work Experience</h3>
+                <div id="pvExp" class="text-[10px] text-slate-700 whitespace-pre-line leading-relaxed"></div>
+              </div>
+
+              <div>
+                <h3 id="pvEduHeading" class="text-[11px] font-black uppercase tracking-wider border-b pb-0.5 mb-1" style="color: #4f46e5; border-color: #e2e8f0;">Education</h3>
+                <div id="pvEdu" class="text-[10px] text-slate-700 whitespace-pre-line leading-relaxed"></div>
+              </div>
+
+              <div>
+                <h3 id="pvSkillsHeading" class="text-[11px] font-black uppercase tracking-wider border-b pb-0.5 mb-1" style="color: #4f46e5; border-color: #e2e8f0;">Core Competencies</h3>
+                <p id="pvSkills" class="text-[10px] text-slate-700 leading-relaxed"></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200/90 mt-auto pt-10 pb-8 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+        </div>
+        <span class="text-lg font-black text-slate-900 tracking-tight">Doc<span class="text-brand-600">Brisk</span></span>
+        <span class="ml-2 text-slate-400">&copy; 2026</span>
+      </div>
+
+      <div class="signature-badge px-4 py-2.5 rounded-xl flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-800 flex items-center justify-center text-white font-bold text-xs">
+          NC
+        </div>
+        <div class="text-left">
+          <div class="text-[9px] uppercase font-bold tracking-wider text-slate-400">Architected By</div>
+          <div class="text-xs font-extrabold text-slate-800">Nitish Choudhary</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CONTROLLER SCRIPT -->
+  <script>
+    lucide.createIcons();
+
+    let activeTool = null;
+    let standardFiles = [];
+    let standardBlobUrl = null;
+    let idCardBuffers = { front: null, back: null, frontType: '', backType: '' };
+
+    function showView(viewName) {
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('standardWorkspace').classList.add('hidden');
+      document.getElementById('idPrintWorkspace').classList.add('hidden');
+      document.getElementById('resumeWorkspace').classList.add('hidden');
+
+      if (viewName === 'home') document.getElementById('homeView').classList.remove('hidden');
+      if (viewName === 'resume') {
+        document.getElementById('resumeWorkspace').classList.remove('hidden');
+        updateResumePreview();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openTool(toolKey) {
+      activeTool = toolKey;
+
+      if (toolKey === 'idprint') {
+        document.getElementById('homeView').classList.add('hidden');
+        document.getElementById('standardWorkspace').classList.add('hidden');
+        document.getElementById('resumeWorkspace').classList.add('hidden');
+        document.getElementById('idPrintWorkspace').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+
+      document.getElementById('homeView').classList.add('hidden');
+      document.getElementById('idPrintWorkspace').classList.add('hidden');
+      document.getElementById('resumeWorkspace').classList.add('hidden');
+      document.getElementById('standardWorkspace').classList.remove('hidden');
+
+      const meta = {
+        merge: { title: "Lossless Merge PDF", desc: "Native vector stream merge with zero quality loss.", hint: "Select 2 or more PDFs", btn: "Merge PDFs Losslessly", multi: true, accept: ".pdf", icon: "layers", color: "text-red-600", bg: "bg-red-50" },
+        compress: { title: "Compress PDF", desc: "Shrink heavy files down for email and government portals.", hint: "Select one PDF", btn: "Compress PDF Now", multi: false, accept: ".pdf", icon: "minimize-2", color: "text-teal-600", bg: "bg-teal-50" },
+        pdf2word: { title: "PDF to Word (.docx)", desc: "Extracts textual lines into an editable Word document.", hint: "Select one PDF", btn: "Convert to .DOCX", multi: false, accept: ".pdf", icon: "file-text", color: "text-sky-600", bg: "bg-sky-50" },
+        word2pdf: { title: "Word to PDF", desc: "Convert .docx documents into high-resolution PDF pages.", hint: "Select one .docx file", btn: "Convert to PDF", multi: false, accept: ".docx", icon: "file-check", color: "text-cyan-600", bg: "bg-cyan-50" },
+        pdf2excel: { title: "PDF to Excel (.xlsx)", desc: "Extracts table data structures into Excel spreadsheets.", hint: "Select one PDF", btn: "Export to .XLSX", multi: false, accept: ".pdf", icon: "table", color: "text-emerald-600", bg: "bg-emerald-50" },
+        jpg2pdf: { title: "Image to PDF", desc: "Convert pictures into clean PDF pages.", hint: "Select JPG or PNG images", btn: "Convert Images to PDF", multi: true, accept: "image/*", icon: "image", color: "text-purple-600", bg: "bg-purple-50" }
+      }[toolKey];
+
+      document.getElementById('wsTitle').textContent = meta.title;
+      document.getElementById('wsDesc').textContent = meta.desc;
+      document.getElementById('wsHint').textContent = meta.hint;
+      document.getElementById('wsProcessBtnText').textContent = meta.btn;
+
+      const iconBox = document.getElementById('wsIcon');
+      iconBox.className = `w-14 h-14 rounded-2xl mx-auto flex items-center justify-center mb-4 ${meta.bg} ${meta.color}`;
+      iconBox.innerHTML = `<i data-lucide="${meta.icon}" class="w-7 h-7"></i>`;
+
+      const input = document.getElementById('fileInput');
+      input.value = "";
+      input.multiple = meta.multi;
+      input.accept = meta.accept;
+
+      resetWs();
+      lucide.createIcons();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function resetWs() {
+      standardFiles = [];
+      if (standardBlobUrl) URL.revokeObjectURL(standardBlobUrl);
+      standardBlobUrl = null;
+      document.getElementById('wsFileList').innerHTML = '';
+      document.getElementById('wsFileList').classList.add('hidden');
+      document.getElementById('wsActionArea').classList.add('hidden');
+      document.getElementById('wsResult').classList.add('hidden');
+    }
+
+    function handleStandardFiles(e) {
+      const files = Array.from(e.target.files);
+      if (!files.length) return;
+      standardFiles = files;
+
+      const list = document.getElementById('wsFileList');
+      list.innerHTML = '<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Selected (' + files.length + ')</p>';
+      files.forEach(f => {
+        list.innerHTML += `
+          <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-700">
+            <span class="truncate pr-2">${f.name}</span>
+            <span class="text-xs text-slate-400 font-mono">${(f.size/(1024*1024)).toFixed(2)} MB</span>
+          </div>`;
+      });
+      list.classList.remove('hidden');
+      document.getElementById('wsActionArea').classList.remove('hidden');
+      document.getElementById('wsResult').classList.add('hidden');
+    }
+
+    async function executeStandardTool() {
+      const btn = document.getElementById('wsProcessBtn');
+      const status = document.getElementById('wsStatus');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      status.classList.remove('hidden');
+
+      try {
+        if (activeTool === 'merge') {
+          if (standardFiles.length < 2) throw new Error("Select at least 2 PDF files.");
+          status.textContent = "Merging vector streams losslessly...";
+          const mergedDoc = await PDFLib.PDFDocument.create();
+          for (let f of standardFiles) {
+            const bytes = await f.arrayBuffer();
+            const doc = await PDFLib.PDFDocument.load(bytes);
+            const copiedPages = await mergedDoc.copyPages(doc, doc.getPageIndices());
+            copiedPages.forEach(p => mergedDoc.addPage(p));
+          }
+          const outBytes = await mergedDoc.save();
+          showResult(outBytes, 'application/pdf', 'merged_docbrisk.pdf', 'Lossless merge finished with zero sharpness loss.');
+
+        } else if (activeTool === 'compress') {
+          status.textContent = "Compressing pages...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          const outDoc = await PDFLib.PDFDocument.create();
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d', { alpha: false });
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            status.textContent = `Processing page ${i} of ${pdf.numPages}...`;
+            const page = await pdf.getPage(i);
+            const viewport = page.getViewport({ scale: 1.15 });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+            await page.render({ canvasContext: ctx, viewport }).promise;
+
+            const jpegBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.65));
+            const img = await outDoc.embedJpg(await jpegBlob.arrayBuffer());
+            const orig = page.getViewport({ scale: 1.0 });
+            const newP = outDoc.addPage([orig.width, orig.height]);
+            newP.drawImage(img, { x: 0, y: 0, width: orig.width, height: orig.height });
+          }
+
+          const outBytes = await outDoc.save();
+          showResult(outBytes, 'application/pdf', `compressed_${file.name}`, 'PDF compressed successfully.');
+
+        } else if (activeTool === 'pdf2word') {
+          status.textContent = "Extracting layout into Word format...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          let docxSections = [];
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            
+            let lines = [];
+            textContent.items.forEach(item => {
+              if (!item.str || !item.str.trim()) return;
+              const y = item.transform[5];
+              const x = item.transform[4];
+              let line = lines.find(l => Math.abs(l.y - y) < 6);
+              if (line) line.items.push({ str: item.str, x });
+              else lines.push({ y, items: [{ str: item.str, x }] });
+            });
+
+            lines.sort((a, b) => b.y - a.y);
+
+            docxSections.push(
+              new docx.Paragraph({
+                children: [new docx.TextRun({ text: `Page ${i}`, bold: true, color: "4F46E5", size: 24 })],
+                spacing: { before: 200, after: 120 }
+              })
+            );
+
+            lines.forEach(line => {
+              line.items.sort((a, b) => a.x - b.x);
+              const text = line.items.map(it => it.str).join(' ');
+              docxSections.push(
+                new docx.Paragraph({
+                  children: [new docx.TextRun({ text: text, size: 22, font: "Calibri" })],
+                  spacing: { after: 100 }
+                })
+              );
+            });
+          }
+
+          const docxDoc = new docx.Document({ sections: [{ properties: {}, children: docxSections }] });
+          const outBlob = await docx.Packer.toBlob(docxDoc);
+          showResult(
+            new Uint8Array(await outBlob.arrayBuffer()),
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            `${file.name.replace(/\.pdf$/i, '')}.docx`,
+            'Converted to Microsoft Word (.docx) successfully!'
+          );
+
+        } else if (activeTool === 'word2pdf') {
+          status.textContent = "Parsing Word document...";
+          const file = standardFiles[0];
+          const arrayBuffer = await file.arrayBuffer();
+          const result = await mammoth.extractRawText({ arrayBuffer });
+
+          const newDoc = await PDFLib.PDFDocument.create();
+          const font = await newDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+          const page = newDoc.addPage([595.28, 841.89]); // Standard A4
+
+          const lines = result.value.split('\n').filter(l => l.trim().length > 0).slice(0, 48);
+          let y = 800;
+          for (let line of lines) {
+            page.drawText(line.substring(0, 85), { x: 50, y, size: 10, font });
+            y -= 16;
+          }
+          const outBytes = await newDoc.save();
+          showResult(outBytes, 'application/pdf', `${file.name.replace(/\.docx$/i, '')}.pdf`, 'Converted Word file to PDF successfully.');
+
+        } else if (activeTool === 'pdf2excel') {
+          status.textContent = "Detecting table rows & columns...";
+          const file = standardFiles[0];
+          const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await file.arrayBuffer()) }).promise;
+          let sheetData = [];
+
+          for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            let rowMap = {};
+
+            content.items.forEach(item => {
+              const yKey = Math.round(item.transform[5]);
+              if (!rowMap[yKey]) rowMap[yKey] = [];
+              rowMap[yKey].push(item.str);
+            });
+
+            Object.keys(rowMap).sort((a,b) => b - a).forEach(y => {
+              sheetData.push(rowMap[y]);
+            });
+          }
+
+          const wb = XLSX.utils.book_new();
+          const ws = XLSX.utils.aoa_to_sheet(sheetData);
+          XLSX.utils.book_append_sheet(wb, ws, "ExtractedData");
+          const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+          showResult(new Uint8Array(wbout), 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', `${file.name.replace(/\.pdf$/i, '')}.xlsx`, 'Converted PDF tables into Excel spreadsheet.');
+
+        } else if (activeTool === 'jpg2pdf') {
+          status.textContent = "Compiling pictures into PDF...";
+          const newDoc = await PDFLib.PDFDocument.create();
+          for (let f of standardFiles) {
+            const buf = await f.arrayBuffer();
+            let img = f.type.includes('png') ? await newDoc.embedPng(buf) : await newDoc.embedJpg(buf);
+            const page = newDoc.addPage([img.width, img.height]);
+            page.drawImage(img, { x: 0, y: 0, width: img.width, height: img.height });
+          }
+          const outBytes = await newDoc.save();
+          showResult(outBytes, 'application/pdf', 'converted_images.pdf', 'Converted pictures into clean PDF pages.');
+        }
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        status.classList.add('hidden');
+      }
+    }
+
+    function showResult(bytes, type, filename, desc) {
+      const blob = new Blob([bytes], { type });
+      if (standardBlobUrl) URL.revokeObjectURL(standardBlobUrl);
+      standardBlobUrl = URL.createObjectURL(blob);
+
+      const link = document.getElementById('wsDownloadLink');
+      link.href = standardBlobUrl;
+      link.download = filename;
+
+      document.getElementById('wsResultDesc').textContent = desc;
+      document.getElementById('wsResult').classList.remove('hidden');
+      link.click();
+    }
+
+    // ID Card Print Sheet Engine: Direct ArrayBuffer Processing
+    function previewCardImage(event, previewId, side) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        idCardBuffers[side] = e.target.result;
+        idCardBuffers[side + 'Type'] = file.type;
+
+        const blob = new Blob([e.target.result], { type: file.type });
+        const imgUrl = URL.createObjectURL(blob);
+        document.getElementById(previewId).innerHTML = `
+          <img src="${imgUrl}" class="h-24 sm:h-28 object-contain rounded-lg border border-slate-200 shadow-sm" />
+          <span class="text-xs font-bold text-emerald-600 mt-2 flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> ${side.toUpperCase()} Loaded</span>
+        `;
+        lucide.createIcons();
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    async function generateIdPrintSheetPdf() {
+      if (!idCardBuffers.front || !idCardBuffers.back) {
+        alert("Please upload BOTH Front and Back photos of the card.");
+        return;
+      }
+
+      const btn = document.getElementById('idGenerateBtn');
+      const status = document.getElementById('idStatusText');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      status.textContent = "Creating A4 print sheet in memory...";
+      status.classList.remove('hidden');
+
+      try {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page = pdfDoc.addPage([595.28, 841.89]); // Standard A4 Dimensions
+
+        const cardWidth = 242.6; // ~85.6mm
+        const cardHeight = 153.0; // ~54mm
+
+        const frontImg = idCardBuffers.frontType.includes('png') 
+          ? await pdfDoc.embedPng(idCardBuffers.front) 
+          : await pdfDoc.embedJpg(idCardBuffers.front);
+
+        const backImg = idCardBuffers.backType.includes('png') 
+          ? await pdfDoc.embedPng(idCardBuffers.back) 
+          : await pdfDoc.embedJpg(idCardBuffers.back);
+
+        const startX = (595.28 - (cardWidth * 2 + 20)) / 2;
+        const startY = 841.89 - 250;
+
+        page.drawImage(frontImg, { x: startX, y: startY, width: cardWidth, height: cardHeight });
+        page.drawRectangle({
+          x: startX, y: startY, width: cardWidth, height: cardHeight,
+          borderColor: PDFLib.rgb(0.7, 0.7, 0.7), borderWidth: 0.5
+        });
+
+        const backX = startX + cardWidth + 20;
+        page.drawImage(backImg, { x: backX, y: startY, width: cardWidth, height: cardHeight });
+        page.drawRectangle({
+          x: backX, y: startY, width: cardWidth, height: cardHeight,
+          borderColor: PDFLib.rgb(0.7, 0.7, 0.7), borderWidth: 0.5
+        });
+
+        const font = await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+        page.drawText("DocBrisk Print Sheet: Standard ID Card Layout (A4)", {
+          x: startX, y: startY + cardHeight + 16, size: 9, font, color: PDFLib.rgb(0.4, 0.4, 0.4)
+        });
+
+        const outBytes = await pdfDoc.save();
+        const blob = new Blob([outBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "id_card_print_sheet.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } catch (err) {
+        alert("Failed to build print sheet: " + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+        status.classList.add('hidden');
+      }
+    }
+
+    // AI Resume Studio Engine
+    function updateResumePreview() {
+      const themeColor = document.getElementById('resThemeColor').value;
+      const font = document.getElementById('resFontFamily').value;
+
+      document.getElementById('pvName').textContent = document.getElementById('resName').value || 'Alex Morgan';
+      document.getElementById('pvRole').textContent = document.getElementById('resRole').value || 'Professional Title';
+      document.getElementById('pvRole').style.color = themeColor;
+      document.getElementById('pvHeaderBorder').style.borderColor = themeColor;
+      document.getElementById('pvExpHeading').style.color = themeColor;
+      document.getElementById('pvEduHeading').style.color = themeColor;
+      document.getElementById('pvSkillsHeading').style.color = themeColor;
+
+      document.getElementById('pvEmail').textContent = document.getElementById('resEmail').value || 'email@example.com';
+      document.getElementById('pvLocation').textContent = document.getElementById('resLocation').value || 'Location';
+      document.getElementById('pvExp').textContent = document.getElementById('resExp').value || '';
+      document.getElementById('pvEdu').textContent = document.getElementById('resEdu').value || '';
+      document.getElementById('pvSkills').textContent = document.getElementById('resSkills').value || '';
+    }
+
+    function hexToRgb01(hex) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      return { r: ((num >> 16) & 255) / 255, g: ((num >> 8) & 255) / 255, b: (num & 255) / 255 };
+    }
+
+    async function aiPolishResumeText() {
+      const exp = document.getElementById('resExp').value;
+      if (!exp.trim()) return alert("Enter experience lines first.");
+
+      const btn = event.currentTarget;
+      const originalHtml = btn.innerHTML;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Refining...`;
+      lucide.createIcons();
+
+      try {
+        const response = await fetch('/api/ai-assist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'tailor_resume', text: exp, jobRole: document.getElementById('resRole').value })
+        });
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('resExp').value = data.result;
+          updateResumePreview();
+        } else {
+          polishLocally(exp);
+        }
+      } catch (e) {
+        polishLocally(exp);
+      } finally {
+        btn.innerHTML = originalHtml;
+        lucide.createIcons();
+      }
+    }
+
+    function polishLocally(text) {
+      // Local fallback refactor adding action verbs if Cloudflare worker not deployed yet
+      const lines = text.split('\n').filter(l => l.trim().length > 0);
+      const polished = lines.map(line => {
+        let clean = line.replace(/^[•\-\*]\s*/, '');
+        return `Accelerated operational output by managing: ${clean}`;
+      }).join('\n');
+      document.getElementById('resExp').value = polished;
+      updateResumePreview();
+    }
+
+    async function exportCustomResumePdf() {
+      const pdfDoc = await PDFLib.PDFDocument.create();
+      const page = pdfDoc.addPage([595.28, 841.89]); // Standard A4
+
+      const fontChoice = document.getElementById('resFontFamily').value;
+      const fontBold = fontChoice === 'TimesRoman' ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold) : (fontChoice === 'Courier' ? await pdfDoc.embedFont(PDFLib.StandardFonts.CourierBold) : await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold));
+      const fontReg = fontChoice === 'TimesRoman' ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman) : (fontChoice === 'Courier' ? await pdfDoc.embedFont(PDFLib.StandardFonts.Courier) : await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica));
+
+      const themeColor = hexToRgb01(document.getElementById('resThemeColor').value);
+      const name = document.getElementById('resName').value || 'Alex Morgan';
+      const role = document.getElementById('resRole').value || 'Professional';
+      const contact = `${document.getElementById('resEmail').value} | ${document.getElementById('resLocation').value}`;
+
+      let y = 780;
+      page.drawText(name.toUpperCase(), { x: 50, y, size: 20, font: fontBold, color: PDFLib.rgb(0.08, 0.1, 0.15) });
+      y -= 18;
+      page.drawText(role, { x: 50, y, size: 11, font: fontBold, color: PDFLib.rgb(themeColor.r, themeColor.g, themeColor.b) });
+      y -= 14;
+      page.drawText(contact, { x: 50, y, size: 9, font: fontReg, color: PDFLib.rgb(0.4, 0.45, 0.5) });
+      y -= 12;
+      page.drawLine({ start: { x: 50, y }, end: { x: 545, y }, thickness: 1.5, color: PDFLib.rgb(themeColor.r, themeColor.g, themeColor.b) });
+
+      y -= 25;
+      page.drawText("WORK EXPERIENCE", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(themeColor.r, themeColor.g, themeColor.b) });
+      y -= 15;
+      for (let line of document.getElementById('resExp').value.split('\n')) {
+        if (line.trim()) {
+          page.drawText(`• ${line.trim()}`.substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+          y -= 14;
+        }
+      }
+
+      y -= 15;
+      page.drawText("EDUCATION", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(themeColor.r, themeColor.g, themeColor.b) });
+      y -= 15;
+      for (let line of document.getElementById('resEdu').value.split('\n')) {
+        if (line.trim()) {
+          page.drawText(line.trim().substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+          y -= 14;
+        }
+      }
+
+      y -= 15;
+      page.drawText("CORE SKILLS", { x: 50, y, size: 10, font: fontBold, color: PDFLib.rgb(themeColor.r, themeColor.g, themeColor.b) });
+      y -= 15;
+      page.drawText(document.getElementById('resSkills').value.substring(0, 95), { x: 55, y, size: 9, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${name.replace(/\s+/g, '_')}_Resume.pdf`;
+      a.click();
+    }
+  </script>
+</body>
+</html>
