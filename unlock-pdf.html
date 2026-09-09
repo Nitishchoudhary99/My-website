@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Free PDF Password Remover & Unlocker — DocBrisk</title>
+  <meta name="description" content="Unlock password-protected PDF files instantly in your browser. Remove user and owner restrictions with zero data transmission to external servers." />
+  <link rel="canonical" href="https://docbrisk.com/unlock-pdf.html" />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+          colors: { brand: { 500: '#6366f1', 600: '#4f46e5' } }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="text-xl font-black text-slate-900">Doc<span class="text-indigo-600">Brisk</span></span>
+      </a>
+      <nav class="flex items-center gap-5 text-xs sm:text-sm font-semibold text-slate-600">
+        <a href="pdf-to-word.html" class="hover:text-indigo-600">PDF to Word</a>
+        <a href="unlock-pdf.html" class="text-indigo-600 font-bold">Unlock PDF</a>
+        <a href="cv-studio.html" class="hover:text-indigo-600">CV Studio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-4xl mx-auto px-4 py-12 w-full">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-black text-slate-900">Unlock Password-Protected PDF Files</h1>
+      <p class="mt-2 text-slate-600 text-sm sm:text-base">
+        Strip printing, copying, and password restrictions directly on your computer.
+      </p>
+    </div>
+
+    <div class="bg-white border-2 border-dashed border-rose-300 rounded-3xl p-8 text-center max-w-xl mx-auto shadow-sm">
+      <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="unlock" class="w-7 h-7"></i>
+      </div>
+      <h2 class="text-base font-bold text-slate-900 mb-2">Upload your encrypted PDF</h2>
+      <input type="file" id="unlockFile" accept="application/pdf" class="text-xs text-slate-500 mb-4" />
+      <div class="mt-2">
+        <input type="password" id="pdfPassword" placeholder="Enter password (if known)" class="px-4 py-2 border border-slate-300 rounded-lg text-xs w-full max-w-xs focus:ring-2 focus:ring-rose-500 outline-none" />
+      </div>
+      <button class="mt-4 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition">
+        Decrypt & Download PDF
+      </button>
+    </div>
+
+    <article class="mt-14 space-y-6 text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-8">
+      <h2 class="text-xl font-bold text-slate-900">How Client-Side PDF Decryption Works</h2>
+      <p>
+        DocBrisk processes the binary file directly via WebAssembly instances of `pdf-lib`. When the decryption key is supplied or permissions are stripped, the PDF is reserialized without the encryption dictionary flag. Because this operation completes within the browser engine, confidential documents like salary slips, bank records, and legal briefs never touch a third-party server.
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-500 bg-white">
+    © 2026 DocBrisk Enterprise Studio
+  </footer>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
