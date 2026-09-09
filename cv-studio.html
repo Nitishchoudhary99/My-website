@@ -3,71 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Free ATS Resume Builder & CV Studio (26 Formats) — DocBrisk</title>
-  <meta name="description" content="Build ATS-compliant resumes with 26 Indian Corporate and Global MNC templates. Vector PDF output, live preview, and total privacy." />
+  <title>Free ATS Resume Builder & CV Studio — DocBrisk</title>
+  <meta name="description" content="Build ATS-compliant resumes with MNC & Corporate templates. Vector PDF output, live preview, and total privacy." />
   <link rel="canonical" href="https://docbrisk.com/cv-studio.html" />
   <meta name="robots" content="index, follow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="bg-[#F8FAFC] text-slate-800 min-h-screen flex flex-col font-sans">
 
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #cv-preview-sheet, #cv-preview-sheet * { visibility: visible; }
+      #cv-preview-sheet {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="text-xl font-black text-slate-900">Doc<span class="text-indigo-600">Brisk</span></a>
-      <nav class="flex items-center gap-4 text-xs font-bold text-slate-600">
-        <a href="pdf-to-word.html" class="hover:text-indigo-600">PDF to Word</a>
-        <a href="unlock-pdf.html" class="hover:text-indigo-600">Unlock PDF</a>
-        <a href="cv-studio.html" class="text-indigo-600">CV Studio</a>
+      <a href="index.html" class="flex items-center gap-2">
+        <span class="text-xl font-black tracking-tight text-slate-900">Doc<span class="text-indigo-600">Brisk</span></span>
+        <span class="text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">Studio</span>
+      </a>
+
+      <nav class="flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="index.html" class="hover:text-indigo-600 transition">All Tools</a>
+        <a href="pdf-to-word.html" class="hover:text-indigo-600 transition">PDF to Word</a>
+        <a href="unlock-pdf.html" class="hover:text-indigo-600 transition">Unlock PDF</a>
+        <a href="cv-studio.html" class="text-indigo-600 font-bold">CV Studio</a>
       </nav>
     </div>
   </header>
 
-  <main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
-    <div class="text-center max-w-3xl mx-auto mb-12">
-      <h1 class="text-3xl sm:text-5xl font-black text-slate-900">
-        MNC & Indian Corporate CV Studio
-      </h1>
-      <p class="mt-3 text-slate-600 text-sm sm:text-base">
-        Generate professional ATS-friendly resumes optimized for hiring algorithms, campus placements, and global recruitment standards.
-      </p>
+  <!-- Main Studio Workspace -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-black text-slate-900">ATS Resume Studio</h1>
+        <p class="text-sm text-slate-500">Live single-column layout optimized for Taleo, Workday, and enterprise ATS screening.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="window.print()" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-sm transition">
+          <i data-lucide="download" class="w-4 h-4"></i> Export PDF
+        </button>
+      </div>
     </div>
 
-    <!-- Feature Highlights -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-      <div class="bg-white p-6 rounded-2xl border border-slate-200">
-        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
-          <i data-lucide="check-circle" class="w-5 h-5"></i>
+    <!-- Dual Panes: Form & Preview -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Editor Form -->
+      <section class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Editor Controls</h2>
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
+          <input id="input-name" type="text" value="Nitish Choudhary" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
         </div>
-        <h2 class="font-bold text-slate-900 text-base mb-1">ATS-Optimized Parsing</h2>
-        <p class="text-xs text-slate-600">Structured semantic markup ensures Workday, Taleo, and Greenhouse parse your work experience cleanly.</p>
-      </div>
 
-      <div class="bg-white p-6 rounded-2xl border border-slate-200">
-        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
-          <i data-lucide="layout" class="w-5 h-5"></i>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Professional Headline</label>
+          <input id="input-role" type="text" value="Business & Operations Analyst | Supply Chain Specialist" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
         </div>
-        <h2 class="font-bold text-slate-900 text-base mb-1">26 Professional Themes</h2>
-        <p class="text-xs text-slate-600">Switch dynamically between single-column engineering templates, executive layouts, and academic CVs.</p>
-      </div>
 
-      <div class="bg-white p-6 rounded-2xl border border-slate-200">
-        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
-          <i data-lucide="shield-check" class="w-5 h-5"></i>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Email</label>
+            <input id="input-email" type="email" value="contact@docbrisk.com" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Location</label>
+            <input id="input-location" type="text" value="Gurugram, India" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+          </div>
         </div>
-        <h2 class="font-bold text-slate-900 text-base mb-1">Total Career Data Privacy</h2>
-        <p class="text-xs text-slate-600">Your salary details, phone number, and career history remain safely in your browser storage.</p>
-      </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Executive Summary</label>
+          <textarea id="input-summary" rows="3" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()">Results-driven analyst experienced in inventory optimization, SAP MM/SD, dispatch reconciliation, and operational reporting.</textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Core Skills (Comma-separated)</label>
+          <input id="input-skills" type="text" value="SAP MM/SD, Inventory Optimization, Advanced Excel (VBA/Lambda), Power BI, OTIF Tracking" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Experience (One bullet per line)</label>
+          <textarea id="input-experience" rows="5" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()">Executive - Operations & Dispatch | Livpure Smart Homes (2023 - Present)
+- Managed FG warehouse inventory reconciliations and dispatch tracking across pan-India nodes.
+- Automated daily KPI sheets via Excel Lambda and VBA, reducing operational reporting turnaround by 35%.
+- Maintained 98%+ OTIF delivery schedules through proactive bottleneck mitigation.</textarea>
+        </div>
+      </section>
+
+      <!-- Preview Canvas -->
+      <section class="lg:col-span-7 flex flex-col items-center">
+        <div id="cv-preview-sheet" class="w-full bg-white border border-slate-300 rounded-lg p-10 shadow-md font-sans text-slate-800 text-[13px] leading-relaxed max-w-[720px]">
+          <div class="text-center border-b border-slate-300 pb-4 mb-4">
+            <h1 id="pv-name" class="text-xl font-bold uppercase tracking-wide text-slate-900">Nitish Choudhary</h1>
+            <p id="pv-role" class="text-xs font-semibold text-slate-700 mt-0.5">Business & Operations Analyst</p>
+            <p class="text-[11px] text-slate-500 mt-1">
+              <span id="pv-location">Gurugram, India</span> | <span id="pv-email">contact@docbrisk.com</span>
+            </p>
+          </div>
+
+          <div class="mb-4">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-1.5">Professional Summary</h2>
+            <p id="pv-summary" class="text-slate-700 text-justify"></p>
+          </div>
+
+          <div class="mb-4">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-1.5">Key Competencies</h2>
+            <p id="pv-skills" class="text-slate-700"></p>
+          </div>
+
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-1.5">Work Experience</h2>
+            <div id="pv-experience" class="text-slate-700 space-y-1"></div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </main>
 
   <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-500 bg-white">
-    © 2026 DocBrisk Enterprise Studio
+    © 2026 DocBrisk Enterprise Studio. All tools process documents client-side.
   </footer>
-  <script>lucide.createIcons();</script>
+
+  <script>
+    function renderPreview() {
+      document.getElementById('pv-name').innerText = document.getElementById('input-name').value || 'Your Name';
+      document.getElementById('pv-role').innerText = document.getElementById('input-role').value;
+      document.getElementById('pv-email').innerText = document.getElementById('input-email').value;
+      document.getElementById('pv-location').innerText = document.getElementById('input-location').value;
+      document.getElementById('pv-summary').innerText = document.getElementById('input-summary').value;
+      document.getElementById('pv-skills').innerText = document.getElementById('input-skills').value;
+
+      const expLines = document.getElementById('input-experience').value.split('\n');
+      const expContainer = document.getElementById('pv-experience');
+      expContainer.innerHTML = '';
+      expLines.forEach(line => {
+        if (line.trim().startsWith('-')) {
+          const li = document.createElement('div');
+          li.className = 'pl-4 relative before:content-["•"] before:absolute before:left-1 text-slate-700';
+          li.innerText = line.replace(/^-+\s*/, '');
+          expContainer.appendChild(li);
+        } else if (line.trim().length > 0) {
+          const h = document.createElement('div');
+          h.className = 'font-bold text-slate-900 mt-2';
+          h.innerText = line;
+          expContainer.appendChild(h);
+        }
+      });
+    }
+
+    renderPreview();
+    lucide.createIcons();
+  </script>
 </body>
 </html>
