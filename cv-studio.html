@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Free ATS Resume Builder & CV Studio — DocBrisk</title>
-  <meta name="description" content="Build ATS-compliant resumes with MNC & Corporate templates. Vector PDF output, live preview, and total privacy." />
+  <title>ATS Resume Studio & MNC CV Builder — DocBrisk</title>
+  <meta name="description" content="Free ATS resume builder by DocBrisk. Single-column formats tested against Taleo, Workday, and Greenhouse. Export crisp vector PDFs directly from your browser." />
   <link rel="canonical" href="https://docbrisk.com/cv-studio.html" />
   <meta name="robots" content="index, follow" />
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="ATS Resume Studio & MNC CV Builder — DocBrisk" />
+  <meta property="og:description" content="Build recruiter-screened, ATS-compliant single-column resumes with real-time vector PDF export." />
+  <meta property="og:url" content="https://docbrisk.com/cv-studio.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts & Scripts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -22,159 +29,389 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-        border: none;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0.5in !important;
+        box-shadow: none !important;
+        border: none !important;
       }
       .no-print { display: none !important; }
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans">
+<body class="bg-[#F8FAFC] text-slate-800 min-h-screen flex flex-col font-['Inter',sans-serif]">
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2">
-        <span class="text-xl font-black tracking-tight text-slate-900">Doc<span class="text-indigo-600">Brisk</span></span>
-        <span class="text-[10px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full border border-indigo-100">Studio</span>
+  <!-- Top Announcement Bar -->
+  <div class="bg-indigo-600 text-white text-xs font-medium py-2 px-4 text-center tracking-wide">
+    Part of the <strong>DocBrisk</strong> document productivity suite. 100% client-side privacy.
+  </div>
+
+  <!-- Global Navigation (Directly Connected to index.html) -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2 group">
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md group-hover:scale-105 transition duration-200">
+          D
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
+            Doc<span class="text-indigo-600">Brisk</span>
+          </span>
+          <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase mt-0.5">Document Suite</span>
+        </div>
       </a>
 
-      <nav class="flex items-center gap-6 text-sm font-semibold text-slate-600">
-        <a href="index.html" class="hover:text-indigo-600 transition">All Tools</a>
-        <a href="pdf-to-word.html" class="hover:text-indigo-600 transition">PDF to Word</a>
-        <a href="unlock-pdf.html" class="hover:text-indigo-600 transition">Unlock PDF</a>
-        <a href="cv-studio.html" class="text-indigo-600 font-bold">CV Studio</a>
+      <!-- Tools Navigation Bar -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
+        <a href="index.html" class="hover:text-indigo-600 transition flex items-center gap-1.5">
+          <i data-lucide="layout-grid" class="w-4 h-4"></i> All Tools
+        </a>
+        <a href="pdf-to-word.html" class="hover:text-indigo-600 transition flex items-center gap-1.5">
+          <i data-lucide="file-text" class="w-4 h-4"></i> PDF to Word
+        </a>
+        <a href="unlock-pdf.html" class="hover:text-indigo-600 transition flex items-center gap-1.5">
+          <i data-lucide="unlock" class="w-4 h-4"></i> Unlock PDF
+        </a>
+        <a href="cv-studio.html" class="text-indigo-600 font-bold flex items-center gap-1.5 border-b-2 border-indigo-600 pb-0.5">
+          <i data-lucide="user-check" class="w-4 h-4"></i> CV Studio
+        </a>
       </nav>
+
+      <!-- Return to Hub CTA -->
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Hub Home
+        </a>
+      </div>
     </div>
   </header>
 
-  <!-- Main Studio Workspace -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-200">
-      <div>
-        <h1 class="text-2xl sm:text-3xl font-black text-slate-900">ATS Resume Studio</h1>
-        <p class="text-sm text-slate-500">Live single-column layout optimized for Taleo, Workday, and enterprise ATS screening.</p>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-white to-slate-50 border-b border-slate-200 py-10 sm:py-14">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <div class="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-indigo-700 text-xs font-bold uppercase tracking-wider mb-4">
+        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Built for Taleo, Workday, & Greenhouse ATS
       </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+        ATS Resume Builder & MNC CV Studio
+      </h1>
+      <p class="mt-4 text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+        Generate recruiter-ready, single-column vector resumes that parse with 100% fidelity. Everything is compiled directly in your browser with zero data sharing.
+      </p>
+
+      <!-- ATS Quick Metrics Bar -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 font-medium">
+        <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> No Sign-up Required</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Instant Vector PDF Output</span>
+        <span class="flex items-center gap-1.5"><i data-lucide="lock" class="w-4 h-4 text-indigo-600"></i> 100% Client-Side Storage</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Studio Workspace -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-8 w-full">
+    
+    <!-- Controls Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
       <div class="flex items-center gap-3">
-        <button onclick="window.print()" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-sm transition">
-          <i data-lucide="download" class="w-4 h-4"></i> Export PDF
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Layout Style:</span>
+        <select id="template-style" onchange="changeTemplateStyle()" class="text-xs font-bold border border-slate-300 rounded-lg px-3 py-2 bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none">
+          <option value="mnc">Tech MNC / Indian Corporate (Single Column)</option>
+          <option value="executive">Executive & Management Clean</option>
+          <option value="academic">Academic & Technical Research</option>
+        </select>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="resetDefaultData()" class="px-3.5 py-2 border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl transition">
+          Load Sample
+        </button>
+        <button onclick="window.print()" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-2 rounded-xl shadow transition">
+          <i data-lucide="download" class="w-4 h-4"></i> Export PDF (ATS Ready)
         </button>
       </div>
     </div>
 
-    <!-- Dual Panes: Form & Preview -->
+    <!-- Dual Panes: Form & Preview Canvas -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
-      <!-- Editor Form -->
-      <section class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Editor Controls</h2>
-        
+      <!-- Editor Form (5 Columns) -->
+      <section class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 flex items-center gap-2 pb-2 border-b border-slate-100">
+          <i data-lucide="edit-3" class="w-4 h-4"></i> Candidate Information
+        </h2>
+
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
-          <input id="input-name" type="text" value="Nitish Choudhary" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+          <input id="input-name" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Professional Headline</label>
-          <input id="input-role" type="text" value="Business & Operations Analyst | Supply Chain Specialist" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+          <label class="block text-xs font-bold text-slate-700 mb-1">Target Role / Designation</label>
+          <input id="input-role" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Email</label>
-            <input id="input-email" type="email" value="contact@docbrisk.com" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+            <input id="input-email" type="email" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
           </div>
           <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Phone</label>
+            <input id="input-phone" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Location</label>
-            <input id="input-location" type="text" value="Gurugram, India" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+            <input id="input-location" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">LinkedIn / Portfolio</label>
+            <input id="input-linkedin" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Executive Summary</label>
-          <textarea id="input-summary" rows="3" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()">Results-driven analyst experienced in inventory optimization, SAP MM/SD, dispatch reconciliation, and operational reporting.</textarea>
+          <textarea id="input-summary" rows="3" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()"></textarea>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Core Skills (Comma-separated)</label>
-          <input id="input-skills" type="text" value="SAP MM/SD, Inventory Optimization, Advanced Excel (VBA/Lambda), Power BI, OTIF Tracking" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()" />
+          <label class="block text-xs font-bold text-slate-700 mb-1">Key Technical & Functional Skills (Comma-separated)</label>
+          <input id="input-skills" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Experience (One bullet per line)</label>
-          <textarea id="input-experience" rows="5" class="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="renderPreview()">Executive - Operations & Dispatch | Livpure Smart Homes (2023 - Present)
-- Managed FG warehouse inventory reconciliations and dispatch tracking across pan-India nodes.
-- Automated daily KPI sheets via Excel Lambda and VBA, reducing operational reporting turnaround by 35%.
-- Maintained 98%+ OTIF delivery schedules through proactive bottleneck mitigation.</textarea>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Experience (Start with Organization, then bullets with -)</label>
+          <textarea id="input-experience" rows="6" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-mono" oninput="renderPreview()"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Education</label>
+          <textarea id="input-education" rows="3" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-mono" oninput="renderPreview()"></textarea>
         </div>
       </section>
 
-      <!-- Preview Canvas -->
+      <!-- Live Vector Preview Sheet (7 Columns) -->
       <section class="lg:col-span-7 flex flex-col items-center">
-        <div id="cv-preview-sheet" class="w-full bg-white border border-slate-300 rounded-lg p-10 shadow-md font-sans text-slate-800 text-[13px] leading-relaxed max-w-[720px]">
-          <div class="text-center border-b border-slate-300 pb-4 mb-4">
-            <h1 id="pv-name" class="text-xl font-bold uppercase tracking-wide text-slate-900">Nitish Choudhary</h1>
+        
+        <!-- Live Preview Status -->
+        <div class="w-full flex items-center justify-between text-xs text-slate-500 mb-3 px-1">
+          <span class="flex items-center gap-1 font-semibold text-emerald-600">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> ATS Check: 100% Single Column
+          </span>
+          <span>Standard A4 Preview</span>
+        </div>
+
+        <!-- Rendered Sheet -->
+        <div id="cv-preview-sheet" class="w-full bg-white border border-slate-300 rounded-xl p-8 sm:p-10 shadow-lg text-slate-800 text-[12px] leading-relaxed max-w-[700px] transition-all">
+          
+          <!-- Header block -->
+          <div id="preview-header" class="text-center border-b border-slate-300 pb-3 mb-3">
+            <h1 id="pv-name" class="text-xl font-bold uppercase tracking-wider text-slate-900">Nitish Choudhary</h1>
             <p id="pv-role" class="text-xs font-semibold text-slate-700 mt-0.5">Business & Operations Analyst</p>
             <p class="text-[11px] text-slate-500 mt-1">
-              <span id="pv-location">Gurugram, India</span> | <span id="pv-email">contact@docbrisk.com</span>
+              <span id="pv-location">Gurugram, India</span> | 
+              <span id="pv-email">contact@docbrisk.com</span> | 
+              <span id="pv-phone">+91 00000 00000</span> |
+              <span id="pv-linkedin">linkedin.com/in/profile</span>
             </p>
           </div>
 
-          <div class="mb-4">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-1.5">Professional Summary</h2>
-            <p id="pv-summary" class="text-slate-700 text-justify"></p>
+          <!-- Professional Summary -->
+          <div class="mb-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Professional Summary</h2>
+            <p id="pv-summary" class="text-slate-700 text-justify text-[11.5px]"></p>
           </div>
 
-          <div class="mb-4">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-1.5">Key Competencies</h2>
-            <p id="pv-skills" class="text-slate-700"></p>
+          <!-- Core Competencies -->
+          <div class="mb-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Core Competencies</h2>
+            <p id="pv-skills" class="text-slate-700 text-[11.5px]"></p>
           </div>
 
+          <!-- Work Experience -->
+          <div class="mb-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Professional Experience</h2>
+            <div id="pv-experience" class="text-slate-700 space-y-1 text-[11.5px]"></div>
+          </div>
+
+          <!-- Education -->
           <div>
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-1.5">Work Experience</h2>
-            <div id="pv-experience" class="text-slate-700 space-y-1"></div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Education</h2>
+            <div id="pv-education" class="text-slate-700 space-y-1 text-[11.5px]"></div>
           </div>
+
         </div>
       </section>
 
     </div>
   </main>
 
-  <footer class="border-t border-slate-200 py-6 text-center text-xs text-slate-500 bg-white">
-    © 2026 DocBrisk Enterprise Studio. All tools process documents client-side.
+  <!-- Hub Connection / Cross-Tool Showcase -->
+  <section class="bg-white border-t border-slate-200 py-12 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900">Explore More Tools on DocBrisk</h2>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">Free, secure browser utilities with zero file retention.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <!-- PDF to Word Tool Card -->
+        <a href="pdf-to-word.html" class="group bg-slate-50 hover:bg-indigo-50/40 p-5 rounded-xl border border-slate-200 hover:border-indigo-300 transition flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">PDF to Word Converter</h3>
+            <p class="text-xs text-slate-500 mt-1">Convert resumes, letters, and contracts back to editable Word format.</p>
+          </div>
+          <span class="text-xs font-bold text-indigo-600 mt-4 flex items-center gap-1">Open Tool &rarr;</span>
+        </a>
+
+        <!-- Unlock PDF Tool Card -->
+        <a href="unlock-pdf.html" class="group bg-slate-50 hover:bg-indigo-50/40 p-5 rounded-xl border border-slate-200 hover:border-indigo-300 transition flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
+              <i data-lucide="unlock" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">Unlock Protected PDF</h3>
+            <p class="text-xs text-slate-500 mt-1">Strip restrictions and password encryption from your personal PDF files.</p>
+          </div>
+          <span class="text-xs font-bold text-indigo-600 mt-4 flex items-center gap-1">Open Tool &rarr;</span>
+        </a>
+
+        <!-- Main Home Hub Card -->
+        <a href="index.html" class="group bg-slate-50 hover:bg-indigo-50/40 p-5 rounded-xl border border-slate-200 hover:border-indigo-300 transition flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
+              <i data-lucide="layout-grid" class="w-5 h-5"></i>
+            </div>
+            <h3 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">DocBrisk Central Hub</h3>
+            <p class="text-xs text-slate-500 mt-1">View our full repository of utilities, privacy policies, and features.</p>
+          </div>
+          <span class="text-xs font-bold text-indigo-600 mt-4 flex items-center gap-1">Go to Homepage &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- World-Class Site Footer -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="text-base font-black text-white">Doc<span class="text-indigo-400">Brisk</span></span>
+        <span>— High Performance Document Tools</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="pdf-to-word.html" class="hover:text-white transition">PDF to Word</a>
+        <a href="unlock-pdf.html" class="hover:text-white transition">Unlock PDF</a>
+        <a href="cv-studio.html" class="hover:text-white transition">CV Studio</a>
+      </div>
+      <p>© 2026 DocBrisk. All operations run client-side.</p>
+    </div>
   </footer>
 
+  <!-- Script Logic -->
   <script>
+    const sampleData = {
+      name: "Nitish Choudhary",
+      role: "Business & Operations Analyst | Supply Chain & Logistics",
+      email: "contact@docbrisk.com",
+      phone: "+91 98765 43210",
+      location: "Gurugram, Haryana, India",
+      linkedin: "linkedin.com/in/profile",
+      summary: "Performance-driven Business & Operations Analyst with over 2 years of proven success in stores operations, SAP MM/SD modules, inventory optimization, and automated dispatch tracking. Expert in developing automated reporting solutions using Advanced Excel, VBA, and Power BI.",
+      skills: "SAP MM / SD, Inventory Reconciliation, Dispatch Analytics, Advanced Excel (VBA/Lambda), Power BI, Supply Chain KPIs (OTIF, EOQ, Lead Time), SQL",
+      experience: `Executive - Stores, SAP & Dispatch Analytics | Corporate Operations (Oct 2023 - Present)
+- Supervised end-to-end inventory reconciliation for 500+ Finished Goods (FG) SKUs across multi-plant facilities.
+- Engineered automated reconciliation tools via VBA & Lambda, reducing reporting turnaround time by 35%.
+- Maintained consistent 98%+ On-Time In-Full (OTIF) dispatch compliance through tight supply-demand alignment.
+- Generated cross-functional dashboards in Power BI providing executive visibility into transit bottlenecks.`,
+      education: `MBA in Business Analytics & Operations Management (2025)
+B.Tech in Mechanical Engineering (2023)`
+    };
+
+    function resetDefaultData() {
+      document.getElementById('input-name').value = sampleData.name;
+      document.getElementById('input-role').value = sampleData.role;
+      document.getElementById('input-email').value = sampleData.email;
+      document.getElementById('input-phone').value = sampleData.phone;
+      document.getElementById('input-location').value = sampleData.location;
+      document.getElementById('input-linkedin').value = sampleData.linkedin;
+      document.getElementById('input-summary').value = sampleData.summary;
+      document.getElementById('input-skills').value = sampleData.skills;
+      document.getElementById('input-experience').value = sampleData.experience;
+      document.getElementById('input-education').value = sampleData.education;
+      renderPreview();
+    }
+
     function renderPreview() {
-      document.getElementById('pv-name').innerText = document.getElementById('input-name').value || 'Your Name';
+      document.getElementById('pv-name').innerText = document.getElementById('input-name').value || 'Candidate Name';
       document.getElementById('pv-role').innerText = document.getElementById('input-role').value;
       document.getElementById('pv-email').innerText = document.getElementById('input-email').value;
+      document.getElementById('pv-phone').innerText = document.getElementById('input-phone').value;
       document.getElementById('pv-location').innerText = document.getElementById('input-location').value;
+      document.getElementById('pv-linkedin').innerText = document.getElementById('input-linkedin').value;
       document.getElementById('pv-summary').innerText = document.getElementById('input-summary').value;
       document.getElementById('pv-skills').innerText = document.getElementById('input-skills').value;
 
-      const expLines = document.getElementById('input-experience').value.split('\n');
+      // Render Experience Bullets
       const expContainer = document.getElementById('pv-experience');
       expContainer.innerHTML = '';
+      const expLines = document.getElementById('input-experience').value.split('\n');
       expLines.forEach(line => {
         if (line.trim().startsWith('-')) {
-          const li = document.createElement('div');
-          li.className = 'pl-4 relative before:content-["•"] before:absolute before:left-1 text-slate-700';
-          li.innerText = line.replace(/^-+\s*/, '');
-          expContainer.appendChild(li);
+          const div = document.createElement('div');
+          div.className = 'pl-4 relative before:content-["•"] before:absolute before:left-1 text-slate-700';
+          div.innerText = line.replace(/^-+\s*/, '');
+          expContainer.appendChild(div);
         } else if (line.trim().length > 0) {
-          const h = document.createElement('div');
-          h.className = 'font-bold text-slate-900 mt-2';
-          h.innerText = line;
-          expContainer.appendChild(h);
+          const title = document.createElement('div');
+          title.className = 'font-bold text-slate-900 mt-2 text-[12px]';
+          title.innerText = line;
+          expContainer.appendChild(title);
+        }
+      });
+
+      // Render Education Lines
+      const eduContainer = document.getElementById('pv-education');
+      eduContainer.innerHTML = '';
+      const eduLines = document.getElementById('input-education').value.split('\n');
+      eduLines.forEach(line => {
+        if (line.trim().length > 0) {
+          const item = document.createElement('div');
+          item.className = 'font-medium text-slate-800';
+          item.innerText = line;
+          eduContainer.appendChild(item);
         }
       });
     }
 
-    renderPreview();
+    function changeTemplateStyle() {
+      const val = document.getElementById('template-style').value;
+      const sheet = document.getElementById('cv-preview-sheet');
+      const header = document.getElementById('preview-header');
+
+      if (val === 'executive') {
+        sheet.className = "w-full bg-white border-2 border-slate-800 rounded-none p-10 shadow-lg text-slate-900 text-[12px] leading-relaxed max-w-[700px]";
+        header.className = "text-left border-b-2 border-slate-900 pb-3 mb-4";
+      } else if (val === 'academic') {
+        sheet.className = "w-full bg-white border border-slate-300 rounded-lg p-10 shadow-md font-serif text-slate-800 text-[12px] leading-relaxed max-w-[700px]";
+        header.className = "text-center border-b border-slate-400 pb-3 mb-4";
+      } else {
+        sheet.className = "w-full bg-white border border-slate-300 rounded-xl p-8 sm:p-10 shadow-lg text-slate-800 text-[12px] leading-relaxed max-w-[700px]";
+        header.className = "text-center border-b border-slate-300 pb-3 mb-3";
+      }
+    }
+
+    // Initialize
+    resetDefaultData();
     lucide.createIcons();
   </script>
 </body>
