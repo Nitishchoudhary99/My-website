@@ -3,416 +3,645 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>ATS Resume Studio & MNC CV Builder — DocBrisk</title>
-  <meta name="description" content="Free ATS resume builder by DocBrisk. Single-column formats tested against Taleo, Workday, and Greenhouse. Export crisp vector PDFs directly from your browser." />
+  <title>DocBrisk — Indian & Global MNC CV Studio (26 Themes)</title>
+  <meta name="description" content="100% Free & Private In-Browser ATS CV Studio. 26 Themes, Indian Corporate vs Global MNC toggles, live preview, and vector PDF compilation." />
   <link rel="canonical" href="https://docbrisk.com/cv-studio.html" />
   <meta name="robots" content="index, follow" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="ATS Resume Studio & MNC CV Builder — DocBrisk" />
-  <meta property="og:description" content="Build recruiter-screened, ATS-compliant single-column resumes with real-time vector PDF export." />
-  <meta property="og:url" content="https://docbrisk.com/cv-studio.html" />
-  <meta property="og:type" content="website" />
+  <!-- Monogram Brand Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234f46e5'/%3E%3Cstop offset='100%25' stop-color='%23312e81'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M10 6a4 4 0 0 1 4-4h16l12 12v28a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V6z' fill='url(%23g)'/%3E%3Cpath d='M30 2v10a2 2 0 0 0 2 2h10L30 2z' fill='%23a5b4fc' opacity='0.8'/%3E%3Cpath d='M25 18l-8 11h7l-3 9 10-12h-7l3-8h-2z' fill='%23ffffff'/%3E%3C/svg%3E" />
 
-  <!-- Fonts & Scripts -->
+  <!-- Typography & Styling (Matches index.html exactly) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+            serif: ['Merriweather', 'EB Garamond', 'serif'],
+            display: ['Cinzel', 'serif'],
+            mono: ['Space Grotesk', 'monospace'],
+          },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' }
+          }
+        }
+      }
+    };
+  </script>
 
   <style>
-    @media print {
-      body * { visibility: hidden; }
-      #cv-preview-sheet, #cv-preview-sheet * { visibility: visible; }
-      #cv-preview-sheet {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0.5in !important;
-        box-shadow: none !important;
-        border: none !important;
-      }
-      .no-print { display: none !important; }
-    }
+    .glass-nav { background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(20px); }
+    .cv-sheet { width: 100%; max-width: 595px; min-height: 842px; aspect-ratio: 1 / 1.4142; box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25); background: #ffffff; }
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #f1f5f9; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
   </style>
 </head>
-<body class="bg-[#F8FAFC] text-slate-800 min-h-screen flex flex-col font-['Inter',sans-serif]">
+<body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-500 selection:text-white">
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-indigo-600 text-white text-xs font-medium py-2 px-4 text-center tracking-wide">
-    Part of the <strong>DocBrisk</strong> document productivity suite. 100% client-side privacy.
+  <!-- Enterprise Privacy Standard Banner -->
+  <div class="bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-950 text-white text-[11px] sm:text-xs font-semibold py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    Enterprise RAM Execution: 100% In-Browser Privacy • Spatial Vector Capture • Architected by Nitish Choudhary
   </div>
 
-  <!-- Global Navigation (Directly Connected to index.html) -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      
-      <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-2 group">
-        <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-md group-hover:scale-105 transition duration-200">
-          D
+  <!-- Advanced Header matching index.html -->
+  <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/90 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 group cursor-pointer">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-600 via-indigo-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:scale-105 transition-transform duration-200">
+          <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <path d="M13 11l-4 6h3l-1 4 5-7h-3z" fill="currentColor" stroke="none"></path>
+          </svg>
         </div>
-        <div class="flex flex-col">
-          <span class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">
-            Doc<span class="text-indigo-600">Brisk</span>
-          </span>
-          <span class="text-[10px] text-slate-500 font-semibold tracking-wider uppercase mt-0.5">Document Suite</span>
+        <div>
+          <span class="text-xl font-black tracking-tight text-slate-900 leading-tight">Doc<span class="text-brand-600">Brisk</span></span>
+          <span class="block text-[10px] font-extrabold uppercase tracking-widest text-indigo-600 -mt-0.5">Enterprise Studio</span>
         </div>
       </a>
 
-      <!-- Tools Navigation Bar -->
-      <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-600">
-        <a href="index.html" class="hover:text-indigo-600 transition flex items-center gap-1.5">
-          <i data-lucide="layout-grid" class="w-4 h-4"></i> All Tools
-        </a>
-        <a href="pdf-to-word.html" class="hover:text-indigo-600 transition flex items-center gap-1.5">
-          <i data-lucide="file-text" class="w-4 h-4"></i> PDF to Word
-        </a>
-        <a href="unlock-pdf.html" class="hover:text-indigo-600 transition flex items-center gap-1.5">
-          <i data-lucide="unlock" class="w-4 h-4"></i> Unlock PDF
-        </a>
-        <a href="cv-studio.html" class="text-indigo-600 font-bold flex items-center gap-1.5 border-b-2 border-indigo-600 pb-0.5">
-          <i data-lucide="user-check" class="w-4 h-4"></i> CV Studio
-        </a>
+      <!-- Quick Tool Links direct to index.html tools -->
+      <nav class="hidden lg:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl font-bold text-xs text-slate-600 border border-slate-200/70 shadow-inner overflow-x-auto max-w-2xl">
+        <span class="px-3.5 py-1.5 rounded-xl text-brand-600 bg-white shadow-sm font-black flex items-center gap-1.5 whitespace-nowrap">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> CV Studio
+        </span>
+        <a href="index.html?tool=pdf2word" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">PDF to Word</a>
+        <a href="index.html?tool=summarizer" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">AI Summarizer</a>
+        <a href="index.html?tool=unlock" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">Unlock PDF</a>
+        <a href="index.html?tool=sign" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">Fill & Sign</a>
+        <a href="index.html?tool=compress" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">Compress</a>
+        <a href="index.html?tool=word2pdf" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">Word to PDF</a>
+        <a href="index.html?tool=pdf2excel" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">PDF to Excel</a>
+        <a href="index.html?tool=ocr" class="px-2.5 py-1.5 rounded-xl hover:text-brand-600 hover:bg-white transition whitespace-nowrap">OCR</a>
       </nav>
 
-      <!-- Return to Hub CTA -->
       <div class="flex items-center gap-3">
-        <a href="index.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition">
-          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Hub Home
+        <a href="index.html" class="px-4 py-2 rounded-xl border border-slate-300 hover:border-brand-500 hover:bg-brand-50 text-slate-700 font-bold text-xs transition shadow-sm flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> All Tools
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="bg-gradient-to-b from-white to-slate-50 border-b border-slate-200 py-10 sm:py-14">
-    <div class="max-w-5xl mx-auto px-4 text-center">
-      <div class="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full text-indigo-700 text-xs font-bold uppercase tracking-wider mb-4">
-        <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Built for Taleo, Workday, & Greenhouse ATS
-      </div>
-      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight leading-tight">
-        ATS Resume Builder & MNC CV Studio
-      </h1>
-      <p class="mt-4 text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-        Generate recruiter-ready, single-column vector resumes that parse with 100% fidelity. Everything is compiled directly in your browser with zero data sharing.
-      </p>
-
-      <!-- ATS Quick Metrics Bar -->
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 font-medium">
-        <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i> No Sign-up Required</span>
-        <span class="flex items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Instant Vector PDF Output</span>
-        <span class="flex items-center gap-1.5"><i data-lucide="lock" class="w-4 h-4 text-indigo-600"></i> 100% Client-Side Storage</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Studio Workspace -->
-  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-8 w-full">
-    
-    <!-- Controls Header -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
-      <div class="flex items-center gap-3">
-        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Layout Style:</span>
-        <select id="template-style" onchange="changeTemplateStyle()" class="text-xs font-bold border border-slate-300 rounded-lg px-3 py-2 bg-white text-slate-700 focus:ring-2 focus:ring-indigo-500 outline-none">
-          <option value="mnc">Tech MNC / Indian Corporate (Single Column)</option>
-          <option value="executive">Executive & Management Clean</option>
-          <option value="academic">Academic & Technical Research</option>
-        </select>
+  <!-- MAIN WORKSPACE -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div id="resumeWorkspace" class="max-w-7xl mx-auto space-y-6">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <a href="index.html" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-brand-600 transition">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to all tools
+        </a>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="bg-slate-100 p-1 rounded-xl flex text-xs font-bold text-slate-600">
+            <button onclick="setResumePages(1)" id="btnPage1" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600">Single Page</button>
+            <button onclick="setResumePages(2)" id="btnPage2" class="px-3 py-1.5 rounded-lg hover:text-brand-600">Full 2-Page</button>
+          </div>
+          <button onclick="exportHybridEnterprisePdf()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl shadow-lg transition flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i> Export Vector PDF
+          </button>
+        </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <button onclick="resetDefaultData()" class="px-3.5 py-2 border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl transition">
-          Load Sample
-        </button>
-        <button onclick="window.print()" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-2 rounded-xl shadow transition">
-          <i data-lucide="download" class="w-4 h-4"></i> Export PDF (ATS Ready)
-        </button>
-      </div>
-    </div>
-
-    <!-- Dual Panes: Form & Preview Canvas -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- Editor Form (5 Columns) -->
-      <section class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <h2 class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 flex items-center gap-2 pb-2 border-b border-slate-100">
-          <i data-lucide="edit-3" class="w-4 h-4"></i> Candidate Information
-        </h2>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Full Name</label>
-          <input id="input-name" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Target Role / Designation</label>
-          <input id="input-role" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Email</label>
-            <input id="input-email" type="email" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Phone</label>
-            <input id="input-phone" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Location</label>
-            <input id="input-location" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">LinkedIn / Portfolio</label>
-            <input id="input-linkedin" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Executive Summary</label>
-          <textarea id="input-summary" rows="3" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()"></textarea>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Key Technical & Functional Skills (Comma-separated)</label>
-          <input id="input-skills" type="text" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none" oninput="renderPreview()" />
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Experience (Start with Organization, then bullets with -)</label>
-          <textarea id="input-experience" rows="6" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-mono" oninput="renderPreview()"></textarea>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Education</label>
-          <textarea id="input-education" rows="3" class="w-full text-xs font-medium border border-slate-200 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-indigo-500 outline-none font-mono" oninput="renderPreview()"></textarea>
-        </div>
-      </section>
-
-      <!-- Live Vector Preview Sheet (7 Columns) -->
-      <section class="lg:col-span-7 flex flex-col items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- Live Preview Status -->
-        <div class="w-full flex items-center justify-between text-xs text-slate-500 mb-3 px-1">
-          <span class="flex items-center gap-1 font-semibold text-emerald-600">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> ATS Check: 100% Single Column
-          </span>
-          <span>Standard A4 Preview</span>
-        </div>
-
-        <!-- Rendered Sheet -->
-        <div id="cv-preview-sheet" class="w-full bg-white border border-slate-300 rounded-xl p-8 sm:p-10 shadow-lg text-slate-800 text-[12px] leading-relaxed max-w-[700px] transition-all">
+        <!-- Controls Column -->
+        <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6 max-h-[88vh] overflow-y-auto scrollbar-thin">
           
-          <!-- Header block -->
-          <div id="preview-header" class="text-center border-b border-slate-300 pb-3 mb-3">
-            <h1 id="pv-name" class="text-xl font-bold uppercase tracking-wider text-slate-900">Nitish Choudhary</h1>
-            <p id="pv-role" class="text-xs font-semibold text-slate-700 mt-0.5">Business & Operations Analyst</p>
-            <p class="text-[11px] text-slate-500 mt-1">
-              <span id="pv-location">Gurugram, India</span> | 
-              <span id="pv-email">contact@docbrisk.com</span> | 
-              <span id="pv-phone">+91 00000 00000</span> |
-              <span id="pv-linkedin">linkedin.com/in/profile</span>
-            </p>
+          <!-- Format Switcher: Indian vs MNC Standard -->
+          <div class="p-4 bg-indigo-50/70 rounded-2xl border border-indigo-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black uppercase tracking-wider text-indigo-900 block">CV Format Standard</span>
+              <span id="cvModeBadge" class="text-[10px] font-extrabold text-brand-600 bg-white px-2 py-0.5 rounded shadow-sm">MNC Standard</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+              <button type="button" onclick="setResumeStandard('mnc')" id="btnStandardMnc" class="py-2.5 rounded-xl border-2 border-brand-600 bg-white text-brand-700 shadow-sm transition">
+                MNC & Global ATS
+                <span class="block text-[10px] font-normal text-slate-500">Keyword & Metric Focused</span>
+              </button>
+              <button type="button" onclick="setResumeStandard('indian')" id="btnStandardIndian" class="py-2.5 rounded-xl border border-slate-300 bg-white hover:border-brand-600 transition text-slate-700">
+                Indian Corporate
+                <span class="block text-[10px] font-normal text-slate-500">Particulars & Declaration</span>
+              </button>
+            </div>
           </div>
 
-          <!-- Professional Summary -->
-          <div class="mb-3">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Professional Summary</h2>
-            <p id="pv-summary" class="text-slate-700 text-justify text-[11.5px]"></p>
+          <!-- 26 Themes Selector -->
+          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 block">Theme & Accent Layout (26 Real Styles)</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold text-slate-700">
+              <select id="cvTemplateStyle" onchange="updateResumePreview()" class="w-full border border-slate-200 rounded-xl px-3 py-2 font-semibold bg-white">
+                <optgroup label="Tier 1: Corporate & Indian Enterprise">
+                  <option value="modern" selected>1. Executive Modern</option>
+                  <option value="ats">2. Ivy League ATS (Classic Serif)</option>
+                  <option value="navy">3. Corporate Navy Block</option>
+                  <option value="tata">4. Conglomerate Formal (Boxed)</option>
+                  <option value="manufacturing">5. Operations & Dispatch Lead</option>
+                </optgroup>
+                <optgroup label="Tier 2: Global Tech & Analytics">
+                  <option value="silicon">6. Silicon Valley Minimalist</option>
+                  <option value="analytics">7. Data Analyst Metric Matrix</option>
+                  <option value="swiss">8. Swiss High-Density</option>
+                  <option value="monochrome">9. Pure Monochrome ATS</option>
+                  <option value="nordic">10. Nordic Indigo Minimal</option>
+                </optgroup>
+                <optgroup label="Tier 3: Executive Sidebar & Blocks">
+                  <option value="sidebar">11. Executive Left Sidebar</option>
+                  <option value="emerald">12. Emerald Executive</option>
+                  <option value="burgundy">13. Burgundy Director</option>
+                  <option value="slateblock">14. Slate Grid Header</option>
+                  <option value="tealclean">15. Modern Teal Operations</option>
+                  <option value="amberbold">16. Amber Ambition</option>
+                </optgroup>
+                <optgroup label="Tier 4: Distinctive & Creative">
+                  <option value="creative">17. Creative Split Header</option>
+                  <option value="compacttech">18. Compact Tech</option>
+                  <option value="classicserif">19. Oxford Traditional</option>
+                  <option value="charcoal">20. Charcoal Elite</option>
+                  <option value="editorial">21. Editorial Clean</option>
+                  <option value="metro">22. Metro Modernist</option>
+                  <option value="harbor">23. Harbor Steel</option>
+                  <option value="cobalt">24. Cobalt Dynamic</option>
+                  <option value="crimson">25. Crimson Bold Leadership</option>
+                  <option value="stellar">26. Stellar Clean Hybrid</option>
+                </optgroup>
+              </select>
+              <div class="flex items-center gap-2">
+                <input type="color" id="resThemeColor" value="#4f46e5" onchange="updateResumePreview()" class="w-9 h-9 rounded-xl border border-slate-300 cursor-pointer p-0.5 bg-white" />
+                <input type="text" id="resThemeHex" value="#4f46e5" oninput="document.getElementById('resThemeColor').value = this.value; updateResumePreview();" class="flex-1 border border-slate-200 rounded-xl px-2.5 py-2 text-xs font-mono" />
+              </div>
+            </div>
           </div>
 
-          <!-- Core Competencies -->
-          <div class="mb-3">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Core Competencies</h2>
-            <p id="pv-skills" class="text-slate-700 text-[11.5px]"></p>
+          <!-- Candidate Identity -->
+          <div class="space-y-3">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600">Candidate Identity & Contact</h4>
+            <div class="grid grid-cols-2 gap-3">
+              <input type="text" id="resName" value="Nitish Choudhary" placeholder="Full Name" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl" />
+              <input type="text" id="resRole" value="Business & Operations Analyst" placeholder="Designation" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl" />
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <input type="text" id="resEmail" value="contact@docbrisk.com" placeholder="Email" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl" />
+              <input type="text" id="resPhone" value="+91 98765 43210" placeholder="Phone" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl font-mono" />
+              <input type="text" id="resLocation" value="Gurugram, India" placeholder="Location" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl" />
+            </div>
           </div>
 
-          <!-- Work Experience -->
-          <div class="mb-3">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Professional Experience</h2>
-            <div id="pv-experience" class="text-slate-700 space-y-1 text-[11.5px]"></div>
+          <!-- Indian Particulars (DOB, Nationality, Notice Period, etc.) -->
+          <div id="indianParticularsArea" class="hidden space-y-3 p-4 bg-amber-50/60 rounded-2xl border border-amber-200">
+            <h4 class="text-xs font-black uppercase tracking-wider text-amber-900">Indian Corporate Particulars</h4>
+            <div class="grid grid-cols-3 gap-3">
+              <input type="text" id="resDob" value="09 April 1999" placeholder="Date of Birth" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl bg-white" />
+              <input type="text" id="resNationality" value="Indian" placeholder="Nationality" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl bg-white" />
+              <input type="text" id="resLanguages" value="English, Hindi" placeholder="Languages Known" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl bg-white" />
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <input type="text" id="resMarital" value="Married" placeholder="Marital Status" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl bg-white" />
+              <input type="text" id="resNotice" value="30 Days (Immediate)" placeholder="Notice Period" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl bg-white" />
+              <input type="text" id="resHometown" value="Siwan, Bihar, India" placeholder="Hometown" oninput="updateResumePreview()" class="w-full text-xs font-semibold px-3 py-2 border rounded-xl bg-white" />
+            </div>
           </div>
 
-          <!-- Education -->
-          <div>
-            <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-0.5 mb-1">Education</h2>
-            <div id="pv-education" class="text-slate-700 space-y-1 text-[11.5px]"></div>
+          <!-- Executive Summary -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600">Executive Summary</h4>
+            <textarea id="resSummary" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl leading-relaxed">MBA in Business Analytics & Operations. Proven expertise in inventory optimization, automated ERP stock reconciliations, and dispatch analytics across multi-facility manufacturing networks.</textarea>
+          </div>
+
+          <!-- Achievements -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600">Key Quantifiable Achievements</h4>
+            <textarea id="resAchievements" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl leading-relaxed">• Maintained 99.6% On-Time In-Full (OTIF) dispatch rate across 500+ active Finished Goods SKUs.
+• Engineered custom automated Excel Lambda and VBA reconciliation models, cutting audit turnaround by 35%.</textarea>
+          </div>
+
+          <!-- Experience -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-black uppercase tracking-wider text-brand-600">Professional Work Experience</h4>
+            <textarea id="resExp" rows="5" oninput="updateResumePreview()" class="w-full text-xs font-medium p-3 border rounded-xl leading-relaxed">Executive - Stores, SAP & Dispatch Analytics (Oct 2023 – Present)
+• Directed finished goods inventory allocations, system reconciliations, and physical audit alignment in SAP MM/SD.
+• Optimized multi-hub dispatch pipelines to minimize transit bottlenecks and safeguard operational SLAs.</textarea>
+          </div>
+
+          <!-- Skills & Tools -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Functional Competencies</h4>
+              <textarea id="resSkills" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl">Supply Chain Analytics, OTIF Management, EOQ, Takt Time, Warehouse Audit</textarea>
+            </div>
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Tools & Technology</h4>
+              <textarea id="resTools" rows="3" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl">SAP MM/SD, Advanced Excel (VBA/Lambda), Power BI Dashboards, SQL Analytics</textarea>
+            </div>
+          </div>
+
+          <!-- Education & Declaration -->
+          <div class="space-y-3">
+            <div>
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Education Credentials</h4>
+              <textarea id="resEdu" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl">• MBA in Business Analytics & Operations (2025)
+• B.Tech in Mechanical Engineering (2023)</textarea>
+            </div>
+            <div id="declarationInputArea" class="hidden">
+              <h4 class="text-xs font-black uppercase tracking-wider text-brand-600 mb-1">Formal Declaration (Indian Standard)</h4>
+              <textarea id="resDeclaration" rows="2" oninput="updateResumePreview()" class="w-full text-xs font-medium p-2.5 border rounded-xl">I hereby declare that all information furnished above is true, complete, and authentic to the best of my knowledge.</textarea>
+            </div>
           </div>
 
         </div>
-      </section>
 
+        <!-- Real-Time Sheet Preview -->
+        <div class="lg:col-span-6 bg-slate-200/70 p-6 rounded-3xl border border-slate-300 flex flex-col items-center gap-6 sticky top-24 overflow-auto max-h-[88vh] scrollbar-thin">
+          <div id="resumeSheet1" class="cv-sheet rounded-sm p-7 text-slate-900 select-none relative transition-all duration-200"></div>
+          <div id="resumeSheet2" class="cv-sheet rounded-sm p-7 text-slate-900 select-none relative transition-all duration-200 hidden"></div>
+        </div>
+
+      </div>
     </div>
   </main>
 
-  <!-- Hub Connection / Cross-Tool Showcase -->
-  <section class="bg-white border-t border-slate-200 py-12 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-2xl mx-auto mb-8">
-        <h2 class="text-xl sm:text-2xl font-black text-slate-900">Explore More Tools on DocBrisk</h2>
-        <p class="text-xs sm:text-sm text-slate-500 mt-1">Free, secure browser utilities with zero file retention.</p>
+  <!-- FOOTER LOCKED TO NITISH CHOUDHARY -->
+  <footer class="bg-white border-t border-slate-200/90 mt-auto pt-10 pb-8 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+          <i data-lucide="zap" class="w-4 h-4"></i>
+        </div>
+        <span class="text-lg font-black text-slate-900 tracking-tight">Doc<span class="text-brand-600">Brisk</span></span>
+        <span class="ml-2 text-slate-400">&copy; 2026. All rights reserved.</span>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <!-- PDF to Word Tool Card -->
-        <a href="pdf-to-word.html" class="group bg-slate-50 hover:bg-indigo-50/40 p-5 rounded-xl border border-slate-200 hover:border-indigo-300 transition flex flex-col justify-between">
-          <div>
-            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
-              <i data-lucide="file-text" class="w-5 h-5"></i>
-            </div>
-            <h3 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">PDF to Word Converter</h3>
-            <p class="text-xs text-slate-500 mt-1">Convert resumes, letters, and contracts back to editable Word format.</p>
-          </div>
-          <span class="text-xs font-bold text-indigo-600 mt-4 flex items-center gap-1">Open Tool &rarr;</span>
-        </a>
-
-        <!-- Unlock PDF Tool Card -->
-        <a href="unlock-pdf.html" class="group bg-slate-50 hover:bg-indigo-50/40 p-5 rounded-xl border border-slate-200 hover:border-indigo-300 transition flex flex-col justify-between">
-          <div>
-            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
-              <i data-lucide="unlock" class="w-5 h-5"></i>
-            </div>
-            <h3 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">Unlock Protected PDF</h3>
-            <p class="text-xs text-slate-500 mt-1">Strip restrictions and password encryption from your personal PDF files.</p>
-          </div>
-          <span class="text-xs font-bold text-indigo-600 mt-4 flex items-center gap-1">Open Tool &rarr;</span>
-        </a>
-
-        <!-- Main Home Hub Card -->
-        <a href="index.html" class="group bg-slate-50 hover:bg-indigo-50/40 p-5 rounded-xl border border-slate-200 hover:border-indigo-300 transition flex flex-col justify-between">
-          <div>
-            <div class="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center mb-3">
-              <i data-lucide="layout-grid" class="w-5 h-5"></i>
-            </div>
-            <h3 class="font-bold text-sm text-slate-900 group-hover:text-indigo-600 transition">DocBrisk Central Hub</h3>
-            <p class="text-xs text-slate-500 mt-1">View our full repository of utilities, privacy policies, and features.</p>
-          </div>
-          <span class="text-xs font-bold text-indigo-600 mt-4 flex items-center gap-1">Go to Homepage &rarr;</span>
-        </a>
+      <div class="signature-badge px-4 py-2.5 rounded-xl flex items-center gap-3 bg-slate-50 border border-slate-200 shadow-sm">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-800 flex items-center justify-center text-white font-bold text-xs shadow">
+          NC
+        </div>
+        <div class="text-left">
+          <div class="text-[9px] uppercase font-black tracking-wider text-slate-400">Architected By</div>
+          <div class="text-xs font-black text-slate-900">Nitish Choudhary</div>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- World-Class Site Footer -->
-  <footer class="bg-slate-900 text-slate-400 text-xs py-10 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="text-base font-black text-white">Doc<span class="text-indigo-400">Brisk</span></span>
-        <span>— High Performance Document Tools</span>
-      </div>
-      <div class="flex items-center gap-6">
-        <a href="index.html" class="hover:text-white transition">Home</a>
-        <a href="pdf-to-word.html" class="hover:text-white transition">PDF to Word</a>
-        <a href="unlock-pdf.html" class="hover:text-white transition">Unlock PDF</a>
-        <a href="cv-studio.html" class="hover:text-white transition">CV Studio</a>
-      </div>
-      <p>© 2026 DocBrisk. All operations run client-side.</p>
     </div>
   </footer>
 
-  <!-- Script Logic -->
+  <!-- CONTROLLER SCRIPT -->
   <script>
-    const sampleData = {
-      name: "Nitish Choudhary",
-      role: "Business & Operations Analyst | Supply Chain & Logistics",
-      email: "contact@docbrisk.com",
-      phone: "+91 98765 43210",
-      location: "Gurugram, Haryana, India",
-      linkedin: "linkedin.com/in/profile",
-      summary: "Performance-driven Business & Operations Analyst with over 2 years of proven success in stores operations, SAP MM/SD modules, inventory optimization, and automated dispatch tracking. Expert in developing automated reporting solutions using Advanced Excel, VBA, and Power BI.",
-      skills: "SAP MM / SD, Inventory Reconciliation, Dispatch Analytics, Advanced Excel (VBA/Lambda), Power BI, Supply Chain KPIs (OTIF, EOQ, Lead Time), SQL",
-      experience: `Executive - Stores, SAP & Dispatch Analytics | Corporate Operations (Oct 2023 - Present)
-- Supervised end-to-end inventory reconciliation for 500+ Finished Goods (FG) SKUs across multi-plant facilities.
-- Engineered automated reconciliation tools via VBA & Lambda, reducing reporting turnaround time by 35%.
-- Maintained consistent 98%+ On-Time In-Full (OTIF) dispatch compliance through tight supply-demand alignment.
-- Generated cross-functional dashboards in Power BI providing executive visibility into transit bottlenecks.`,
-      education: `MBA in Business Analytics & Operations Management (2025)
-B.Tech in Mechanical Engineering (2023)`
+    lucide.createIcons();
+
+    let resumePageCount = 1;
+    let currentResumeStandard = 'mnc';
+
+    const THEME_REGISTRY = {
+      modern: { family: 'sans', accent: '#4f46e5', style: 'top-accent', name: 'Executive Modern' },
+      ats: { family: 'serif', accent: '#0f172a', style: 'linear-ats', name: 'Ivy League ATS' },
+      navy: { family: 'sans', accent: '#1e3a8a', style: 'top-block', name: 'Corporate Navy Block' },
+      tata: { family: 'serif', accent: '#0369a1', style: 'boxed-formal', name: 'Conglomerate Formal' },
+      manufacturing: { family: 'sans', accent: '#b45309', style: 'top-accent', name: 'Operations & Dispatch Lead' },
+      silicon: { family: 'sans', accent: '#2563eb', style: 'minimal-line', name: 'Silicon Valley Minimalist' },
+      analytics: { family: 'mono', accent: '#0d9488', style: 'grid-matrix', name: 'Data Analyst Metric Matrix' },
+      swiss: { family: 'sans', accent: '#dc2626', style: 'swiss-density', name: 'Swiss High-Density' },
+      monochrome: { family: 'sans', accent: '#18181b', style: 'linear-ats', name: 'Pure Monochrome ATS' },
+      nordic: { family: 'sans', accent: '#4338ca', name: 'Nordic Indigo Minimal' },
+      sidebar: { family: 'sans', accent: '#0f172a', style: 'dual-sidebar', name: 'Executive Left Sidebar' },
+      emerald: { family: 'sans', accent: '#047857', style: 'top-block', name: 'Emerald Executive' },
+      burgundy: { family: 'serif', accent: '#831843', style: 'boxed-formal', name: 'Burgundy Director' },
+      slateblock: { family: 'sans', accent: '#334155', style: 'top-block', name: 'Slate Grid Header' },
+      tealclean: { family: 'sans', accent: '#0f766e', style: 'minimal-line', name: 'Modern Teal Operations' },
+      amberbold: { family: 'sans', accent: '#d97706', style: 'top-accent', name: 'Amber Ambition' },
+      creative: { family: 'sans', accent: '#7c3aed', style: 'split-header', name: 'Creative Split' },
+      compacttech: { family: 'mono', accent: '#3b82f6', style: 'grid-matrix', name: 'Compact Tech' },
+      classicserif: { family: 'serif', accent: '#374151', style: 'linear-ats', name: 'Oxford Traditional' },
+      charcoal: { family: 'sans', accent: '#27272a', style: 'top-block', name: 'Charcoal Elite' },
+      editorial: { family: 'serif', accent: '#4b5563', style: 'linear-ats', name: 'Editorial Clean' },
+      metro: { family: 'sans', accent: '#0284c7', style: 'top-accent', name: 'Metro Modernist' },
+      harbor: { family: 'sans', accent: '#1e293b', style: 'top-block', name: 'Harbor Steel' },
+      cobalt: { family: 'sans', accent: '#1d4ed8', style: 'top-accent', name: 'Cobalt Dynamic' },
+      crimson: { family: 'serif', accent: '#991b1b', style: 'boxed-formal', name: 'Crimson Bold' },
+      stellar: { family: 'sans', accent: '#6366f1', style: 'split-header', name: 'Stellar Clean Hybrid' }
     };
 
-    function resetDefaultData() {
-      document.getElementById('input-name').value = sampleData.name;
-      document.getElementById('input-role').value = sampleData.role;
-      document.getElementById('input-email').value = sampleData.email;
-      document.getElementById('input-phone').value = sampleData.phone;
-      document.getElementById('input-location').value = sampleData.location;
-      document.getElementById('input-linkedin').value = sampleData.linkedin;
-      document.getElementById('input-summary').value = sampleData.summary;
-      document.getElementById('input-skills').value = sampleData.skills;
-      document.getElementById('input-experience').value = sampleData.experience;
-      document.getElementById('input-education').value = sampleData.education;
-      renderPreview();
+    function setResumePages(n) {
+      resumePageCount = n;
+      document.getElementById('btnPage1').className = n === 1 ? "px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600 font-bold" : "px-3 py-1.5 rounded-lg hover:text-brand-600 font-bold";
+      document.getElementById('btnPage2').className = n === 2 ? "px-3 py-1.5 rounded-lg bg-white shadow-sm text-brand-600 font-bold" : "px-3 py-1.5 rounded-lg hover:text-brand-600 font-bold";
+      document.getElementById('resumeSheet2').classList.toggle('hidden', n !== 2);
     }
 
-    function renderPreview() {
-      document.getElementById('pv-name').innerText = document.getElementById('input-name').value || 'Candidate Name';
-      document.getElementById('pv-role').innerText = document.getElementById('input-role').value;
-      document.getElementById('pv-email').innerText = document.getElementById('input-email').value;
-      document.getElementById('pv-phone').innerText = document.getElementById('input-phone').value;
-      document.getElementById('pv-location').innerText = document.getElementById('input-location').value;
-      document.getElementById('pv-linkedin').innerText = document.getElementById('input-linkedin').value;
-      document.getElementById('pv-summary').innerText = document.getElementById('input-summary').value;
-      document.getElementById('pv-skills').innerText = document.getElementById('input-skills').value;
+    function setResumeStandard(std) {
+      currentResumeStandard = std;
+      const bMnc = document.getElementById('btnStandardMnc');
+      const bInd = document.getElementById('btnStandardIndian');
+      const badge = document.getElementById('cvModeBadge');
+      const partArea = document.getElementById('indianParticularsArea');
+      const decArea = document.getElementById('declarationInputArea');
 
-      // Render Experience Bullets
-      const expContainer = document.getElementById('pv-experience');
-      expContainer.innerHTML = '';
-      const expLines = document.getElementById('input-experience').value.split('\n');
-      expLines.forEach(line => {
-        if (line.trim().startsWith('-')) {
-          const div = document.createElement('div');
-          div.className = 'pl-4 relative before:content-["•"] before:absolute before:left-1 text-slate-700';
-          div.innerText = line.replace(/^-+\s*/, '');
-          expContainer.appendChild(div);
-        } else if (line.trim().length > 0) {
-          const title = document.createElement('div');
-          title.className = 'font-bold text-slate-900 mt-2 text-[12px]';
-          title.innerText = line;
-          expContainer.appendChild(title);
-        }
-      });
-
-      // Render Education Lines
-      const eduContainer = document.getElementById('pv-education');
-      eduContainer.innerHTML = '';
-      const eduLines = document.getElementById('input-education').value.split('\n');
-      eduLines.forEach(line => {
-        if (line.trim().length > 0) {
-          const item = document.createElement('div');
-          item.className = 'font-medium text-slate-800';
-          item.innerText = line;
-          eduContainer.appendChild(item);
-        }
-      });
-    }
-
-    function changeTemplateStyle() {
-      const val = document.getElementById('template-style').value;
-      const sheet = document.getElementById('cv-preview-sheet');
-      const header = document.getElementById('preview-header');
-
-      if (val === 'executive') {
-        sheet.className = "w-full bg-white border-2 border-slate-800 rounded-none p-10 shadow-lg text-slate-900 text-[12px] leading-relaxed max-w-[700px]";
-        header.className = "text-left border-b-2 border-slate-900 pb-3 mb-4";
-      } else if (val === 'academic') {
-        sheet.className = "w-full bg-white border border-slate-300 rounded-lg p-10 shadow-md font-serif text-slate-800 text-[12px] leading-relaxed max-w-[700px]";
-        header.className = "text-center border-b border-slate-400 pb-3 mb-4";
+      if (std === 'mnc') {
+        bMnc.className = "py-2.5 rounded-xl border-2 border-brand-600 bg-white text-brand-700 shadow-sm font-bold transition";
+        bInd.className = "py-2.5 rounded-xl border border-slate-300 bg-white hover:border-brand-600 transition text-slate-700 font-bold";
+        badge.textContent = "MNC & Global ATS";
+        partArea.classList.add('hidden');
+        decArea.classList.add('hidden');
       } else {
-        sheet.className = "w-full bg-white border border-slate-300 rounded-xl p-8 sm:p-10 shadow-lg text-slate-800 text-[12px] leading-relaxed max-w-[700px]";
-        header.className = "text-center border-b border-slate-300 pb-3 mb-3";
+        bInd.className = "py-2.5 rounded-xl border-2 border-brand-600 bg-white text-brand-700 shadow-sm font-bold transition";
+        bMnc.className = "py-2.5 rounded-xl border border-slate-300 bg-white hover:border-brand-600 transition text-slate-700 font-bold";
+        badge.textContent = "Indian Corporate";
+        partArea.classList.remove('hidden');
+        decArea.classList.remove('hidden');
+      }
+      updateResumePreview();
+    }
+
+    function updateResumePreview() {
+      const templateKey = document.getElementById('cvTemplateStyle').value;
+      const themeDef = THEME_REGISTRY[templateKey] || THEME_REGISTRY.modern;
+      const themeColor = document.getElementById('resThemeColor').value;
+      document.getElementById('resThemeHex').value = themeColor;
+
+      const name = document.getElementById('resName').value || 'Candidate Name';
+      const role = document.getElementById('resRole').value || 'Professional Headline';
+      const phone = document.getElementById('resPhone').value || '';
+      const email = document.getElementById('resEmail').value || '';
+      const location = document.getElementById('resLocation').value || '';
+
+      const dob = document.getElementById('resDob').value || '';
+      const nationality = document.getElementById('resNationality').value || '';
+      const languages = document.getElementById('resLanguages').value || '';
+      const marital = document.getElementById('resMarital').value || '';
+      const notice = document.getElementById('resNotice').value || '';
+      const hometown = document.getElementById('resHometown').value || '';
+
+      const summary = document.getElementById('resSummary').value || '';
+      const ach = document.getElementById('resAchievements').value || '';
+      const exp = document.getElementById('resExp').value || '';
+      const skills = document.getElementById('resSkills').value || '';
+      const tools = document.getElementById('resTools').value || '';
+      const edu = document.getElementById('resEdu').value || '';
+      const declaration = document.getElementById('resDeclaration').value || '';
+
+      const sheet1 = document.getElementById('resumeSheet1');
+      const sheet2 = document.getElementById('resumeSheet2');
+      const fontClass = themeDef.family === 'serif' ? 'font-serif' : (themeDef.family === 'mono' ? 'font-mono' : 'font-sans');
+
+      if (themeDef.style === 'dual-sidebar') {
+        sheet1.className = `cv-sheet rounded-sm flex text-slate-900 select-none relative overflow-hidden ${fontClass} p-0`;
+        sheet1.innerHTML = `
+          <div class="w-1/3 p-6 text-white flex flex-col gap-4 text-[9px]" style="background-color: #0f172a;">
+            <div>
+              <h1 class="text-lg font-black tracking-tight uppercase leading-tight">${name}</h1>
+              <h2 class="text-[10px] font-bold mt-1 text-indigo-400">${role}</h2>
+            </div>
+            <div class="space-y-1 text-slate-300 text-[8.5px] border-t border-slate-700 pt-3">
+              <div>📞 ${phone}</div>
+              <div class="truncate">✉️ ${email}</div>
+              <div>📍 ${location}</div>
+              ${currentResumeStandard === 'indian' ? `<div>🏠 ${hometown}</div><div class="mt-1 text-amber-400 font-bold">${notice}</div>` : ''}
+            </div>
+            <div class="border-t border-slate-700 pt-3">
+              <h3 class="font-black uppercase tracking-wider text-indigo-400 mb-1">Competencies</h3>
+              <p class="text-slate-300 leading-snug">${skills}</p>
+            </div>
+            <div class="border-t border-slate-700 pt-3">
+              <h3 class="font-black uppercase tracking-wider text-indigo-400 mb-1">Tools & Stack</h3>
+              <p class="text-slate-300 leading-snug">${tools}</p>
+            </div>
+          </div>
+          <div class="w-2/3 p-7 flex flex-col gap-3 text-[9px]">
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Executive Summary</h3>
+              <p class="text-slate-700 leading-snug">${summary}</p>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Key Quantifiable Achievements</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${ach}</div>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 text-indigo-600 border-slate-200">Work Experience</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${exp}</div>
+            </div>
+          </div>
+        `;
+      } else if (themeDef.style === 'linear-ats') {
+        sheet1.className = `cv-sheet rounded-sm p-8 text-slate-900 select-none relative ${fontClass}`;
+        sheet1.innerHTML = `
+          <div class="text-center border-b border-slate-900 pb-3 mb-3">
+            <h1 class="text-2xl font-bold tracking-wider uppercase text-slate-950">${name}</h1>
+            <h2 class="text-[11px] italic text-slate-700 mt-0.5">${role}</h2>
+            <div class="flex justify-center flex-wrap gap-2 text-[8.5px] text-slate-600 mt-1">
+              <span>${phone}</span> | <span>${email}</span> | <span>${location}</span>
+              ${currentResumeStandard === 'indian' ? ` | <span>${notice}</span>` : ''}
+            </div>
+          </div>
+          <div class="space-y-3 text-[9px] leading-snug">
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Executive Summary</h3>
+              <p class="text-slate-800 text-justify">${summary}</p>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Key Quantifiable Achievements</h3>
+              <div class="text-slate-800 whitespace-pre-line">${ach}</div>
+            </div>
+            <div>
+              <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Professional Experience</h3>
+              <div class="text-slate-800 whitespace-pre-line">${exp}</div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Core Competencies</h3>
+                <p class="text-slate-800">${skills}</p>
+              </div>
+              <div>
+                <h3 class="font-bold uppercase tracking-widest text-[9.5px] border-b border-slate-400 pb-0.5 mb-1">Tools & Technology</h3>
+                <p class="text-slate-800">${tools}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        sheet1.className = `cv-sheet rounded-sm p-7 text-slate-900 select-none relative ${fontClass}`;
+        sheet1.innerHTML = `
+          <div class="border-b-2 pb-2.5 mb-2.5" style="border-color: ${themeColor};">
+            <div class="flex justify-between items-start">
+              <div>
+                <h1 class="text-xl font-black tracking-tight uppercase text-slate-900">${name}</h1>
+                <h2 class="text-[11px] font-bold mt-0.5" style="color: ${themeColor};">${role}</h2>
+              </div>
+              ${currentResumeStandard === 'indian' ? `<span class="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200">${notice}</span>` : ''}
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-[9px] text-slate-500 mt-1 font-medium">
+              <span>${email}</span> • <span>${phone}</span> • <span>${location}</span>
+              ${currentResumeStandard === 'indian' ? ` • <span>${hometown}</span>` : ''}
+            </div>
+          </div>
+          <div class="space-y-2.5 text-[9px]">
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Executive Summary</h3>
+              <p class="text-slate-700 leading-snug">${summary}</p>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Key Achievements</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${ach}</div>
+            </div>
+            <div>
+              <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Professional Work Experience</h3>
+              <div class="text-slate-700 whitespace-pre-line leading-snug">${exp}</div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-0.5">
+              <div>
+                <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Core Competencies</h3>
+                <p class="text-slate-700 leading-snug">${skills}</p>
+              </div>
+              <div>
+                <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-0.5 border-slate-200" style="color: ${themeColor};">Tools & Stack</h3>
+                <p class="text-slate-700 leading-snug">${tools}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      sheet2.className = `cv-sheet rounded-sm p-7 text-slate-900 select-none relative ${fontClass}` + (resumePageCount === 2 ? "" : " hidden");
+      sheet2.innerHTML = `
+        <div class="border-b-2 pb-2 mb-2.5 flex justify-between items-center" style="border-color: ${themeColor};">
+          <span class="text-[11px] font-bold uppercase text-slate-600">${name} — Curriculum Vitae (Page 2)</span>
+          <span class="text-[9px] font-bold" style="color: ${themeColor};">Page 2</span>
+        </div>
+        <div class="space-y-3.5 text-[9.5px]">
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Education & Certifications</h3>
+            <div class="text-slate-700 whitespace-pre-line">${edu}</div>
+          </div>
+          ${currentResumeStandard === 'indian' ? `
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Personal Particulars (Indian Standard)</h3>
+            <div class="grid grid-cols-2 gap-2 text-slate-700 mt-1">
+              <div><strong>Date of Birth:</strong> ${dob}</div>
+              <div><strong>Nationality:</strong> ${nationality}</div>
+              <div><strong>Languages Known:</strong> ${languages}</div>
+              <div><strong>Marital Status:</strong> ${marital}</div>
+              <div><strong>Permanent Address:</strong> ${hometown}</div>
+              <div><strong>Availability:</strong> ${notice}</div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-slate-200">
+            <h3 class="font-black uppercase tracking-wider mb-1" style="color: ${themeColor};">Declaration</h3>
+            <p class="text-slate-700 italic leading-snug">${declaration}</p>
+            <div class="mt-6 flex justify-between items-end">
+              <div class="text-[8.5px] text-slate-500">
+                <p>Place: ${location}</p>
+                <p>Date: ${new Date().toLocaleDateString()}</p>
+              </div>
+              <div class="text-right font-bold text-slate-800 text-xs">
+                <p>${name}</p>
+              </div>
+            </div>
+          </div>
+          ` : `
+          <div>
+            <h3 class="font-black uppercase tracking-wider border-b pb-0.5 mb-1 border-slate-200" style="color: ${themeColor};">Strategic Projects & Global Leadership</h3>
+            <p class="text-slate-700 leading-relaxed">• Enterprise Pipeline Resilience: Engineered real-time dispatch dashboard monitoring 500+ items across regional DCs.<br/>• Process Automation: Automated cross-functional audit pipelines saving 120+ monthly operational hours.</p>
+          </div>
+          `}
+        </div>
+      `;
+    }
+
+    function hexToRgb01(hex) {
+      const clean = hex.replace('#', '');
+      const bi = parseInt(clean, 16);
+      return { r: ((bi >> 16) & 255) / 255, g: ((bi >> 8) & 255) / 255, b: (bi & 255) / 255 };
+    }
+
+    async function exportHybridEnterprisePdf() {
+      try {
+        const pdfDoc = await PDFLib.PDFDocument.create();
+        const page1 = pdfDoc.addPage([595.28, 841.89]);
+        const themeKey = document.getElementById('cvTemplateStyle').value;
+        const themeDef = THEME_REGISTRY[themeKey] || THEME_REGISTRY.modern;
+        const isSerif = themeDef.family === 'serif';
+
+        const fontBold = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRomanBold) : await pdfDoc.embedFont(PDFLib.StandardFonts.HelveticaBold);
+        const fontReg = isSerif ? await pdfDoc.embedFont(PDFLib.StandardFonts.TimesRoman) : await pdfDoc.embedFont(PDFLib.StandardFonts.Helvetica);
+
+        const theme = hexToRgb01(document.getElementById('resThemeColor').value);
+        const name = document.getElementById('resName').value || 'Candidate Name';
+        const role = document.getElementById('resRole').value || 'Headline';
+        const contact = `${document.getElementById('resEmail').value} | ${document.getElementById('resPhone').value} | ${document.getElementById('resLocation').value}`;
+
+        let y = 795;
+        page1.drawText(name.toUpperCase(), { x: 45, y, size: 18, font: fontBold, color: PDFLib.rgb(0.08, 0.1, 0.15) });
+        y -= 16;
+        page1.drawText(role, { x: 45, y, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+        y -= 13;
+        page1.drawText(contact, { x: 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.4, 0.45, 0.5) });
+        y -= 10;
+        page1.drawLine({ start: { x: 45, y }, end: { x: 550, y }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+
+        const drawSection = (title, text) => {
+          y -= 20;
+          page1.drawText(title, { x: 45, y, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          y -= 12;
+          for (let l of text.split('\n')) {
+            if (l.trim() && y > 45) {
+              page1.drawText(l.trim().substring(0, 105), { x: 45, y, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+              y -= 11;
+            }
+          }
+        };
+
+        drawSection("EXECUTIVE SUMMARY", document.getElementById('resSummary').value);
+        drawSection("KEY QUANTIFIABLE ACHIEVEMENTS", document.getElementById('resAchievements').value);
+        drawSection("PROFESSIONAL WORK EXPERIENCE", document.getElementById('resExp').value);
+        drawSection("CORE COMPETENCIES & TECHNICAL STACK", `${document.getElementById('resSkills').value}\nTools: ${document.getElementById('resTools').value}`);
+
+        if (resumePageCount === 2) {
+          const page2 = pdfDoc.addPage([595.28, 841.89]);
+          let y2 = 795;
+          page2.drawText(`${name.toUpperCase()} — CURRICULUM VITAE (PAGE 2)`, { x: 45, y: y2, size: 10, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          y2 -= 12;
+          page2.drawLine({ start: { x: 45, y: y2 }, end: { x: 550, y2 }, thickness: 1.2, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          y2 -= 20;
+
+          page2.drawText("EDUCATION CREDENTIALS", { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+          y2 -= 13;
+          for (let l of document.getElementById('resEdu').value.split('\n')) {
+            if (l.trim()) { page2.drawText(l.trim(), { x: 45, y: y2, size: 8.5, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) }); y2 -= 12; }
+          }
+
+          if (currentResumeStandard === 'indian') {
+            y2 -= 20;
+            page2.drawText("PERSONAL PARTICULARS (INDIAN CORPORATE STANDARD)", { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+            y2 -= 14;
+            page2.drawText(`DOB: ${document.getElementById('resDob').value} | Nationality: ${document.getElementById('resNationality').value} | Marital Status: ${document.getElementById('resMarital').value}`, { x: 45, y: y2, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+            y2 -= 12;
+            page2.drawText(`Languages Known: ${document.getElementById('resLanguages').value} | Availability: ${document.getElementById('resNotice').value}`, { x: 45, y: y2, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+            y2 -= 25;
+            page2.drawText("DECLARATION", { x: 45, y: y2, size: 9, font: fontBold, color: PDFLib.rgb(theme.r, theme.g, theme.b) });
+            y2 -= 13;
+            page2.drawText(document.getElementById('resDeclaration').value.substring(0, 110), { x: 45, y: y2, size: 8, font: fontReg, color: PDFLib.rgb(0.15, 0.2, 0.25) });
+          }
+        }
+
+        const bytes = await pdfDoc.save();
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+        a.download = `${name.replace(/\s+/g, '_')}_Curriculum_Vitae.pdf`;
+        a.click();
+      } catch (err) {
+        alert("Export failure: " + err.message);
       }
     }
 
-    // Initialize
-    resetDefaultData();
-    lucide.createIcons();
+    document.addEventListener('DOMContentLoaded', () => {
+      updateResumePreview();
+    });
   </script>
 </body>
 </html>
