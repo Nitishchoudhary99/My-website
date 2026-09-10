@@ -1,6 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+    <!-- Structured Data for Google Knowledge Graph -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://docbrisk.com/#organization",
+        "name": "DocBrisk",
+        "url": "https://docbrisk.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://docbrisk.com/logo.png",
+          "caption": "DocBrisk Logo"
+        },
+        "description": "DocBrisk provides online document management and file conversion utilities, including PDF to Word, DOCX to PDF, and image conversion tools.",
+        "sameAs": [
+          "https://twitter.com/yourhandle",
+          "https://www.linkedin.com/company/yourhandle",
+          "https://github.com/yourhandle"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://docbrisk.com/#website",
+        "url": "https://docbrisk.com/",
+        "name": "DocBrisk",
+        "publisher": {
+          "@id": "https://docbrisk.com/#organization"
+        },
+        "description": "Fast and secure online document and PDF converter."
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://docbrisk.com/#webapp",
+        "name": "DocBrisk Document Converter",
+        "url": "https://docbrisk.com/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@id": "https://docbrisk.com/#organization"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>DocBrisk — Enterprise Document Suite & CV Studio</title>
