@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DocBrisk KPI Dashboards</title>
+<link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+<link rel="stylesheet" href="taskpane.css">
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body class="ms-font-m">
+
+<header class="db-header">
+  <div class="db-logo">DB</div>
+  <div>
+    <h1>KPI Dashboards</h1>
+    <p>Pick data → get KPIs → build a dashboard</p>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- STEP 1: pick data -->
+  <section class="db-step" data-step="1">
+    <h2>1. Choose your data</h2>
+    <p class="db-hint">Select a range in the sheet first, or use the whole used range.</p>
+    <div class="db-row">
+      <button class="db-btn db-btn-primary" id="btnUseSelection">Use current selection</button>
+      <button class="db-btn" id="btnUseSheet">Use whole sheet</button>
+    </div>
+    <p class="db-status" id="dataStatus"></p>
+  </section>
+
+  <!-- STEP 2: KPI suggestions -->
+  <section class="db-step hidden" data-step="2">
+    <h2>2. Choose your KPIs</h2>
+    <p class="db-hint">Suggested from the shape of your data — check the ones you want, or add your own below.</p>
+    <div id="kpiList" class="db-kpi-list"></div>
+
+    <details class="db-custom">
+      <summary>+ Add a custom KPI</summary>
+      <div class="db-field">
+        <label for="customLabel">Name</label>
+        <input type="text" id="customLabel" placeholder="e.g. Revenue per Order">
+      </div>
+      <div class="db-field">
+        <label for="customFormula">Formula</label>
+        <input type="text" id="customFormula" placeholder="SUM(Revenue) / COUNT(Order ID)">
+        <p class="db-hint">Use SUM, AVG, COUNT, MIN, MAX or DISTINCT with a column name, combined with + − × ÷ and parentheses.</p>
+      </div>
+      <div class="db-field">
+        <label for="customFormat">Display as</label>
+        <select id="customFormat">
+          <option value="number">Number</option>
+          <option value="currency">Currency (₹)</option>
+          <option value="percent">Percent</option>
+        </select>
+      </div>
+      <button class="db-btn db-btn-primary" id="btnAddCustom">Add KPI</button>
+      <p class="db-status" id="customStatus"></p>
+    </details>
+  </section>
+
+  <!-- STEP 3: template -->
+  <section class="db-step hidden" data-step="3">
+    <h2>3. Choose a layout</h2>
+    <div id="templateList" class="db-template-list"></div>
+  </section>
+
+  <!-- STEP 4: generate -->
+  <section class="db-step hidden" data-step="4">
+    <h2>4. Build your dashboard</h2>
+    <button class="db-btn db-btn-primary db-btn-block" id="btnBuildExcel">Build dashboard in this workbook</button>
+    <button class="db-btn db-btn-block" id="btnExportHtml">Download standalone HTML dashboard</button>
+    <p class="db-status" id="buildStatus"></p>
+
+    <details class="db-custom">
+      <summary>Send to Google Looker Studio</summary>
+      <ol class="db-steps-list">
+        <li>Click "Download data as CSV" below.</li>
+        <li>In Google Sheets, create a new sheet and use <em>File → Import</em> to load that CSV.</li>
+        <li>Copy the Google Sheet's URL and paste it here.</li>
+      </ol>
+      <button class="db-btn" id="btnDownloadCsv">Download data as CSV</button>
+      <div class="db-field">
+        <label for="sheetUrl">Google Sheet URL</label>
+        <input type="text" id="sheetUrl" placeholder="https://docs.google.com/spreadsheets/d/…">
+      </div>
+      <button class="db-btn db-btn-primary" id="btnLookerLink">Open in Looker Studio</button>
+      <p class="db-status" id="lookerStatus"></p>
+    </details>
+  </section>
+
+</main>
+
+<script src="kpi-engine.js"></script>
+<script src="templates.js"></script>
+<script src="dashboard-builder.js"></script>
+<script src="export-dashboard.js"></script>
+<script src="looker-studio.js"></script>
+<script src="taskpane.js"></script>
+</body>
+</html>
