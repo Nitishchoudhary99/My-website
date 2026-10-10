@@ -12714,15 +12714,65 @@ const DocxMerge = (() => {
     return { rows: rows.filter(r => Object.values(r).some(v => String(v).trim())), headers };
   }
 
+  /* {{Amount | inr}}, {{Name | upper}}, {{Date | date}}: a field may carry formats after a bar.
+     {{Row}} / {{Serial}} (record number) and {{Today}} work without a column. */
+  const baseOf = (f) => String(f).split('|')[0].trim();
+  const BUILTIN = { row: 'Row', serial: 'Row', srno: 'Row', sno: 'Row', today: 'Today', todaysdate: 'Today' };
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function toDate(v) {
+    const s = String(v).trim();
+    if (/^\d{5}(\.\d+)?$/.test(s)) return new Date(Math.round((+s - 25569) * 864e5));            // Excel serial day
+    let m = s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})$/);                               // dd/mm/yyyy (India)
+    if (m) return new Date(+(m[3].length === 2 ? '20' + m[3] : m[3]), +m[2] - 1, +m[1]);
+    m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+    const d = new Date(s); return isNaN(d) ? null : d;
+  }
+  const numOf = (v) => { const n = parseFloat(String(v).replace(/[₹,\s]|rs\.?|inr/gi, '')); return isNaN(n) ? null : n; };
+  const FORMATS = {
+    upper: (v) => v.toUpperCase(), lower: (v) => v.toLowerCase(),
+    title: (v) => v.toLowerCase().replace(/(^|[\s\-'(])(\p{L})/gu, (m, a, b) => a + b.toUpperCase()),
+    first: (v) => v.trim().split(/\s+/)[0] || '',
+    inr: (v) => { const n = numOf(v); return n == null ? v : '₹' + n.toLocaleString('en-IN', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); },
+    num: (v) => { const n = numOf(v); return n == null ? v : n.toLocaleString('en-IN', { maximumFractionDigits: 2 }); },
+    words: (v) => { const n = numOf(v); return n == null ? v : 'Rupees ' + rupeesInWords(n) + ' only'; },
+    date: (v) => { const d = toDate(v); return d ? d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear() : v; },
+    ddmmyyyy: (v) => { const d = toDate(v); return d ? String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear() : v; }
+  };
+  function formatValue(v, f) {
+    return String(f).split('|').slice(1).map(x => x.trim().toLowerCase()).reduce((acc, fm) => {
+      const pad = fm.match(/^pad(\d)$/);
+      if (pad) return acc.padStart(+pad[1], '0');
+      return FORMATS[fm] ? FORMATS[fm](acc) : acc;
+    }, String(v ?? ''));
+  }
   function mapping(fields, headers) {
     const map = {};
-    fields.forEach(f => { const h = headers.find(x => norm(x) === norm(f)); if (h) map[f] = h; });
+    fields.forEach(f => {
+      const b = baseOf(f), h = headers.find(x => norm(x) === norm(b));
+      if (h) map[f] = h; else if (BUILTIN[norm(b)]) map[f] = { builtin: BUILTIN[norm(b)] };
+    });
     return map;
   }
+  const valueOf = (map, f, row, i) => {
+    const m = map[f];
+    if (m === undefined) return undefined;
+    const raw = typeof m === 'object' ? (m.builtin === 'Row' ? String(i + 1) : FORMATS.date(new Date().toISOString().slice(0, 10))) : row[m];
+    return formatValue(raw, f);
+  };
+  /* "{{Name}} - {{Course}}" -> a safe file name for one row */
+  function fileName(pattern, row, map, i, headers) {
+    const out = String(pattern || '').replace(/\{\{\s*([^{}]+?)\s*\}\}/g, (all, f) => {
+      const local = Object.assign({}, map);
+      if (local[f] === undefined) { const h = headers.find(x => norm(x) === norm(baseOf(f))); if (h) local[f] = h; else if (BUILTIN[norm(baseOf(f))]) local[f] = { builtin: BUILTIN[norm(baseOf(f))] }; }
+      return valueOf(local, f, row, i) ?? '';
+    });
+    return out.replace(/[\\/:*?"<>|]+/g, '_').replace(/\s+/g, ' ').trim().slice(0, 90);
+  }
 
-  async function mergeOne(tpl, row, map) {
+  async function mergeOne(tpl, row, map, i) {
     const zip = await JSZip.loadAsync(tpl.raw);
-    const valueFor = (f) => (map[f] !== undefined ? String(row[map[f]] ?? '') : undefined);
+    const valueFor = (f) => valueOf(map, f, row, i || 0);
     for (const [name, xml] of Object.entries(tpl.parts)) zip.file(name, mergeXml(xml, valueFor));
     return zip.generateAsync({ type: 'uint8array', compression: 'DEFLATE', compressionOptions: { level: 6 } });
   }
@@ -12755,12 +12805,29 @@ const DocxMerge = (() => {
       </div>
       <p class="hint" style="margin-top:10px">In Word, type each field where it should go, like <strong>{{Name}}</strong> or <strong>{{Course}}</strong>, matching your column names.
         Fonts, colours, logos, tables, headers and footers stay exactly as you designed them.</p>
+      <details class="hint mm-formats" style="margin-top:6px"><summary style="cursor:pointer;font-weight:600">Formatting and automatic fields</summary>
+        <ul style="margin:6px 0 0;padding-left:18px;line-height:1.7">
+          <li><strong>{{Amount | inr}}</strong> → ₹1,25,000 · <strong>{{Amount | words}}</strong> → Rupees One Lakh Twenty-Five Thousand only</li>
+          <li><strong>{{Date | date}}</strong> → 12 October 2026 (reads Excel dates and 12/10/2026) · <strong>{{Date | ddmmyyyy}}</strong> → 12/10/2026</li>
+          <li><strong>{{Name | upper}}</strong>, <strong>| lower</strong>, <strong>| title</strong>, <strong>| first</strong> (first name only)</li>
+          <li><strong>{{Row}}</strong> → 1, 2, 3… (certificate or serial numbers; <strong>{{Row | pad4}}</strong> → 0001) · <strong>{{Today}}</strong> → today's date</li>
+        </ul></details>
       <div class="panel hidden" id="mdInfo"></div>
       <div class="panel hidden" id="mdPrevWrap"><div class="panel-title" style="display:flex;justify-content:space-between;align-items:center">
           <span>Preview</span><span class="pager" style="margin:0"><button type="button" class="btn btn-ghost btn-sm" id="mdPrev" aria-label="Previous record">‹</button>
           <span class="label" id="mdPrevLabel"></span><button type="button" class="btn btn-ghost btn-sm" id="mdNext" aria-label="Next record">›</button></span></div>
         <div class="paper-preview" id="mdPreview"></div>
         <p class="hint">A quick preview of the wording. The downloaded files keep your exact Word design.</p></div>
+      <div class="panel hidden" id="mdOutWrap"><div class="panel-title">Output</div>
+        <div class="field-row" style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+          <div class="field"><label for="mdOut">Create</label><select id="mdOut">
+            <option value="docx">Word files (.docx), editable</option>
+            <option value="pdf">PDF files, one per row</option>
+            <option value="pdf-one">One combined PDF, ready to print</option>
+            <option value="both">Word and PDF for every row</option></select></div>
+          <div class="field"><label for="mdPattern">File names</label><input id="mdPattern" type="text" spellcheck="false" placeholder="{{Name}} - Certificate"></div>
+        </div>
+        <p class="hint" style="margin:8px 0 0">Use any column in the file name, like <strong>{{Name}} - {{Course}}</strong>, or <strong>{{Row | pad3}}</strong> for 001, 002…</p></div>
       <button type="button" class="btn btn-primary btn-block" id="mdRun" disabled style="margin-top:16px">Create Word files</button>
       <p class="hint" id="mdStatus" aria-live="polite" style="text-align:center"></p>`;
     const banner = shell.querySelector('#proBanner');
@@ -12798,13 +12865,15 @@ const DocxMerge = (() => {
         return;
       }
       const chips = tpl.fields.map(f => map[f]
-        ? `<span class="field-chip ok">{{${esc(f)}}} → ${esc(map[f])}</span>`
+        ? `<span class="field-chip ok">{{${esc(f)}}} → ${esc(typeof map[f] === 'object' ? (map[f].builtin === 'Row' ? 'record number' : "today's date") : map[f])}</span>`
         : `<span class="field-chip miss" title="No column with this name">{{${esc(f)}}} has no matching column</span>`).join('');
-      const nameOpts = data ? data.headers.map(h => `<option${Object.values(map)[0] === h ? ' selected' : ''}>${esc(h)}</option>`).join('') : '';
+      const firstCol = Object.values(map).find(v => typeof v === 'string') || (data && data.headers[0]) || '';
       info.innerHTML = `<div class="panel-title">Fields</div><div class="field-chips">${chips}</div>
-        ${data ? `<p class="hint" style="margin:10px 0 0">${data.rows.length} row${data.rows.length === 1 ? '' : 's'} in ${esc($('#mdCsvName').textContent)}, so ${data.rows.length} Word file${data.rows.length === 1 ? '' : 's'}.</p>
-          <div class="field" style="margin-top:12px"><label for="mdNameCol">Name each file after</label><select id="mdNameCol">${nameOpts}</select></div>` :
+        ${data ? `<p class="hint" style="margin:10px 0 0">${data.rows.length} row${data.rows.length === 1 ? '' : 's'} in ${esc($('#mdCsvName').textContent)}, so ${data.rows.length} document${data.rows.length === 1 ? '' : 's'}.</p>` :
           '<p class="hint" style="margin:10px 0 0">Now add the CSV or Excel file with one row per document.</p>'}`;
+      $('#mdOutWrap').classList.toggle('hidden', !data);
+      const pat = $('#mdPattern');
+      if (data && (!pat.value || pat.dataset.auto === '1')) { pat.value = firstCol ? `{{${firstCol}}}` : '{{Row}}'; pat.dataset.auto = '1'; }
       if (data) await preview();
     }
 
@@ -12816,7 +12885,7 @@ const DocxMerge = (() => {
       wrap.classList.remove('hidden');
       try {
         if (typeof mammoth === 'undefined') await window.ensureLib('mammoth');
-        const bytes = await mergeOne(tpl, data.rows[idx], map);
+        const bytes = await mergeOne(tpl, data.rows[idx], map, idx);
         const { value } = await mammoth.convertToHtml({ arrayBuffer: bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) });
         $('#mdPreview').innerHTML = value;
       } catch (e) { $('#mdPreview').textContent = 'Preview is not available for this file, but the Word files will still be created.'; }
@@ -12841,39 +12910,62 @@ const DocxMerge = (() => {
         await refresh();
       } catch (e) { data = null; fail(e); refresh(); }
     });
+    $('#mdPattern').addEventListener('input', () => { $('#mdPattern').dataset.auto = '0'; });
+    const RUN_LABEL = { docx: 'Create Word files', pdf: 'Create PDF files', 'pdf-one': 'Create one combined PDF', both: 'Create Word and PDF files' };
+    $('#mdOut').addEventListener('change', () => { $('#mdRun').textContent = RUN_LABEL[$('#mdOut').value]; });
     $('#mdPrev').addEventListener('click', () => { idx--; preview(); });
     $('#mdNext').addEventListener('click', () => { idx++; preview(); });
 
     $('#mdRun').addEventListener('click', () => runTask($('#mdRun'), async () => {
       if (!(await Trials.allow('mail-merge'))) return;
-      const nameCol = ($('#mdNameCol') || {}).value;
+      const out = $('#mdOut').value, pattern = $('#mdPattern').value.trim() || '{{Row}}';
+      const wantDocx = out === 'docx' || out === 'both', wantPdf = out !== 'docx';
       const status = $('#mdStatus');
       const used = new Set();
       const files = [];
+      let combined = null;
+      if (wantPdf) {
+        if (typeof PDFLib === 'undefined') await window.ensureLib('PDFLib');
+        if (out === 'pdf-one') combined = await PDFLib.PDFDocument.create();
+      }
+      const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
       for (let i = 0; i < data.rows.length; i++) {
-        status.textContent = `Creating ${i + 1} of ${data.rows.length}…`;
-        const bytes = await mergeOne(tpl, data.rows[i], map);
-        let base = String((nameCol && data.rows[i][nameCol]) || `row_${i + 1}`).replace(/[\\/:*?"<>|]+/g, '_').trim().slice(0, 80) || `row_${i + 1}`;
+        status.textContent = `${wantPdf ? 'Laying out' : 'Creating'} ${i + 1} of ${data.rows.length}…`;
+        const bytes = await mergeOne(tpl, data.rows[i], map, i);
+        const base = fileName(pattern, data.rows[i], map, i, data.headers) || `row_${i + 1}`;
         let name = base, n = 2;
         while (used.has(name.toLowerCase())) name = `${base}_${n++}`;
         used.add(name.toLowerCase());
-        files.push([name + '.docx', bytes]);
-        if (i % 10 === 9) await new Promise(r => setTimeout(r, 0));
+        if (wantDocx) files.push([name + '.docx', bytes]);
+        if (wantPdf) {
+          const pdf = await PDFEngine.docxToPdf(new File([bytes], name + '.docx', { type: DOCX }), null, { title: name, bookmarks: false });
+          if (combined) {
+            const src = await PDFLib.PDFDocument.load(pdf);
+            (await combined.copyPages(src, src.getPageIndices())).forEach(pg => combined.addPage(pg));
+          } else files.push([name + '.pdf', pdf]);
+        }
+        if (i % 5 === 4) await new Promise(r => setTimeout(r, 0));
       }
-      const DOCX = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-      if (files.length === 1) downloadBytes(files[0][1], DOCX, files[0][0]);
-      else {
-        status.textContent = 'Bundling the ZIP…';
-        const zip = new JSZip();
-        files.forEach(([n, b]) => zip.file(n, b));
-        downloadBlob(await zip.generateAsync({ type: 'blob' }), 'mail_merge_word_files.zip');
+      if (combined) {
+        status.textContent = 'Joining the pages…';
+        downloadBytes(await combined.save(), 'application/pdf', (tpl.name.replace(/\.docx$/i, '').replace(/[\\/:*?"<>|]+/g, '_').trim() || 'mail_merge') + '_all_' + data.rows.length + '.pdf');
+        status.textContent = `One PDF with ${data.rows.length} personalised document${data.rows.length === 1 ? '' : 's'} (${combined.getPageCount()} pages), ready to print.`;
+      } else {
+        if (files.length === 1) downloadBytes(files[0][1], files[0][0].endsWith('.pdf') ? 'application/pdf' : DOCX, files[0][0]);
+        else {
+          status.textContent = 'Bundling the ZIP…';
+          const zip = new JSZip();
+          files.forEach(([n, b]) => zip.file(n, b));
+          downloadBlob(await zip.generateAsync({ type: 'blob' }), out === 'docx' ? 'mail_merge_word_files.zip' : out === 'pdf' ? 'mail_merge_pdf_files.zip' : 'mail_merge_word_and_pdf.zip');
+        }
+        const kinds = out === 'both' ? 'Word and PDF' : out === 'pdf' ? 'PDF' : 'editable Word';
+        status.textContent = `${data.rows.length} ${kinds} document${data.rows.length === 1 ? '' : 's'} created, each with your original design.`;
       }
-      status.textContent = `${files.length} editable Word file${files.length === 1 ? '' : 's'} created, each with your original design.`;
       await Trials.used('mail-merge');
     }));
   }
 
-  return { mount, mergeXml, fieldsInXml, openTemplate, readData, mapping, mergeOne };
+  return { mount, mergeXml, fieldsInXml, openTemplate, readData, mapping, mergeOne, formatValue, fileName };
 })();
 
 const PDFEditor = (() => {
@@ -17820,8 +17912,10 @@ const SEO_PAGES = {
     f: [['Does it calculate CGST, SGST and IGST?', 'Yes. Taxes are calculated for every line item from the GST rate you enter.'],
         ['Can customers pay by scanning the invoice?', 'Yes. A UPI QR with the amount is printed on the invoice.']] },
   'mail-merge': { t: 'Bulk Certificate Generator & Mail Merge | DocBrisk', d: 'Create hundreds of personalised certificates and letters from a Word or PDF template and a spreadsheet, as Word files or PDFs.',
-    h: 'How to generate certificates in bulk', s: ['Upload your template and the spreadsheet of names', 'Match the fields to the columns', 'Download every personalised file'],
+    h: 'How to generate certificates in bulk', s: ['Type fields like {{Name}} in your Word template, or place them on a PDF', 'Add the Excel or CSV file: one row per person', 'Choose Word files, PDFs or one combined print-ready PDF, and download'],
     f: [['Can I make certificates in bulk from Excel?', 'Yes. Each row of the spreadsheet becomes one certificate or letter.'],
+        ['Can I get PDFs from a Word template?', 'Yes. Choose PDF files (one per row), one combined PDF ready to print, or both Word and PDF. The PDFs keep your Word design.'],
+        ['Can I add certificate numbers and format amounts?', 'Yes. {{Row | pad4}} gives 0001, 0002…; {{Amount | inr}} gives ₹1,25,000; {{Amount | words}} spells the amount in words; {{Date | date}} gives 12 October 2026.'],
         ['Does it work with Hindi names?', 'Yes. Names and text in Hindi and other scripts are placed correctly.']] },
   'split-by-size': { t: 'Split PDF by Size: Under 1 MB, 2 MB or Any Limit | DocBrisk', d: 'Break a large PDF into parts under an upload limit such as 1 MB or 2 MB, or split by page count or equal sections. Free and private.',
     h: 'How to split a PDF by file size', s: ['Upload the large PDF', 'Enter the maximum size per part, or a page count', 'Download the parts'],
@@ -18149,7 +18243,8 @@ const MergeSamples = (() => {
       para(run('{{Course}}', { b: 1, c: '1E3A8A', sz: 46 }), 240) +
       para(run('on {{Date}} with grade ', { sz: 32 }) + run('{{Grade}}', { b: 1, sz: 32 }) + run('.', { sz: 32 }), 1100) +
       para(run('________________________                    ________________________', { sz: 26 }), 60) +
-      para(run('Course Director                                                     Principal', { sz: 26, c: '475569' })) +
+      para(run('Course Director                                                     Principal', { sz: 26, c: '475569' }), 500) +
+      para(run('Certificate No. DB-2026-{{Row | pad4}}', { sz: 22, c: '64748B' })) +
       `<w:sectPr><w:pgSz w:w="16838" w:h="11906" w:orient="landscape"/><w:pgMar w:top="1300" w:right="1300" w:bottom="1300" w:left="1300" w:header="0" w:footer="0" w:gutter="0"/>` +
       `<w:pgBorders w:offsetFrom="page">${border('top')}${border('left')}${border('bottom')}${border('right')}</w:pgBorders></w:sectPr>` +
       '</w:body></w:document>');
