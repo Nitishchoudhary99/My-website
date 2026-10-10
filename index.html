@@ -6733,7 +6733,7 @@ const TOOLS = [
     blurb:'Make QR codes for links, Wi-Fi, contacts, UPI payments or plain text. Generated offline and downloadable as PNG or SVG.' },
   { slug:'invoice-maker', name:'Invoice Maker', tint:'t-emerald', icon:'receipt', featured:true, badge:'GST ready',
     h1:'Free GST Invoice Generator',
-    blurb:'Build a professional invoice with GST or flat tax, line items, HSN codes and a scannable UPI QR for instant payment.' },
+    blurb:'GST tax invoices, quotations and proformas with per-item GST rates, automatic IGST from the GSTINs, your logo and signature, bank details, amount in words and a UPI QR. Any number of lines.' },
   { slug:'mail-merge', name:'Mail Merge', tint:'t-violet', icon:'users', badge:'Pro', pro:true,
     h1:'Bulk Certificate & Letter Generator',
     blurb:'Turn a Word or PDF template and a spreadsheet into hundreds of personalised certificates and letters, as editable Word files or PDFs.' },
@@ -8266,12 +8266,30 @@ const DocLayout = (() => {
     const blocks = [];
     let cur = [lines[0]];
     for (let i = 1; i < lines.length; i++) {
-      const gap = lines[i - 1].y - lines[i].y;
-      if (gap > breakAt) { blocks.push(cur); cur = [lines[i]]; }
-      else cur.push(lines[i]);
+      const a = lines[i - 1], b = lines[i];
+      const gap = a.y - b.y;
+      // A heading sits close to its text, so a gap alone does not separate them:
+      // also break where the size jumps or a whole bold line meets a regular one.
+      const sizeJump = Math.max(a.size, b.size) / Math.max(0.1, Math.min(a.size, b.size)) > 1.12;
+      const boldFlip = !!a.bold !== !!b.bold && (a.text.length <= 90 || b.text.length <= 90);
+      if (gap > breakAt || sizeJump || boldFlip) { blocks.push(cur); cur = [b]; }
+      else cur.push(b);
     }
     blocks.push(cur);
     return blocks;
+  }
+
+  /* A list ends at the first line that is not indented under its items, so a
+     note or paragraph after the last item is not swallowed into it. */
+  function splitListTail(block) {
+    const isMark = (l) => BULLET_RE.test(l.text) || ORDINAL_RE.test(l.text);
+    if (!isMark(block[0])) return [block];
+    const markX = Math.min(...block.filter(isMark).map(l => l.x0));
+    for (let i = 1; i < block.length; i++) {
+      const l = block[i];
+      if (!isMark(l) && l.x0 <= markX + l.size * 0.6) return [block.slice(0, i)].concat(splitListTail(block.slice(i)));
+    }
+    return [block];
   }
 
   /* ---------------- stage 4: tables ---------------- */
@@ -8280,66 +8298,94 @@ const DocLayout = (() => {
    * neighbouring lines. Two or more consecutive agreeing lines make a table.
    */
   function detectTables(lines) {
-    const colsOf = (l) => {
-      const cols = [];
-      let start = null, prev = null;
+    // A segment is a run of text with no wide gap in it: one table cell.
+    const segsOf = (l) => {
+      const segs = [];
+      let cur = null, prev = null;
       l.items.forEach(it => {
-        if (start === null) { start = it.x; }
-        else if (prev && it.x - (prev.x + prev.w) > l.size * 1.1) {
-          cols.push(start); start = it.x;
+        const gap = prev ? it.x - (prev.x + prev.w) : 0;
+        if (cur && gap <= l.size * 0.55) {
+          cur.x1 = Math.max(cur.x1, it.x + it.w);
+          cur.text += (gap > l.size * 0.18 && !/\s$/.test(cur.text) && !/^\s/.test(it.text) ? ' ' : '') + it.text;
+        } else {
+          cur = { x0: it.x, x1: it.x + it.w, text: it.text };
+          segs.push(cur);
         }
         prev = it;
       });
-      if (start !== null) cols.push(start);
-      return cols;
+      segs.forEach(sg => { sg.text = sg.text.replace(/\s+/g, ' ').trim(); });
+      return segs.filter(sg => sg.text);
+    };
+    const overlaps = (p, q) => Math.min(p.x1, q.x1) - Math.max(p.x0, q.x0) > -2;
+    // Two rows agree when every cell of the shorter one lines up with exactly one
+    // cell of the other. Overlap (not equal start) also matches right-aligned numbers.
+    const agree = (A, B) => {
+      if (A.segs.length < 2 || B.segs.length < 2) return false;
+      if (A.line.y - B.line.y > Math.max(A.line.size, B.line.size) * 4.5) return false;
+      const [few, many] = A.segs.length <= B.segs.length ? [A.segs, B.segs] : [B.segs, A.segs];
+      return few.every(sg => many.filter(t => overlaps(sg, t)).length === 1);
     };
 
-    const rows = lines.map(l => ({ line: l, cols: colsOf(l) }));
-    const agree = (a, b) => {
-      if (a.length < 2 || b.length < 2) return false;
-      const tol = Math.max(6, a.line ? 8 : 8);
-      let hits = 0;
-      a.forEach(x => { if (b.some(y => Math.abs(x - y) <= 10)) hits++; });
-      return hits >= Math.min(a.length, b.length) - 0 && hits >= 2;
-    };
-
+    const rows = lines.map(l => ({ line: l, segs: segsOf(l) }));
     const groups = [];
     let run = null;
-    for (let i = 0; i < rows.length; i++) {
-      const prev = i ? rows[i - 1] : null;
-      const ok = prev && agree(rows[i].cols, prev.cols);
-      if (ok) {
-        if (!run) { run = { start: i - 1, rows: [rows[i - 1], rows[i]] }; }
-        else run.rows.push(rows[i]);
+    for (let i = 1; i < rows.length; i++) {
+      if (agree(rows[i - 1], rows[i])) {
+        if (!run) run = { start: i - 1, rows: [rows[i - 1]] };
+        run.rows.push(rows[i]);
       } else {
-        if (run && run.rows.length >= 2) groups.push(run);
+        if (run) groups.push(run);
         run = null;
       }
     }
-    if (run && run.rows.length >= 2) groups.push(run);
+    if (run) groups.push(run);
 
     return groups.map(g => {
-      // unify column boundaries across the whole group
-      const all = [];
-      g.rows.forEach(r => r.cols.forEach(x => all.push(x)));
-      all.sort((a, b) => a - b);
-      const bounds = [];
-      all.forEach(x => {
-        const last = bounds[bounds.length - 1];
-        if (!last || x - last.sum / last.n > 12) bounds.push({ sum: x, n: 1 });
-        else { last.sum += x; last.n++; }
+      // columns = the x-ranges covered by cells, merged where they touch
+      const ivs = [];
+      g.rows.forEach(r => r.segs.forEach(sg => ivs.push([sg.x0, sg.x1])));
+      ivs.sort((p, q) => p[0] - q[0]);
+      const cols = [];
+      ivs.forEach(([x0, x1]) => {
+        const c = cols[cols.length - 1];
+        if (c && x0 <= c[1] + 1.5) c[1] = Math.max(c[1], x1);
+        else cols.push([x0, x1]);
       });
-      const cuts = bounds.map(b => b.sum / b.n);
-      const cells = g.rows.map(r => {
-        const out = new Array(cuts.length).fill('');
-        r.line.items.forEach(it => {
-          let ci = 0;
-          for (let k = cuts.length - 1; k >= 0; k--) if (it.x >= cuts[k] - 12) { ci = k; break; }
-          out[ci] = (out[ci] ? out[ci] + ' ' : '') + it.text;
+      // Header cells often sit on two or three baselines (a two-line "Q2 (₹ lakh)" next to a
+      // centred "Region"). Lines just above the table whose cells all fall in its columns
+      // are one header row, read top to bottom.
+      const fits = (r) => r.segs.length >= 2 && r.segs.every(sg => cols.filter(c => Math.min(sg.x1, c[1]) - Math.max(sg.x0, c[0]) > -2).length === 1);
+      const head = [];
+      for (let k = g.start - 1, below = g.rows[0]; k >= 0 && head.length < 4; k--) {
+        const r = rows[k];
+        if (r.line.y - below.line.y > r.line.size * 3.5 || !fits(r)) break;
+        head.unshift(r); below = r;
+      }
+      const cells = [], kept = [];
+      if (head.length) {
+        const out = new Array(cols.length).fill('');
+        head.forEach(r => r.segs.forEach(sg => {
+          const ci = cols.findIndex(c => Math.min(sg.x1, c[1]) - Math.max(sg.x0, c[0]) > -2);
+          out[ci] = (out[ci] ? out[ci] + ' ' : '') + sg.text;
+        }));
+        cells.push(out); kept.push(head[head.length - 1]);
+        g.rows = head.concat(g.rows.filter(r => !head.includes(r)));
+      }
+      g.rows.filter(r => !head.includes(r)).forEach((r, ri) => {
+        const out = new Array(cols.length).fill('');
+        r.segs.forEach(sg => {
+          let best = 0, bestOv = -Infinity;
+          cols.forEach((c, ci) => { const ov = Math.min(sg.x1, c[1]) - Math.max(sg.x0, c[0]); if (ov > bestOv) { bestOv = ov; best = ci; } });
+          out[best] = (out[best] ? out[best] + ' ' : '') + sg.text;
         });
-        return out.map(s => s.replace(/\s+/g, ' ').trim());
+        // A wrapped cell (e.g. a two-line header) continues the row above it.
+        const prev = kept[kept.length - 1];
+        if (prev && !out[0] && prev.line.y - r.line.y < r.line.size * 1.5) {
+          const last = cells[cells.length - 1];
+          out.forEach((t, ci) => { if (t) last[ci] = (last[ci] ? last[ci] + ' ' : '') + t; });
+        } else { cells.push(out); kept.push(r); }
       });
-      return { lines: g.rows.map(r => r.line), cuts, cells };
+      return { lines: g.rows.map(r => r.line), cuts: cols.map(c => c[0]), widths: cols.map(c => c[1] - c[0]), spans: cols, cells };
     }).filter(t => t.cuts.length >= 2 && t.cells.length >= 2);
   }
 
@@ -8351,6 +8397,14 @@ const DocLayout = (() => {
     const bold = block.every(l => l.items.every(i => (ctx.fonts.get(i.font) || {}).bold));
     const short = block.length <= 2 && first.text.length <= 90;
 
+    const ratio = size / (bodySize || size);
+    const family = (ctx.fonts.get(first.items[0] && first.items[0].font) || {}).family;
+    // Numbered section titles ("3. Decisions requested") are headings, not lists, when set larger.
+    if (short && ratio >= 1.13 && !SENT_END_RE.test(block[block.length - 1].text.replace(/:$/, ''))) {
+      const level = ratio >= 1.7 ? 1 : ratio >= 1.35 ? 2 : ratio >= 1.15 ? 3 : 4;
+      return { type: 'heading', level, text: joinLines(block), size, bold: true, family };
+    }
+
     // list?
     const listish = block.filter(l => BULLET_RE.test(l.text) || ORDINAL_RE.test(l.text)).length;
     if (listish && listish >= Math.ceil(block.length * 0.5)) {
@@ -8359,11 +8413,10 @@ const DocLayout = (() => {
     }
 
     // heading?
-    const ratio = size / (bodySize || size);
     const isHeading = (ratio >= 1.13 && short) || (bold && short && ratio >= 0.98 && first.text.length <= 70);
     if (isHeading) {
       const level = ratio >= 1.7 ? 1 : ratio >= 1.35 ? 2 : ratio >= 1.15 ? 3 : 4;
-      return { type: 'heading', level, text: joinLines(block), size, bold: true };
+      return { type: 'heading', level, text: joinLines(block), size, bold: true, family };
     }
 
     return { type: 'paragraph', runs: mergeParagraph(block, ctx), align: alignOf(block, colX0, colX1), size };
@@ -8404,15 +8457,21 @@ const DocLayout = (() => {
     return paras.map(p => {
       const runs = [];
       p.forEach((l, li) => {
-        l.items.forEach(it => {
+        l.items.forEach((it, ii) => {
           const f = ctx.fonts.get(it.font) || {};
           const last = runs[runs.length - 1];
           const sameStyle = last && last.bold === !!f.bold && last.italic === !!f.italic
             && Math.abs(last.size - it.h) < 0.6 && last.family === (f.family || 'Calibri');
-          const needSpace = last && !/\s$/.test(last.text) && !/^\s/.test(it.text);
+          // a space is needed where the PDF leaves a word gap, whatever the styles on either side
+          const prev = ii > 0 ? l.items[ii - 1] : null;
+          const gapped = prev ? it.x - (prev.x + prev.w) > l.size * 0.18 : true;
+          const needSpace = last && gapped && !/\s$/.test(last.text) && !/^\s/.test(it.text);
           if (sameStyle) last.text += (needSpace ? ' ' : '') + it.text;
-          else runs.push({ text: it.text, bold: !!f.bold, italic: !!f.italic,
-                           size: it.h, family: f.family || 'Calibri', color: null });
+          else {
+            if (needSpace) last.text += ' ';
+            runs.push({ text: it.text, bold: !!f.bold, italic: !!f.italic,
+                        size: it.h, family: f.family || 'Calibri', color: null });
+          }
         });
         if (li < p.length - 1) {
           const last = runs[runs.length - 1];
@@ -8456,18 +8515,96 @@ const DocLayout = (() => {
     links.find(l => line.x0 >= l.x0 - 3 && line.x1 <= l.x1 + 3 && line.y >= l.y0 - 3 && line.y <= l.y1 + 3);
 
   /* ---------------- public: analyse one page ---------------- */
-  async function analysePage(pdf, pageNo) {
+  /* Where each picture is drawn: follow the transformation matrix through the
+     page's drawing operations and map the unit square of every image. */
+  function findImages(opList, pageW, pageH) {
+    const OPS = (window.pdfjsLib && pdfjsLib.OPS) || {};
+    const mul = (m, n) => [m[0] * n[0] + m[2] * n[1], m[1] * n[0] + m[3] * n[1], m[0] * n[2] + m[2] * n[3],
+      m[1] * n[2] + m[3] * n[3], m[0] * n[4] + m[2] * n[5] + m[4], m[1] * n[4] + m[3] * n[5] + m[5]];
+    const paint = new Set([OPS.paintImageXObject, OPS.paintInlineImageXObject, OPS.paintJpegXObject, OPS.paintImageXObjectRepeat].filter(v => v !== undefined));
+    const out = [], stack = [];
+    let ctm = [1, 0, 0, 1, 0, 0];
+    const fns = opList.fnArray, args = opList.argsArray;
+    for (let i = 0; i < fns.length && out.length < 40; i++) {
+      const fn = fns[i], a = args[i];
+      if (fn === OPS.save) stack.push(ctm);
+      else if (fn === OPS.restore) ctm = stack.pop() || [1, 0, 0, 1, 0, 0];
+      else if (fn === OPS.transform && a) ctm = mul(ctm, a);
+      else if (fn === OPS.paintFormXObjectBegin) { stack.push(ctm); if (a && Array.isArray(a[0])) ctm = mul(ctm, a[0]); }
+      else if (fn === OPS.paintFormXObjectEnd) ctm = stack.pop() || ctm;
+      else if (paint.has(fn)) {
+        const pts = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([u, v]) => [ctm[0] * u + ctm[2] * v + ctm[4], ctm[1] * u + ctm[3] * v + ctm[5]]);
+        const xs = pts.map(q => q[0]), ys = pts.map(q => q[1]);
+        const box = { x0: Math.max(0, Math.min(...xs)), x1: Math.min(pageW, Math.max(...xs)), y0: Math.max(0, Math.min(...ys)), y1: Math.min(pageH, Math.max(...ys)) };
+        if (box.x1 - box.x0 >= 24 && box.y1 - box.y0 >= 24) out.push(box);
+      }
+    }
+    const area = (q) => (q.x1 - q.x0) * (q.y1 - q.y0);
+    const inside = (q, o) => o.x0 <= q.x0 + 1 && o.x1 >= q.x1 - 1 && o.y0 <= q.y0 + 1 && o.y1 >= q.y1 - 1;
+    return out.filter((q, i) => !out.some((o, j) => j !== i && inside(q, o) && (area(o) > area(q) || j < i)));
+  }
+
+  /* Cut each picture out of a rendering of the page: works for every image
+     format and mask PDF.js can draw, without decoding them ourselves. */
+  async function cropImages(page, boxes) {
+    const vp0 = page.getViewport({ scale: 1 });
+    const scale = Math.min(2, 2400 / Math.max(vp0.width, vp0.height));
+    const vp = page.getViewport({ scale });
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.ceil(vp.width); canvas.height = Math.ceil(vp.height);
+    const c2d = canvas.getContext('2d');
+    c2d.fillStyle = '#fff'; c2d.fillRect(0, 0, canvas.width, canvas.height);
+    await page.render({ canvasContext: c2d, viewport: vp }).promise;
+    const out = [];
+    for (const bx of boxes) {
+      const [ax, ay, bx2, by] = vp.convertToViewportRectangle([bx.x0, bx.y0, bx.x1, bx.y1]);
+      const x = Math.max(0, Math.floor(Math.min(ax, bx2))), y = Math.max(0, Math.floor(Math.min(ay, by)));
+      const w = Math.min(canvas.width - x, Math.ceil(Math.abs(bx2 - ax))), h = Math.min(canvas.height - y, Math.ceil(Math.abs(by - ay)));
+      if (w < 8 || h < 8) continue;
+      const cut = document.createElement('canvas');
+      cut.width = w; cut.height = h;
+      cut.getContext('2d').drawImage(canvas, x, y, w, h, 0, 0, w, h);
+      const jpg = w * h > 250000;
+      const blob = await new Promise(res => cut.toBlob(res, jpg ? 'image/jpeg' : 'image/png', 0.9));
+      if (!blob) continue;
+      out.push(Object.assign({}, bx, { data: new Uint8Array(await blob.arrayBuffer()), ext: jpg ? 'jpg' : 'png', px: [w, h] }));
+    }
+    canvas.width = canvas.height = 0;
+    return out;
+  }
+
+  async function analysePage(pdf, pageNo, opts) {
+    opts = opts || {};
     const page = await pdf.getPage(pageNo);
     const viewport = page.getViewport({ scale: 1 });
     const tc = await page.getTextContent({ normalizeWhitespace: false, disableCombineTextItems: false });
+
+    // The drawing operations make PDF.js load every font, so names like
+    // "DejaVuSerif-Bold" (and with them bold and italic) are known below.
+    let opList = null;
+    try { opList = await Promise.race([page.getOperatorList(), new Promise(res => setTimeout(() => res(null), 6000))]); } catch (e) { opList = null; }
 
     const fonts = new Map();
     const names = Array.from(new Set(tc.items.map(i => i.fontName).filter(Boolean)));
     for (const n of names) await fontInfo(page, n, fonts);
 
     const lines = buildLines(tc.items);
+    lines.forEach(l => { l.bold = l.items.every(i => (fonts.get(i.font) || {}).bold); });
     const links = await linkMap(page, viewport);
-    if (!lines.length) return { pageNo, width: viewport.width, height: viewport.height, columns: [], empty: true };
+
+    let images = [];
+    if (opts.images && opList && !page.rotate) {
+      let boxes = findImages(opList, viewport.width, viewport.height);
+      const pageArea = viewport.width * viewport.height;
+      // a picture covering the whole page behind real text is a background, not content
+      if (lines.length) boxes = boxes.filter(q => (q.x1 - q.x0) * (q.y1 - q.y0) < pageArea * 0.85);
+      if (boxes.length) { try { images = await cropImages(page, boxes.slice(0, 12)); } catch (e) { images = []; } }
+    }
+    if (!lines.length && !images.length) return { pageNo, width: viewport.width, height: viewport.height, columns: [], empty: true };
+    if (!lines.length) {
+      return { pageNo, width: viewport.width, height: viewport.height, multiColumn: false,
+               columns: [{ x0: 0, x1: viewport.width, items: images.map(im => ({ type: 'image', image: im })) }] };
+    }
 
     const bodySize = median(lines.map(l => l.size));
     const columns = detectColumns(lines, viewport.width);
@@ -8479,18 +8616,25 @@ const DocLayout = (() => {
       tables.forEach(t => t.lines.forEach(l => inTable.add(l)));
 
       const ctx = { bodySize, colX0: col.x0, colX1: col.x1, fonts };
-      const blocks = groupBlocks(colLines.filter(l => !inTable.has(l)));
+      const blocks = [].concat(...groupBlocks(colLines.filter(l => !inTable.has(l))).map(splitListTail));
       const items = [];
 
-      // interleave tables back in document order
+      // interleave tables and pictures back in document order
       const flow = [];
       blocks.forEach(b => flow.push({ y: b[0].y, kind: 'block', b }));
       tables.forEach(t => flow.push({ y: t.lines[0].y, kind: 'table', t }));
+      images.filter(im => { const cx = (im.x0 + im.x1) / 2; return cx >= col.x0 && cx < col.x1; })
+        .forEach(im => flow.push({ y: im.y1, kind: 'image', im }));
       flow.sort((a, b) => b.y - a.y);
 
       flow.forEach(f => {
-        if (f.kind === 'table') items.push({ type: 'table', rows: f.t.cells });
-        else {
+        if (f.kind === 'table') {
+          const numeric = f.t.cells[0].map((_, ci) => f.t.cells.slice(1).every(r => !r[ci] || /^[-+(]?[₹$€£]?\s?[\d,]+(\.\d+)?%?\)?$/.test(r[ci])));
+          items.push({ type: 'table', rows: f.t.cells, widths: f.t.widths, numeric });
+        } else if (f.kind === 'image') {
+          const cx = (f.im.x0 + f.im.x1) / 2, mid = (col.x0 + col.x1) / 2;
+          items.push({ type: 'image', image: f.im, align: Math.abs(cx - mid) < (col.x1 - col.x0) * 0.08 ? 'center' : cx > mid ? 'right' : 'left' });
+        } else {
           const node = classify(f.b, ctx);
           const link = f.b.length === 1 ? linkFor(links, f.b[0]) : null;
           if (link) node.link = link.url;
@@ -8504,12 +8648,12 @@ const DocLayout = (() => {
              columns: out, bodySize, multiColumn: columns.length > 1 };
   }
 
-  async function analyse(file, onProgress) {
+  async function analyse(file, onProgress, opts) {
     const pdf = await PDFEngine.loadPdfJsDoc(file);
     const pages = [];
     for (let i = 1; i <= pdf.numPages; i++) {
       if (onProgress) onProgress(i, pdf.numPages);
-      pages.push(await analysePage(pdf, i));
+      pages.push(await analysePage(pdf, i, opts));
       // Hand control back to the browser between pages. Without this a long
       // document blocks the main thread, so the progress bar never repaints
       // and the tab can be judged unresponsive on a phone.
@@ -8871,6 +9015,7 @@ const DocxExact = (() => {
       (r.bold ? '<w:b/><w:bCs/>' : '') + (r.italic ? '<w:i/><w:iCs/>' : '') +
       '<w:color w:val="' + r.colour + '"/>' +
       (r.track ? '<w:spacing w:val="' + r.track + '"/>' : '') +
+      (r.scale && r.scale !== 100 ? '<w:w w:val="' + r.scale + '"/>' : '') +
       '<w:sz w:val="' + r.half + '"/><w:szCs w:val="' + r.half + '"/>' +
       (r.underline ? '<w:u w:val="single"/>' : '') +
       '</w:rPr><w:t xml:space="preserve">' + xesc(r.text) + '</w:t></w:r>';
@@ -9024,8 +9169,17 @@ const DocxExact = (() => {
             }
           }
           if (!spaced) {
-            const per = excess / nChars;
-            if (Math.abs(per) >= 0.02 * real) base.track = Math.round(clamp(per, -0.06 * real, 0.12 * real) * 20);
+            // A substitute font is usually a few percent wider or narrower everywhere.
+            // Scaling the glyphs keeps letters evenly set; spacing alone opened visible gaps.
+            const ratio = want / nat;
+            if (!it.exact && nChars >= 3 && Math.abs(ratio - 1) > 0.03) {
+              base.scale = Math.round(clamp(ratio, 0.8, 1.25) * 100);
+              const rest = (want - nat * base.scale / 100) / nChars;
+              if (Math.abs(rest) >= 0.02 * real) base.track = Math.round(clamp(rest, -0.06 * real, 0.12 * real) * 20);
+            } else {
+              const per = excess / nChars;
+              if (Math.abs(per) >= 0.02 * real) base.track = Math.round(clamp(per, -0.06 * real, 0.12 * real) * 20);
+            }
           }
         }
         if (!spaced) runs.push(Object.assign({}, base, { text: it.text }));
@@ -9160,7 +9314,19 @@ const DocxEngine = (() => {
         heading: opts.useHeadingStyles ? lvl : undefined,
         spacing: { before: 200, after: 110 },
         children: [new docx.TextRun({ text: item.text, bold: true,
-          size: half(item.size * (opts.scale || 1)), font: 'Calibri' })]
+          size: half(item.size * (opts.scale || 1)), font: item.family || 'Calibri' })]
+      }));
+      return out;
+    }
+
+    if (item.type === 'image') {
+      const im = item.image, maxW = (opts.textWidth || 500);
+      let wPt = im.x1 - im.x0, hPt = im.y1 - im.y0;
+      if (wPt > maxW) { hPt *= maxW / wPt; wPt = maxW; }
+      out.push(new docx.Paragraph({
+        alignment: A[item.align] || A.left,
+        spacing: { before: 60, after: 120 },
+        children: [new docx.ImageRun({ data: im.data, transformation: { width: Math.round(wPt * 96 / 72), height: Math.round(hPt * 96 / 72) } })]
       }));
       return out;
     }
@@ -9178,16 +9344,26 @@ const DocxEngine = (() => {
 
     if (item.type === 'table') {
       const cols = Math.max(...item.rows.map(r => r.length));
+      const textW = opts.textWidth || 500;
+      // column widths follow the PDF; numbers are right-aligned like in the original
+      const ws = item.widths && item.widths.length === cols ? item.widths : null;
+      const total = ws ? ws.reduce((a, b) => a + Math.max(b, 24), 0) : 0;
+      const colW = ws ? ws.map(w => Math.round(twip(Math.max(w, 24) / total * textW))) : null;
       const rows = item.rows.map((r, ri) => new docx.TableRow({
+        tableHeader: ri === 0,
         children: Array.from({ length: cols }, (_, ci) => new docx.TableCell({
           margins: { top: 60, bottom: 60, left: 90, right: 90 },
+          width: colW ? { size: colW[ci], type: docx.WidthType.DXA } : undefined,
+          shading: ri === 0 ? { fill: 'EEF2F7', type: docx.ShadingType.CLEAR, color: 'auto' } : undefined,
           children: [new docx.Paragraph({
+            alignment: item.numeric && item.numeric[ci] && ri > 0 ? A.right : A.left,
             children: [new docx.TextRun({ text: r[ci] || '', size: half(9.5), bold: ri === 0, font: 'Calibri' })]
           })]
         }))
       }));
       out.push(new docx.Table({
         rows,
+        columnWidths: colW || undefined,
         width: { size: 100, type: docx.WidthType.PERCENTAGE },
         borders: opts.tableBorders !== false ? undefined : {
           top:{style:docx.BorderStyle.NONE}, bottom:{style:docx.BorderStyle.NONE},
@@ -9232,6 +9408,7 @@ const DocxEngine = (() => {
     doc.pages.forEach((page, pi) => {
       if (onProgress) onProgress(pi + 1, doc.pages.length);
       const children = [];
+      o.textWidth = Math.max(100, page.width - 88);
 
       // Two-column pages: either keep real Word columns, or flatten to
       // reading order. Flattening is safer for editing, columns for fidelity.
@@ -9273,7 +9450,7 @@ const DocxEngine = (() => {
 
   /** One-shot: PDF file → .docx Blob. */
   async function convert(file, opts, onProgress) {
-    const analysed = await DocLayout.analyse(file, (p, t) => onProgress && onProgress(p, t * 2, 'Analysing layout'));
+    const analysed = await DocLayout.analyse(file, (p, t) => onProgress && onProgress(p, t * 2, 'Analysing layout'), { images: true });
     const blob = await toDocx(analysed, opts, (p, t) => onProgress && onProgress(t + p, t * 2, 'Writing document'));
     return { blob, analysed };
   }
@@ -11713,6 +11890,22 @@ const OCRPlus = (() => {
     };
   }
 
+  /* The English model has no rupee sign, so "₹25" comes back as "X25", "% 25" or
+     "(X lakh)". A lone X/x/%/Z right before an amount (and not after a number,
+     as in "3 x 4") is put back as ₹. */
+  const RUPEE_NEXT = /^(\d|lakh|lac|crore|cr\b)/i;
+  function rupeeWord(t, next, prev) {
+    if (prev && /^[\d,.]+$/.test(prev)) return t;
+    const m = /^([(\[]?)([Xx%Z])(\d[\d,]*(?:\.\d+)?\/?-?\)?)?$/.exec(t);
+    if (!m) return t;
+    if (m[3]) return m[1] + '\u20B9' + m[3];
+    return next && RUPEE_NEXT.test(next) ? m[1] + '\u20B9' : t;
+  }
+  function fixRupee(text) {
+    return text.replace(/(^|[\s(\[])([Xx%Z])(?=(\d|\s?(?:\d|lakh|lac|crore)))/gim, (all, pre, ch, _n, off, whole) =>
+      /\d\s*$/.test(whole.slice(0, off + pre.length)) ? all : pre + '\u20B9');
+  }
+
   /* Two recognisers side by side where the device can afford it. */
   function laneCount(pages) {
     const cores = navigator.hardwareConcurrency || 2, mem = navigator.deviceMemory || 4;
@@ -11748,8 +11941,17 @@ const OCRPlus = (() => {
         if ((again.confidence || 0) > (data.confidence || 0) + 3) { data = again; rec.enhanced = true; }
       }
       rec.lines = linesOf(data).filter(l => l.words && l.words.length);
-      rec.text = String(data.text || '').trim();
+      rec.text = fixRupee(String(data.text || '').trim());
+      rec.lines.forEach(l => l.words.forEach((wd, k) => {
+        const next = l.words[k + 1], prev = l.words[k - 1];
+        wd.text = rupeeWord(String(wd.text || ''), next && next.text, prev && prev.text);
+      }));
       rec.confidence = Math.round(data.confidence || 0);
+      // Amounts and dates read with low confidence: worth a second look before the file is used.
+      rec.unsure = [];
+      rec.lines.forEach(l => l.words.forEach(wd => {
+        if (wd.confidence < 72 && /\d/.test(wd.text) && wd.text.replace(/\W/g, '').length >= 2) rec.unsure.push({ text: wd.text, conf: Math.round(wd.confidence) });
+      }));
     } finally {
       OCRPrep.release(canvas);
     }
@@ -16048,9 +16250,10 @@ const TOOL_DEFS = {
       }, (p, t, label) => { setProgress(p, t); if (label) setStatus(label + '…'); });
       downloadBlob(r.blob, stem(files[0].name) + '.docx');
 
-      let heads = 0, tables = 0, lists = 0, paras = 0;
+      let heads = 0, tables = 0, lists = 0, paras = 0, pics = 0;
       r.analysed.pages.forEach(pg => pg.columns.forEach(c => c.items.forEach(it => {
-        if (it.type === 'heading') heads++;
+        if (it.type === 'image') pics++;
+        else if (it.type === 'heading') heads++;
         else if (it.type === 'table') tables++;
         else if (it.type === 'list') lists++;
         else paras++;
@@ -16059,6 +16262,7 @@ const TOOL_DEFS = {
       setStatus('');
       showResult('Word document ready',
         `${r.analysed.numPages} page(s): ${heads} heading(s), ${paras} paragraph(s), ${lists} list(s), ${tables} table(s)` +
+        (pics ? `, ${pics} picture(s)` : '') +
         (multi ? `, ${multi} multi-column page(s)` : '') + '.' + fallbackNote);
     }
   },
@@ -16322,6 +16526,9 @@ const TOOL_DEFS = {
       const fixes = [tilted ? `straightened ${tilted} tilted page${tilted > 1 ? 's' : ''}` : '',
         faint ? `cleaned up ${faint} faint or shadowed page${faint > 1 ? 's' : ''}` : ''].filter(Boolean);
       if (fixes.length) desc += ' Along the way DocBrisk ' + fixes.join(' and ') + '.';
+      const unsure = [];
+      pages.forEach((p, i) => (p.unsure || []).forEach(u => unsure.push(u.text + (pages.length > 1 ? ' (p' + (i + 1) + ')' : ''))));
+      if (unsure.length) desc += ` Please check ${unsure.length === 1 ? 'this number' : 'these numbers'}, read with low confidence: ${unsure.slice(0, 15).join(', ')}${unsure.length > 15 ? ' …' : ''}.`;
       await Trials.used('ocr-pdf');
       setStatus(''); showResult(title, desc);
     }
@@ -16492,7 +16699,7 @@ const TOOL_DEFS = {
       if ($('#o_tfmt').value === 'xlsx') {
         const wb = XLSX.utils.book_new();
         tables.forEach((t, i) => XLSX.utils.book_append_sheet(wb,
-          XLSX.utils.aoa_to_sheet(t.rows), `Table ${i + 1} (p${t.page})`.slice(0, 31)));
+          XLSX.utils.aoa_to_sheet(t.rows.map(r => r.map(c => /^-?\d{1,3}(,\d{2,3})*(\.\d+)?$|^-?\d+(\.\d+)?$/.test(String(c).trim()) ? parseFloat(String(c).replace(/,/g, '')) : c))), `Table ${i + 1} (p${t.page})`.slice(0, 31)));
         downloadBytes(new Uint8Array(XLSX.write(wb, { bookType: 'xlsx', type: 'array' })),
           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', stem(files[0].name) + '_tables.xlsx');
       } else {
@@ -27008,61 +27215,145 @@ function renderMailMerge(view) {
 function renderInvoice(view) {
   const KEY = 'docbrisk_invoice';
   const TPL_KEY = 'docbrisk_invoice_templates';
-  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || null; } catch (e) { return null; } };
-  const loadTemplates = () => { try { return JSON.parse(localStorage.getItem(TPL_KEY)) || {}; } catch (e) { return {}; } };
-  const saveTemplates = (t) => { try { localStorage.setItem(TPL_KEY, JSON.stringify(t)); } catch (e) {} };
+  const CLI_KEY = 'docbrisk_invoice_clients';
+  const readJson = (k, fb) => { try { return JSON.parse(localStorage.getItem(k)) || fb; } catch (e) { return fb; } };
+  const writeJson = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
+  const load = () => readJson(KEY, null);
+  const loadTemplates = () => readJson(TPL_KEY, {});
+  const saveTemplates = (t) => writeJson(TPL_KEY, t);
+
+  /* Document types change the title and, for a bill of supply, switch tax off. */
+  const DOC_TYPES = {
+    tax: 'TAX INVOICE', invoice: 'INVOICE', proforma: 'PROFORMA INVOICE', quote: 'QUOTATION',
+    estimate: 'ESTIMATE', bos: 'BILL OF SUPPLY', credit: 'CREDIT NOTE', challan: 'DELIVERY CHALLAN'
+  };
+  const GST_RATES = [0, 0.25, 3, 5, 12, 18, 28, 40];
+  const newItem = (rate) => ({ desc: '', hsn: '', qty: 1, unit: '', rate: 0, discount: 0, discountType: 'percent', gst: rate });
   const blank = {
+    docType: 'tax',
     from: { name:'', gstin:'', address:'', email:'', phone:'' },
-    to: { name:'', gstin:'', address:'' },
+    to: { name:'', gstin:'', address:'', phone:'' },
+    shipTo: '', placeOfSupply: '', poNumber: '',
     number: 'INV-001', date: new Date().toISOString().slice(0, 10), due: '',
     currency: '₹', notes: 'Payment due within 15 days.',
-    upi: PLAN.UPI_VPA, showQr: true,
-    taxMode: 'gst', gstRate: 18, interState: false,
+    // Never default to DocBrisk's own UPI ID: a customer scanning the QR would pay the wrong person.
+    upi: '', showQr: true,
+    bank: { holder: '', name: '', account: '', ifsc: '' }, showBank: false,
+    taxMode: 'gst', gstRate: 18, interState: false, autoState: true,
+    shipping: 0, roundOff: true, words: true, hsnSummary: true, status: 'none',
+    logo: '', signature: '',
     recurrence: 'none',
     template: 'classic', accent: '#4f46e5',
-    items: [{ desc: 'Service rendered', hsn: '', qty: 1, rate: 1000, discount: 0, discountType: 'percent' }]
+    items: [{ desc: 'Service rendered', hsn: '', qty: 1, unit: '', rate: 1000, discount: 0, discountType: 'percent', gst: 18 }]
   };
-  let inv = Object.assign({}, blank, load() || {});
-  // migrate older saved invoices that had no per-line discount fields
-  inv.items = (inv.items || []).map(it => Object.assign({ discount: 0, discountType: 'percent' }, it));
-  if (!inv.recurrence) inv.recurrence = 'none';
-  if (!inv.template) inv.template = 'classic';
-  if (!inv.accent) inv.accent = '#4f46e5';
+  function normalise(v) {
+    const o = Object.assign({}, blank, v || {});
+    o.from = Object.assign({}, blank.from, o.from); o.to = Object.assign({}, blank.to, o.to);
+    o.bank = Object.assign({}, blank.bank, o.bank);
+    if (o.upi && typeof PLAN !== 'undefined' && o.upi === PLAN.UPI_VPA) o.upi = '';   // older saves carried the site's ID
+    o.items = (o.items || []).map(it => Object.assign(newItem(o.gstRate), it, { gst: it.gst === undefined || it.gst === null ? o.gstRate : it.gst }));
+    if (!o.items.length) o.items = [newItem(o.gstRate)];
+    if (!DOC_TYPES[o.docType]) o.docType = 'tax';
+    return o;
+  }
+  let inv = normalise(load());
+
+  const stateOf = (gstin) => { const c = String(gstin || '').trim().slice(0, 2); return /^\d\d$/.test(c) && GST_STATES[c] ? c : ''; };
 
   view.innerHTML = toolShell('invoice-maker', `
     <div class="cv-grid">
       <div class="cv-editor">
+        <div class="panel"><div class="panel-title">Document</div>
+          <div class="field-row cols-2">
+            <div><label for="ivType">Type</label><select id="ivType">
+              <option value="tax">Tax invoice (GST)</option><option value="invoice">Invoice</option>
+              <option value="proforma">Proforma invoice</option><option value="quote">Quotation</option>
+              <option value="estimate">Estimate</option><option value="bos">Bill of supply (no GST)</option>
+              <option value="credit">Credit note</option><option value="challan">Delivery challan</option></select></div>
+            <div><label for="ivStatus">Stamp</label><select id="ivStatus">
+              <option value="none">None</option><option value="paid">PAID</option><option value="unpaid">UNPAID</option><option value="partial">PARTLY PAID</option></select></div>
+          </div>
+        </div>
+
         <div class="panel"><div class="panel-title">Your details</div>
           <div class="field"><label for="ivFrom">Business name</label><input type="text" id="ivFrom"></div>
           <div class="field-row cols-2">
-            <div><label for="ivGstin">GSTIN (optional)</label><input type="text" id="ivGstin"></div>
-            <div><label for="ivPhone">Phone</label><input type="text" id="ivPhone"></div>
+            <div><label for="ivGstin">GSTIN (optional)</label><input type="text" id="ivGstin" autocapitalize="characters"></div>
+            <div><label for="ivPhone">Phone</label><input type="text" id="ivPhone" inputmode="tel"></div>
           </div>
           <div class="field" style="margin-top:12px"><label for="ivFromAddr">Address</label><textarea id="ivFromAddr" rows="2"></textarea></div>
-          <div class="field"><label for="ivEmail">Email</label><input type="text" id="ivEmail"></div>
+          <div class="field"><label for="ivEmail">Email</label><input type="text" id="ivEmail" inputmode="email"></div>
+          <div class="field-row cols-2">
+            <div><label for="ivLogo">Logo (PNG or JPG)</label><input type="file" id="ivLogo" accept="image/png,image/jpeg">
+              <button type="button" class="btn btn-ghost btn-sm hidden" id="ivLogoX" style="margin-top:6px">Remove logo</button></div>
+            <div><label for="ivSign">Signature or stamp</label><input type="file" id="ivSign" accept="image/png,image/jpeg">
+              <button type="button" class="btn btn-ghost btn-sm hidden" id="ivSignX" style="margin-top:6px">Remove signature</button></div>
+          </div>
+          <p class="hint">Images stay in this browser. A PNG with a transparent background looks best.</p>
         </div>
 
         <div class="panel"><div class="panel-title">Bill to</div>
-          <div class="field"><label for="ivTo">Client name</label><input type="text" id="ivTo"></div>
-          <div class="field"><label for="ivToGst">Client GSTIN (optional)</label><input type="text" id="ivToGst"></div>
-          <div class="field"><label for="ivToAddr">Address</label><textarea id="ivToAddr" rows="2"></textarea></div>
+          <div class="field-row cols-2">
+            <div><label for="ivClientPick">Saved clients</label><select id="ivClientPick"><option value="">— choose —</option></select></div>
+            <div style="display:flex;align-items:flex-end;gap:8px"><button type="button" class="btn btn-ghost btn-sm" id="ivClientSave"><span data-icon="save" data-icon-size="14"></span> Save this client</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="ivClientDel" aria-label="Delete the selected client"><span data-icon="trash" data-icon-size="14"></span></button></div>
+          </div>
+          <div class="field" style="margin-top:12px"><label for="ivTo">Client name</label><input type="text" id="ivTo"></div>
+          <div class="field-row cols-2">
+            <div><label for="ivToGst">Client GSTIN (optional)</label><input type="text" id="ivToGst" autocapitalize="characters"></div>
+            <div><label for="ivToPhone">Client phone</label><input type="text" id="ivToPhone" inputmode="tel"></div>
+          </div>
+          <div class="field" style="margin-top:12px"><label for="ivToAddr">Billing address</label><textarea id="ivToAddr" rows="2"></textarea></div>
+          <div class="field"><label for="ivShipTo">Shipping address (if different)</label><textarea id="ivShipTo" rows="2"></textarea></div>
         </div>
 
         <div class="panel"><div class="panel-title">Invoice details</div>
           <div class="field-row cols-3">
             <div><label for="ivNum">Number</label><input type="text" id="ivNum"></div>
-            <div><label for="ivDate">Date</label><input type="text" id="ivDate" placeholder="YYYY-MM-DD"></div>
-            <div><label for="ivDue">Due date</label><input type="text" id="ivDue" placeholder="YYYY-MM-DD"></div>
+            <div><label for="ivDate">Date</label><input type="date" id="ivDate"></div>
+            <div><label for="ivDue">Due date</label><input type="date" id="ivDue"></div>
+          </div>
+          <div class="field-row cols-2" style="margin-top:12px">
+            <div><label for="ivPo">PO / reference no. (optional)</label><input type="text" id="ivPo"></div>
+            <div><label for="ivPos">Place of supply</label><select id="ivPos"><option value="">— not shown —</option>
+              ${Object.keys(GST_STATES).map(c => `<option value="${c}">${c} · ${esc(GST_STATES[c])}</option>`).join('')}</select></div>
           </div>
           <div class="field-row cols-3" style="margin-top:12px">
             <div><label for="ivCur">Currency</label><select id="ivCur">
-              <option value="₹">₹ INR</option><option value="$">$ USD</option><option value="€">€ EUR</option><option value="£">£ GBP</option></select></div>
+              <option value="₹">₹ INR</option><option value="$">$ USD</option><option value="€">€ EUR</option><option value="£">£ GBP</option><option value="AED ">AED</option></select></div>
             <div><label for="ivTax">Tax</label><select id="ivTax">
-              <option value="gst">GST (India)</option><option value="flat">Flat rate</option><option value="none">No tax</option></select></div>
-            <div><label for="ivRate">Rate %</label><input type="number" id="ivRate" min="0" max="50" step="0.5"></div>
+              <option value="gst">GST (India)</option><option value="flat">Other tax / VAT</option><option value="none">No tax</option></select></div>
+            <div><label for="ivRate">Default rate %</label><input type="number" id="ivRate" min="0" max="50" step="0.25"></div>
           </div>
           <label class="opt-card" style="margin-top:12px" id="ivInterWrap"><input type="checkbox" id="ivInter">
-            <div>Inter-state supply<small>Charges IGST instead of CGST + SGST</small></div></label>
+            <div>Inter-state supply (IGST)<small id="ivInterHint">Charges IGST instead of CGST + SGST</small></div></label>
+        </div>
+
+        <div class="panel"><div class="panel-title">Line items</div>
+          <div id="ivItems"></div>
+          <button class="btn btn-ghost btn-sm" id="ivAdd"><span data-icon="plus" data-icon-size="14"></span> Add line</button>
+          <div class="field-row cols-2" style="margin-top:14px">
+            <div><label for="ivShip">Shipping / other charges</label><input type="number" id="ivShip" min="0" step="0.01"></div>
+            <div style="display:flex;flex-direction:column;justify-content:flex-end;gap:6px">
+              <label class="opt-check" style="margin:0"><input type="checkbox" id="ivRound"> <span>Round off the total</span></label>
+              <label class="opt-check" style="margin:0"><input type="checkbox" id="ivWords"> <span>Amount in words</span></label>
+              <label class="opt-check" style="margin:0"><input type="checkbox" id="ivHsnSum"> <span>Tax summary by HSN / rate</span></label></div>
+          </div>
+        </div>
+
+        <div class="panel"><div class="panel-title">Payment &amp; notes</div>
+          <div class="field"><label for="ivUpi">Your UPI ID for payment</label><input type="text" id="ivUpi" placeholder="yourname@okbank" autocapitalize="off"></div>
+          <label class="opt-card"><input type="checkbox" id="ivQr"><div>Include a scannable UPI QR code<small>Generated offline with the invoice total pre-filled</small></div></label>
+          <label class="opt-card" style="margin-top:8px"><input type="checkbox" id="ivBankOn"><div>Show bank details<small>For NEFT / RTGS / IMPS payments</small></div></label>
+          <div id="ivBankBox" class="hidden">
+            <div class="field-row cols-2" style="margin-top:12px">
+              <div><label for="ivBankHolder">Account name</label><input type="text" id="ivBankHolder"></div>
+              <div><label for="ivBankName">Bank and branch</label><input type="text" id="ivBankName"></div>
+              <div><label for="ivBankAcc">Account number</label><input type="text" id="ivBankAcc" inputmode="numeric"></div>
+              <div><label for="ivBankIfsc">IFSC</label><input type="text" id="ivBankIfsc" autocapitalize="characters"></div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:12px"><label for="ivNotes">Notes / terms</label><textarea id="ivNotes" rows="2"></textarea></div>
         </div>
 
         <div class="panel"><div class="panel-title">Invoice design</div>
@@ -27100,29 +27391,22 @@ function renderInvoice(view) {
             <button class="btn btn-danger btn-sm" id="ivTplDelete"><span data-icon="trash" data-icon-size="14"></span> Delete selected</button>
           </div>
         </div>
-
-        <div class="panel"><div class="panel-title">Line items</div>
-          <div id="ivItems"></div>
-          <button class="btn btn-ghost btn-sm" id="ivAdd"><span data-icon="plus" data-icon-size="14"></span> Add line</button>
-        </div>
-
-        <div class="panel"><div class="panel-title">Payment &amp; notes</div>
-          <div class="field"><label for="ivUpi">UPI ID for payment</label><input type="text" id="ivUpi"></div>
-          <label class="opt-card"><input type="checkbox" id="ivQr"><div>Include a scannable UPI QR code<small>Generated offline with the invoice total pre-filled</small></div></label>
-          <div class="field" style="margin-top:12px"><label for="ivNotes">Notes / terms</label><textarea id="ivNotes" rows="2"></textarea></div>
-        </div>
       </div>
 
       <aside class="cv-preview">
         <div class="cv-preview-head"><span class="pill added">Live preview</span>
           <span id="ivTotal" style="font-weight:800;font-size:1.05rem"></span></div>
         <div class="cv-canvas-wrap"><canvas id="ivCanvas"></canvas></div>
+        <p class="hint" id="ivPages" style="text-align:center;margin:6px 0 0"></p>
         <button class="btn btn-primary btn-block" id="ivDownload" style="margin-top:12px">
-          <span data-icon="download" data-icon-size="16"></span> Download invoice</button>
+          <span data-icon="download" data-icon-size="16"></span> Download invoice PDF</button>
+        <button class="btn btn-ghost btn-block" id="ivCsv" style="margin-top:8px">
+          <span data-icon="table" data-icon-size="16"></span> Line items for Excel (CSV)</button>
         <p id="status" class="status hidden"></p>
         <div id="errorBox" class="alert alert-err hidden"></div>
       </aside>
     </div>
+    <datalist id="ivUnits"><option value="pcs"><option value="nos"><option value="kg"><option value="g"><option value="litre"><option value="m"><option value="sq ft"><option value="hrs"><option value="days"><option value="month"><option value="box"><option value="set"></datalist>
     <div id="result" class="result hidden"><h3 id="resultTitle"></h3><p id="resultDesc"></p></div>`);
 
   const bind = (id, path) => {
@@ -27132,208 +27416,406 @@ function renderInvoice(view) {
     el[el.type === 'checkbox' ? 'checked' : 'value'] = get();
     el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', () => {
       set(el.type === 'checkbox' ? el.checked : (el.type === 'number' ? parseFloat(el.value) || 0 : el.value));
-      persist(); queue();
+      persist(); sync(); queue();
     });
   };
-  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify(inv)); } catch (e) {} };
+  const persist = () => {
+    if (!writeJson(KEY, inv)) showError('This browser is out of storage, so the logo or signature could not be kept for next time. Use a smaller image.');
+  };
 
+  const taxOn = () => inv.taxMode !== 'none' && inv.docType !== 'bos' && inv.docType !== 'challan';
   const lineNet = (it) => {
     const gross = (it.qty || 0) * (it.rate || 0);
     const d = it.discount || 0;
     if (!d) return gross;
     return it.discountType === 'flat' ? Math.max(0, gross - d) : gross * (1 - Math.min(d, 100) / 100);
   };
+  const r2 = (n) => Math.round((n + Number.EPSILON) * 100) / 100;
+
+  /* Tax is worked out per line at that line's rate, then grouped by rate (and HSN)
+     for the summary, the way a GST invoice with mixed slabs must show it. */
+  function totals() {
+    const groups = new Map();
+    let sub = 0, tax = 0;
+    inv.items.forEach(it => {
+      const net = lineNet(it), rate = taxOn() ? (+it.gst || 0) : 0;
+      sub += net;
+      const t = net * rate / 100;
+      tax += t;
+      const key = (it.hsn || '') + '|' + rate;
+      const g = groups.get(key) || { hsn: it.hsn || '', rate, taxable: 0, tax: 0 };
+      g.taxable += net; g.tax += t; groups.set(key, g);
+    });
+    const ship = Math.max(0, +inv.shipping || 0);
+    const raw = sub + tax + ship;
+    const total = inv.roundOff ? Math.round(raw) : r2(raw);
+    const rates = [...new Set([...groups.values()].filter(g => g.taxable > 0).map(g => g.rate))].sort((a, b) => a - b);
+    return { sub, tax, ship, raw, total, round: total - raw, groups: [...groups.values()].filter(g => g.taxable > 0), rates };
+  }
+  const money = (n) => inv.currency + (Math.round(n * 100) / 100).toLocaleString(inv.currency === '₹' ? 'en-IN' : 'en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const pct = (r) => (Math.round(r * 100) / 100) + '%';
 
   function paintItems() {
+    const tax = taxOn();
     $('#ivItems').innerHTML = inv.items.map((it, i) => `
       <div class="rep" data-i="${i}"><div class="rep-body">
         <div class="field"><label>Description</label><input type="text" data-iv="desc" data-i="${i}" value="${esc(it.desc)}"></div>
         <div class="field-row cols-3">
-          <div><label>HSN/SAC</label><input type="text" data-iv="hsn" data-i="${i}" value="${esc(it.hsn || '')}"></div>
+          <div><label>HSN/SAC</label><input type="text" data-iv="hsn" data-i="${i}" value="${esc(it.hsn || '')}" inputmode="numeric"></div>
           <div><label>Qty</label><input type="number" data-iv="qty" data-i="${i}" value="${it.qty}" min="0" step="0.01"></div>
-          <div><label>Rate</label><input type="number" data-iv="rate" data-i="${i}" value="${it.rate}" min="0" step="0.01"></div>
+          <div><label>Unit</label><input type="text" data-iv="unit" data-i="${i}" value="${esc(it.unit || '')}" list="ivUnits" placeholder="pcs"></div>
         </div>
         <div class="field-row cols-3" style="margin-top:8px">
+          <div><label>Rate</label><input type="number" data-iv="rate" data-i="${i}" value="${it.rate}" min="0" step="0.01"></div>
           <div><label>Discount</label><input type="number" data-iv="discount" data-i="${i}" value="${it.discount || 0}" min="0" step="0.01"></div>
           <div><label>Discount type</label><select data-iv="discountType" data-i="${i}">
             <option value="percent"${it.discountType !== 'flat' ? ' selected' : ''}>% percent</option>
-            <option value="flat"${it.discountType === 'flat' ? ' selected' : ''}>${inv.currency} flat</option></select></div>
-          <div><label>Line total</label><input type="text" value="${money(lineNet(it))}" disabled></div>
+            <option value="flat"${it.discountType === 'flat' ? ' selected' : ''}>${esc(inv.currency)} flat</option></select></div>
         </div>
-        <button class="btn btn-danger btn-sm" data-ivdel="${i}" style="margin-top:10px">Remove line</button>
+        <div class="field-row cols-2" style="margin-top:8px">
+          <div${tax ? '' : ' class="hidden"'}><label>${inv.taxMode === 'gst' ? 'GST' : 'Tax'} %</label><select data-iv="gst" data-i="${i}">
+            ${[...new Set(GST_RATES.concat([+it.gst || 0, +inv.gstRate || 0]))].sort((a, b) => a - b).map(r => `<option value="${r}"${+it.gst === r ? ' selected' : ''}>${r}%</option>`).join('')}</select></div>
+          <div><label>Line total</label><input type="text" value="${esc(money(lineNet(it)))}" disabled></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn btn-ghost btn-sm" data-ivup="${i}"${i === 0 ? ' disabled' : ''} aria-label="Move line up">↑</button>
+          <button class="btn btn-ghost btn-sm" data-ivcopy="${i}">Duplicate</button>
+          <button class="btn btn-danger btn-sm" data-ivdel="${i}">Remove line</button></div>
       </div></div>`).join('');
     $$('[data-iv]').forEach(el => el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
       const i = +el.dataset.i, k = el.dataset.iv;
-      inv.items[i][k] = (k === 'qty' || k === 'rate' || k === 'discount') ? (parseFloat(el.value) || 0) : el.value;
-      persist(); paintItems(); queue();
+      inv.items[i][k] = (k === 'qty' || k === 'rate' || k === 'discount' || k === 'gst') ? (parseFloat(el.value) || 0) : el.value;
+      persist(); queue();
+      if (k !== 'desc' && k !== 'hsn' && k !== 'unit') {        // keep focus while typing text
+        const box = el.closest('.rep').querySelector('input[disabled]'); if (box) box.value = money(lineNet(inv.items[i]));
+      }
     }));
     $$('[data-ivdel]').forEach(b => b.addEventListener('click', () => {
       if (inv.items.length === 1) return;
       inv.items.splice(+b.dataset.ivdel, 1); paintItems(); persist(); queue();
     }));
+    $$('[data-ivcopy]').forEach(b => b.addEventListener('click', () => {
+      const i = +b.dataset.ivcopy; inv.items.splice(i + 1, 0, JSON.parse(JSON.stringify(inv.items[i]))); paintItems(); persist(); queue();
+    }));
+    $$('[data-ivup]').forEach(b => b.addEventListener('click', () => {
+      const i = +b.dataset.ivup; if (!i) return;
+      [inv.items[i - 1], inv.items[i]] = [inv.items[i], inv.items[i - 1]]; paintItems(); persist(); queue();
+    }));
   }
 
-  const money = (n) => inv.currency + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  function totals() {
-    const sub = inv.items.reduce((a, it) => a + lineNet(it), 0);
-    const rate = inv.taxMode === 'none' ? 0 : (inv.gstRate || 0);
-    const tax = sub * rate / 100;
-    return { sub, tax, rate, total: sub + tax };
+  /* Seller and buyer GSTINs give the states; different states mean IGST. */
+  function sync() {
+    const gst = inv.taxMode === 'gst' && taxOn();
+    $('#ivInterWrap').classList.toggle('hidden', !gst);
+    $('#ivBankBox').classList.toggle('hidden', !inv.showBank);
+    $('#ivLogoX').classList.toggle('hidden', !inv.logo);
+    $('#ivSignX').classList.toggle('hidden', !inv.signature);
+    const a = stateOf(inv.from.gstin), b = stateOf(inv.to.gstin);
+    const hint = $('#ivInterHint');
+    if (gst && a && b && inv.autoState) {
+      const inter = a !== b;
+      if (inv.interState !== inter) { inv.interState = inter; $('#ivInter').checked = inter; }
+      if (!inv.placeOfSupply) { inv.placeOfSupply = b; $('#ivPos').value = b; }
+      hint.textContent = inter ? `Set from the GSTINs: ${GST_STATES[a]} → ${GST_STATES[b]}, so IGST applies.` : `Set from the GSTINs: both in ${GST_STATES[a]}, so CGST + SGST apply.`;
+    } else hint.textContent = 'Charges IGST instead of CGST + SGST';
+  }
+
+  async function imageBytes(dataUrl) {
+    const m = /^data:image\/(png|jpe?g);base64,(.+)$/.exec(dataUrl || '');
+    if (!m) return null;
+    const bin = atob(m[2]), out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return { png: m[1] === 'png', bytes: out };
   }
 
   async function build() {
     const t = totals();
-    $('#ivTotal').textContent = money(t.total);   // on-page total keeps the real ₹
+    $('#ivTotal').textContent = money(t.total);
     const doc = await PDFLib.PDFDocument.create();
     const F = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
     const B = await doc.embedFont(PDFLib.StandardFonts.HelveticaBold);
-    const W = 595.28, H = 841.89, M = 46;
-    const page = doc.addPage([W, H]);
-    const ink = PDFLib.rgb(.09, .12, .18), soft = PDFLib.rgb(.42, .46, .53);
+    const W = 595.28, H = 841.89, M = 42, BOTTOM = 70;
+    const ink = PDFLib.rgb(.09, .12, .18), soft = PDFLib.rgb(.4, .44, .51), line = PDFLib.rgb(.88, .9, .93);
 
-    /* Each template is a small set of drawing decisions rather than a
-       separate renderer, so every feature — discounts, GST, recurrence, the
-       UPI QR — keeps working in all of them. */
     const hexRgb = (hex) => {
       const c = String(hex || '#4f46e5').replace('#', '');
       const n = c.length === 3 ? c.split('').map(x => x + x).join('') : c;
-      const v = n.match(/../g).map(h => parseInt(h, 16) / 255);
+      const v = (n.match(/../g) || ['4f', '46', 'e5']).map(h => parseInt(h, 16) / 255);
       return PDFLib.rgb(v[0], v[1], v[2]);
     };
     const TPL = {
-      classic:   { bar: 'thin',  head: 26, headColor: 'ink',   tableHead: 'accent', rules: true,  totalsBox: false, rowGap: 18 },
-      modern:    { bar: 'none',  head: 34, headColor: 'accent', tableHead: 'light', rules: false, totalsBox: false, rowGap: 20 },
-      minimal:   { bar: 'none',  head: 22, headColor: 'ink',   tableHead: 'none',   rules: true,  totalsBox: false, rowGap: 17 },
-      corporate: { bar: 'band',  head: 24, headColor: 'white', tableHead: 'accent', rules: true,  totalsBox: true,  rowGap: 19 },
-      compact:   { bar: 'thin',  head: 20, headColor: 'ink',   tableHead: 'accent', rules: true,  totalsBox: false, rowGap: 14 }
+      classic:   { bar: 'thin',  head: 24, headColor: 'ink',    tableHead: 'accent', rules: true,  totalsBox: false, rowGap: 15 },
+      modern:    { bar: 'none',  head: 30, headColor: 'accent', tableHead: 'light',  rules: false, totalsBox: false, rowGap: 16 },
+      minimal:   { bar: 'none',  head: 20, headColor: 'ink',    tableHead: 'none',   rules: true,  totalsBox: false, rowGap: 14 },
+      corporate: { bar: 'band',  head: 22, headColor: 'white',  tableHead: 'accent', rules: true,  totalsBox: true,  rowGap: 15 },
+      compact:   { bar: 'thin',  head: 18, headColor: 'ink',    tableHead: 'accent', rules: true,  totalsBox: false, rowGap: 12 }
     };
     const tpl = TPL[inv.template] || TPL.classic;
     const accent = inv.template === 'minimal' ? PDFLib.rgb(.15, .15, .18) : hexRgb(inv.accent);
-    const brand = accent;
-    /* The 14 standard PDF fonts use WinAnsi, which has no rupee sign — drawing
-       "₹" threw "WinAnsi cannot encode" and killed the whole download. Spell
-       it out instead of silently dropping it, so the amount still reads as
-       rupees. Other symbols (€ £ ¥ $) are in WinAnsi and pass through. */
-    /* UniText draws ₹ (and any script) crisply, so amounts keep the real sign. */
-    const winAnsi = (s) => String(s || '').replace(/[‐‑‒]/g, '-');
-    const S = (s) => PDFEngine.sanitize(winAnsi(s));
-    const money$ = (n) => winAnsi(money(n));
-    let y = H - M;
+    const white = PDFLib.rgb(1, 1, 1);
+    const clean = (s) => String(s || '').replace(/[‐‑‒]/g, '-');
+    const S = (s) => PDFEngine.sanitize(clean(s));
+    const M$ = (n) => clean(money(n));
+    const wrap = (s, font, size, width) => PDFEngine.wrapText(S(s), font, size, width);
+    const right = (pg, txt, xr, y, size, font, color) => pg.drawText(txt, { x: xr - font.widthOfTextAtSize(txt, size), y, size, font, color });
 
-    if (tpl.bar === 'thin') {
-      page.drawRectangle({ x: 0, y: H - 8, width: W, height: 8, color: accent });
-    } else if (tpl.bar === 'band') {
-      page.drawRectangle({ x: 0, y: H - 96, width: W, height: 96, color: accent });
-    }
-    const headInk = tpl.headColor === 'accent' ? accent
-      : tpl.headColor === 'white' ? PDFLib.rgb(1, 1, 1) : ink;
-    page.drawText('INVOICE', { x: M, y: y - 26, size: tpl.head, font: B, color: headInk });
-    page.drawText(S(inv.number), { x: W - M - B.widthOfTextAtSize(S(inv.number), 12), y: y - 16, size: 12, font: B,
-      color: tpl.headColor === 'white' ? PDFLib.rgb(1, 1, 1) : accent });
-    const dline = `Date ${S(inv.date)}${inv.due ? '   ·   Due ' + S(inv.due) : ''}`;
-    page.drawText(dline, { x: W - M - F.widthOfTextAtSize(dline, 8.5), y: y - 30, size: 8.5, font: F, color: soft });
-    if (inv.recurrence && inv.recurrence !== 'none') {
-      const rlabel = 'Recurring · ' + inv.recurrence.charAt(0).toUpperCase() + inv.recurrence.slice(1);
-      page.drawText(rlabel, { x: W - M - F.widthOfTextAtSize(rlabel, 8), y: y - 42, size: 8, font: F, color: brand });
-    }
-    y -= 56;
+    const logo = inv.logo ? await imageBytes(inv.logo) : null;
+    const logoImg = logo ? await (logo.png ? doc.embedPng(logo.bytes) : doc.embedJpg(logo.bytes)).catch(() => null) : null;
+    const sign = inv.signature ? await imageBytes(inv.signature) : null;
+    const signImg = sign ? await (sign.png ? doc.embedPng(sign.bytes) : doc.embedJpg(sign.bytes)).catch(() => null) : null;
 
-    const col = (x, title, lines) => {
+    const title = DOC_TYPES[inv.docType] || 'INVOICE';
+    const tax = taxOn(), gst = tax && inv.taxMode === 'gst';
+    const showHsn = inv.items.some(it => it.hsn);
+    const showUnit = inv.items.some(it => it.unit);
+    const multiRate = tax && t.rates.length > 1;
+
+    /* table columns, right edges; description takes what is left */
+    const colDefs = [['#', 18, 'l'], ['ITEM', 0, 'l']];
+    if (showHsn) colDefs.push(['HSN/SAC', 52, 'l']);
+    colDefs.push(['QTY', showUnit ? 58 : 38, 'r'], ['RATE', 70, 'r']);
+    if (multiRate) colDefs.push([gst ? 'GST' : 'TAX', 34, 'r']);   // only needed when lines carry different rates
+    colDefs.push(['AMOUNT', 78, 'r']);
+    const fixed = colDefs.reduce((a, c) => a + c[1], 0);
+    colDefs[1][1] = (W - M * 2) - fixed;
+    let cx = M;
+    const cols = colDefs.map(([label, w, al]) => { const c = { label, x0: cx, x1: cx + w, al }; cx += w; return c; });
+
+    let page, y, pageNo = 0;
+    const pages = [];
+    function drawHeaderBand(pg, first) {
+      if (tpl.bar === 'thin') pg.drawRectangle({ x: 0, y: H - 7, width: W, height: 7, color: accent });
+      else if (tpl.bar === 'band' && first) pg.drawRectangle({ x: 0, y: H - 104, width: W, height: 104, color: accent });
+    }
+    function tableHead() {
+      const hy = y;
+      if (tpl.tableHead === 'accent') page.drawRectangle({ x: M, y: hy - 5, width: W - M * 2, height: 20, color: accent });
+      else if (tpl.tableHead === 'light') page.drawRectangle({ x: M, y: hy - 5, width: W - M * 2, height: 20, color: PDFLib.rgb(.95, .96, .98) });
+      else page.drawLine({ start: { x: M, y: hy - 6 }, end: { x: W - M, y: hy - 6 }, thickness: .8, color: ink });
+      const col = tpl.tableHead === 'accent' ? white : soft;
+      cols.forEach(c => {
+        if (c.al === 'r') right(page, c.label, c.x1 - 5, hy + 1, 7, B, col);
+        else page.drawText(c.label, { x: c.x0 + 5, y: hy + 1, size: 7, font: B, color: col });
+      });
+      y -= 18;
+    }
+    function newPage(cont, withHead) {
+      page = doc.addPage([W, H]); pages.push(page); pageNo++;
+      drawHeaderBand(page, !cont);
+      y = H - M;
+      if (cont) {
+        page.drawText(S(`${title} ${inv.number} (continued)`), { x: M, y: y - 8, size: 10, font: B, color: ink });
+        y -= 30;
+        if (withHead) tableHead();      // the column header repeats only while item rows continue
+      }
+    }
+    const ensure = (need, rows) => { if (y - need < BOTTOM) { newPage(true, rows); } };
+
+    /* ---- page 1 header ---- */
+    newPage(false);
+    const headInk = tpl.headColor === 'accent' ? accent : tpl.headColor === 'white' ? white : ink;
+    let titleX = M;
+    if (logoImg) {
+      const s = Math.min(150 / logoImg.width, 54 / logoImg.height);
+      const lw = logoImg.width * s, lh = logoImg.height * s;
+      page.drawImage(logoImg, { x: M, y: y - lh + 6, width: lw, height: lh });
+      titleX = M;
+      y -= lh + 4;
+    }
+    page.drawText(title, { x: titleX, y: y - tpl.head + 2, size: tpl.head, font: B, color: headInk });
+    const stampAt = { x: titleX + B.widthOfTextAtSize(title, tpl.head) + 28, y: y - tpl.head - 4 };
+    const metaColor = tpl.headColor === 'white' ? white : soft;
+    const metaInk = tpl.headColor === 'white' ? white : ink;
+    let my = H - M - 4;
+    const meta = [['No.', inv.number], ['Date', inv.date ? fmtDate(inv.date, 'en') : ''], ['Due', inv.due ? fmtDate(inv.due, 'en') : ''], ['PO / Ref.', inv.poNumber]]
+      .filter(([, v]) => v);
+    meta.forEach(([k, v]) => {
+      const val = S(v);
+      right(page, val, W - M, my, 9.5, k === 'No.' ? B : F, k === 'No.' ? (tpl.headColor === 'white' ? white : accent) : metaInk);
+      right(page, k, W - M - B.widthOfTextAtSize(val, 9.5) - 8, my, 8, F, metaColor);
+      my -= 14;
+    });
+    if (inv.recurrence && inv.recurrence !== 'none') { right(page, 'Recurring · ' + inv.recurrence, W - M, my, 7.5, F, metaColor); my -= 12; }
+    y = Math.min(y - tpl.head - 14, my - 6, tpl.bar === 'band' ? H - 120 : H);
+
+    /* ---- parties ---- */
+    const block = (x, w, label, lines) => {
       let yy = y;
-      page.drawText(title, { x, y: yy, size: 8, font: B, color: soft });
-      yy -= 14;
+      page.drawText(label, { x, y: yy, size: 7.5, font: B, color: soft });
+      yy -= 13;
       lines.filter(Boolean).forEach((ln, i) => {
-        PDFEngine.wrapText(S(ln), i === 0 ? B : F, i === 0 ? 11 : 9, 220).forEach(w => {
-          page.drawText(w, { x, y: yy, size: i === 0 ? 11 : 9, font: i === 0 ? B : F, color: i === 0 ? ink : soft });
-          yy -= i === 0 ? 15 : 12;
+        wrap(ln, i === 0 ? B : F, i === 0 ? 10.5 : 8.8, w).forEach(wl => {
+          page.drawText(wl, { x, y: yy, size: i === 0 ? 10.5 : 8.8, font: i === 0 ? B : F, color: i === 0 ? ink : soft });
+          yy -= i === 0 ? 14 : 11.5;
         });
       });
       return yy;
     };
-    const y1 = col(M, 'FROM', [inv.from.name, inv.from.address, inv.from.email, inv.from.phone,
-      inv.from.gstin ? 'GSTIN: ' + inv.from.gstin : '']);
-    const y2 = col(W / 2 + 10, 'BILL TO', [inv.to.name, inv.to.address, inv.to.gstin ? 'GSTIN: ' + inv.to.gstin : '']);
-    y = Math.min(y1, y2) - 18;
+    const ship = String(inv.shipTo || '').trim();
+    const pw = ship ? (W - M * 2 - 24) / 3 : (W - M * 2 - 20) / 2;
+    const ys = [
+      block(M, pw, 'FROM', [inv.from.name, inv.from.address, inv.from.phone, inv.from.email, inv.from.gstin ? 'GSTIN: ' + inv.from.gstin : '']),
+      block(M + pw + 12, pw, 'BILL TO', [inv.to.name, inv.to.address, inv.to.phone, inv.to.gstin ? 'GSTIN: ' + inv.to.gstin : '',
+        gst && inv.placeOfSupply && GST_STATES[inv.placeOfSupply] ? `Place of supply: ${inv.placeOfSupply} - ${GST_STATES[inv.placeOfSupply]}` : ''])
+    ];
+    if (ship) ys.push(block(M + (pw + 12) * 2, pw, 'SHIP TO', [inv.to.name, ship]));
+    y = Math.min(...ys) - 16;
 
-    // table
-    const cols = [M, M + 250, M + 320, M + 390, W - M];
-    page.drawRectangle({ x: M, y: y - 4, width: W - M * 2, height: 22, color: PDFLib.rgb(.95, .96, .98) });
-    ['DESCRIPTION', 'QTY', 'RATE', 'AMOUNT'].forEach((h, i) => {
-      const x = i === 0 ? cols[0] + 6 : cols[i + 1] - 6 - B.widthOfTextAtSize(h, 7.5);
-      page.drawText(h, { x, y: y + 5, size: 7.5, font: B, color: soft });
-    });
-    y -= 12;
-
-    inv.items.forEach(it => {
-      const gross = (it.qty || 0) * (it.rate || 0);
+    /* ---- items ---- */
+    tableHead();
+    inv.items.forEach((it, i) => {
       const net = lineNet(it);
-      const hasDiscount = (it.discount || 0) > 0;
-      y -= tpl.rowGap;
-      if (y < 190) return;
-      const discLabel = hasDiscount
-        ? (it.discountType === 'flat' ? `  (−${money$(it.discount)})` : `  (−${it.discount}%)`)
-        : '';
-      const desc = S(it.desc) + (it.hsn ? `  (HSN ${S(it.hsn)})` : '') + discLabel;
-      page.drawText(PDFEngine.wrapText(desc, F, 9.5, 236)[0] || '', { x: cols[0] + 6, y, size: 9.5, font: F, color: ink });
-      [[String(it.qty), 1], [money$(it.rate || 0), 2], [money$(net), 3]].forEach(([txt, ci]) => {
-        page.drawText(txt, { x: cols[ci + 1] - 6 - F.widthOfTextAtSize(txt, 9.5), y, size: 9.5, font: F, color: ink });
+      const desc = cols[1];
+      const dLines = wrap(it.desc || '', F, 9, desc.x1 - desc.x0 - 10).slice(0, 6);
+      const disc = (it.discount || 0) > 0 ? (it.discountType === 'flat' ? `Discount ${M$(it.discount)}` : `Discount ${it.discount}%`) : '';
+      const rowH = Math.max(1, dLines.length) * 11.5 + (disc ? 10 : 0) + (tpl.rowGap - 11);
+      ensure(rowH + 6, true);
+      const top = y;
+      const cell = (c, txt, font, size) => {
+        if (!txt) return;
+        if (c.al === 'r') right(page, txt, c.x1 - 5, top, size, font, ink);
+        else page.drawText(txt, { x: c.x0 + 5, y: top, size, font, color: ink });
+      };
+      cols.forEach(c => {
+        if (c.label === '#') cell(c, String(i + 1), F, 8.5);
+        else if (c.label === 'ITEM') dLines.forEach((dl, k) => page.drawText(dl, { x: c.x0 + 5, y: top - k * 11.5, size: 9, font: F, color: ink }));
+        else if (c.label === 'HSN/SAC') cell(c, S(it.hsn || ''), F, 8.5);
+        else if (c.label === 'QTY') cell(c, S(String(it.qty) + (it.unit ? ' ' + it.unit : '')), F, 8.8);
+        else if (c.label === 'RATE') cell(c, M$(it.rate || 0), F, 8.8);
+        else if (c.label === 'GST' || c.label === 'TAX') cell(c, tax ? pct(+it.gst || 0) : '', F, 8.8);
+        else if (c.label === 'AMOUNT') cell(c, M$(net), F, 8.8);
       });
-      if (hasDiscount) {
-        const strike = money$(gross);
-        page.drawText(strike, { x: cols[4] - 6 - F.widthOfTextAtSize(strike, 7.5) - F.widthOfTextAtSize(money$(net), 9.5) - 6,
-          y: y + 10, size: 7.5, font: F, color: soft });
-      }
-      if (tpl.rules) page.drawLine({ start: { x: M, y: y - 6 }, end: { x: W - M, y: y - 6 }, thickness: .4, color: PDFLib.rgb(.9, .92, .95) });
+      if (disc) page.drawText(S(disc), { x: cols[1].x0 + 5, y: top - Math.max(1, dLines.length) * 11.5 + 1, size: 7.2, font: F, color: soft });
+      y -= rowH;
+      if (tpl.rules) page.drawLine({ start: { x: M, y: y + 6 }, end: { x: W - M, y: y + 6 }, thickness: .4, color: line });
     });
 
-    // totals
-    y -= 26;
-    const tx = W - M - 190;
-    const row = (label, val, bold, big) => {
-      page.drawText(label, { x: tx, y, size: big ? 11 : 9.5, font: bold ? B : F, color: bold ? ink : soft });
-      const f = bold ? B : F, s = big ? 11 : 9.5;
-      page.drawText(val, { x: W - M - f.widthOfTextAtSize(val, s), y, size: s, font: f, color: ink });
-      y -= big ? 20 : 15;
-    };
-    row('Subtotal', money$(t.sub));
-    if (t.rate > 0) {
-      if (inv.taxMode === 'gst' && !inv.interState) {
-        row(`CGST ${(t.rate / 2)}%`, money$(t.tax / 2));
-        row(`SGST ${(t.rate / 2)}%`, money$(t.tax / 2));
-      } else {
-        row(inv.taxMode === 'gst' ? `IGST ${t.rate}%` : `Tax ${t.rate}%`, money$(t.tax));
-      }
+    /* ---- totals ---- */
+    const trows = [['Subtotal', M$(t.sub)]];
+    if (tax) {
+      const byRate = new Map();
+      t.groups.forEach(g => { const v = byRate.get(g.rate) || 0; byRate.set(g.rate, v + g.tax); });
+      [...byRate.entries()].sort((a, b) => a[0] - b[0]).forEach(([r, v]) => {
+        if (!r) return;
+        if (gst && !inv.interState) { trows.push([`CGST @ ${pct(r / 2)}`, M$(v / 2)]); trows.push([`SGST @ ${pct(r / 2)}`, M$(v / 2)]); }
+        else trows.push([`${gst ? 'IGST' : 'Tax'} @ ${pct(r)}`, M$(v)]);
+      });
     }
-    page.drawLine({ start: { x: tx, y: y + 8 }, end: { x: W - M, y: y + 8 }, thickness: 1, color: brand });
-    y -= 4;
-    row('TOTAL', money$(t.total), true, true);
+    if (t.ship) trows.push(['Shipping / other charges', M$(t.ship)]);
+    if (inv.roundOff && Math.abs(t.round) >= 0.005) trows.push(['Round off', (t.round < 0 ? '-' : '+') + M$(Math.abs(t.round))]);
+    ensure(trows.length * 14 + 60);
+    y -= 10;
+    const tx = W - M - 220;
+    if (tpl.totalsBox) page.drawRectangle({ x: tx - 10, y: y - trows.length * 14 - 34, width: W - M - tx + 10, height: trows.length * 14 + 44, borderColor: line, borderWidth: .8 });
+    trows.forEach(([l, v]) => {
+      page.drawText(S(l), { x: tx, y, size: 9, font: F, color: soft });
+      right(page, v, W - M, y, 9, F, ink);
+      y -= 14;
+    });
+    page.drawLine({ start: { x: tx, y: y + 8 }, end: { x: W - M, y: y + 8 }, thickness: 1, color: accent });
+    y -= 8;
+    const totalLabel = inv.docType === 'quote' || inv.docType === 'estimate' ? 'TOTAL (ESTIMATED)' : inv.docType === 'credit' ? 'CREDIT AMOUNT' : 'TOTAL';
+    page.drawText(totalLabel, { x: tx, y, size: 11, font: B, color: ink });
+    right(page, M$(t.total), W - M, y, 12, B, accent);
+    y -= 18;
+    if (inv.words && inv.currency === '₹') {
+      const words = NumWords.rupees(t.total, 'en', false);
+      wrap('Amount in words: ' + words, F, 8.3, W - M * 2).forEach(wl => { ensure(14); page.drawText(wl, { x: M, y, size: 8.3, font: F, color: ink }); y -= 11; });
+      y -= 4;
+    }
 
-    // payment block
-    y -= 14;
+    /* ---- tax summary (HSN / rate) ---- */
+    if (tax && inv.hsnSummary && t.groups.length && (gst || multiRate)) {
+      const sumCols = gst && !inv.interState
+        ? ['HSN/SAC', 'Rate', 'Taxable value', 'CGST', 'SGST', 'Total tax']
+        : ['HSN/SAC', 'Rate', 'Taxable value', gst ? 'IGST' : 'Tax', 'Total tax'];
+      const cw = (W - M * 2) / sumCols.length;
+      ensure(30 + t.groups.length * 13);
+      y -= 6;
+      page.drawText('TAX SUMMARY', { x: M, y, size: 7.5, font: B, color: soft }); y -= 13;
+      sumCols.forEach((h, i) => right(page, h, M + cw * (i + 1) - 4, y, 7.2, B, soft));
+      y -= 4; page.drawLine({ start: { x: M, y }, end: { x: W - M, y }, thickness: .5, color: line }); y -= 10;
+      t.groups.forEach(g => {
+        ensure(14);
+        const vals = gst && !inv.interState
+          ? [S(g.hsn || '-'), pct(g.rate), M$(g.taxable), M$(g.tax / 2), M$(g.tax / 2), M$(g.tax)]
+          : [S(g.hsn || '-'), pct(g.rate), M$(g.taxable), M$(g.tax), M$(g.tax)];
+        vals.forEach((v, i) => right(page, v, M + cw * (i + 1) - 4, y, 7.8, F, ink));
+        y -= 12;
+      });
+      y -= 6;
+    }
+
+    /* ---- payment, bank, notes, signature ---- */
+    ensure(120);
+    const startY = y;
+    let ly = y;
     if (inv.upi) {
-      page.drawText('PAYMENT', { x: M, y, size: 8, font: B, color: soft });
-      page.drawText('UPI: ' + S(inv.upi), { x: M, y: y - 14, size: 9.5, font: F, color: ink });
-      if (inv.showQr) {
+      page.drawText('PAY BY UPI', { x: M, y: ly, size: 7.5, font: B, color: soft });
+      page.drawText(S(inv.upi), { x: M, y: ly - 13, size: 9, font: F, color: ink });
+      if (inv.showQr && t.total > 0 && inv.docType !== 'credit') {
         try {
-          const link = QR.upiLink({ vpa: inv.upi, name: inv.from.name || 'Payment',
-            amount: t.total.toFixed(2), note: inv.number });
+          const link = QR.upiLink({ vpa: inv.upi, name: inv.from.name || 'Payment', amount: t.total.toFixed(2), note: inv.number });
           const c = QR.toCanvas(link, { moduleSize: 5, quiet: 1 });
           const img = await doc.embedPng(await PDFEngine.canvasToBytes(c, 'image/png'));
-          page.drawImage(img, { x: M, y: y - 96, width: 74, height: 74 });
-          page.drawText('Scan to pay', { x: M, y: y - 106, size: 7.5, font: F, color: soft });
-        } catch (e) {}
-      }
+          page.drawImage(img, { x: M, y: ly - 96, width: 76, height: 76 });
+          page.drawText('Scan to pay ' + M$(t.total), { x: M, y: ly - 106, size: 7, font: F, color: soft });
+          ly -= 116;
+        } catch (e) { ly -= 24; }
+      } else ly -= 24;
+    }
+    const bx = inv.upi ? M + 120 : M;
+    let by = startY;
+    if (inv.showBank && (inv.bank.account || inv.bank.ifsc)) {
+      page.drawText('BANK DETAILS', { x: bx, y: by, size: 7.5, font: B, color: soft }); by -= 13;
+      [['Name', inv.bank.holder || inv.from.name], ['Bank', inv.bank.name], ['A/c no.', inv.bank.account], ['IFSC', inv.bank.ifsc]]
+        .filter(([, v]) => v).forEach(([k, v]) => {
+          page.drawText(k, { x: bx, y: by, size: 8, font: F, color: soft });
+          page.drawText(S(v), { x: bx + 44, y: by, size: 8.5, font: k === 'A/c no.' || k === 'IFSC' ? B : F, color: ink });
+          by -= 12;
+        });
+      by -= 6;
     }
     if (inv.notes) {
-      PDFEngine.wrapText(S(inv.notes), F, 8.5, 260).forEach((ln, i) => {
-        page.drawText(ln, { x: W / 2 + 10, y: y - 14 - i * 11, size: 8.5, font: F, color: soft });
-      });
+      page.drawText(inv.docType === 'quote' || inv.docType === 'estimate' ? 'TERMS' : 'NOTES', { x: bx, y: by, size: 7.5, font: B, color: soft }); by -= 12;
+      wrap(inv.notes, F, 8.2, W - M - bx - 150).slice(0, 8).forEach(ln => { page.drawText(ln, { x: bx, y: by, size: 8.2, font: F, color: soft }); by -= 10.5; });
     }
-    page.drawText('Generated with DocBrisk', { x: M, y: 28, size: 7.5, font: F, color: PDFLib.rgb(.7, .73, .78) });
+    // signature block, bottom right of the last page
+    const sy = Math.max(BOTTOM - 6, Math.min(ly, by) - 10);
+    const sx = W - M - 150;
+    if (signImg) {
+      const s = Math.min(130 / signImg.width, 48 / signImg.height);
+      page.drawImage(signImg, { x: W - M - signImg.width * s, y: sy + 12, width: signImg.width * s, height: signImg.height * s });
+    }
+    if (inv.from.name || signImg) {
+      page.drawLine({ start: { x: sx, y: sy + 8 }, end: { x: W - M, y: sy + 8 }, thickness: .5, color: line });
+      right(page, S('For ' + (inv.from.name || '')), W - M, sy - 4, 8, B, ink);
+      right(page, 'Authorised signatory', W - M, sy - 15, 7.5, F, soft);
+    }
+
+    /* ---- stamp ---- */
+    if (inv.status && inv.status !== 'none') {
+      const label = { paid: 'PAID', unpaid: 'UNPAID', partial: 'PARTLY PAID' }[inv.status];
+      const col = inv.status === 'paid' ? PDFLib.rgb(.06, .55, .3) : PDFLib.rgb(.8, .15, .15);
+      const size = 28, w = B.widthOfTextAtSize(label, size), a = 12 * Math.PI / 180;
+      const x0 = Math.min(stampAt.x, W - M - w - 150), y0 = stampAt.y;
+      // the frame and the word turn about the same corner, so they stay together
+      const at = (dx, dy) => ({ x: x0 + dx * Math.cos(a) - dy * Math.sin(a), y: y0 + dx * Math.sin(a) + dy * Math.cos(a) });
+      pages[0].drawRectangle({ x: x0, y: y0, width: w + 20, height: size + 12, borderColor: col, borderWidth: 2.2, rotate: PDFLib.degrees(12), borderOpacity: .75, opacity: 0 });
+      const p0 = at(10, 9);
+      pages[0].drawText(label, { x: p0.x, y: p0.y, size, font: B, color: col, rotate: PDFLib.degrees(12), opacity: .75 });
+    }
+
+    /* ---- footer on every page ---- */
+    pages.forEach((pg, i) => {
+      pg.drawText('Generated with DocBrisk', { x: M, y: 26, size: 7, font: F, color: PDFLib.rgb(.7, .73, .78) });
+      if (pages.length > 1) right(pg, `Page ${i + 1} of ${pages.length}`, W - M, 26, 7.5, F, soft);
+    });
+    buildPages = pages.length;
     return await doc.save();
   }
 
-  let bytes = null, timer = null;
+  let bytes = null, timer = null, buildPages = 1;
   async function preview() {
     try {
       clearError();
@@ -27341,30 +27823,92 @@ function renderInvoice(view) {
       bytes = await build();
       if (typeof pdfjsLib === 'undefined') await window.ensureLib('pdfjsLib');
       PDFEngine.initPdfJs();
-      const doc = await pdfjsLib.getDocument({ data: bytes.slice() }).promise;
-      const { canvas } = await PDFEngine.renderPageToCanvas(doc, 1, 1.3);
+      const pdf = await pdfjsLib.getDocument({ data: bytes.slice() }).promise;
+      const { canvas } = await PDFEngine.renderPageToCanvas(pdf, 1, 1.3);
       const c = $('#ivCanvas');
       c.width = canvas.width; c.height = canvas.height;
       c.getContext('2d').drawImage(canvas, 0, 0);
+      $('#ivPages').textContent = buildPages > 1 ? `Page 1 of ${buildPages} shown · the PDF has all ${buildPages} pages` : '';
     } catch (e) { showError(e.message); }
   }
   const queue = () => { clearTimeout(timer); timer = setTimeout(preview, 300); };
 
-  [['ivFrom','from.name'],['ivGstin','from.gstin'],['ivPhone','from.phone'],['ivFromAddr','from.address'],
-   ['ivEmail','from.email'],['ivTo','to.name'],['ivToGst','to.gstin'],['ivToAddr','to.address'],
-   ['ivNum','number'],['ivDate','date'],['ivDue','due'],['ivCur','currency'],['ivTax','taxMode'],
-   ['ivRate','gstRate'],['ivInter','interState'],['ivUpi','upi'],['ivQr','showQr'],['ivNotes','notes'],
-   ['ivRecurrence','recurrence'],['ivTemplate','template'],['ivAccent','accent']]
+  [['ivType','docType'],['ivStatus','status'],
+   ['ivFrom','from.name'],['ivGstin','from.gstin'],['ivPhone','from.phone'],['ivFromAddr','from.address'],['ivEmail','from.email'],
+   ['ivTo','to.name'],['ivToGst','to.gstin'],['ivToPhone','to.phone'],['ivToAddr','to.address'],['ivShipTo','shipTo'],
+   ['ivNum','number'],['ivDate','date'],['ivDue','due'],['ivPo','poNumber'],['ivPos','placeOfSupply'],
+   ['ivCur','currency'],['ivTax','taxMode'],['ivRate','gstRate'],['ivInter','interState'],
+   ['ivShip','shipping'],['ivRound','roundOff'],['ivWords','words'],['ivHsnSum','hsnSummary'],
+   ['ivUpi','upi'],['ivQr','showQr'],['ivBankOn','showBank'],
+   ['ivBankHolder','bank.holder'],['ivBankName','bank.name'],['ivBankAcc','bank.account'],['ivBankIfsc','bank.ifsc'],
+   ['ivNotes','notes'],['ivRecurrence','recurrence'],['ivTemplate','template'],['ivAccent','accent']]
    .forEach(([id, path]) => bind(id, path));
 
-  $('#ivTax').addEventListener('change', () => {
-    $('#ivInterWrap').classList.toggle('hidden', inv.taxMode !== 'gst');
+  // ticking the IGST box by hand stops the GSTIN-based guess from overriding it
+  $('#ivInter').addEventListener('change', () => { inv.autoState = false; persist(); });
+  ['#ivGstin', '#ivToGst'].forEach(s => $(s).addEventListener('input', () => { inv.autoState = true; sync(); }));
+  // the default rate applies to lines still on the old default, and to new lines
+  let lastRate = inv.gstRate;
+  $('#ivRate').addEventListener('input', () => {
+    inv.items.forEach(it => { if (+it.gst === +lastRate) it.gst = inv.gstRate; });
+    lastRate = inv.gstRate; persist(); paintItems(); queue();
   });
-  $('#ivInterWrap').classList.toggle('hidden', inv.taxMode !== 'gst');
+  $('#ivTax').addEventListener('change', () => { paintItems(); });
+  $('#ivType').addEventListener('change', () => { paintItems(); });
+  $('#ivCur').addEventListener('change', () => { paintItems(); });
+
+  /* logo and signature: kept as small data URLs */
+  function pickImage(input, field, maxW) {
+    input.addEventListener('change', async () => {
+      const f = input.files && input.files[0]; if (!f) return;
+      try {
+        const bmp = await createImageBitmap(f);
+        const k = Math.min(1, maxW / bmp.width);
+        const c = document.createElement('canvas');
+        c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+        c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+        inv[field] = c.toDataURL(/png/i.test(f.type) ? 'image/png' : 'image/jpeg', 0.9);
+        persist(); sync(); queue();
+      } catch (e) { showError('That image could not be read. Use a PNG or JPG file.'); }
+      input.value = '';
+    });
+  }
+  pickImage($('#ivLogo'), 'logo', 600);
+  pickImage($('#ivSign'), 'signature', 500);
+  $('#ivLogoX').addEventListener('click', () => { inv.logo = ''; persist(); sync(); queue(); });
+  $('#ivSignX').addEventListener('click', () => { inv.signature = ''; persist(); sync(); queue(); });
 
   $('#ivAdd').addEventListener('click', () => {
-    inv.items.push({ desc: '', hsn: '', qty: 1, rate: 0, discount: 0, discountType: 'percent' });
+    inv.items.push(newItem(inv.gstRate));
     paintItems(); persist(); queue();
+    const rows = $$('#ivItems [data-iv="desc"]'); if (rows.length) rows[rows.length - 1].focus();
+  });
+
+  /* ---- saved clients ---- */
+  function refreshClients() {
+    const c = readJson(CLI_KEY, {});
+    $('#ivClientPick').innerHTML = '<option value="">— choose —</option>' + Object.keys(c).sort().map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+  }
+  refreshClients();
+  $('#ivClientSave').addEventListener('click', () => {
+    const name = (inv.to.name || '').trim();
+    if (!name) { showError('Type the client name first.'); return; }
+    const c = readJson(CLI_KEY, {});
+    c[name] = { to: Object.assign({}, inv.to), shipTo: inv.shipTo, placeOfSupply: inv.placeOfSupply };
+    writeJson(CLI_KEY, c); refreshClients(); $('#ivClientPick').value = name;
+    showResult('Client saved', `"${name}" can now be picked for the next invoice.`);
+  });
+  $('#ivClientPick').addEventListener('change', () => {
+    const n = $('#ivClientPick').value, c = readJson(CLI_KEY, {});
+    if (!n || !c[n]) return;
+    inv.to = Object.assign({}, blank.to, c[n].to); inv.shipTo = c[n].shipTo || ''; inv.placeOfSupply = c[n].placeOfSupply || ''; inv.autoState = true;
+    ['ivTo', 'ivToGst', 'ivToPhone', 'ivToAddr'].forEach((id, k) => { $('#' + id).value = inv.to[['name', 'gstin', 'phone', 'address'][k]] || ''; });
+    $('#ivShipTo').value = inv.shipTo; $('#ivPos').value = inv.placeOfSupply;
+    persist(); sync(); queue();
+  });
+  $('#ivClientDel').addEventListener('click', () => {
+    const n = $('#ivClientPick').value; if (!n) { showError('Pick a saved client to delete first.'); return; }
+    const c = readJson(CLI_KEY, {}); delete c[n]; writeJson(CLI_KEY, c); refreshClients();
   });
 
   /* ---- recurring: generate the next invoice in the cycle ---- */
@@ -27375,7 +27919,7 @@ function renderInvoice(view) {
     else if (freq === 'monthly') d.setMonth(d.getMonth() + 1);
     else if (freq === 'quarterly') d.setMonth(d.getMonth() + 3);
     else if (freq === 'yearly') d.setFullYear(d.getFullYear() + 1);
-    return d.toISOString().slice(0, 10);
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   }
   function nextInvoiceNumber(num) {
     const m = String(num || '').match(/^(.*?)(\d+)(\D*)$/);
@@ -27385,10 +27929,7 @@ function renderInvoice(view) {
     return m[1] + next + m[3];
   }
   $('#ivNextCycle').addEventListener('click', () => {
-    if (inv.recurrence === 'none') {
-      showError('Set "Repeats" to weekly, monthly, quarterly or yearly first.');
-      return;
-    }
+    if (inv.recurrence === 'none') { showError('Set "Repeats" to weekly, monthly, quarterly or yearly first.'); return; }
     const oldDate = inv.date, oldDue = inv.due;
     inv.number = nextInvoiceNumber(inv.number);
     inv.date = addInterval(oldDate, inv.recurrence);
@@ -27397,9 +27938,10 @@ function renderInvoice(view) {
       if (!isNaN(gapDays)) {
         const nd = new Date(inv.date + 'T00:00:00');
         nd.setDate(nd.getDate() + gapDays);
-        inv.due = nd.toISOString().slice(0, 10);
+        inv.due = new Date(nd.getTime() - nd.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
       }
     }
+    if (inv.status === 'paid') { inv.status = 'none'; $('#ivStatus').value = 'none'; }
     $('#ivNum').value = inv.number; $('#ivDate').value = inv.date; $('#ivDue').value = inv.due;
     persist(); queue();
     showResult('Next invoice ready', `Number and dates rolled forward to ${inv.date} for this ${inv.recurrence} cycle. Review the details, then download.`);
@@ -27408,35 +27950,30 @@ function renderInvoice(view) {
   /* ---- templates: save / load / delete named invoice presets ---- */
   function refreshTplOptions() {
     const t = loadTemplates();
-    const sel = $('#ivTplPick');
     const names = Object.keys(t).sort();
-    sel.innerHTML = '<option value="">— choose —</option>' + names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    $('#ivTplPick').innerHTML = '<option value="">— choose —</option>' + names.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
   }
   refreshTplOptions();
-
   $('#ivTplSave').addEventListener('click', () => {
     const name = ($('#ivTplName').value || '').trim();
     if (!name) { showError('Give the template a name first.'); return; }
     const t = loadTemplates();
     t[name] = JSON.parse(JSON.stringify(inv));
-    saveTemplates(t);
+    if (!saveTemplates(t)) { showError('This browser is out of storage. Remove the logo or signature and try again.'); return; }
     refreshTplOptions();
     $('#ivTplPick').value = name;
     $('#ivTplName').value = '';
     showResult('Template saved', `"${name}" is ready to reuse for the next invoice.`);
   });
-
   $('#ivTplPick').addEventListener('change', () => {
     const name = $('#ivTplPick').value;
     if (!name) return;
     const t = loadTemplates();
     if (!t[name]) return;
-    inv = Object.assign({}, blank, t[name]);
-    inv.items = (inv.items || []).map(it => Object.assign({ discount: 0, discountType: 'percent' }, it));
+    inv = normalise(t[name]);
     persist();
     renderInvoice(view);
   });
-
   $('#ivTplDelete').addEventListener('click', () => {
     const name = $('#ivTplPick').value;
     if (!name) { showError('Pick a saved template to delete first.'); return; }
@@ -27450,10 +27987,23 @@ function renderInvoice(view) {
   $('#ivDownload').addEventListener('click', () => runTask($('#ivDownload'), async () => {
     const b = bytes || await build();
     downloadBytes(b, 'application/pdf', `${(inv.number || 'invoice').replace(/[^\w-]+/g, '_')}.pdf`);
-    showResult('Invoice downloaded', 'Saved in this browser, so the next one starts from these details.');
+    showResult('Invoice downloaded', `Saved in this browser, so the next one starts from these details.${buildPages > 1 ? ` The PDF has ${buildPages} pages.` : ''}`);
   }));
+  $('#ivCsv').addEventListener('click', () => {
+    const t = totals();
+    const cell = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const rows = [['#', 'Description', 'HSN/SAC', 'Qty', 'Unit', 'Rate', 'Discount', 'Taxable value', 'Tax %', 'Tax', 'Line total']];
+    inv.items.forEach((it, i) => {
+      const net = lineNet(it), rate = taxOn() ? (+it.gst || 0) : 0;
+      rows.push([i + 1, it.desc, it.hsn, it.qty, it.unit, it.rate, it.discount ? (it.discountType === 'flat' ? it.discount : it.discount + '%') : '', r2(net), rate, r2(net * rate / 100), r2(net * (1 + rate / 100))]);
+    });
+    rows.push([], ['', 'Subtotal', '', '', '', '', '', r2(t.sub)], ['', 'Tax', '', '', '', '', '', '', '', r2(t.tax)]);
+    if (t.ship) rows.push(['', 'Shipping / other charges', '', '', '', '', '', r2(t.ship)]);
+    rows.push(['', 'Total', '', '', '', '', '', '', '', '', t.total]);
+    downloadBlob(new Blob(['﻿' + rows.map(r => r.map(cell).join(',')).join('\r\n')], { type: 'text/csv;charset=utf-8' }), `${(inv.number || 'invoice').replace(/[^\w-]+/g, '_')}.csv`);
+  });
 
-  paintItems(); preview(); hydrateIcons();
+  sync(); paintItems(); preview(); hydrateIcons();
 }
 
 /* ========================== SPLIT BY SIZE ============================ */
