@@ -8151,7 +8151,7 @@ const DocLayout = (() => {
 
   const BULLET_RE = /^[•◦▪‣·∙●○□■–—*-]\s+/;
   const ORDINAL_RE = /^(\(?\d{1,3}[.)]|\(?[a-zA-Z][.)]|[ivxlIVXL]{1,5}[.)])\s+/;
-  const SENT_END_RE = /[.!?:;"'\u201d\u2019)\]]\s*$/;
+  const SENT_END_RE = /[.!?:;"'\u201d\u2019)\]\u0964\u0965]\s*$/;   // \u0964/5: the Devanagari full stops । ॥
 
   /* ---------------- font resolution ---------------- */
   async function fontInfo(page, name, cache) {
@@ -8470,6 +8470,9 @@ const DocLayout = (() => {
   function mergeParagraph(block, ctx) {
     const paras = [];
     let cur = [];
+    // the block's usual line gap
+    const gaps = block.slice(1).map((l, i) => block[i].y - l.y).filter(g => g > 0);
+    const g0 = median(gaps) || median(block.map(l => l.size)) * 1.2;
     for (let i = 0; i < block.length; i++) {
       cur.push(block[i]);
       const line = block[i], next = block[i + 1];
@@ -8477,7 +8480,12 @@ const DocLayout = (() => {
       const endsSentence = SENT_END_RE.test(line.text);
       const nextIndented = next.x0 - line.x0 > line.size * 1.2;
       const lineIsShort = (line.x1 - line.x0) < (ctx.colX1 - ctx.colX0) * 0.62;
-      if ((endsSentence && lineIsShort) || nextIndented) { paras.push(cur); cur = []; }
+      // a line well short of the lines around it ends its paragraph (or stands alone, like an
+      // address line), and so does extra space before the next line
+      const wOf = (l) => l ? l.x1 - l.x0 : 0;
+      const shortInBlock = wOf(line) < Math.max(wOf(block[i - 1]), wOf(next)) * 0.7;
+      const extraGap = line.y - next.y > g0 * 1.25;
+      if ((endsSentence && lineIsShort) || nextIndented || shortInBlock || extraGap) { paras.push(cur); cur = []; }
     }
     if (cur.length) paras.push(cur);
 
@@ -11778,6 +11786,57 @@ const OCRPrep = (() => {
     for (let i = 0; i < g.length; i++) out[i] = ((g[i] - lo) * 255) / span;
     return out;
   }
+  /* Even out shadows, vignetting and uneven light: divide every pixel by the
+     local paper brightness (a smoothed maximum), so the page turns evenly
+     white and text keeps the same contrast in a dark corner as in the centre. */
+  function flattenColour(ctx, w, h) {
+    const img = ctx.getImageData(0, 0, w, h), d = img.data;
+    const g = new Uint8ClampedArray(w * h);
+    for (let i = 0, j = 0; j < g.length; i += 4, j++) g[j] = (d[i] * 77 + d[i + 1] * 150 + d[i + 2] * 29) >> 8;
+    const f = flatten(g, w, h);
+    for (let i = 0, j = 0; j < g.length; i += 4, j++) {
+      const k = g[j] ? f[j] / g[j] : 1;
+      d[i] = d[i] * k; d[i + 1] = d[i + 1] * k; d[i + 2] = d[i + 2] * k;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  function flatten(g, w, h) {
+    const s = Math.max(2, Math.round(Math.max(w, h) / 500));
+    const sw = Math.ceil(w / s), sh = Math.ceil(h / s);
+    let bg = new Float32Array(sw * sh);
+    for (let y = 0; y < h; y++) {
+      const r = y * w, br = ((y / s) | 0) * sw;
+      for (let x = 0; x < w; x++) { const v = g[r + x], i = br + ((x / s) | 0); if (v > bg[i]) bg[i] = v; }
+    }
+    // spread the paper over text strokes (max filter), then smooth it (box filter); both separable
+    const rad = Math.max(2, Math.round(Math.max(w, h) / 90 / s));
+    const run = (src, horiz, isMax) => {
+      const out = new Float32Array(src.length), n = horiz ? sw : sh, m = horiz ? sh : sw;
+      for (let a = 0; a < m; a++) {
+        for (let b = 0; b < n; b++) {
+          let acc = isMax ? 0 : 0, cnt = 0;
+          for (let k = Math.max(0, b - rad); k <= Math.min(n - 1, b + rad); k++) {
+            const v = horiz ? src[a * sw + k] : src[k * sw + a];
+            if (isMax) { if (v > acc) acc = v; } else { acc += v; cnt++; }
+          }
+          out[horiz ? a * sw + b : b * sw + a] = isMax ? acc : acc / cnt;
+        }
+      }
+      return out;
+    };
+    bg = run(run(bg, true, true), false, true);
+    bg = run(run(bg, true, false), false, false);
+    const out = new Uint8ClampedArray(w * h);
+    for (let y = 0; y < h; y++) {
+      const fy = Math.min(sh - 1.001, Math.max(0, y / s - 0.5)), y0 = fy | 0, ty = fy - y0, r0 = y0 * sw, r1 = Math.min(sh - 1, y0 + 1) * sw;
+      for (let x = 0; x < w; x++) {
+        const fx = Math.min(sw - 1.001, Math.max(0, x / s - 0.5)), x0 = fx | 0, tx = fx - x0, x1 = Math.min(sw - 1, x0 + 1);
+        const b = (bg[r0 + x0] * (1 - tx) + bg[r0 + x1] * tx) * (1 - ty) + (bg[r1 + x0] * (1 - tx) + bg[r1 + x1] * tx) * ty;
+        out[y * w + x] = g[y * w + x] * 255 / Math.max(b, 60);
+      }
+    }
+    return out;
+  }
   /* Tilt in degrees (positive = text runs downhill to the right). Projection
      profile: rotated correctly, text rows pile up into sharp peaks. */
   function estimateSkew(g, w, h, maxDeg) {
@@ -11795,11 +11854,16 @@ const OCRPrep = (() => {
       xs = sx; ys = sy;
     }
     const H = Math.ceil(Math.hypot(w, h) / step) + 4;
-    const hist = new Uint32Array(H * 2);
+    // Score each vertical strip on its own: on a two-column page a small rotation can
+    // line up the rows of the left column with those of the right one and fake a tilt.
+    const STRIPS = 4, stripW = Math.ceil(w / step / STRIPS);
+    const strip = new Uint8Array(xs.length);
+    for (let i = 0; i < xs.length; i++) strip[i] = Math.min(STRIPS - 1, (xs[i] / stripW) | 0);
+    const hist = new Uint32Array(H * 2 * STRIPS);
     const score = (deg) => {
       const a = deg * Math.PI / 180, s = Math.sin(a), c = Math.cos(a);
       hist.fill(0);
-      for (let i = 0; i < xs.length; i++) hist[(ys[i] * c - xs[i] * s + H) | 0]++;
+      for (let i = 0; i < xs.length; i++) hist[strip[i] * H * 2 + ((ys[i] * c - xs[i] * s + H) | 0)]++;
       let sq = 0;
       for (let k = 0; k < hist.length; k++) sq += hist[k] * hist[k];
       return sq;
@@ -11848,7 +11912,7 @@ const OCRPrep = (() => {
   }
   /* Give a canvas's pixel memory back now instead of whenever the GC runs. */
   function release(c) { if (c) { c.width = 0; c.height = 0; } }
-  return { grayOf, putGray, autoLevels, estimateSkew, binarize, rotate, release };
+  return { grayOf, putGray, autoLevels, flatten, flattenColour, estimateSkew, binarize, rotate, release };
 })();
 
 /* ==========================================================================
@@ -11879,7 +11943,8 @@ const OCRPlus = (() => {
 
   /* Pages come one at a time, so a 300-page PDF needs memory for two pages,
      not three hundred. */
-  async function openSource(file) {
+  async function openSource(file, opts) {
+    opts = opts || {};
     if (/pdf$/i.test(file.type) || /\.pdf$/i.test(file.name)) {
       const pdf = await PDFEngine.loadPdfJsDoc(file);
       return {
@@ -11902,16 +11967,18 @@ const OCRPlus = (() => {
         const big = Math.max(bmp.width, bmp.height);
         // Small photos are enlarged (up to 2200 px) so small print is legible; huge ones are capped.
         const k = Math.min(5000 / big, Math.max(1, 2200 / big));
-        const canvas = document.createElement('canvas');
+        let canvas = document.createElement('canvas');
         canvas.width = Math.round(bmp.width * k); canvas.height = Math.round(bmp.height * k);
         const ctx = canvas.getContext('2d', { alpha: false });
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.imageSmoothingQuality = 'high';
         ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
         if (bmp.close) bmp.close();
+        const flat = unwarp(canvas), flattened = flat !== canvas;
+        if (flattened) { OCRPrep.release(canvas); canvas = flat; }
         // A photo has no physical size: make its longer side A4's (842 pt).
         const pxPerPt = Math.max(canvas.width, canvas.height) / 842;
-        return { canvas, wPt: canvas.width / pxPerPt, hPt: canvas.height / pxPerPt, pxPerPt };
+        return { canvas, wPt: canvas.width / pxPerPt, hPt: canvas.height / pxPerPt, pxPerPt, flattened };
       },
       close() {}
     };
@@ -11933,6 +12000,135 @@ const OCRPlus = (() => {
       /\d\s*$/.test(whole.slice(0, off + pre.length)) ? all : pre + '\u20B9');
   }
 
+  /* A phone photo of a page lying on a table: find the sheet and flatten it into a
+     straight-on scan (the same page finder as the Document Scanner). Full-frame
+     scans and doubtful detections are left exactly as they are. */
+  function unwarp(canvas) {
+    if (typeof DocScan === 'undefined' || !DocScan.pageQuad) return canvas;
+    let q = null;
+    try { q = DocScan.pageQuad(canvas); } catch (e) { q = null; }
+    if (!q || q.length !== 4) return canvas;
+    const A = canvas.width * canvas.height;
+    const area = Math.abs(q.reduce((acc, p, i) => { const n = q[(i + 1) % 4]; return acc + p.x * n.y - n.x * p.y; }, 0)) / 2;
+    if (area > A * 0.9 || area < A * 0.2) return canvas;
+    for (let i = 0; i < 4; i++) {            // every corner close to a right angle, or it is not a sheet
+      const a = q[(i + 3) % 4], b = q[i], c = q[(i + 1) % 4];
+      const v1 = [a.x - b.x, a.y - b.y], v2 = [c.x - b.x, c.y - b.y];
+      const cos = (v1[0] * v2[0] + v1[1] * v2[1]) / (Math.hypot(...v1) * Math.hypot(...v2) || 1);
+      if (Math.abs(cos) > 0.45) return canvas;
+    }
+    const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+    let W = Math.max(d(q[0], q[1]), d(q[3], q[2])), H = Math.max(d(q[0], q[3]), d(q[1], q[2]));
+    const k = Math.min(1.6, 3000 / Math.max(W, H));     // a little larger helps small print in photos
+    W = Math.round(W * k); H = Math.round(H * k);
+    try { return DocScan.warp(canvas, q, W, H); } catch (e) { return canvas; }
+  }
+
+  /* Drop what Tesseract "reads" in pictures, shadows and page edges: stray
+     punctuation and very low-confidence fragments. Real words, even uncertain
+     ones, are kept (and listed for checking further on). */
+  function cleanLines(lines) {
+    const kept = new Map();
+    lines.forEach(l => {
+      const words = (l.words || []).filter(wd => {
+        const t = String(wd.text || '').trim(), c = wd.confidence || 0;
+        if (!t) return false;
+        const core = t.replace(/[^\p{L}\p{M}\p{N}]/gu, '');   // \p{M}: Hindi vowel signs count as letters
+        if (!core) return c >= 60;
+        if (c < 25) return false;
+        if (c < 45 && core.length <= 2) return false;
+        return true;
+      });
+      if (!words.length) return;
+      const mean = words.reduce((a, wd) => a + (wd.confidence || 0), 0) / words.length;
+      // a short line is still text when it has real words in it ("Yours faithfully", "राहुल शर्मा")
+      const real = words.filter(wd => String(wd.text).replace(/[^\p{L}\p{M}\p{N}]/gu, '').length >= 3).length;
+      if ((mean < 40 && real < 2) || (mean < 55 && !real)) return;
+      kept.set(l, Object.assign({}, l, { words }));
+    });
+    return kept;
+  }
+  function textOf(data, kept, extra) {
+    if (!data.blocks || !data.blocks.length) return String(data.text || '');
+    const paras = [];
+    const para = (ls) => {
+      const bb = ls.map(l => l.bbox).filter(Boolean);
+      return { text: ls.map(l => l.words.map(wd => wd.text).join(' ')).join('\n'),
+               x0: Math.min(...bb.map(b => b.x0)), x1: Math.max(...bb.map(b => b.x1)), y1: Math.max(...bb.map(b => b.y1)) };
+    };
+    data.blocks.forEach(b => (b.paragraphs || []).forEach(p => {
+      const ls = (p.lines || []).map(l => kept.get(l)).filter(Boolean);
+      if (ls.length) paras.push(para(ls));
+    }));
+    // lines read on a second look go after the paragraph just above them in the same column
+    (extra || []).forEach(x => {
+      const ls = [...x.kept.values()];
+      if (!ls.length) return;
+      const np = para(ls);
+      let at = -1, best = -Infinity;
+      paras.forEach((q, i) => { if (q.y1 <= x.rect.top + x.rect.height / 2 && q.x1 > np.x0 && q.x0 < np.x1 && q.y1 > best) { best = q.y1; at = i; } });
+      paras.splice(at + 1, 0, np);
+    });
+    return paras.map(q => q.text).join('\n\n');
+  }
+
+  /* Tesseract's automatic layout now and then skips a few lines of a page.
+     Find bands of text-like ink that no recognised word covers, read each band
+     on its own and hand the result back to be put in reading order. */
+  async function recoverMissed(data, gray, w, h, worker, canvas) {
+    const S = 4, gw = Math.ceil(w / S), gh = Math.ceil(h / S);
+    const ink = new Uint8Array(gw * gh), covered = new Uint8Array(gw * gh);
+    for (let y = 0; y < h; y++) { const r = y * w, gr = ((y / S) | 0) * gw; for (let x = 0; x < w; x++) if (gray[r + x] < 110) ink[gr + ((x / S) | 0)] = 1; }
+    const hs = [];
+    linesOf(data).forEach(l => (l.words || []).forEach(wd => {
+      if (!String(wd.text || '').trim() || !wd.bbox) return;
+      const b = wd.bbox, pad = 3;
+      hs.push(b.y1 - b.y0);
+      for (let y = Math.max(0, ((b.y0 / S) | 0) - pad); y <= Math.min(gh - 1, ((b.y1 / S) | 0) + pad); y++)
+        for (let x = Math.max(0, ((b.x0 / S) | 0) - pad); x <= Math.min(gw - 1, ((b.x1 / S) | 0) + pad); x++) covered[y * gw + x] = 1;
+    }));
+    if (hs.length < 5) return [];
+    hs.sort((a, b) => a - b);
+    const lineH = Math.max(2, hs[hs.length >> 1] / S);
+    const mx = Math.ceil(gw * 0.03), my = Math.ceil(gh * 0.02);   // leave the edge of the sheet alone
+    const rowInk = new Uint32Array(gh), rowMin = new Int32Array(gh).fill(gw), rowMax = new Int32Array(gh).fill(-1);
+    for (let y = my; y < gh - my; y++) for (let x = mx; x < gw - mx; x++) {
+      const i = y * gw + x;
+      if (ink[i] && !covered[i]) { rowInk[y]++; if (x < rowMin[y]) rowMin[y] = x; if (x > rowMax[y]) rowMax[y] = x; }
+    }
+    const bands = [];
+    // a row of a real text line carries far more ink than scanner noise does
+    const minRow = Math.max(4, Math.round(gw * 0.015));
+    for (let y = my; y < gh - my;) {
+      if (rowInk[y] < minRow) { y++; continue; }
+      let y2 = y, sum = 0, x0 = gw, x1 = -1;
+      while (y2 < gh - my && rowInk[y2] >= minRow) { sum += rowInk[y2]; x0 = Math.min(x0, rowMin[y2]); x1 = Math.max(x1, rowMax[y2]); y2++; }
+      const bh = y2 - y, bw = x1 - x0 + 1, density = sum / Math.max(1, bh * bw);
+      // one to a few text lines tall, wider than a few letters, and not a solid picture
+      if (bh >= Math.max(2, lineH * 0.3) && bh <= lineH * 6 && bw >= lineH * 1.5 && density > 0.04 && density < 0.95 && sum > lineH * 4) bands.push({ y0: y, y1: y2, x0, x1 });
+      y = y2;
+    }
+    if (!bands.length || bands.length > 15) return [];
+    const out = [];
+    try {
+      await worker.setParameters({ tessedit_pageseg_mode: '6' });
+      for (const b of bands) {
+        const pad = Math.max(2, Math.round(lineH * 0.6));
+        const left = Math.max(0, (b.x0 - pad) * S), top = Math.max(0, (b.y0 - pad) * S);
+        const rect = { left, top, width: Math.min(w, (b.x1 + pad + 1) * S) - left, height: Math.min(h, (b.y1 + pad) * S) - top };
+        const r = (await worker.recognize(canvas, { rectangle: rect }, { text: true, blocks: true })).data;
+        const ls = linesOf(r).filter(l => l.words && l.words.length);
+        // boxes may come back relative to the band; move them onto the page
+        const minX = Math.min(...ls.flatMap(l => l.words.map(wd => wd.bbox ? wd.bbox.x0 : Infinity)));
+        if (rect.left > 20 && minX < rect.left - 2) ls.forEach(l => [l, ...l.words].forEach(o => { if (o.bbox) o.bbox = { x0: o.bbox.x0 + rect.left, x1: o.bbox.x1 + rect.left, y0: o.bbox.y0 + rect.top, y1: o.bbox.y1 + rect.top }; }));
+        const kept = cleanLines(ls);
+        if (kept.size) out.push({ rect, kept });
+      }
+    } catch (e) { /* the first reading stands */ }
+    finally { try { await worker.setParameters({ tessedit_pageseg_mode: '3' }); } catch (e) {} }
+    return out;
+  }
+
   /* Two recognisers side by side where the device can afford it. */
   function laneCount(pages) {
     const cores = navigator.hardwareConcurrency || 2, mem = navigator.deviceMemory || 4;
@@ -11947,17 +12143,27 @@ const OCRPlus = (() => {
     let canvas = pg.canvas;
     const w = canvas.width, h = canvas.height;
     let ctx = canvas.getContext('2d');
-    let gray = OCRPrep.autoLevels(OCRPrep.grayOf(ctx, w, h));
+    const prep = (c) => OCRPrep.autoLevels(OCRPrep.flatten(OCRPrep.grayOf(c, w, h), w, h));
+    let gray = prep(ctx);
     const skew = opts.deskew === false ? 0 : OCRPrep.estimateSkew(gray, w, h);
     if (skew) {
       const straight = OCRPrep.rotate(canvas, -skew);
       OCRPrep.release(canvas);
       canvas = straight; ctx = canvas.getContext('2d');
-      gray = OCRPrep.autoLevels(OCRPrep.grayOf(ctx, w, h));
+      gray = prep(ctx);
     }
-    const rec = { wPt: pg.wPt, hPt: pg.hPt, pxPerPt: pg.pxPerPt, skew, enhanced: false };
+    const rec = { wPt: pg.wPt, hPt: pg.hPt, pxPerPt: pg.pxPerPt, skew, enhanced: false, flattened: !!pg.flattened };
+    // tesseract.js defaults to "single block", which reads straight across two columns
+    // (and across side-by-side From / Bill-to blocks); automatic layout finds them.
     try {
-      if (!opts.textOnly) rec.jpg = await PDFEngine.canvasToBytes(canvas, 'image/jpeg', opts.quality || 0.82);
+      await worker.setParameters({ tessedit_pageseg_mode: '3', user_defined_dpi: String(Math.max(70, Math.min(600, Math.round(pg.pxPerPt * 72)))) });
+    } catch (e) { /* older engine */ }
+    try {
+      if (!opts.textOnly) {
+        // a phone photo also gets its shadows and vignetting evened out, like a scanner app
+        if (pg.flattened) OCRPrep.flattenColour(ctx, w, h);
+        rec.jpg = await PDFEngine.canvasToBytes(canvas, 'image/jpeg', opts.quality || 0.82);
+      }
       OCRPrep.putGray(ctx, gray, w, h);
       setPass(1);
       let data = (await worker.recognize(canvas, {}, { text: true, blocks: true })).data;
@@ -11967,8 +12173,11 @@ const OCRPlus = (() => {
         const again = (await worker.recognize(canvas, {}, { text: true, blocks: true })).data;
         if ((again.confidence || 0) > (data.confidence || 0) + 3) { data = again; rec.enhanced = true; }
       }
-      rec.lines = linesOf(data).filter(l => l.words && l.words.length);
-      rec.text = fixRupee(String(data.text || '').trim());
+      const kept = cleanLines(linesOf(data).filter(l => l.words && l.words.length));
+      const extra = await recoverMissed(data, gray, w, h, worker, canvas);
+      rec.lines = [...kept.values()].concat(...extra.map(x => [...x.kept.values()]));
+      rec.text = fixRupee(textOf(data, kept, extra).trim());
+      rec.recovered = extra.reduce((a, x) => a + x.kept.size, 0);
       rec.lines.forEach(l => l.words.forEach((wd, k) => {
         const next = l.words[k + 1], prev = l.words[k - 1];
         wd.text = rupeeWord(String(wd.text || ''), next && next.text, prev && prev.text);
@@ -11991,7 +12200,7 @@ const OCRPlus = (() => {
     opts = opts || {};
     if (typeof Tesseract === 'undefined' && window.ensureLib) await window.ensureLib('Tesseract');
     if (typeof Tesseract === 'undefined') throw new Error('The OCR engine could not be downloaded. Check your connection and try again.');
-    const src = await openSource(file);
+    const src = await openSource(file, opts);
     const n = src.count;
     const results = new Array(n);
     const want = Math.min(laneCount(n), n);
@@ -12057,11 +12266,37 @@ const OCRPlus = (() => {
     return Math.max(h * 0.6, Math.min(h * 1.5, fromTop));
   }
 
+  /* An invisible text layer that works in every script. The font has no visible
+     glyphs; its character codes are the Unicode code points and an identity
+     ToUnicode map turns them back into text, so selecting, copying, searching and
+     screen readers get the real words in Hindi, Tamil, Arabic, Chinese or with a
+     ₹ sign. This is how Tesseract itself writes searchable PDFs. */
+  const GLYPHLESS_TTF = 'AAEAAAAKAIAAAwAgT1MvMkT/RUAAAAEoAAAAYGNtYXAADABzAAABkAAAADRnbHlmAAAAAAAAAcwAAAABaGVhZCz2BtwAAACsAAAANmhoZWED6QH2AAAA5AAAACRobXR4AfQAAAAAAYgAAAAGbG9jYQAAAAAAAAHEAAAABm1heHAAAwACAAABCAAAACBuYW1lGZ8ZNAAAAdAAAABycG9zdABOAAAAAAJEAAAAJgABAAAAAQAAgfvNhl8PPPUAAwPoAAAAAObv4v4AAAAA5u/i/gAAAAAAAAAAAAAAAwACAAAAAAAAAAEAAAPoAAAAAAH0AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAABAAEAAAACAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAwH0AZAABQAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAPz8/PwAAACAAIAPoAAAAAAPoAAAAAAAAAAAAAAAAAAAAAAAgAAAB9AAAAAAAAAAAAAIAAAADAAAAFAADAAEAAAAUAAQAIAAAAAQABAABAAAAIP//AAAAIP///+EAAQAAAAAAAAAAAAAAAAAAAAAAAAAEADYAAQAAAAAAAQANAAAAAQAAAAAAAgAHAA0AAwABBAkAAQAaABQAAwABBAkAAgAOAC5HbHlwaExlc3NGb250UmVndWxhcgBHAGwAeQBwAGgATABlAHMAcwBGAG8AbgB0AFIAZQBnAHUAbABhAHIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAABKAAA=';
+  function glyphlessFont(doc) {
+    const ctx = doc.context, P = PDFLib;
+    const bin = atob(GLYPHLESS_TTF), ttf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) ttf[i] = bin.charCodeAt(i);
+    const map = new Uint8Array(65536 * 2);                 // every code shows glyph 1 (an empty one)
+    for (let i = 1; i < map.length; i += 2) map[i] = 1;
+    const cmap = '/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n' +
+      '/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def\n/CMapName /Adobe-Identity-UCS def\n/CMapType 2 def\n' +
+      '1 begincodespacerange\n<0000> <FFFF>\nendcodespacerange\n1 beginbfrange\n<0000> <FFFF> <0000>\nendbfrange\n' +
+      'endcmap\nCMapName currentdict /CMap defineresource pop\nend\nend\n';
+    const desc = ctx.obj({ Type: 'FontDescriptor', FontName: 'GlyphLessFont', Flags: 5, FontBBox: [0, 0, 500, 1000], ItalicAngle: 0,
+      Ascent: 1000, Descent: 0, CapHeight: 1000, StemV: 80, FontFile2: ctx.register(ctx.flateStream(ttf, { Length1: ttf.length })) });
+    const cid = ctx.obj({ Type: 'Font', Subtype: 'CIDFontType2', BaseFont: 'GlyphLessFont',
+      CIDSystemInfo: { Registry: P.PDFString.of('Adobe'), Ordering: P.PDFString.of('Identity'), Supplement: 0 },
+      FontDescriptor: ctx.register(desc), DW: 500, CIDToGIDMap: ctx.register(ctx.flateStream(map)) });
+    return ctx.register(ctx.obj({ Type: 'Font', Subtype: 'Type0', BaseFont: 'GlyphLessFont', Encoding: 'Identity-H',
+      DescendantFonts: [ctx.register(cid)], ToUnicode: ctx.register(ctx.flateStream(new TextEncoder().encode(cmap))) }));
+  }
+  const utf16hex = (s) => { let h = ''; for (let i = 0; i < s.length; i++) h += s.charCodeAt(i).toString(16).padStart(4, '0'); return h; };
+
   /** Image pages + invisible text layer -> PDF bytes. */
   async function searchablePdf(pages, opts) {
     opts = opts || {};
     const doc = await PDFLib.PDFDocument.create();
-    const font = await doc.embedFont(PDFLib.StandardFonts.Helvetica);
+    const fontRef = glyphlessFont(doc);
     const O = PDFLib;
     let words = 0;
     for (const pg of pages) {
@@ -12069,26 +12304,35 @@ const OCRPlus = (() => {
       const jpg = pg.jpg || await PDFEngine.canvasToBytes(pg.canvas, 'image/jpeg', opts.quality || 0.82);
       const img = await doc.embedJpg(jpg);
       page.drawImage(img, { x: 0, y: 0, width: pg.wPt, height: pg.hPt });
-      const fontKey = page.node.newFontDictionary('OCRF', font.ref);
+      const fontKey = page.node.newFontDictionary('OCRF', fontRef);
       const k = 1 / pg.pxPerPt;
       const ops = [];
       for (const line of pg.lines || []) {
         const sizePx = lineSizePx(line);
-        for (const w of line.words) {
-          // For the Word rebuild, ₹ travels as ¤ (standard fonts cannot encode ₹) and is restored afterwards.
-          const raw = String(w.text || '').trim();
-          const text = PDFEngine.sanitize(opts.rupeeMark ? raw.replace(/\u20B9/g, '\u00A4') : raw);
-          if (!text || (w.confidence !== undefined && w.confidence < 20)) continue;
+        const ws = line.words.filter(w => String(w.text || '').trim() && !(w.confidence !== undefined && w.confidence < 20));
+        // A line is written as runs of words joined by real spaces and stretched over their box;
+        // a run only breaks at a wide gap (a table column). Copied and searched text keeps its
+        // spaces, and anything reading the PDF sees whole lines rather than loose words.
+        const runs = [];
+        ws.forEach((w, wi) => {
+          const prev = ws[wi - 1];
+          if (!prev || w.bbox.x0 - prev.bbox.x1 >= sizePx * 2) runs.push([w]);
+          else runs[runs.length - 1].push(w);
+        });
+        for (const run of runs) {
+          const text = run.map(w => String(w.text || '').trim()).join(' ').replace(/[\u0000-\u001F\u007F]/g, '');
+          if (!text) continue;
+          const first = run[0], last = run[run.length - 1];
           const size = Math.max(2, sizePx * k);
-          const natural = font.widthOfTextAtSize(text, size);
-          const target = (w.bbox.x1 - w.bbox.x0) * k;
+          const natural = text.length * 0.5 * size;           // every code is half an em wide in this font
+          const target = (last.bbox.x1 - first.bbox.x0) * k;
           if (natural <= 0 || target <= 0) continue;
-          const sx = Math.max(0.25, Math.min(4, target / natural));
-          const x = w.bbox.x0 * k;
-          const y = pg.hPt - baselineAt(line, w, w.bbox.x0) * k;
+          const sx = Math.max(0.1, Math.min(6, target / natural));
+          const x = first.bbox.x0 * k;
+          const y = pg.hPt - baselineAt(line, first, first.bbox.x0) * k;
           ops.push(O.beginText(), O.setFontAndSize(fontKey, size), O.setTextRenderingMode(O.TextRenderingMode.Invisible),
-            O.setTextMatrix(sx, 0, 0, 1, x, y), O.showText(font.encodeText(text)), O.endText());
-          words++;
+            O.setTextMatrix(sx, 0, 0, 1, x, y), O.showText(O.PDFHexString.of(utf16hex(text))), O.endText());
+          words += run.length;
         }
       }
       if (ops.length) page.pushOperators(...ops);
@@ -12098,14 +12342,18 @@ const OCRPlus = (() => {
 
   /** Searchable PDF -> Word file with the same look (via the PDF to Word exact engine). */
   async function editableDocx(pages, onProgress) {
-    const { bytes } = await searchablePdf(pages, { rupeeMark: true });
+    const { bytes } = await searchablePdf(pages);
     const file = new File([bytes], 'ocr.pdf', { type: 'application/pdf' });
+    // The exact-look rebuild measures text with Latin font metrics, which squeezes
+    // Devanagari, Tamil, Arabic and other scripts. For those, clean reflowed paragraphs
+    // (headings, lists, tables) let Word shape the script with its own fonts.
+    const latinOnly = pages.every(p => !/[^\u0000-\u024F\u1E00-\u1EFF\u2000-\u20CF\u2100-\u214F]/.test(p.text || ''));
+    if (!latinOnly) {
+      const r = await DocxEngine.convert(file, { useHeadingStyles: true, tableBorders: true }, onProgress);
+      return r.blob;
+    }
     const r = await DocxExact.convert(file, {}, onProgress);
-    const zip = await JSZip.loadAsync(await r.blob.arrayBuffer());
-    const xml = await zip.file('word/document.xml').async('string');
-    if (xml.indexOf('\u00A4') < 0) return r.blob;
-    zip.file('word/document.xml', xml.replace(/\u00A4/g, '\u20B9'));
-    return zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    return r.blob;
   }
 
   return { recognise, searchablePdf, editableDocx, linesOf };
@@ -14567,7 +14815,7 @@ const DocScan = (() => {
     return canvas;
   }
 
-  return { warp, autoCorners, enhance, homography };
+  return { warp, autoCorners, enhance, homography, pageQuad: findPageQuad };
 })();
 
 /* ======================================================================
@@ -16512,15 +16760,7 @@ const TOOL_DEFS = {
       <select id="o_lang">${OCR_LANGS.map(([c, n]) => `<option value="${c}">${n}</option>`).join('')}</select></div>
       <p class="hint" id="o_langNote">The language pack downloads once on first use, then works offline.</p></div>`,
     onMount() {
-      const LATIN = ['eng', 'spa', 'fra', 'deu', 'ita', 'por'];
-      const sync = () => {
-        const latin = LATIN.includes($('#o_lang').value);
-        $$('input[name=o_out]').forEach(r => { if (r.value !== 'txt') { r.disabled = !latin; r.closest('.out-card').classList.toggle('disabled', !latin); } });
-        if (!latin) $('input[name=o_out][value=txt]').checked = true;
-        $('#o_langNote').textContent = latin ? 'The language pack downloads once on first use, then works offline.'
-          : 'For this language DocBrisk gives you the recognised text. Searchable PDF and Word output currently support English and other Latin-alphabet languages.';
-      };
-      $('#o_lang').addEventListener('change', sync);
+      // Searchable PDF and Word now carry real Unicode text, so every language gets all three outputs.
     },
     async run(files) {
       if (!(await Trials.allow('ocr-pdf'))) return;
