@@ -166,7 +166,11 @@
     "Rent Receipt Generator for HRA",
     "PAN, Aadhaar & IFSC Number Validator",
     "Number to Words Converter (Rupees)",
-    "CGPA to Percentage Calculator"
+    "CGPA to Percentage Calculator",
+    "Income Tax Calculator FY 2026-27: New vs Old Regime",
+    "EMI Calculator for Home, Car & Personal Loans",
+    "SIP Calculator: Mutual Fund Returns",
+    "FD Calculator, RD & PPF Maturity Calculator"
    ],
    "applicationSubCategory": "PDF and document tools"
   },
@@ -179,7 +183,7 @@
      "name": "Is DocBrisk free?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Yes for almost everything. 42 of the 51 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times."
+      "text": "Yes for almost everything. 46 of the 55 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times."
      }
     },
     {
@@ -582,9 +586,33 @@
      "position": 51,
      "name": "CGPA to Percentage Calculator",
      "url": "https://docbrisk.com/tool/cgpa-calculator"
+    },
+    {
+     "@type": "ListItem",
+     "position": 52,
+     "name": "Income Tax Calculator FY 2026-27: New vs Old Regime",
+     "url": "https://docbrisk.com/tool/income-tax-calculator"
+    },
+    {
+     "@type": "ListItem",
+     "position": 53,
+     "name": "EMI Calculator for Home, Car & Personal Loans",
+     "url": "https://docbrisk.com/tool/emi-calculator"
+    },
+    {
+     "@type": "ListItem",
+     "position": 54,
+     "name": "SIP Calculator: Mutual Fund Returns",
+     "url": "https://docbrisk.com/tool/sip-calculator"
+    },
+    {
+     "@type": "ListItem",
+     "position": 55,
+     "name": "FD Calculator, RD & PPF Maturity Calculator",
+     "url": "https://docbrisk.com/tool/fd-calculator"
     }
    ],
-   "numberOfItems": 51
+   "numberOfItems": 55
   }
  ]
 }
@@ -2325,6 +2353,56 @@ input.calc-big{font-size:1.35rem;font-weight:700;font-variant-numeric:tabular-nu
 .rep-row{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 30px;gap:8px;align-items:center;margin-bottom:8px}
 .rep-row .rep-btn,.sem-row .rep-btn{width:30px;height:38px;display:grid;place-items:center;cursor:pointer;color:var(--ink-500);padding:0}
 
+/* ---- money calculators: EMI, SIP, FD/RD/PPF, income tax ---- */
+.fin-field{margin-bottom:16px}
+.fin-lab{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.fin-lab label{margin:0}
+.fin-l{display:block;font-weight:600;font-size:.86rem;color:var(--ink-700);margin-bottom:6px}
+.fin-in{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink-300);border-radius:11px;background:var(--white);padding:0 10px;min-height:42px;max-width:100%}
+.fin-in:focus-within{border-color:var(--brand-500);box-shadow:0 0 0 3px var(--brand-100)}
+.fin-in>span{font-weight:700;color:var(--ink-500);font-size:.9rem;white-space:nowrap}
+.fin-in input[type=text],.fin-in input[type=number]{border:0!important;box-shadow:none!important;background:transparent!important;padding:8px 0!important;min-height:0!important;width:9.5em;max-width:100%;font-weight:700;font-size:1rem;font-variant-numeric:tabular-nums;text-align:right;outline:0}
+.fin-in-wide{display:flex;width:100%}
+.fin-in-wide input[type=text]{flex:1;width:auto;text-align:left}
+.fin-unit{border:0;background:var(--ink-100);border-radius:8px}
+.fin-unit button{min-height:30px;padding:4px 10px;font-size:.78rem}
+.fin-field input[type=range]{display:block;margin:2px 0 0}
+.fin-fy{font-size:.88rem;color:var(--ink-600);margin:0 0 16px}
+.fin-donut{display:flex;align-items:center;gap:18px;margin:4px 0 14px;flex-wrap:wrap}
+.fin-donut svg{flex:none;transform:rotate(0deg)}
+.fin-legend{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;flex:1;min-width:160px}
+.fin-legend li{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;font-size:.86rem;color:var(--ink-700)}
+.fin-legend i{width:12px;height:12px;border-radius:3px}
+.fin-legend b{font-variant-numeric:tabular-nums;color:var(--ink-900)}
+.fin-sched{margin-top:22px}
+.fin-sched:empty{display:none}
+.fin-sched-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.fin-sched-head h2{font-size:1.15rem;margin:0}
+.fin-bars{display:flex;align-items:flex-end;gap:3px;height:170px;padding:8px 0 22px;border-bottom:1px solid var(--ink-200);margin-bottom:8px}
+.fin-bar{flex:1 1 0;min-width:0;height:100%;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
+.fin-bar span{display:block;width:100%}
+.fin-bar .fb-b{border-radius:3px 3px 0 0}
+.fin-bar em{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font:600 .66rem var(--font);font-style:normal;color:var(--ink-500);white-space:nowrap}
+.fb-a{background:var(--brand-600)}
+.fb-b{background:var(--ok)}
+#emi_sched .fb-b{background:var(--warn)}
+.fin-key{display:flex;gap:16px;font-size:.8rem;color:var(--ink-600);margin:0 0 14px}
+.fin-key span{display:inline-flex;align-items:center;gap:6px}
+.fin-key i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.fin-tbl-wrap{overflow:auto;max-height:440px;border:1px solid var(--ink-200);border-radius:12px;background:var(--white);-webkit-overflow-scrolling:touch}
+.fin-tbl{width:100%;border-collapse:collapse;font-size:.85rem;font-variant-numeric:tabular-nums}
+.fin-tbl th{position:sticky;top:0;background:var(--ink-50);text-align:right;padding:9px 12px;font-weight:700;color:var(--ink-600);border-bottom:1px solid var(--ink-200);white-space:nowrap}
+.fin-tbl td{text-align:right;padding:7px 12px;border-bottom:1px solid var(--ink-100);color:var(--ink-800);white-space:nowrap}
+.fin-tbl th:first-child,.fin-tbl td:first-child{text-align:left}
+.fin-tbl tr:last-child td{border-bottom:0}
+.fin-cmp td:not(:first-child){text-align:right;font-weight:700;color:var(--ink-900);font-variant-numeric:tabular-nums;padding-left:10px;white-space:nowrap}
+.fin-cmp tr.fin-cmp-h td{font:700 .68rem var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-500)}
+.fin-two{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+.fin-two h3{font-size:.95rem;margin:0 0 8px}
+.fin-two .fin-tbl{border:1px solid var(--ink-200);border-radius:12px;overflow:hidden;background:var(--white)}
+@media(min-width:820px){.fin-two{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fin-tbl{font-size:.8rem}.fin-tbl th,.fin-tbl td{padding:7px 8px}.fin-donut svg{width:108px;height:108px}}
+
 /* amount in words */
 .words-out{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .words-fig{font:400 1.7rem/1.15 var(--serif);color:var(--ink-900);margin:0 0 4px;font-variant-numeric:tabular-nums}
@@ -2552,9 +2630,13 @@ html[data-theme="dark"] .t-slate{background:var(--ink-100);color:var(--ink-900)}
       <section id="pan-aadhaar-validator"><h3><a href="/tool/pan-aadhaar-validator" tabindex="-1">PAN, Aadhaar &amp; IFSC Number Validator</a></h3><p>Check whether a PAN, Aadhaar, GSTIN or IFSC is correctly formed: the pattern, the holder type and the check digit. Paste one or thousands. Checked on your device and never uploaded.</p></section>
       <section id="amount-in-words"><h3><a href="/tool/amount-in-words" tabindex="-1">Number to Words Converter (Rupees)</a></h3><p>Turn any amount into words for cheques, invoices and receipts: English with lakh and crore, Hindi, and the international million format, with paise.</p></section>
       <section id="cgpa-calculator"><h3><a href="/tool/cgpa-calculator" tabindex="-1">CGPA to Percentage Calculator</a></h3><p>Convert CGPA to percentage and back, work out the percentage of marks, or average your semester SGPAs into a CGPA. Choose the formula your board or university uses.</p></section>
+      <section id="income-tax-calculator"><h3><a href="/tool/income-tax-calculator" tabindex="-1">Income Tax Calculator FY 2026-27: New vs Old Regime</a></h3><p>Compare your tax under the new and old regimes side by side, with the ₹12 lakh rebate, standard deduction, 80C, HRA, 80D and home loan interest. See which regime saves more.</p></section>
+      <section id="emi-calculator"><h3><a href="/tool/emi-calculator" tabindex="-1">EMI Calculator for Home, Car &amp; Personal Loans</a></h3><p>Work out the monthly EMI, total interest and full amortisation schedule of any loan. Add a part payment to see the interest and months you save, and export the schedule to Excel.</p></section>
+      <section id="sip-calculator"><h3><a href="/tool/sip-calculator" tabindex="-1">SIP Calculator: Mutual Fund Returns</a></h3><p>See what a monthly SIP or a lumpsum could grow to, plan a step-up SIP, or find the SIP you need for a goal such as ₹1 crore. Year-by-year growth, with inflation if you want it.</p></section>
+      <section id="fd-calculator"><h3><a href="/tool/fd-calculator" tabindex="-1">FD Calculator, RD &amp; PPF Maturity Calculator</a></h3><p>Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table.</p></section>
   </section>
   <section><h2>Frequently asked questions</h2>
-      <section><h3>Is DocBrisk free?</h3><p>Yes for almost everything. 42 of the 51 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times.</p></section>
+      <section><h3>Is DocBrisk free?</h3><p>Yes for almost everything. 46 of the 55 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times.</p></section>
       <section><h3>Are my documents uploaded to a server?</h3><p>No. All processing happens inside your browser using client-side JavaScript. Your files are read from disk into browser memory and written back out as a download — they are never transmitted. The single exception is Translate PDF, which sends extracted text (not your file) to a public translation service, and says so on the tool page.</p></section>
       <section><h3>Can I edit the existing text in a PDF?</h3><p>Yes. In the PDF Editor choose Edit text, click any line and type. DocBrisk matches the size, colour and font style, removes the original words from the page itself and checks the result pixel by pixel before saving. On scanned pages, or where a font makes in-place removal unsafe, the old line is covered with a matching background colour instead, and the export tells you which lines were handled that way. Replacement text uses the closest standard font: Helvetica, Times or Courier.</p></section>
       <section><h3>How is your redaction different from drawing a black box?</h3><p>Pages containing redactions are rasterised to an image with the black boxes permanently burned in, then re-embedded. The original text objects are discarded entirely, so nothing can be selected, searched, copied or recovered from the exported file.</p></section>
@@ -6171,7 +6253,11 @@ const TOOLS = [
   {"slug": "rent-receipt", "name": "Rent Receipt Generator", "tint": "t-orange", "icon": "home", "badge": "New", "isNew": true, "calc": true, "h1": "Rent Receipt Generator for HRA", "blurb": "Make rent receipts for every month of the year in one go, with the amount in words, the landlord's PAN and a revenue stamp box. A print-ready PDF for your HRA claim."},
   {"slug": "pan-aadhaar-validator", "name": "PAN & Aadhaar Validator", "tint": "t-slate", "icon": "badge-check", "badge": "New", "isNew": true, "calc": true, "h1": "PAN, Aadhaar & IFSC Number Validator", "blurb": "Check whether a PAN, Aadhaar, GSTIN or IFSC is correctly formed: the pattern, the holder type and the check digit. Paste one or thousands. Checked on your device and never uploaded."},
   {"slug": "amount-in-words", "name": "Amount in Words", "tint": "t-amber", "icon": "rupee", "badge": "New", "isNew": true, "calc": true, "h1": "Number to Words Converter (Rupees)", "blurb": "Turn any amount into words for cheques, invoices and receipts: English with lakh and crore, Hindi, and the international million format, with paise."},
-  {"slug": "cgpa-calculator", "name": "CGPA Calculator", "tint": "t-indigo", "icon": "graduation", "badge": "New", "isNew": true, "calc": true, "h1": "CGPA to Percentage Calculator", "blurb": "Convert CGPA to percentage and back, work out the percentage of marks, or average your semester SGPAs into a CGPA. Choose the formula your board or university uses."}
+  {"slug": "cgpa-calculator", "name": "CGPA Calculator", "tint": "t-indigo", "icon": "graduation", "badge": "New", "isNew": true, "calc": true, "h1": "CGPA to Percentage Calculator", "blurb": "Convert CGPA to percentage and back, work out the percentage of marks, or average your semester SGPAs into a CGPA. Choose the formula your board or university uses."},
+  {"slug":"income-tax-calculator","name":"Income Tax Calculator","tint":"t-rose","icon":"receipt","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"Income Tax Calculator FY 2026-27: New vs Old Regime","blurb":"Compare your tax under the new and old regimes side by side, with the ₹12 lakh rebate, standard deduction, 80C, HRA, 80D and home loan interest. See which regime saves more."},
+  {"slug":"emi-calculator","name":"EMI Calculator","tint":"t-cyan","icon":"calculator","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"EMI Calculator for Home, Car & Personal Loans","blurb":"Work out the monthly EMI, total interest and full amortisation schedule of any loan. Add a part payment to see the interest and months you save, and export the schedule to Excel."},
+  {"slug":"sip-calculator","name":"SIP Calculator","tint":"t-lime","icon":"trending-up","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"SIP Calculator: Mutual Fund Returns","blurb":"See what a monthly SIP or a lumpsum could grow to, plan a step-up SIP, or find the SIP you need for a goal such as ₹1 crore. Year-by-year growth, with inflation if you want it."},
+  {"slug":"fd-calculator","name":"FD, RD & PPF Calculator","tint":"t-teal","icon":"landmark","badge":"New","isNew":true,"calc":true,"h1":"FD Calculator, RD & PPF Maturity Calculator","blurb":"Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table."}
 ];
 
 /* Browsing category per tool, kept as a lookup separate from the TOOLS data
@@ -6190,12 +6276,16 @@ const TOOL_CATEGORIES = {
   'biodata-maker':'Letters & Forms', 'letter-maker':'Letters & Forms', 'cv-studio':'Letters & Forms', 'gstin-validator':'Calculators & Checks',
   'image-compressor':'Photo & ID',
   'gst-calculator':'Calculators & Checks', 'age-calculator':'Calculators & Checks', 'pan-aadhaar-validator':'Calculators & Checks', 'amount-in-words':'Calculators & Checks', 'cgpa-calculator':'Calculators & Checks',
-  'salary-slip':'Letters & Forms', 'rent-receipt':'Letters & Forms'
+  'salary-slip':'Letters & Forms', 'rent-receipt':'Letters & Forms',
+  'income-tax-calculator':'Money & Tax', 'emi-calculator':'Money & Tax', 'sip-calculator':'Money & Tax', 'fd-calculator':'Money & Tax'
 };
 TOOLS.forEach(t => { t.cat = TOOL_CATEGORIES[t.slug] || 'More tools'; });
-const TOOL_CATS = ['All', 'Photo & ID', 'Letters & Forms', 'Calculators & Checks', 'Edit & Secure', 'Convert', 'Business & QR'];
+const TOOL_CATS = ['All', 'Photo & ID', 'Letters & Forms', 'Money & Tax', 'Calculators & Checks', 'Edit & Secure', 'Convert', 'Business & QR'];
 
 const ICONS = {
+  'calculator':'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14v4M8 18h.01M12 18h.01"/>',
+  'trending-up':'<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
+  'landmark':'<path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="m12 2 9 5H3Z"/>',
   'share':'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
   'rotate-ccw':'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>',
   'edit':'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
@@ -6325,7 +6415,7 @@ function renderChrome() {
           <p>A free, private document toolkit that runs entirely in your browser. Your files are never uploaded to a server.</p>
         </div>
         <div><h4>Photo, ID &amp; Forms</h4><ul>${pick(['image-compressor','exam-photo','photo-studio','id-card','biodata-maker','letter-maker','cv-studio'])}</ul></div>
-        <div><h4>Calculators &amp; Business</h4><ul>${pick(['gst-calculator','invoice-maker','salary-slip','rent-receipt','age-calculator','cgpa-calculator','amount-in-words','gstin-validator'])}</ul></div>
+        <div><h4>Calculators &amp; Business</h4><ul>${pick(['income-tax-calculator','emi-calculator','sip-calculator','fd-calculator','gst-calculator','invoice-maker','salary-slip','rent-receipt','age-calculator','cgpa-calculator'])}</ul></div>
         <div><h4>PDF tools</h4><ul>${pick(['compress-pdf','merge-pdf','pdf-editor','sign-pdf','pdf-to-word','word-to-pdf','organize-pdf','unlock-pdf'])}</ul></div>
         <div><h4>DocBrisk</h4><ul><li><a href="/guides">Guides and formats</a></li><li><a href="/pricing">Pricing</a></li><li><a href="/addins">Excel Add-ins</a></li>
           <li><a href="/about">About</a></li><li><a href="/security">Security</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></div>
@@ -6625,11 +6715,15 @@ const PDFEngine = (() => {
     'rent-receipt': ["PDFLib"],
     'pan-aadhaar-validator': [],
     'amount-in-words': [],
-    'cgpa-calculator': []
+    'cgpa-calculator': [],
+    'income-tax-calculator': [],
+    'emi-calculator': [],
+    'sip-calculator': [],
+    'fd-calculator': []
   };
   /* Tools that never reach for another library: no reason to fetch the other
      3 MB in the background on someone's mobile data. */
-  const SELF_CONTAINED = new Set(['qr-maker', 'gstin-validator', 'exam-photo', 'biodata-maker', 'letter-maker', 'image-compressor', 'gst-calculator', 'age-calculator', 'salary-slip', 'rent-receipt', 'pan-aadhaar-validator', 'amount-in-words', 'cgpa-calculator']);
+  const SELF_CONTAINED = new Set(['qr-maker', 'gstin-validator', 'exam-photo', 'biodata-maker', 'letter-maker', 'image-compressor', 'gst-calculator', 'age-calculator', 'salary-slip', 'rent-receipt', 'pan-aadhaar-validator', 'amount-in-words', 'cgpa-calculator', 'income-tax-calculator', 'emi-calculator', 'sip-calculator', 'fd-calculator']);
   const ALL = window.LIB_NAMES.slice();
   const lite = () => {
     const c = navigator.connection;
@@ -15150,7 +15244,11 @@ const NEXT_STEPS = {
   'rent-receipt': ["salary-slip", "sign-pdf", "letter-maker"],
   'pan-aadhaar-validator': ["gstin-validator", "smart-redact", "id-card"],
   'amount-in-words': ["invoice-maker", "gst-calculator", "rent-receipt"],
-  'cgpa-calculator': ["age-calculator", "cv-studio", "image-compressor"]
+  'cgpa-calculator': ["age-calculator", "cv-studio", "image-compressor"],
+  'income-tax-calculator': ["salary-slip","rent-receipt","emi-calculator"],
+  'emi-calculator': ["income-tax-calculator","sip-calculator","fd-calculator"],
+  'sip-calculator': ["fd-calculator","emi-calculator","income-tax-calculator"],
+  'fd-calculator': ["sip-calculator","income-tax-calculator","emi-calculator"]
 };
 
 function suggestNext(slug) {
@@ -16022,6 +16120,10 @@ const App = {
     else if (hash === 'tool/pan-aadhaar-validator') { renderIdValidator(view); }
     else if (hash === 'tool/amount-in-words') { renderAmountWords(view); }
     else if (hash === 'tool/cgpa-calculator') { renderCgpa(view); }
+    else if (hash === 'tool/income-tax-calculator') { renderIncomeTax(view); }
+    else if (hash === 'tool/emi-calculator') { renderEmi(view); }
+    else if (hash === 'tool/sip-calculator') { renderSip(view); }
+    else if (hash === 'tool/fd-calculator') { renderDeposit(view); }
     else if (hash === 'guides') { renderGuides(view); }
     else if (hash === 'tool/doc-integrity') { renderIntegrity(view); }
     else if (hash === 'tool/batch-process') { renderBatch(view); }
@@ -16244,7 +16346,11 @@ const SEO_PAGES = {
   "rent-receipt": {"t": "Rent Receipt Generator for HRA: Free PDF | DocBrisk", "d": "Generate monthly rent receipts for an HRA claim in one PDF: 12 months at once, amount in words, landlord PAN and revenue stamp box. Free, no sign-up.", "h": "How to make rent receipts for HRA", "s": ["Enter the tenant, the landlord, the address and the monthly rent", "Choose the first month and how many months you need", "Download the PDF, print it and get each receipt signed"], "f": [["Is the landlord's PAN needed on a rent receipt?", "Your employer needs the landlord's PAN when the rent is more than ₹1,00,000 a year, which is above about ₹8,333 a month. Below that, receipts without a PAN are accepted."], ["Is a revenue stamp required on a rent receipt?", "A ₹1 revenue stamp is needed when more than ₹5,000 is paid in cash against one receipt. For rent paid by bank transfer, UPI or cheque it is not required."], ["Can I claim HRA under the new tax regime?", "No. The HRA exemption is available only under the old tax regime. Under the old regime your employer asks for rent receipts as proof."]]},
   "pan-aadhaar-validator": {"t": "PAN & Aadhaar Number Validator: Format Check | DocBrisk", "d": "Check PAN format, the Aadhaar check digit, GSTIN and IFSC for typing mistakes. Paste one or thousands and export a CSV. Runs offline, nothing uploaded.", "h": "How to check a PAN or Aadhaar number format", "s": ["Paste one or many numbers, or load a CSV or Excel file", "Each number is recognised as a PAN, Aadhaar, GSTIN or IFSC and checked", "Download the results as a CSV"], "f": [["What is the format of a PAN number?", "Ten characters: five letters, four digits and one letter, like ABCPK1234L. The fourth letter shows the holder type (P for an individual, C for a company) and the fifth is the first letter of the surname or name."], ["How is an Aadhaar number checked?", "An Aadhaar number has 12 digits, never starts with 0 or 1, and ends in a check digit calculated with the Verhoeff algorithm. A single wrong digit, or two neighbouring digits swapped, fails the check."], ["Does this confirm that a PAN or Aadhaar is real?", "No. It tells you the number is correctly formed and catches typing mistakes. Only the Income Tax Department and UIDAI can confirm that a number has been issued and who holds it."]]},
   "amount-in-words": {"t": "Number to Words in Rupees: English & Hindi | DocBrisk", "d": "Convert an amount to words in Indian rupees: lakh and crore in English, Hindi words, or the million format. With paise, ready for cheques and invoices.", "h": "How to write an amount in words", "s": ["Type the amount in figures", "Read it in English, in Hindi and in the international format", "Copy the line you need into your cheque, invoice or receipt"], "f": [["How do I write 1,50,000 in words?", "One Lakh Fifty Thousand. On a cheque: \"Rupees One Lakh Fifty Thousand Only\"."], ["How do I write paise in words?", "₹1,250.50 is written \"Rupees One Thousand Two Hundred Fifty and Fifty Paise Only\"."], ["What is 1 crore in millions?", "One crore is 10 million (1,00,00,000 = 10,000,000), and one lakh is 100 thousand."]]},
-  "cgpa-calculator": {"t": "CGPA to Percentage Calculator (CBSE, 10 Point) | DocBrisk", "d": "Convert CGPA to percentage and percentage to CGPA, find the percentage of marks, or turn SGPA into CGPA. Pick the formula your university uses.", "h": "How to convert CGPA to percentage", "s": ["Enter your CGPA", "Choose the formula your board or university uses", "Read the percentage, or switch tabs for marks percentage and SGPA to CGPA"], "f": [["How do I convert CGPA to percentage?", "Multiply by the factor your board or university gives. CBSE used 9.5, so a CGPA of 8.2 is 8.2 × 9.5 = 77.9%. Many universities use CGPA × 10 or (CGPA − 0.75) × 10, so check your marksheet."], ["How do I calculate the percentage of marks?", "Percentage = marks obtained ÷ total marks × 100. For 432 out of 500 it is 86.4%."], ["How is CGPA calculated from SGPA?", "If every semester carries the same credits, CGPA is the average of the SGPAs. Otherwise multiply each SGPA by its credits, add the results, and divide by the total credits."]]}
+  "cgpa-calculator": {"t": "CGPA to Percentage Calculator (CBSE, 10 Point) | DocBrisk", "d": "Convert CGPA to percentage and percentage to CGPA, find the percentage of marks, or turn SGPA into CGPA. Pick the formula your university uses.", "h": "How to convert CGPA to percentage", "s": ["Enter your CGPA", "Choose the formula your board or university uses", "Read the percentage, or switch tabs for marks percentage and SGPA to CGPA"], "f": [["How do I convert CGPA to percentage?", "Multiply by the factor your board or university gives. CBSE used 9.5, so a CGPA of 8.2 is 8.2 × 9.5 = 77.9%. Many universities use CGPA × 10 or (CGPA − 0.75) × 10, so check your marksheet."], ["How do I calculate the percentage of marks?", "Percentage = marks obtained ÷ total marks × 100. For 432 out of 500 it is 86.4%."], ["How is CGPA calculated from SGPA?", "If every semester carries the same credits, CGPA is the average of the SGPAs. Otherwise multiply each SGPA by its credits, add the results, and divide by the total credits."]]},
+  "income-tax-calculator": {"t":"Income Tax Calculator FY 2026-27: New vs Old Regime | DocBrisk","d":"Free income tax calculator for FY 2026-27 and 2025-26. Compare the new and old regime, with the ₹12 lakh rebate, ₹75,000 standard deduction, 80C and HRA.","h":"How to calculate your income tax","s":["Choose your age group and enter your gross salary and other income","Add 80C, HRA, 80D and home loan interest if you are weighing the old regime","Compare the tax under both regimes and see which one saves more"],"f":[["Is income up to ₹12 lakh tax-free in the new regime?","Yes. Under the new regime a resident individual with taxable income up to ₹12 lakh pays no tax because of the rebate of up to ₹60,000. A salaried person also gets the ₹75,000 standard deduction, so a salary of up to ₹12.75 lakh is tax-free."],["Which is better, the new or the old tax regime?","It depends on your deductions. With few deductions the new regime is almost always cheaper. The old regime can win when you claim large amounts for HRA, 80C, 80D and home loan interest. The calculator shows the deductions you would need for the old regime to break even."],["Did Budget 2026 change the tax slabs?","No. Budget 2026 kept the slabs, the ₹12 lakh rebate limit and the standard deduction unchanged, so FY 2026-27 uses the same rates as FY 2025-26."]]},
+  "emi-calculator": {"t":"EMI Calculator: Home, Car & Personal Loan EMI | DocBrisk","d":"Calculate the EMI, total interest and amortisation schedule of a home, car, personal or education loan. See how much a part payment saves. Free, no sign-up.","h":"How to calculate a loan EMI","s":["Enter the loan amount, the interest rate and the tenure","Read the EMI, total interest and the year-wise schedule","Add a monthly or one-time prepayment to see the interest and months saved"],"f":[["How is EMI calculated?","EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r the monthly interest rate (annual rate ÷ 12 ÷ 100) and n the number of months. A ₹30 lakh loan at 8.5% for 20 years has an EMI of ₹26,035."],["Does prepaying a home loan save interest?","Yes. A part payment goes straight to the principal, so every later EMI carries less interest. On a ₹30 lakh, 20-year loan at 8.5%, paying ₹5 lakh extra after the first year cuts about ₹14 lakh of interest and 6 years of EMIs."],["Can I download the EMI schedule?","Yes. The schedule button saves every EMI with its principal, interest, prepayment and balance as a CSV file that opens in Excel or Google Sheets."]]},
+  "sip-calculator": {"t":"SIP Calculator: Mutual Fund SIP & Lumpsum Returns | DocBrisk","d":"Estimate the returns of a monthly SIP, a lumpsum or a step-up SIP, or find the SIP you need for a goal like ₹1 crore. Year-by-year growth. Free and private.","h":"How to use the SIP calculator","s":["Pick SIP, lumpsum, step-up SIP or the goal planner","Enter the amount, the expected return and the number of years","Read the invested amount, the estimated returns and the year-by-year growth"],"f":[["How is SIP return calculated?","FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), where P is the monthly SIP, i the monthly return (annual rate ÷ 12 ÷ 100) and n the number of months. ₹5,000 a month for 10 years at 12% comes to about ₹11.6 lakh on ₹6 lakh invested."],["How much SIP is needed for ₹1 crore?","At an assumed 12% a year, about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years. The goal planner works it out for any target."],["What is a step-up SIP?","A SIP that grows by a fixed percentage every year, usually in line with your salary. ₹10,000 a month raised 10% every year for 20 years at 12% grows to about ₹1.99 crore, double a flat SIP."]]},
+  "fd-calculator": {"t":"FD Calculator, RD & PPF Calculator: Maturity Amount | DocBrisk","d":"Calculate the maturity amount of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a PPF account at 7.1%. Free, instant, private.","h":"How to calculate FD, RD or PPF maturity","s":["Choose FD, RD or PPF","Enter the amount, the interest rate and the period","Read the maturity value and the interest earned"],"f":[["How is FD interest calculated?","Most banks compound FD interest every quarter: maturity = P × (1 + r ÷ 400)^(4 × years). ₹1 lakh at 7% for 1 year becomes ₹1,07,186."],["How is RD maturity calculated?","Each monthly instalment earns quarterly compounded interest for the months it stays in the account, and the instalments are added up. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100."],["What will ₹1.5 lakh a year in PPF give after 15 years?","At the current 7.1%, about ₹40.68 lakh: ₹22.5 lakh deposited and ₹18.18 lakh of tax-free interest."]]}
 };
 
 /* The privacy question every tool gets, phrased for that tool. */
@@ -16697,7 +16803,11 @@ const SEARCH_ALIASES = {
   'rent-receipt': "rent receipt hra house rent kiraya rasid kiraye ki raseed landlord tenant monthly receipt generator revenue stamp pan",
   'pan-aadhaar-validator': "pan card number check format validate aadhaar aadhar verify verhoeff ifsc code gstin checksum bulk kyc",
   'amount-in-words': "number to words amount in words rupees cheque check lakh crore hindi shabdon mein paise convert figures million rupaye",
-  'cgpa-calculator': "cgpa to percentage sgpa gpa percentage calculator marks percent cbse grade point 10 point 9.5 university result"
+  'cgpa-calculator': "cgpa to percentage sgpa gpa percentage calculator marks percent cbse grade point 10 point 9.5 university result",
+  'income-tax-calculator': "income tax calculator new regime old regime tax slab fy 2026-27 2025-26 salary tax 87a rebate 12 lakh standard deduction 75000 80c hra tds itr aaykar kitna tax lagega",
+  'emi-calculator': "emi calculator loan home loan car loan personal loan education loan interest amortisation schedule prepayment part payment kist emi kaise nikale",
+  'sip-calculator': "sip calculator mutual fund returns lumpsum step up sip goal 1 crore investment compounding monthly sip return calculator",
+  'fd-calculator': "fd calculator fixed deposit rd recurring deposit ppf calculator maturity interest bank post office quarterly compounding sukanya"
 };
 const toolHaystack = (t) => (t.name + ' ' + (t.h1 || '') + ' ' + t.blurb + ' ' + t.slug.replace(/-/g, ' ') + ' ' +
   (SEARCH_ALIASES[t.slug] || '')).toLowerCase();
@@ -23112,7 +23222,20 @@ const LANDINGS = {
   "delete-pages-from-pdf": {"tool": "organize-pdf", "h1": "Delete Pages from PDF", "t": "Delete Pages from PDF Online, Free (No Upload) | DocBrisk", "d": "Remove unwanted or blank pages from a PDF: mark the pages to delete, then save a new file. Free, no watermark, and the PDF never leaves your device.", "lead": "Open your PDF, mark the pages you do not want, and export the rest.", "body": ["A scanned file often carries blank backs of pages, a cover sheet or a page with details you do not want to share. Removing them also makes the PDF smaller, which helps when a portal has an upload limit.", "Every page is shown as a thumbnail. Press the bin on a page to remove it, or select several and press \"Remove selected\". A removed page can be restored until you export, and your original file is never changed."], "f": [["How do I delete a page from a PDF for free?", "Open the PDF on this page, press the bin on each page you want to remove and press \"Export rebuilt PDF\"."], ["Can I delete several pages at once?", "Yes. Tap the pages to select them, then press \"Remove selected\"."], ["Will the remaining pages lose quality?", "No. The pages you keep are copied as they are, with text still selectable."]], "kw": ["delete pages from pdf", "remove pages from pdf", "pdf page remover", "delete pdf pages online free", "remove blank pages from pdf", "pdf se page kaise hataye"], "rel": ["extract-pages-from-pdf", "rotate-pdf", "compress-pdf-to-200kb"]},
   "extract-pages-from-pdf": {"tool": "organize-pdf", "h1": "Extract Pages from PDF", "t": "Extract Pages from PDF: Save Selected Pages | DocBrisk", "d": "Save only the pages you need from a PDF as a new file, or split every page into its own PDF in a ZIP. Free, private, nothing uploaded.", "lead": "Open your PDF, keep the pages you need, and export them as a new file.", "body": ["Forms often want one page out of a long document: a single marksheet from a consolidated file, the signature page of an agreement, or one month from a statement.", "Open the PDF, remove the pages you do not need and export the rest as a new PDF. To get every page as its own file, use \"Split into ZIP of single pages\". Reorder pages with the arrows before exporting if the order matters."], "f": [["How do I extract one page from a PDF?", "Open the PDF, press \"Select all\", tap the page you need to unselect it, press \"Remove selected\" and export. The new file contains only that page."], ["How do I save each page as a separate PDF?", "Press \"Split into ZIP of single pages\". You get a ZIP with one PDF per page."], ["Can I change the page order while extracting?", "Yes. Use the arrows on each thumbnail to move a page earlier or later before you export."]], "kw": ["extract pages from pdf", "extract pdf pages", "save one page of pdf", "separate pdf pages", "split pdf pages online free", "pdf page extractor"], "rel": ["delete-pages-from-pdf", "rotate-pdf", "merge-pdf-on-mobile"]},
   "compress-pdf-to-300kb": {"tool": "compress-pdf", "preset": {"#o_mode": "target", "#o_target": "300", "#o_unit": "1024"}, "h1": "Compress PDF to 300 KB", "t": "Compress PDF to 300 KB Online Free | DocBrisk", "d": "Reduce PDF size to under 300 KB for exam, admission and government portals. Text stays sharp and selectable. Free, and nothing is uploaded.", "lead": "Set to 300 KB already. Choose your PDF and download it inside the limit.", "body": ["300 KB is a frequent limit for multi-page uploads such as a set of marksheets, an experience letter with annexures, or a certificate with its attachments.", "At 300 KB, three or four scanned pages usually stay readable. If your file has more pages, scan in grayscale at 150 DPI, or remove pages the form does not ask for before compressing."], "f": [["How do I compress a PDF to 300 KB?", "Choose the PDF on this page. The target is already set to 300 KB, so press the button and download the result."], ["How many pages fit in 300 KB?", "Many pages of typed text, or about three to four scanned pages at readable quality."], ["What if the result is still above 300 KB?", "The tool shows the smallest size it reached. Removing extra pages or rescanning in grayscale usually closes the gap."]], "kw": ["compress pdf to 300kb", "reduce pdf size to 300kb", "pdf compressor 300kb", "compress pdf below 300kb", "pdf size 300kb", "pdf ko 300kb kaise kare"], "rel": ["compress-pdf-to-200kb", "compress-pdf-to-500kb", "delete-pages-from-pdf"]},
-  "compress-pdf-to-2mb": {"tool": "compress-pdf", "preset": {"#o_mode": "target", "#o_target": "2", "#o_unit": "1048576"}, "h1": "Compress PDF to 2 MB", "t": "Compress PDF to 2 MB Online Free | DocBrisk", "d": "Reduce a large PDF to under 2 MB for email, job portals, e-filing systems and university uploads. Keeps text selectable. Free, nothing uploaded.", "lead": "Set to 2 MB already. Choose your PDF and download it inside the limit.", "body": ["2 MB is a common ceiling for attachments on office mail, job portals, tender and e-filing systems, and university document uploads.", "A scanned file of 20 or 30 pages can be 15 MB or more straight from a scanner app. Compression re-encodes the page images and usually brings such a file under 2 MB while keeping it readable; typed PDFs often need no visible change at all."], "f": [["How do I reduce a PDF to 2 MB?", "Choose the PDF on this page; the target is already 2 MB. Download the result and check the size shown."], ["Will a 20 MB scan fit in 2 MB?", "Usually, yes, for text documents. Colour photographs in the file lose some detail at that ratio, so check the pages that matter."], ["Can I split the file instead?", "Yes. If the portal accepts several files, split the PDF into parts under 2 MB each with the Split by Size tool."]], "kw": ["compress pdf to 2mb", "reduce pdf size to 2mb", "pdf compressor 2mb", "compress pdf under 2mb", "pdf size 2mb", "pdf 2mb se kam kaise kare"], "rel": ["compress-pdf-to-1mb", "compress-pdf-to-500kb", "extract-pages-from-pdf"]}
+  "compress-pdf-to-2mb": {"tool": "compress-pdf", "preset": {"#o_mode": "target", "#o_target": "2", "#o_unit": "1048576"}, "h1": "Compress PDF to 2 MB", "t": "Compress PDF to 2 MB Online Free | DocBrisk", "d": "Reduce a large PDF to under 2 MB for email, job portals, e-filing systems and university uploads. Keeps text selectable. Free, nothing uploaded.", "lead": "Set to 2 MB already. Choose your PDF and download it inside the limit.", "body": ["2 MB is a common ceiling for attachments on office mail, job portals, tender and e-filing systems, and university document uploads.", "A scanned file of 20 or 30 pages can be 15 MB or more straight from a scanner app. Compression re-encodes the page images and usually brings such a file under 2 MB while keeping it readable; typed PDFs often need no visible change at all."], "f": [["How do I reduce a PDF to 2 MB?", "Choose the PDF on this page; the target is already 2 MB. Download the result and check the size shown."], ["Will a 20 MB scan fit in 2 MB?", "Usually, yes, for text documents. Colour photographs in the file lose some detail at that ratio, so check the pages that matter."], ["Can I split the file instead?", "Yes. If the portal accepts several files, split the PDF into parts under 2 MB each with the Split by Size tool."]], "kw": ["compress pdf to 2mb", "reduce pdf size to 2mb", "pdf compressor 2mb", "compress pdf under 2mb", "pdf size 2mb", "pdf 2mb se kam kaise kare"], "rel": ["compress-pdf-to-1mb", "compress-pdf-to-500kb", "extract-pages-from-pdf"]},
+  /* ---------- v4.7: loans, investments and income tax ---------- */
+  "home-loan-emi-calculator": {"tool":"emi-calculator","opts":{"kind":"home"},"h1":"Home Loan EMI Calculator","t":"Home Loan EMI Calculator with Prepayment & Schedule | DocBrisk","d":"Calculate your home loan EMI, total interest and year-wise amortisation schedule. Add part payments to see the interest and years you save. Free.","lead":"Set to a home loan already. Enter your loan amount, rate and tenure.","body":["A home loan EMI is worked out on the reducing balance: each month's interest is charged only on what you still owe. A ₹30 lakh loan at 8.5% for 20 years has an EMI of ₹26,035, and you pay about ₹32.5 lakh in interest over the loan, more than the amount borrowed.","The tenure changes the cost far more than the EMI suggests. The same ₹30 lakh over 15 years costs ₹29,542 a month but about ₹23.2 lakh in interest, roughly ₹9 lakh less. Prepaying even one extra EMI a year has a similar effect."],"f":[["What is the EMI for a ₹50 lakh home loan?","At 8.5% for 20 years it is ₹43,391 a month. At 9% it rises to about ₹44,986."],["How can I reduce my home loan interest?","Choose a shorter tenure, prepay whenever you can, especially in the first few years, and ask your bank to move you to its current lower rate if your loan is on an older benchmark."],["Can I claim tax benefits on a home loan?","In the old regime, up to ₹2 lakh of interest on a self-occupied house and up to ₹1.5 lakh of principal under 80C. The new regime does not allow these for a self-occupied house."]],"kw":["home loan emi calculator","housing loan emi calculator","home loan calculator","home loan interest calculator","sbi home loan emi calculator","home loan emi calculator with prepayment"],"rel":["home-loan-prepayment-calculator","car-loan-emi-calculator","personal-loan-emi-calculator"]},
+  "car-loan-emi-calculator": {"tool":"emi-calculator","opts":{"kind":"car"},"h1":"Car Loan EMI Calculator","t":"Car Loan EMI Calculator: Monthly EMI & Interest | DocBrisk","d":"Work out the EMI on a new or used car loan, the total interest and the schedule. Compare 3, 5 and 7 year tenures in seconds. Free and private.","lead":"Set to a car loan already. Enter the loan amount, rate and tenure.","body":["Car loans usually run for 1 to 7 years. On an ₹8 lakh loan at 9.5%, the EMI is ₹16,801 for 5 years, with about ₹2.08 lakh of interest in all.","Most banks lend up to 80 to 90% of the on-road price. A larger down payment lowers both the EMI and the interest, and a shorter tenure keeps the interest down even though the EMI is higher."],"f":[["What is the EMI on a ₹10 lakh car loan?","At 9.5% for 5 years it is about ₹21,000 a month. For 7 years it falls to about ₹16,340, but you pay much more interest."],["Is a 7-year car loan a good idea?","It lowers the EMI, but the car loses value faster than the loan is repaid, and the total interest is much higher. Five years or less is usually wiser."],["Can I prepay a car loan?","Usually yes, though fixed-rate car loans often carry a foreclosure charge of a few percent. Check your loan agreement, then add the prepayment above to see the saving."]],"kw":["car loan emi calculator","car loan calculator","auto loan emi calculator","used car loan emi calculator","car emi calculator","vehicle loan emi calculator"],"rel":["home-loan-emi-calculator","personal-loan-emi-calculator"]},
+  "personal-loan-emi-calculator": {"tool":"emi-calculator","opts":{"kind":"personal"},"h1":"Personal Loan EMI Calculator","t":"Personal Loan EMI Calculator: EMI, Interest & Schedule | DocBrisk","d":"Calculate the EMI and total interest on a personal loan for 1 to 5 years, with the month-wise schedule. Compare offers before you apply. Free.","lead":"Set to a personal loan already. Enter the amount, rate and tenure.","body":["Personal loans are unsecured, so their rates are higher, often 10.5% to 24% a year. On ₹5 lakh at 12% for 3 years the EMI is ₹16,607 and the interest about ₹97,900.","When you compare offers, look at the processing fee as well as the rate: a 2% fee on ₹5 lakh is ₹10,000 taken at the start. Keep the EMIs of all your loans under about 40 to 50% of your take-home pay."],"f":[["What is the EMI on a ₹2 lakh personal loan?","At 12% for 2 years it is about ₹9,415 a month; for 3 years about ₹6,643."],["How do I get a lower personal loan rate?","A credit score above 750, a stable job with a large employer and an existing relationship with the bank usually bring the best offers."],["Is it better to take a longer tenure?","Only if you need the lower EMI. A longer tenure means paying interest for longer, so the total cost rises."]],"kw":["personal loan emi calculator","personal loan calculator","personal loan interest calculator","personal loan emi","emi calculator personal loan","instant loan emi calculator"],"rel":["car-loan-emi-calculator","home-loan-emi-calculator"]},
+  "home-loan-prepayment-calculator": {"tool":"emi-calculator","opts":{"kind":"home","lump":"500000","lumpAt":"12"},"h1":"Home Loan Prepayment Calculator","t":"Home Loan Prepayment Calculator: Interest Saved | DocBrisk","d":"See how much interest and how many EMIs a part payment or an extra monthly amount saves on your home loan, with the new schedule. Free and private.","lead":"A ₹5 lakh part payment after the first year is filled in. Change it to your own figures.","body":["A prepayment goes straight to the principal, so every later EMI carries less interest. On a ₹30 lakh loan at 8.5% for 20 years, paying ₹5 lakh after the twelfth EMI ends the loan 73 EMIs early and saves about ₹14.1 lakh of interest.","Small, regular amounts work too. Adding a twelfth of an EMI every month, which equals one extra EMI a year, cuts the same loan by about 41 EMIs and saves about ₹6.5 lakh. Keep the EMI the same and let the tenure fall; that saves the most."],"f":[["Should I reduce the EMI or the tenure after prepaying?","Reducing the tenure saves more interest. Reduce the EMI only if you need room in your monthly budget."],["Is there a penalty for prepaying a home loan?","Not on a floating-rate home loan taken by an individual: RBI rules do not allow it. Fixed-rate loans may carry a charge."],["When is the best time to prepay?","As early as possible. In the first years most of each EMI is interest, so money you prepay then saves the most."]],"kw":["home loan prepayment calculator","loan prepayment calculator","part payment calculator","emi calculator with prepayment","home loan part payment calculator","prepayment of home loan benefits"],"rel":["home-loan-emi-calculator"]},
+  "lumpsum-calculator": {"tool":"sip-calculator","opts":{"tab":"lump"},"h1":"Lumpsum Calculator","t":"Lumpsum Calculator: One-Time Mutual Fund Returns | DocBrisk","d":"Find out what a one-time mutual fund investment could grow to at the return you expect, with a year-by-year table and inflation. Free and private.","lead":"Set to lumpsum already. Enter the amount, the return and the years.","body":["A lumpsum grows by compounding once a year: FV = P × (1 + r ÷ 100)^years. ₹1 lakh at 12% for 10 years becomes about ₹3.1 lakh, and for 20 years about ₹9.6 lakh.","A lumpsum puts all your money in at one price. If markets are high, many investors spread it over a few months through an STP or SIP instead; switch to the SIP tab to compare."],"f":[["What will ₹5 lakh become in 10 years?","At an assumed 12% a year, about ₹15.5 lakh."],["Is a lumpsum better than a SIP?","If the market rises steadily, a lumpsum earns more because all the money is invested for longer. A SIP spreads the risk of investing at a peak."],["Are the returns guaranteed?","No. Mutual fund returns vary, and the rate you enter is only an assumption."]],"kw":["lumpsum calculator","lump sum calculator","mutual fund lumpsum calculator","one time investment calculator","lumpsum return calculator","compound interest calculator"],"rel":["step-up-sip-calculator","sip-for-1-crore"]},
+  "step-up-sip-calculator": {"tool":"sip-calculator","opts":{"tab":"step","amt":"10000","step":"10","yrs":"20"},"h1":"Step-up SIP Calculator","t":"Step-up SIP Calculator: Yearly Top-up SIP Returns | DocBrisk","d":"See how raising your SIP by a fixed percentage every year grows your wealth compared with a flat SIP, with a year-by-year table. Free.","lead":"Set to a ₹10,000 SIP raised 10% a year for 20 years. Change any figure.","body":["A step-up (or top-up) SIP raises the monthly amount by a set percentage once a year, usually to match a salary rise. ₹10,000 a month raised 10% every year for 20 years at 12% grows to about ₹1.99 crore, against ₹99.9 lakh for a flat ₹10,000 SIP.","Most fund houses let you set the step-up when you start the SIP, either as a percentage or a fixed rupee amount, so the increase happens without you having to remember."],"f":[["What step-up percentage should I choose?","Something you can keep up, often 5 to 10% a year, close to your expected pay rise."],["Does a step-up SIP need a new mandate every year?","No. You choose the step-up once and the fund house raises the instalment each year on its own."],["Can I find the step-up SIP for a goal?","Yes. Use the goal planner tab and enter a step-up percentage; it shows the starting SIP you need."]],"kw":["step up sip calculator","top up sip calculator","sip with annual increase calculator","step up sip","increasing sip calculator","sip step up returns"],"rel":["sip-for-1-crore","lumpsum-calculator"]},
+  "sip-for-1-crore": {"tool":"sip-calculator","opts":{"tab":"goal","goal":"10000000","yrs":"20","step":"0"},"h1":"How Much SIP for ₹1 Crore?","t":"SIP for 1 Crore: Monthly SIP Needed in 10, 15, 20 Years | DocBrisk","d":"Find the monthly SIP needed to reach ₹1 crore in 10, 15 or 20 years at the return you expect, with or without a yearly step-up. Free goal planner.","lead":"The goal planner is set to ₹1 crore in 20 years. Change the years and the return.","body":["At an assumed 12% a year, reaching ₹1 crore takes about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years. Time does most of the work: the 20-year plan invests only ₹24 lakh of your own money.","With a 10% step-up every year you can start lower, at roughly ₹5,000 a month for 20 years. Remember inflation too: at 6% a year, ₹1 crore in 20 years will buy about what ₹31 lakh buys today."],"f":[["How much SIP for 1 crore in 10 years?","About ₹43,000 a month at 12% a year."],["How much SIP for 1 crore in 15 years?","About ₹19,800 a month at 12% a year."],["How much SIP for 1 crore in 20 years?","About ₹10,000 a month at 12% a year."]],"kw":["sip for 1 crore","how much sip for 1 crore","sip calculator 1 crore","1 crore in 10 years sip","1 crore in 15 years sip","goal sip calculator"],"rel":["step-up-sip-calculator","lumpsum-calculator"]},
+  "rd-calculator": {"tool":"fd-calculator","opts":{"tab":"rd"},"h1":"RD Calculator (Recurring Deposit)","t":"RD Calculator: Recurring Deposit Maturity & Interest | DocBrisk","d":"Calculate the maturity amount and interest of a bank or Post Office recurring deposit with quarterly compounding. Any monthly amount and tenure. Free.","lead":"Set to a recurring deposit already. Enter the monthly amount, rate and months.","body":["In a recurring deposit you put in the same amount every month. Banks add interest every quarter, and each instalment earns it only for the months it is in the account. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100.","RD interest is taxed as income, and TDS applies when your total interest from the bank crosses ₹50,000 in a year (₹1 lakh for senior citizens)."],"f":[["What is the maturity of ₹2,000 a month for 5 years?","At 7% a year, about ₹1,43,900 on ₹1,20,000 deposited."],["Is RD better than SIP?","An RD gives a fixed, guaranteed return. A SIP in an equity fund can earn more over long periods but its value moves with the market."],["What happens if I miss an RD instalment?","Banks usually charge a small penalty for a late instalment, and several missed instalments can lead to the RD being closed early."]],"kw":["rd calculator","recurring deposit calculator","rd interest calculator","post office rd calculator","sbi rd calculator","rd maturity calculator"],"rel":["ppf-calculator"]},
+  "ppf-calculator": {"tool":"fd-calculator","opts":{"tab":"ppf"},"h1":"PPF Calculator","t":"PPF Calculator 2026: Maturity at 7.1% for 15+ Years | DocBrisk","d":"Calculate your PPF maturity amount and tax-free interest at 7.1%, for 15 years or extended in 5-year blocks, with a year-by-year table. Free.","lead":"Set to PPF already. Enter your yearly deposit.","body":["The PPF rate is 7.1% for October to December 2026. Depositing ₹1.5 lakh every year for 15 years builds about ₹40.68 lakh: ₹22.5 lakh of your money and about ₹18.18 lakh of interest, all tax-free.","After 15 years you can extend the account in 5-year blocks, with or without new deposits. Keep depositing ₹1.5 lakh and it reaches about ₹66.6 lakh at 20 years and ₹1.03 crore at 25."],"f":[["What is the maximum PPF deposit?","₹1,50,000 in a financial year, in one go or in instalments. The minimum is ₹500."],["When should I deposit in PPF?","Before the 5th of the month, and ideally before 5 April, so the deposit earns interest for the whole year."],["Is PPF interest taxable?","No. PPF is tax-free at every stage: deposits qualify for 80C in the old regime, and the interest and maturity are exempt."]],"kw":["ppf calculator","ppf interest calculator","ppf maturity calculator","public provident fund calculator","ppf calculator 2026","ppf return calculator"],"rel":["rd-calculator"]},
+  "tax-on-12-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"1200000","other":"0"},"h1":"Income Tax on ₹12 Lakh Salary","t":"Income Tax on 12 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"How much tax on a ₹12 lakh salary in FY 2026-27? Nil in the new regime thanks to the ₹12 lakh rebate. See the old regime figure and your own numbers.","lead":"Set to a ₹12 lakh salary. Add your own income and deductions.","body":["A ₹12 lakh salary pays no income tax in the new regime. After the ₹75,000 standard deduction, the taxable income is ₹11.25 lakh, and the rebate for taxable income up to ₹12 lakh cancels the ₹52,500 of slab tax. In fact any salary up to ₹12.75 lakh is tax-free.","In the old regime the same salary pays ₹1,63,800 with no deductions, or about ₹1,01,400 with ₹2.25 lakh of 80C, 80D and NPS. The new regime wins unless you have very large deductions."],"f":[["Is a 12 lakh salary tax-free?","Yes, in the new regime, for a resident individual whose only income is the salary."],["What if I also have interest income?","It is added to your income. If the taxable total goes over ₹12 lakh, tax applies, with marginal relief so the tax never exceeds the amount above ₹12 lakh."],["Will my employer still deduct TDS?","If you choose the new regime and your projected taxable income stays within ₹12 lakh, there should be no TDS on salary."]],"kw":["income tax on 12 lakh salary","12 lakh salary tax","12 lakh income tax new regime","tax on 12.75 lakh salary","12 lakh tax free","12 lakh salary tax calculation"],"rel":["tax-on-15-lakh-salary","tax-on-20-lakh-salary"]},
+  "tax-on-15-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"1500000","other":"0"},"h1":"Income Tax on ₹15 Lakh Salary","t":"Income Tax on 15 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"Tax on a ₹15 lakh salary in FY 2026-27 is ₹97,500 in the new regime. Compare it with the old regime and your own deductions. Free calculator.","lead":"Set to a ₹15 lakh salary. Add your own income and deductions.","body":["On a ₹15 lakh salary the new regime tax is ₹97,500 including cess. The taxable income is ₹14.25 lakh after the ₹75,000 standard deduction: nil up to ₹4 lakh, ₹20,000 on the next ₹4 lakh, ₹40,000 on the next ₹4 lakh and ₹33,750 on the last ₹2.25 lakh, plus 4% cess.","In the old regime the same salary pays ₹2,57,400 with no deductions and about ₹1,87,200 with ₹2.25 lakh of deductions. You would need roughly ₹5.45 lakh of old-regime deductions for the two to break even."],"f":[["How much is the monthly tax on 15 lakh?","About ₹8,125 a month in the new regime."],["Can HRA make the old regime better at 15 lakh?","Only if HRA, 80C, 80D, home loan interest and other deductions together come to roughly ₹5.45 lakh or more. Enter yours to check."],["Is the employer's NPS contribution allowed in the new regime?","Yes, up to 14% of basic pay. It lowers the taxable income in both regimes."]],"kw":["income tax on 15 lakh salary","15 lakh salary tax new regime","tax on 15 lakh income","15 lakh salary tax calculation","15 lakh ctc tax","tax for 15 lakh package"],"rel":["tax-on-12-lakh-salary","tax-on-20-lakh-salary"]},
+  "tax-on-20-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"2000000","other":"0"},"h1":"Income Tax on ₹20 Lakh Salary","t":"Income Tax on 20 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"Tax on a ₹20 lakh salary in FY 2026-27 is ₹1,92,400 in the new regime. Compare it with the old regime, slab by slab, with your deductions.","lead":"Set to a ₹20 lakh salary. Add your own income and deductions.","body":["A ₹20 lakh salary pays ₹1,92,400 in the new regime, including cess: the taxable income is ₹19.25 lakh after the standard deduction, and the slabs charge 5%, 10%, 15% and then 20% on the part above ₹16 lakh.","In the old regime it is ₹4,13,400 with no deductions, and still about ₹2,96,400 with ₹3.75 lakh of deductions including a home loan. At this income the old regime only wins with very large HRA and home loan claims."],"f":[["What is the monthly tax on 20 lakh?","About ₹16,033 a month in the new regime."],["Which tax slab is a 20 lakh salary in?","In the new regime the top slab reached is 20% (₹16 to 20 lakh). In the old regime it is 30% (above ₹10 lakh)."],["Does surcharge apply at 20 lakh?","No. Surcharge starts only when income is above ₹50 lakh."]],"kw":["income tax on 20 lakh salary","20 lakh salary tax new regime","tax on 20 lakh income","20 lakh ctc tax","20 lakh salary tax calculation","tax for 20 lakh package"],"rel":["tax-on-15-lakh-salary","tax-on-12-lakh-salary"]}
 };
 
 /* Render a landing page: the real tool, already set up, with its own copy. */
@@ -23126,7 +23249,8 @@ function renderLanding(view, slug, again) {
     'image-compressor': renderImageCompressor, 'salary-slip': renderSalarySlip, 'rent-receipt': renderRentReceipt,
     'pan-aadhaar-validator': renderIdValidator, 'gstin-validator': renderGstin, 'organize-pdf': renderOrganize,
     'gst-calculator': (v) => renderGstCalc(v, L.opts), 'age-calculator': (v) => renderAgeCalc(v, L.opts),
-    'amount-in-words': (v) => renderAmountWords(v, L.opts), 'cgpa-calculator': (v) => renderCgpa(v, L.opts)
+    'amount-in-words': (v) => renderAmountWords(v, L.opts), 'cgpa-calculator': (v) => renderCgpa(v, L.opts),
+    'income-tax-calculator': (v) => renderIncomeTax(v, L.opts), 'emi-calculator': (v) => renderEmi(v, L.opts), 'sip-calculator': (v) => renderSip(v, L.opts), 'fd-calculator': (v) => renderDeposit(v, L.opts)
   };
   (custom[L.tool] || ((v) => TOOL_DEFS[L.tool] ? renderStandardTool(v, L.tool) : renderHome(v)))(view);
 
@@ -24291,6 +24415,637 @@ function renderCgpa(view, opts) {
 }
 
 /* ==========================================================================
+   Money calculators (v4.7): EMI, SIP, FD / RD / PPF and income tax.
+   All of them work out everything on the device and keep the last inputs
+   in localStorage, like the other calculators.
+   ========================================================================== */
+const FinKit = {
+  inr(n) { return V9.inr(Math.round(+n || 0), 0); },
+  /* ₹12.5 L / ₹1.25 Cr for chart labels and headings */
+  short(n) {
+    const a = Math.abs(+n || 0), trim = (x) => x.toFixed(2).replace(/\.?0+$/, '');
+    if (a >= 1e7) return '₹' + trim(n / 1e7) + ' Cr';
+    if (a >= 1e5) return '₹' + trim(n / 1e5) + ' L';
+    return FinKit.inr(n);
+  },
+  group(n) { return (Math.round((+n || 0) * 100) / 100).toLocaleString('en-IN', { maximumFractionDigits: 2 }); },
+  /* A labelled number box with a slider under it. The slider only covers the
+     usual range; a typed value may go past it. */
+  field(id, label, o) {
+    return `<div class="field fin-field"><div class="fin-lab"><label for="${id}">${esc(label)}</label>
+        <div class="fin-in">${o.pre ? `<span>${o.pre}</span>` : ''}<input type="text" inputmode="decimal" id="${id}" autocomplete="off">${o.unit ? `<span>${esc(o.unit)}</span>` : ''}</div></div>
+      <input type="range" id="${id}_r" min="${o.min}" max="${o.max}" step="${o.step}" aria-label="${esc(label)}">
+      ${o.hint ? `<p class="hint">${o.hint}</p>` : ''}</div>`;
+  },
+  bind(st, id, key, onChange, money) {
+    const box = $('#' + id), range = $('#' + id + '_r');
+    const show = () => { box.value = st[key] === '' ? '' : (money ? FinKit.group(V9.num(st[key])) : st[key]); };
+    show();
+    if (range) range.value = V9.num(st[key]);
+    box.addEventListener('input', () => { st[key] = box.value.replace(/[^0-9.]/g, ''); if (range) range.value = V9.num(st[key]); onChange(); });
+    box.addEventListener('blur', show);
+    if (range) range.addEventListener('input', () => { st[key] = range.value; show(); onChange(); });
+  },
+  donut(parts) {
+    const total = parts.reduce((a, p) => a + Math.max(0, p.v), 0) || 1;
+    let off = 25;
+    const segs = parts.map(p => {
+      const pc = Math.max(0, p.v) / total * 100;
+      const s = `<circle r="15.9155" cx="21" cy="21" fill="none" style="stroke:${p.c}" stroke-width="6" stroke-dasharray="${pc.toFixed(3)} ${(100 - pc).toFixed(3)}" stroke-dashoffset="${off.toFixed(3)}"/>`;
+      off -= pc;
+      return s;
+    }).join('');
+    const label = parts.map(p => `${p.label} ${Math.round(Math.max(0, p.v) / total * 100)}%`).join(', ');
+    return `<div class="fin-donut"><svg viewBox="0 0 42 42" width="128" height="128" role="img" aria-label="${esc(label)}">
+        <circle r="15.9155" cx="21" cy="21" fill="none" style="stroke:var(--ink-200)" stroke-width="6"/>${segs}</svg>
+      <ul class="fin-legend">${parts.map(p => `<li><i style="background:${p.c}"></i><span>${esc(p.label)}</span><b>${FinKit.inr(p.v)}</b></li>`).join('')}</ul></div>`;
+  },
+  /* Year-by-year stacked bars: the lower part is what went in, the upper part what it earned. */
+  bars(rows, aLabel, bLabel) {
+    if (!rows.length) return '';
+    const max = Math.max(...rows.map(r => r.a + r.b)) || 1;
+    const every = Math.ceil(rows.length / 10);
+    return `<div class="fin-bars" role="img" aria-label="${esc(`${aLabel} and ${bLabel} for each year, up to ${FinKit.short(rows[rows.length - 1].a + rows[rows.length - 1].b)}`)}">
+      ${rows.map((r, i) => `<div class="fin-bar" title="${esc(`${r.label}: ${aLabel} ${FinKit.inr(r.a)}, ${bLabel} ${FinKit.inr(r.b)}`)}">
+        <span class="fb-b" style="height:${(Math.max(0, r.b) / max * 100).toFixed(2)}%"></span><span class="fb-a" style="height:${(Math.max(0, r.a) / max * 100).toFixed(2)}%"></span>
+        <em>${(i + 1) % every === 0 || i === 0 ? esc(r.tick) : ''}</em></div>`).join('')}
+      </div><div class="fin-key"><span><i class="fb-a"></i>${esc(aLabel)}</span><span><i class="fb-b"></i>${esc(bLabel)}</span></div>`;
+  },
+  csv(rows, filename) {
+    const cell = (v) => { const s = String(v == null ? '' : v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const text = '﻿' + rows.map(r => r.map(cell).join(',')).join('\r\n');
+    downloadBlob(new Blob([text], { type: 'text/csv;charset=utf-8' }), filename);
+  }
+};
+const FIN_C = { a: 'var(--brand-600)', b: 'var(--warn)', g: 'var(--ok)' };
+
+/* ==========================================================================
+   EMI calculator with prepayment and an amortisation schedule
+   ========================================================================== */
+const EMI_KINDS = {
+  home: { label: 'Home loan', amt: '3000000', rate: '8.5', tenure: '20', max: 50000000 },
+  car: { label: 'Car loan', amt: '800000', rate: '9.5', tenure: '5', max: 5000000 },
+  personal: { label: 'Personal loan', amt: '500000', rate: '12', tenure: '3', max: 4000000 },
+  education: { label: 'Education loan', amt: '1000000', rate: '10', tenure: '7', max: 10000000 }
+};
+const EmiMath = {
+  emi(P, annual, n) {
+    if (!(P > 0) || !(n > 0)) return 0;
+    const r = annual / 1200;
+    if (!r) return P / n;
+    const f = Math.pow(1 + r, n);
+    return P * r * f / (f - 1);
+  },
+  /* Month by month. extra = paid every month on top of the EMI; lump = one
+     payment in month lumpAt. Prepayments cut the tenure, the EMI stays the same. */
+  schedule(P, annual, emi, extra, lump, lumpAt) {
+    const r = annual / 1200, rows = [];
+    let bal = P, m = 0;
+    while (bal > 0.005 && m < 1200) {
+      m++;
+      const int = bal * r;
+      const princ = Math.min(bal, emi - int);
+      if (princ <= 0) break;                    // EMI does not cover the interest
+      bal -= princ;
+      const ex = Math.min(bal, (extra || 0) + (m === lumpAt ? (lump || 0) : 0));
+      bal -= ex;
+      rows.push({ m, int, princ, extra: ex, bal: Math.max(0, bal) });
+    }
+    return rows;
+  }
+};
+
+function renderEmi(view, opts) {
+  const KEY = 'docbrisk:emi';
+  const now = todayIso().slice(0, 7);
+  const kind0 = (opts && opts.kind) || null;
+  const base = Object.assign({ kind: 'home', unit: 'y', start: now, extra: '', lump: '', lumpAt: '12', table: 'y' }, EMI_KINDS.home);
+  const st = Object.assign(base, kind0 ? {} : (SheetKit.load(KEY) || {}), opts || {});
+  if (kind0 && EMI_KINDS[kind0]) Object.assign(st, EMI_KINDS[kind0], { kind: kind0 });
+  delete st.label; delete st.max;
+  if (!/^\d{4}-\d{2}$/.test(st.start || '')) st.start = now;
+
+  view.innerHTML = toolShell('emi-calculator', `
+    <div class="seg seg-wide" id="emi_kind" style="margin-bottom:18px">${Object.entries(EMI_KINDS).map(([k, v]) => `<button type="button" data-v="${k}">${esc(v.label)}</button>`).join('')}</div>
+    <div class="calc">
+      <div class="calc-form">
+        ${FinKit.field('emi_amt', 'Loan amount', { pre: '₹', min: 10000, max: 50000000, step: 10000 })}
+        ${FinKit.field('emi_rate', 'Interest rate (per year)', { unit: '%', min: 1, max: 24, step: 0.05 })}
+        <div class="field fin-field"><div class="fin-lab"><label for="emi_ten">Loan tenure</label>
+            <div class="fin-in"><input type="text" inputmode="numeric" id="emi_ten" autocomplete="off">
+              <div class="seg fin-unit" id="emi_unit"><button type="button" data-v="y">Yr</button><button type="button" data-v="m">Mo</button></div></div></div>
+          <input type="range" id="emi_ten_r" min="1" max="30" step="1" aria-label="Loan tenure"></div>
+        <div class="field"><label for="emi_start">First EMI month</label><input type="month" id="emi_start"></div>
+        <details class="panel mk-sec" id="emi_pre"${st.extra || st.lump ? ' open' : ''}><summary class="panel-title">Prepayment: see how much interest you save</summary>
+          <div class="field-row cols-2">
+            <div><label for="emi_extra">Extra every month (₹)</label><input type="text" inputmode="decimal" id="emi_extra" autocomplete="off" placeholder="5,000"></div>
+            <div><label for="emi_lump">One-time part payment (₹)</label><input type="text" inputmode="decimal" id="emi_lump" autocomplete="off" placeholder="2,00,000"></div>
+          </div>
+          <div class="field" style="margin:10px 0 0"><label for="emi_lumpAt">Make the part payment in EMI number</label><input type="number" id="emi_lumpAt" min="1" max="600" inputmode="numeric"></div>
+          <p class="hint">The EMI stays the same and the loan ends sooner. Banks do not charge a prepayment penalty on floating-rate home loans taken by individuals.</p>
+        </details>
+      </div>
+      <div class="calc-out" id="emi_out" aria-live="polite"></div>
+    </div>
+    <div class="fin-sched" id="emi_sched"></div>
+    <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span>
+      <span>Worked out on your device with the reducing-balance method banks use. Your bank's figure can differ by a few rupees because of rounding and the date the loan is paid out.</span></div>`);
+
+  const out = $('#emi_out'), sched = $('#emi_sched');
+  const persist = () => SheetKit.save(KEY, { kind: st.kind, amt: st.amt, rate: st.rate, tenure: st.tenure, unit: st.unit, start: st.start, extra: st.extra, lump: st.lump, lumpAt: st.lumpAt, table: st.table });
+  const months = () => Math.round(V9.num(st.tenure) * (st.unit === 'y' ? 12 : 1));
+  const monthName = (i) => {               // i = 0 for the first EMI
+    const [y, m] = st.start.split('-').map(Number), d = new Date(Date.UTC(y, m - 1 + i, 1));
+    return EN_MONTHS[d.getUTCMonth()].slice(0, 3) + ' ' + d.getUTCFullYear();
+  };
+  const tenureText = (n) => { const y = Math.floor(n / 12), m = n % 12; return [y ? y + ' yr' : '', m ? m + ' mo' : ''].filter(Boolean).join(' ') || '0 mo'; };
+  let last = null;
+
+  function draw() {
+    const P = V9.num(st.amt), R = V9.num(st.rate), n = months();
+    if (!(P > 0) || !(n > 0)) { out.innerHTML = `<p class="calc-empty">Enter the loan amount, interest rate and tenure.</p>`; sched.innerHTML = ''; last = null; return; }
+    if (n > 600) { out.innerHTML = `<p class="calc-empty">Keep the tenure to 50 years or less.</p>`; sched.innerHTML = ''; last = null; return; }
+    const emi = EmiMath.emi(P, R, n);
+    const plain = EmiMath.schedule(P, R, emi, 0, 0, 0);
+    const extra = V9.num(st.extra), lump = V9.num(st.lump), lumpAt = Math.max(1, Math.round(V9.num(st.lumpAt) || 1));
+    const pre = extra > 0 || lump > 0;
+    const rows = pre ? EmiMath.schedule(P, R, emi, extra, lump, lumpAt) : plain;
+    const sum = (rs, k) => rs.reduce((a, r) => a + r[k], 0);
+    const intPlain = sum(plain, 'int'), intNow = sum(rows, 'int');
+    const paid = P + intNow;
+    last = { P, R, n, emi, rows, intNow, paid };
+
+    out.innerHTML = `
+      <div class="calc-hero"><span>Monthly EMI</span><strong>${FinKit.inr(emi)}</strong></div>
+      ${FinKit.donut([{ v: P, label: 'Principal', c: FIN_C.a }, { v: intNow, label: 'Total interest', c: FIN_C.b }])}
+      <table class="calc-table">
+        <tr><td>Total interest</td><td>${FinKit.inr(intNow)}</td></tr>
+        <tr><td>Total amount payable</td><td>${FinKit.inr(paid)}</td></tr>
+        <tr><td>Last EMI</td><td>${esc(monthName(rows.length - 1))} <span>(${tenureText(rows.length)})</span></td></tr>
+      </table>
+      ${pre ? `<div class="calc-flag"><strong>Prepayment saves ${FinKit.inr(intPlain - intNow)} of interest</strong>
+        <p>The loan ends ${tenureText(plain.length - rows.length)} early, after ${rows.length} EMIs instead of ${plain.length}. You prepay ${FinKit.inr(sum(rows, 'extra'))} in all.</p></div>` : ''}
+      <p class="calc-words">EMI = P × r × (1 + r)<sup>n</sup> ÷ ((1 + r)<sup>n</sup> − 1), with P = ${FinKit.inr(P)}, r = ${V9.pct(R)}% ÷ 12 per month and n = ${n} months.</p>
+      <div class="calc-actions">
+        <button type="button" class="btn btn-ghost btn-sm" id="emi_copy"><span data-icon="copy" data-icon-size="15"></span> Copy summary</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="emi_csv"><span data-icon="download" data-icon-size="15"></span> Schedule for Excel (CSV)</button>
+      </div>`;
+    hydrateIcons(out);
+    $('#emi_copy').addEventListener('click', () => V9.copy(
+      `Loan ${FinKit.inr(P)} at ${V9.pct(R)}% for ${tenureText(n)}: EMI ${FinKit.inr(emi)}, total interest ${FinKit.inr(intNow)}, total payable ${FinKit.inr(paid)}` +
+      (pre ? `. With prepayment the loan ends after ${rows.length} EMIs and saves ${FinKit.inr(intPlain - intNow)} of interest.` : '.'), 'Summary copied'));
+    $('#emi_csv').addEventListener('click', () => FinKit.csv(
+      [['EMI no.', 'Month', 'EMI', 'Principal', 'Interest', 'Prepayment', 'Balance']].concat(rows.map((r, i) =>
+        [r.m, monthName(i), Math.round(r.princ + r.int), Math.round(r.princ), Math.round(r.int), Math.round(r.extra), Math.round(r.bal)])),
+      'emi-schedule-' + Math.round(P) + '.csv'));
+    drawSched();
+  }
+
+  function drawSched() {
+    if (!last) { sched.innerHTML = ''; return; }
+    const { rows } = last;
+    let body;
+    if (st.table === 'y') {
+      const years = [];
+      rows.forEach((r, i) => {
+        const label = monthName(i).slice(4);
+        let y = years[years.length - 1];
+        if (!y || y.label !== label) { y = { label, princ: 0, int: 0, extra: 0, bal: 0 }; years.push(y); }
+        y.princ += r.princ; y.int += r.int; y.extra += r.extra; y.bal = r.bal;
+      });
+      body = `<thead><tr><th>Year</th><th>Principal</th><th>Interest</th>${rows.some(r => r.extra) ? '<th>Prepaid</th>' : ''}<th>Balance</th></tr></thead><tbody>` +
+        years.map(y => `<tr><td>${esc(y.label)}</td><td>${FinKit.inr(y.princ)}</td><td>${FinKit.inr(y.int)}</td>${rows.some(r => r.extra) ? `<td>${FinKit.inr(y.extra)}</td>` : ''}<td>${FinKit.inr(y.bal)}</td></tr>`).join('') + '</tbody>';
+    } else {
+      body = `<thead><tr><th>#</th><th>Month</th><th>Principal</th><th>Interest</th>${rows.some(r => r.extra) ? '<th>Prepaid</th>' : ''}<th>Balance</th></tr></thead><tbody>` +
+        rows.map((r, i) => `<tr><td>${r.m}</td><td>${esc(monthName(i))}</td><td>${FinKit.inr(r.princ)}</td><td>${FinKit.inr(r.int)}</td>${rows.some(x => x.extra) ? `<td>${FinKit.inr(r.extra)}</td>` : ''}<td>${FinKit.inr(r.bal)}</td></tr>`).join('') + '</tbody>';
+    }
+    const yearsBars = [];
+    rows.forEach((r, i) => {
+      const label = monthName(i).slice(4);
+      let y = yearsBars[yearsBars.length - 1];
+      if (!y || y.label !== label) { y = { label, tick: label.slice(2), a: 0, b: 0 }; yearsBars.push(y); }
+      y.a += r.princ + r.extra; y.b += r.int;
+    });
+    sched.innerHTML = `<div class="fin-sched-head"><h2>Amortisation schedule</h2>
+        <div class="seg" id="emi_tbl"><button type="button" data-v="y">Year-wise</button><button type="button" data-v="m">Month-wise</button></div></div>
+      ${yearsBars.length >= 3 ? FinKit.bars(yearsBars, 'Principal', 'Interest') : ''}
+      <div class="fin-tbl-wrap"><table class="fin-tbl">${body}</table></div>`;
+    V9.seg($('#emi_tbl'), st.table, (v) => { st.table = v; persist(); drawSched(); });
+  }
+
+  const tenureRange = () => {
+    const r = $('#emi_ten_r');
+    r.max = st.unit === 'y' ? 30 : 360; r.step = 1; r.value = V9.num(st.tenure);
+  };
+  const go = () => { draw(); persist(); };
+  FinKit.bind(st, 'emi_amt', 'amt', go, true);
+  FinKit.bind(st, 'emi_rate', 'rate', go);
+  FinKit.bind(st, 'emi_ten', 'tenure', go);
+  tenureRange();
+  V9.seg($('#emi_unit'), st.unit, (v) => {
+    if (v === st.unit) return;
+    const n = months();
+    st.unit = v; st.tenure = String(v === 'y' ? Math.round(n / 12 * 100) / 100 : n);
+    $('#emi_ten').value = st.tenure; tenureRange(); go();
+  });
+  V9.seg($('#emi_kind'), st.kind, (v) => {
+    st.kind = v; Object.assign(st, { amt: EMI_KINDS[v].amt, rate: EMI_KINDS[v].rate, tenure: EMI_KINDS[v].tenure, unit: 'y' });
+    $('#emi_amt').value = FinKit.group(V9.num(st.amt)); $('#emi_amt_r').value = st.amt;
+    $('#emi_rate').value = st.rate; $('#emi_rate_r').value = st.rate;
+    $('#emi_ten').value = st.tenure; $('#emi_unit').querySelectorAll('button').forEach(b => { b.classList.toggle('on', b.dataset.v === 'y'); b.setAttribute('aria-pressed', String(b.dataset.v === 'y')); });
+    tenureRange(); go();
+  });
+  const plainBind = (id, k) => { const el = $('#' + id); el.value = st[k] || ''; el.addEventListener('input', () => { st[k] = el.value; go(); }); };
+  plainBind('emi_extra', 'extra'); plainBind('emi_lump', 'lump'); plainBind('emi_lumpAt', 'lumpAt');
+  const sm = $('#emi_start'); sm.value = st.start;
+  sm.addEventListener('change', () => { if (/^\d{4}-\d{2}$/.test(sm.value)) { st.start = sm.value; go(); } });
+  draw();
+}
+
+/* ==========================================================================
+   SIP calculator: SIP, lumpsum, step-up SIP and a goal planner
+   ========================================================================== */
+const SipMath = {
+  /* Monthly SIP paid at the start of each month, as most fund houses and
+     calculators show it: FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), i = rate ÷ 12. */
+  run(P, annual, years, stepPct) {
+    const i = annual / 1200, n = Math.round(years * 12), out = [];
+    let val = 0, inv = 0, amt = P;
+    for (let m = 1; m <= n; m++) {
+      if (m > 1 && (m - 1) % 12 === 0) amt *= 1 + (stepPct || 0) / 100;
+      val = (val + amt) * (1 + i); inv += amt;
+      if (m % 12 === 0 || m === n) out.push({ year: Math.ceil(m / 12), inv, val, amt });
+    }
+    return out;
+  },
+  lump(P, annual, years) {
+    const out = [];
+    for (let y = 1; y <= Math.ceil(years); y++) out.push({ year: y, inv: P, val: P * Math.pow(1 + annual / 100, Math.min(y, years)) });
+    return out;
+  }
+};
+
+function renderSip(view, opts) {
+  const KEY = 'docbrisk:sip';
+  const st = Object.assign({ tab: 'sip', amt: '5000', lump: '100000', rate: '12', yrs: '10', step: '10', goal: '5000000', infl: '' },
+    SheetKit.load(KEY) || {}, opts || {});
+  view.innerHTML = toolShell('sip-calculator', `
+    <div class="seg seg-wide" id="sip_tabs" style="margin-bottom:18px">
+      <button type="button" data-v="sip">SIP</button><button type="button" data-v="lump">Lumpsum</button>
+      <button type="button" data-v="step">Step-up SIP</button><button type="button" data-v="goal">Goal planner</button></div>
+    <div class="calc">
+      <div class="calc-form" id="sip_form"></div>
+      <div class="calc-out" id="sip_out" aria-live="polite"></div>
+    </div>
+    <div class="fin-sched" id="sip_sched"></div>
+    <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span>
+      <span>Mutual fund returns are not guaranteed: the rate you enter is an assumption, not a promise. Worked out on your device; nothing is sent anywhere.</span></div>`);
+  const form = $('#sip_form'), out = $('#sip_out'), sched = $('#sip_sched');
+  const persist = () => SheetKit.save(KEY, st);
+  const go = () => { drawOut(); persist(); };
+
+  function drawForm() {
+    const t = st.tab;
+    form.innerHTML =
+      (t === 'goal' ? FinKit.field('sip_goal', 'Target amount', { pre: '₹', min: 100000, max: 100000000, step: 100000, hint: 'For example a child\'s education, a house down payment or retirement.' }) : '') +
+      (t === 'lump' ? FinKit.field('sip_lump', 'One-time investment', { pre: '₹', min: 5000, max: 10000000, step: 5000 })
+        : t === 'goal' ? '' : FinKit.field('sip_amt', t === 'step' ? 'Starting monthly SIP' : 'Monthly SIP amount', { pre: '₹', min: 500, max: 200000, step: 500 })) +
+      FinKit.field('sip_rate', 'Expected return (per year)', { unit: '%', min: 1, max: 30, step: 0.5, hint: 'Long-run equity funds have often been assumed at 10–12%; debt funds and FDs nearer 6–7%.' }) +
+      FinKit.field('sip_yrs', 'Time period', { unit: 'years', min: 1, max: 40, step: 1 }) +
+      (t === 'step' || t === 'goal' ? FinKit.field('sip_step', 'Increase the SIP every year by', { unit: '%', min: 0, max: 50, step: 1, hint: t === 'goal' ? 'Optional. Leave at 0 for a flat SIP.' : 'A raise each year keeps the SIP in step with your salary.' }) : '') +
+      `<div class="field" style="margin-bottom:0"><label for="sip_infl">Inflation, to see the value in today's money (optional)</label>
+        <div class="fin-in fin-in-wide"><input type="text" inputmode="decimal" id="sip_infl" autocomplete="off" placeholder="6"><span>%</span></div></div>`;
+    const b = (id, k, money) => { if ($('#' + id)) FinKit.bind(st, id, k, go, money); };
+    b('sip_goal', 'goal', true); b('sip_lump', 'lump', true); b('sip_amt', 'amt', true); b('sip_rate', 'rate'); b('sip_yrs', 'yrs'); b('sip_step', 'step');
+    const inf = $('#sip_infl'); inf.value = st.infl;
+    inf.addEventListener('input', () => { st.infl = inf.value; go(); });
+  }
+
+  function drawOut() {
+    const R = V9.num(st.rate), Y = V9.num(st.yrs), infl = V9.num(st.infl);
+    if (!(Y > 0) || Y > 60) { out.innerHTML = `<p class="calc-empty">Enter a time period between 1 and 60 years.</p>`; sched.innerHTML = ''; return; }
+    const real = (v) => infl > 0 ? `<tr><td>Worth in today's money <span>at ${V9.pct(infl)}% inflation</span></td><td>${FinKit.inr(v / Math.pow(1 + infl / 100, Y))}</td></tr>` : '';
+    let rows, hero, extra = '', summary;
+    if (st.tab === 'goal') {
+      const G = V9.num(st.goal);
+      if (!(G > 0)) { out.innerHTML = `<p class="calc-empty">Enter the amount you want to reach.</p>`; sched.innerHTML = ''; return; }
+      const unit = SipMath.run(1, R, Y, V9.num(st.step));
+      const need = G / unit[unit.length - 1].val;
+      rows = SipMath.run(need, R, Y, V9.num(st.step));
+      const lumpNeed = G / Math.pow(1 + R / 100, Y);
+      hero = `<div class="calc-hero"><span>Monthly SIP needed${V9.num(st.step) > 0 ? ' to start with' : ''}</span><strong>${FinKit.inr(Math.ceil(need))}</strong></div>`;
+      extra = `<tr><td>Or invest once today</td><td>${FinKit.inr(lumpNeed)}</td></tr>` +
+        (infl > 0 ? `<tr><td>Target in future money <span>${FinKit.short(G)} today at ${V9.pct(infl)}% inflation</span></td><td>${FinKit.inr(G * Math.pow(1 + infl / 100, Y))}</td></tr>` : '');
+      summary = `To reach ${FinKit.inr(G)} in ${V9.pct(Y)} years at ${V9.pct(R)}% a year, invest ${FinKit.inr(Math.ceil(need))} a month${V9.num(st.step) > 0 ? `, raised ${V9.pct(V9.num(st.step))}% every year` : ''}.`;
+    } else if (st.tab === 'lump') {
+      const L = V9.num(st.lump);
+      if (!(L > 0)) { out.innerHTML = `<p class="calc-empty">Enter the amount you will invest.</p>`; sched.innerHTML = ''; return; }
+      rows = SipMath.lump(L, R, Y);
+      hero = `<div class="calc-hero"><span>Value after ${V9.pct(Y)} years</span><strong>${FinKit.inr(rows[rows.length - 1].val)}</strong></div>`;
+      summary = `${FinKit.inr(L)} invested once at ${V9.pct(R)}% a year grows to ${FinKit.inr(rows[rows.length - 1].val)} in ${V9.pct(Y)} years.`;
+    } else {
+      const P = V9.num(st.amt);
+      if (!(P > 0)) { out.innerHTML = `<p class="calc-empty">Enter the monthly amount.</p>`; sched.innerHTML = ''; return; }
+      rows = SipMath.run(P, R, Y, st.tab === 'step' ? V9.num(st.step) : 0);
+      hero = `<div class="calc-hero"><span>Value after ${V9.pct(Y)} years</span><strong>${FinKit.inr(rows[rows.length - 1].val)}</strong></div>`;
+      if (st.tab === 'step') {
+        const flat = SipMath.run(P, R, Y, 0);
+        extra = `<tr><td>Last monthly SIP</td><td>${FinKit.inr(rows[rows.length - 1].amt)}</td></tr>
+          <tr><td>Extra over a flat ${FinKit.inr(P)} SIP</td><td>${FinKit.inr(rows[rows.length - 1].val - flat[flat.length - 1].val)}</td></tr>`;
+      }
+      summary = `${FinKit.inr(P)} a month${st.tab === 'step' ? `, raised ${V9.pct(V9.num(st.step))}% a year,` : ''} for ${V9.pct(Y)} years at ${V9.pct(R)}% grows to ${FinKit.inr(rows[rows.length - 1].val)}.`;
+    }
+    const end = rows[rows.length - 1], gain = end.val - end.inv;
+    const stepped = st.tab !== 'lump' && st.tab !== 'sip' && V9.num(st.step) > 0;
+    out.innerHTML = hero + FinKit.donut([{ v: end.inv, label: 'Amount invested', c: FIN_C.a }, { v: gain, label: 'Estimated returns', c: FIN_C.g }]) +
+      `<table class="calc-table">
+        <tr><td>Amount invested</td><td>${FinKit.inr(end.inv)}</td></tr>
+        <tr><td>Estimated returns</td><td>${FinKit.inr(gain)}</td></tr>
+        <tr class="grand"><td>Total value</td><td>${FinKit.inr(end.val)}</td></tr>
+        ${extra}${real(end.val)}
+      </table>
+      <div class="calc-actions"><button type="button" class="btn btn-ghost btn-sm" id="sip_copy"><span data-icon="copy" data-icon-size="15"></span> Copy result</button></div>`;
+    hydrateIcons(out);
+    $('#sip_copy').addEventListener('click', () => V9.copy(summary, 'Copied'));
+    sched.innerHTML = `<div class="fin-sched-head"><h2>Year-by-year growth</h2></div>
+      ${FinKit.bars(rows.map(r => ({ label: 'Year ' + r.year, tick: String(r.year), a: r.inv, b: r.val - r.inv })), 'Invested', 'Returns')}
+      <div class="fin-tbl-wrap"><table class="fin-tbl"><thead><tr><th>Year</th>${stepped ? '<th>Monthly SIP</th>' : ''}<th>Invested so far</th><th>Value</th></tr></thead><tbody>
+      ${rows.map(r => `<tr><td>${r.year}</td>${stepped ? `<td>${FinKit.inr(r.amt)}</td>` : ''}<td>${FinKit.inr(r.inv)}</td><td>${FinKit.inr(r.val)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  V9.seg($('#sip_tabs'), st.tab, (v) => { st.tab = v; drawForm(); go(); });
+  drawForm(); drawOut();
+}
+
+/* ==========================================================================
+   FD, RD and PPF calculator
+   ========================================================================== */
+const FD_COMP = [['q', 'Quarterly (most banks)', 4], ['m', 'Monthly', 12], ['h', 'Half-yearly', 2], ['y', 'Yearly', 1], ['s', 'Simple interest (payout)', 0]];
+const DepositMath = {
+  fd(P, annual, years, per) {
+    if (!per) return P * (1 + annual / 100 * years);
+    return P * Math.pow(1 + annual / 100 / per, per * years);
+  },
+  /* Bank RD: every instalment compounds quarterly for the months it stays in. */
+  rd(R, annual, months) {
+    const q = 1 + annual / 400;
+    let m = 0;
+    for (let k = 1; k <= months; k++) m += R * Math.pow(q, (months - k + 1) / 3);
+    return m;
+  },
+  /* PPF: deposit by 5 April each year, interest credited once a year. */
+  ppf(D, annual, years) {
+    const rows = [];
+    let bal = 0;
+    for (let y = 1; y <= years; y++) { const int = (bal + D) * annual / 100; bal += D + int; rows.push({ year: y, dep: D, int, bal }); }
+    return rows;
+  }
+};
+
+function renderDeposit(view, opts) {
+  const KEY = 'docbrisk:fdrd';
+  const st = Object.assign({ tab: 'fd', amt: '100000', rate: '7', y: '1', mo: '0', comp: 'q', rd: '5000', rdRate: '7', rdMonths: '24', ppf: '150000', ppfRate: '7.1', ppfYrs: '15' },
+    SheetKit.load(KEY) || {}, opts || {});
+  view.innerHTML = toolShell('fd-calculator', `
+    <div class="seg seg-wide seg-tabs3" id="fd_tabs" style="margin-bottom:18px">
+      <button type="button" data-v="fd">Fixed deposit (FD)</button><button type="button" data-v="rd">Recurring deposit (RD)</button><button type="button" data-v="ppf">PPF</button></div>
+    <div class="calc">
+      <div class="calc-form" id="fd_form"></div>
+      <div class="calc-out" id="fd_out" aria-live="polite"></div>
+    </div>
+    <div class="fin-sched" id="fd_sched"></div>
+    <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span>
+      <span>Rates change: check your bank's current FD and RD rates, and the PPF rate the government sets every quarter (7.1% for October to December 2026).</span></div>`);
+  const form = $('#fd_form'), out = $('#fd_out'), sched = $('#fd_sched');
+  const persist = () => SheetKit.save(KEY, st);
+  const go = () => { drawOut(); persist(); };
+
+  function drawForm() {
+    if (st.tab === 'fd') {
+      form.innerHTML = FinKit.field('fd_amt', 'Deposit amount', { pre: '₹', min: 1000, max: 10000000, step: 1000 }) +
+        FinKit.field('fd_rate', 'Interest rate (per year)', { unit: '%', min: 1, max: 12, step: 0.05, hint: 'Senior citizens usually get 0.25–0.5% more.' }) +
+        `<div class="field-row cols-2"><div><label for="fd_y">Years</label><input type="number" id="fd_y" min="0" max="30" inputmode="numeric"></div>
+          <div><label for="fd_mo">Months</label><input type="number" id="fd_mo" min="0" max="11" inputmode="numeric"></div></div>
+        <div class="field" style="margin:14px 0 0"><label for="fd_comp">Interest is compounded</label>
+          <select id="fd_comp">${FD_COMP.map(([k, l]) => `<option value="${k}"${k === st.comp ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div>`;
+      FinKit.bind(st, 'fd_amt', 'amt', go, true); FinKit.bind(st, 'fd_rate', 'rate', go);
+      [['fd_y', 'y'], ['fd_mo', 'mo']].forEach(([id, k]) => { const el = $('#' + id); el.value = st[k]; el.addEventListener('input', () => { st[k] = el.value; go(); }); });
+      $('#fd_comp').addEventListener('change', (e) => { st.comp = e.target.value; go(); });
+    } else if (st.tab === 'rd') {
+      form.innerHTML = FinKit.field('rd_amt', 'Monthly deposit', { pre: '₹', min: 100, max: 200000, step: 100 }) +
+        FinKit.field('rd_rate', 'Interest rate (per year)', { unit: '%', min: 1, max: 12, step: 0.05 }) +
+        FinKit.field('rd_months', 'Period', { unit: 'months', min: 6, max: 120, step: 1, hint: 'Banks offer RDs from 6 months to 10 years. The Post Office RD runs for 5 years (60 months).' });
+      FinKit.bind(st, 'rd_amt', 'rd', go, true); FinKit.bind(st, 'rd_rate', 'rdRate', go); FinKit.bind(st, 'rd_months', 'rdMonths', go);
+    } else {
+      form.innerHTML = FinKit.field('ppf_amt', 'Yearly deposit', { pre: '₹', min: 500, max: 150000, step: 500, hint: 'Between ₹500 and ₹1,50,000 a year. Deposit before 5 April to earn interest for the whole year.' }) +
+        FinKit.field('ppf_rate', 'PPF interest rate', { unit: '%', min: 5, max: 10, step: 0.05 }) +
+        `<div class="field" style="margin-bottom:0"><label for="ppf_yrs">Period</label>
+          <select id="ppf_yrs">${[15, 20, 25, 30, 35, 40].map(y => `<option value="${y}"${String(y) === String(st.ppfYrs) ? ' selected' : ''}>${y} years${y > 15 ? ' (extended in 5-year blocks)' : ''}</option>`).join('')}</select></div>`;
+      FinKit.bind(st, 'ppf_amt', 'ppf', go, true); FinKit.bind(st, 'ppf_rate', 'ppfRate', go);
+      $('#ppf_yrs').addEventListener('change', (e) => { st.ppfYrs = e.target.value; go(); });
+    }
+  }
+
+  function drawOut() {
+    sched.innerHTML = '';
+    let inv, mat, hero, rows = '', summary;
+    if (st.tab === 'fd') {
+      const P = V9.num(st.amt), R = V9.num(st.rate), yrs = V9.num(st.y) + V9.num(st.mo) / 12;
+      if (!(P > 0) || !(yrs > 0)) { out.innerHTML = `<p class="calc-empty">Enter the deposit, rate and period.</p>`; return; }
+      const per = (FD_COMP.find(c => c[0] === st.comp) || FD_COMP[0])[2];
+      inv = P; mat = DepositMath.fd(P, R, yrs, per);
+      hero = per ? `<div class="calc-hero"><span>Maturity amount</span><strong>${FinKit.inr(mat)}</strong></div>`
+        : `<div class="calc-hero"><span>Interest paid out every month</span><strong>${FinKit.inr(P * R / 1200)}</strong></div>`;
+      const yearly = per ? DepositMath.fd(P, R, 1, per) - P : P * R / 100;
+      rows = (per ? '' : `<tr><td>Every quarter</td><td>${FinKit.inr(P * R / 400)}</td></tr>`) +
+        `<tr><td>Effective yearly yield</td><td>${V9.pct(Math.round(yearly / P * 10000) / 100)}%</td></tr>` +
+        (yearly > 50000 ? `<tr><td colspan="2"><p class="ic-warn" style="margin:0">Interest above ₹50,000 a year (₹1,00,000 for senior citizens) from one bank has TDS deducted unless you submit Form 15G or 15H.</p></td></tr>` : '');
+      summary = `FD of ${FinKit.inr(P)} at ${V9.pct(R)}% for ${V9.pct(Math.round(yrs * 100) / 100)} years: maturity ${FinKit.inr(mat)}, interest ${FinKit.inr(mat - P)}.`;
+    } else if (st.tab === 'rd') {
+      const R = V9.num(st.rd), r = V9.num(st.rdRate), n = Math.round(V9.num(st.rdMonths));
+      if (!(R > 0) || !(n > 0)) { out.innerHTML = `<p class="calc-empty">Enter the monthly deposit, rate and period.</p>`; return; }
+      inv = R * n; mat = DepositMath.rd(R, r, n);
+      hero = `<div class="calc-hero"><span>Maturity amount</span><strong>${FinKit.inr(mat)}</strong></div>`;
+      summary = `RD of ${FinKit.inr(R)} a month for ${n} months at ${V9.pct(r)}%: maturity ${FinKit.inr(mat)}, interest ${FinKit.inr(mat - inv)}.`;
+    } else {
+      const D = V9.num(st.ppf), r = V9.num(st.ppfRate), Y = Math.round(V9.num(st.ppfYrs)) || 15;
+      if (!(D > 0)) { out.innerHTML = `<p class="calc-empty">Enter the yearly deposit.</p>`; return; }
+      const list = DepositMath.ppf(D, r, Y);
+      inv = D * Y; mat = list[list.length - 1].bal;
+      hero = `<div class="calc-hero"><span>Maturity after ${Y} years</span><strong>${FinKit.inr(mat)}</strong></div>`;
+      rows = D > 150000 ? `<tr><td colspan="2"><p class="ic-warn" style="margin:0">PPF accepts at most ₹1,50,000 a year. Anything above earns no interest and is refunded.</p></td></tr>` : '';
+      summary = `PPF of ${FinKit.inr(D)} a year for ${Y} years at ${V9.pct(r)}%: maturity ${FinKit.inr(mat)}, interest ${FinKit.inr(mat - inv)} (tax-free).`;
+      sched.innerHTML = `<div class="fin-sched-head"><h2>PPF balance year by year</h2></div>
+        ${FinKit.bars(list.map(x => ({ label: 'Year ' + x.year, tick: String(x.year), a: x.dep * x.year, b: x.bal - x.dep * x.year })), 'Deposited', 'Interest')}
+        <div class="fin-tbl-wrap"><table class="fin-tbl"><thead><tr><th>Year</th><th>Deposit</th><th>Interest</th><th>Balance</th></tr></thead><tbody>
+        ${list.map(x => `<tr><td>${x.year}</td><td>${FinKit.inr(x.dep)}</td><td>${FinKit.inr(x.int)}</td><td>${FinKit.inr(x.bal)}</td></tr>`).join('')}</tbody></table></div>`;
+    }
+    out.innerHTML = hero + FinKit.donut([{ v: inv, label: st.tab === 'fd' ? 'Deposit' : 'Total deposited', c: FIN_C.a }, { v: mat - inv, label: 'Interest earned', c: FIN_C.g }]) +
+      `<table class="calc-table"><tr><td>${st.tab === 'fd' ? 'Deposit' : 'Total deposited'}</td><td>${FinKit.inr(inv)}</td></tr>
+        <tr><td>Interest earned</td><td>${FinKit.inr(mat - inv)}</td></tr>
+        <tr class="grand"><td>Maturity value</td><td>${FinKit.inr(mat)}</td></tr>${rows}</table>
+      <div class="calc-actions"><button type="button" class="btn btn-ghost btn-sm" id="fd_copy"><span data-icon="copy" data-icon-size="15"></span> Copy result</button></div>`;
+    hydrateIcons(out);
+    $('#fd_copy').addEventListener('click', () => V9.copy(summary, 'Copied'));
+  }
+  V9.seg($('#fd_tabs'), st.tab, (v) => { st.tab = v; drawForm(); go(); });
+  drawForm(); drawOut();
+}
+
+/* ==========================================================================
+   Income tax calculator: new vs old regime, FY 2025-26 and FY 2026-27
+   (Budget 2026 kept the slabs, rebate and standard deduction unchanged.)
+   ========================================================================== */
+const TaxMath = {
+  NEW: [[0, 400000, 0], [400000, 800000, 5], [800000, 1200000, 10], [1200000, 1600000, 15], [1600000, 2000000, 20], [2000000, 2400000, 25], [2400000, Infinity, 30]],
+  old(age) {
+    const b = age === '80' ? 500000 : age === '60' ? 300000 : 250000;
+    return [[0, b, 0], [b, 500000, 5], [500000, 1000000, 20], [1000000, Infinity, 30]];
+  },
+  slab(inc, slabs) {
+    let tax = 0;
+    const rows = [];
+    for (const [lo, hi, rate] of slabs) {
+      if (inc <= lo || hi <= lo) continue;
+      const part = Math.min(inc, hi) - lo, t = part * rate / 100;
+      tax += t; rows.push({ lo, hi, rate, part, t });
+    }
+    return { tax, rows };
+  },
+  /* Surcharge with marginal relief: crossing a threshold never costs more
+     than the income above it. */
+  surcharge(inc, tax, slabs, regime) {
+    const bands = regime === 'new' ? [[5e6, 10], [1e7, 15], [2e7, 25]] : [[5e6, 10], [1e7, 15], [2e7, 25], [5e7, 37]];
+    let rate = 0, T = 0, prev = 0;
+    for (const [t, r] of bands) if (inc > t) { prev = rate; rate = r; T = t; }
+    if (!rate) return 0;
+    const s = tax * rate / 100;
+    const cap = TaxMath.slab(T, slabs).tax * (1 + prev / 100) + (inc - T);
+    return Math.max(0, Math.min(s, cap - tax));
+  },
+  compute(o, regime) {
+    const salaried = o.salary > 0;
+    const std = salaried ? Math.min(o.salary, regime === 'new' ? 75000 : 50000) : 0;
+    const gross = o.salary + o.other;
+    const ded = regime === 'new' ? o.empNps : o.empNps + o.oldDed;
+    const taxable = Math.max(0, gross - std - ded);
+    const slabs = regime === 'new' ? TaxMath.NEW : TaxMath.old(o.age);
+    const s = TaxMath.slab(taxable, slabs);
+    let rebate = 0;
+    if (regime === 'new') {
+      if (taxable <= 1200000) rebate = Math.min(s.tax, 60000);
+      else if (s.tax > taxable - 1200000) rebate = s.tax - (taxable - 1200000);   // marginal relief just above ₹12 lakh
+    } else if (taxable <= 500000) rebate = Math.min(s.tax, 12500);
+    const afterRebate = s.tax - rebate;
+    const sur = TaxMath.surcharge(taxable, afterRebate, slabs, regime);
+    const cess = (afterRebate + sur) * 0.04;
+    const total = Math.round(afterRebate + sur + cess);
+    return { std, ded, gross, taxable, slabTax: s.tax, rows: s.rows, rebate, sur, cess, total };
+  }
+};
+
+function renderIncomeTax(view, opts) {
+  const KEY = 'docbrisk:itax';
+  const st = Object.assign({ age: '0', salary: '1500000', other: '0', empNps: '', hra: '', c80: '', d80: '', home: '', nps: '', ptax: '', more: '' },
+    SheetKit.load(KEY) || {}, opts || {});
+  const money = (id, label, hint) => `<div class="field"><label for="${id}">${esc(label)}</label>
+    <div class="fin-in fin-in-wide"><span>₹</span><input type="text" inputmode="decimal" id="${id}" autocomplete="off" placeholder="0"></div>${hint ? `<p class="hint">${hint}</p>` : ''}</div>`;
+  view.innerHTML = toolShell('income-tax-calculator', `
+    <p class="fin-fy">Slabs for <b>FY 2026-27</b> (tax year 2026-27) and FY 2025-26: Budget 2026 left them unchanged.</p>
+    <div class="calc">
+      <div class="calc-form">
+        <div class="field"><span class="fin-l">Your age</span>
+          <div class="seg seg-wide" id="tx_age"><button type="button" data-v="0">Below 60</button><button type="button" data-v="60">60 to 79</button><button type="button" data-v="80">80 or more</button></div></div>
+        ${money('tx_salary', 'Gross salary for the year', 'CTC minus employer PF and gratuity, or the gross on your Form 16. Pensioners: enter your pension here.')}
+        ${money('tx_other', 'Other income', 'Savings and FD interest, rent received after the 30% deduction, freelance income.')}
+        ${money('tx_empNps', 'Employer\'s NPS contribution (80CCD(2))', 'Allowed in both regimes: up to 14% of basic pay in the new regime and 10% in the old.')}
+        <details class="panel mk-sec" id="tx_oldBox"${st.hra || st.c80 || st.d80 || st.home || st.nps ? ' open' : ''}><summary class="panel-title">Deductions for the old regime</summary>
+          <div class="field-row cols-2">
+            <div>${money('tx_c80', '80C: PF, PPF, ELSS, LIC, tuition', 'Up to ₹1,50,000.')}</div>
+            <div>${money('tx_hra', 'HRA exemption', 'The exempt part, not the HRA you get.')}</div>
+            <div>${money('tx_d80', '80D: health insurance', '₹25,000 for yourself, ₹50,000 if you are a senior, plus parents.')}</div>
+            <div>${money('tx_home', 'Home loan interest (self-occupied)', 'Up to ₹2,00,000.')}</div>
+            <div>${money('tx_nps', 'Your own NPS, 80CCD(1B)', 'Up to ₹50,000, over and above 80C.')}</div>
+            <div>${money('tx_ptax', 'Professional tax', 'Up to ₹2,500.')}</div>
+          </div>
+          ${money('tx_more', 'Any other deduction (80E, 80G, 80TTA, LTA …)', '')}
+        </details>
+      </div>
+      <div class="calc-out" id="tx_out" aria-live="polite"></div>
+    </div>
+    <div class="fin-sched" id="tx_detail"></div>
+    <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span>
+      <span>An estimate for resident individuals on income taxed at normal slab rates. Capital gains taxed at special rates are not included. Your income stays on this device.</span></div>`);
+  const out = $('#tx_out'), detail = $('#tx_detail');
+  const persist = () => SheetKit.save(KEY, st);
+  const caps = { c80: 150000, home: 200000, nps: 50000, ptax: 2500, d80: 100000 };
+
+  function inputs() {
+    const n = (k) => Math.max(0, V9.num(st[k]));
+    const capped = (k) => caps[k] ? Math.min(n(k), caps[k]) : n(k);
+    const oldDed = n('hra') + capped('c80') + capped('d80') + capped('home') + capped('nps') + capped('ptax') + n('more');
+    return { age: st.age, salary: n('salary'), other: n('other'), empNps: n('empNps'), oldDed };
+  }
+
+  function draw() {
+    const o = inputs();
+    if (!(o.salary + o.other > 0)) { out.innerHTML = `<p class="calc-empty">Enter your salary or other income.</p>`; detail.innerHTML = ''; return; }
+    const N = TaxMath.compute(o, 'new'), O = TaxMath.compute(o, 'old');
+    const better = N.total === O.total ? null : N.total < O.total ? 'new' : 'old';
+    const diff = Math.abs(N.total - O.total);
+    /* How much in old-regime deductions would make the old regime as good as the new one. */
+    let breakEven = null;
+    if (N.total > 0 || O.total > 0) {
+      let lo = 0, hi = o.salary + o.other;
+      const oldAt = (d) => TaxMath.compute(Object.assign({}, o, { oldDed: d }), 'old').total;
+      if (oldAt(hi) <= N.total) {
+        for (let k = 0; k < 40; k++) { const mid = (lo + hi) / 2; if (oldAt(mid) <= N.total) hi = mid; else lo = mid; }
+        breakEven = Math.ceil(hi / 1000) * 1000;
+      }
+    }
+    const capsHit = Object.keys(caps).filter(k => V9.num(st[k]) > caps[k]);
+    const line = (label, a, b, cls) => `<tr${cls ? ` class="${cls}"` : ''}><td>${label}</td><td>${a}</td><td>${b}</td></tr>`;
+    const rate = (x) => o.salary + o.other > 0 ? V9.pct(Math.round(x.total / (o.salary + o.other) * 1000) / 10) + '%' : '0%';
+    out.innerHTML = `
+      <div class="calc-hero"><span>${better ? (better === 'new' ? 'New regime' : 'Old regime') + ' saves you' : 'Both regimes cost the same'}</span>
+        <strong>${better ? FinKit.inr(diff) : FinKit.inr(N.total)}${better ? ' <small>a year</small>' : ''}</strong></div>
+      <table class="calc-table fin-cmp">
+        <tr class="fin-cmp-h"><td></td><td>New regime</td><td>Old regime</td></tr>
+        ${line('Gross income', FinKit.inr(N.gross), FinKit.inr(O.gross))}
+        ${line('Standard deduction', '− ' + FinKit.inr(N.std), '− ' + FinKit.inr(O.std))}
+        ${line('Other deductions', '− ' + FinKit.inr(N.ded), '− ' + FinKit.inr(O.ded))}
+        ${line('Taxable income', FinKit.inr(N.taxable), FinKit.inr(O.taxable))}
+        ${line('Tax on slabs', FinKit.inr(N.slabTax), FinKit.inr(O.slabTax))}
+        ${N.rebate || O.rebate ? line('Rebate (87A)', '− ' + FinKit.inr(N.rebate), '− ' + FinKit.inr(O.rebate)) : ''}
+        ${N.sur || O.sur ? line('Surcharge', FinKit.inr(N.sur), FinKit.inr(O.sur)) : ''}
+        ${line('Health & education cess 4%', FinKit.inr(N.cess), FinKit.inr(O.cess))}
+        ${line('Total tax', FinKit.inr(N.total), FinKit.inr(O.total), 'grand')}
+        ${line('Per month', FinKit.inr(N.total / 12), FinKit.inr(O.total / 12))}
+        ${line('Effective rate', rate(N), rate(O))}
+      </table>
+      ${breakEven !== null && better === 'new' && O.ded < breakEven ? `<p class="calc-words">The old regime would only win if your old-regime deductions (not counting the standard deduction) were more than <b>${FinKit.inr(breakEven)}</b>. You have entered ${FinKit.inr(O.ded)}.</p>` : ''}
+      ${capsHit.length ? `<p class="ic-warn">Some deductions are above their limit and have been capped: ${capsHit.map(k => ({ c80: '80C', home: 'home loan interest', nps: '80CCD(1B)', ptax: 'professional tax', d80: '80D' })[k]).join(', ')}.</p>` : ''}
+      <div class="calc-actions"><button type="button" class="btn btn-ghost btn-sm" id="tx_copy"><span data-icon="copy" data-icon-size="15"></span> Copy comparison</button></div>`;
+    hydrateIcons(out);
+    $('#tx_copy').addEventListener('click', () => V9.copy(
+      `Income ${FinKit.inr(N.gross)} (FY 2026-27). New regime tax ${FinKit.inr(N.total)}, old regime tax ${FinKit.inr(O.total)}.` +
+      (better ? ` The ${better} regime saves ${FinKit.inr(diff)}.` : ''), 'Comparison copied'));
+    const slabTable = (title, x) => `<div><h3>${title}</h3><table class="fin-tbl"><thead><tr><th>Income slab</th><th>Rate</th><th>Tax</th></tr></thead><tbody>
+      ${x.rows.map(r => `<tr><td>${FinKit.short(r.lo)} – ${r.hi === Infinity ? 'above' : FinKit.short(r.hi)}</td><td>${r.rate}%</td><td>${FinKit.inr(r.t)}</td></tr>`).join('') || '<tr><td colspan="3">No tax on slabs</td></tr>'}</tbody></table></div>`;
+    detail.innerHTML = `<div class="fin-sched-head"><h2>Slab-wise working</h2></div><div class="fin-two">${slabTable('New regime', N)}${slabTable('Old regime', O)}</div>`;
+  }
+  const go = () => { draw(); persist(); };
+  ['salary', 'other', 'empNps', 'hra', 'c80', 'd80', 'home', 'nps', 'ptax', 'more'].forEach(k => {
+    const el = $('#tx_' + k);
+    const show = () => { el.value = st[k] === '' ? '' : FinKit.group(V9.num(st[k])); };
+    show();
+    el.addEventListener('input', () => { st[k] = el.value.replace(/[^0-9.]/g, ''); go(); });
+    el.addEventListener('blur', show);
+  });
+  V9.seg($('#tx_age'), st.age, (v) => { st.age = v; go(); });
+  draw();
+}
+
+/* ==========================================================================
    PAN, Aadhaar, GSTIN and IFSC validator
    ========================================================================== */
 const Verhoeff = (() => {
@@ -25196,7 +25951,9 @@ const QUICK_TASKS = [
   ['rent-receipt', 'Rent receipts for HRA', 'किराये की रसीद बनाएँ'],
   ['cv-studio', 'Resume in minutes', 'रिज़्यूमे बनाएँ'],
   ['pdf-to-word', 'PDF to Word', 'PDF को Word में बदलें'],
-  ['age-calculator', 'Age on a cut-off date', 'फ़ॉर्म के लिए उम्र निकालें']
+  ['age-calculator', 'Age on a cut-off date', 'फ़ॉर्म के लिए उम्र निकालें'],
+  ['income-tax-calculator', 'Income tax: new vs old', 'इनकम टैक्स कितना लगेगा'],
+  ['emi-calculator', 'Loan EMI & schedule', 'लोन की EMI निकालें']
 ];
 
 /* Short names for the phone launcher grid, where a tile is about 100 px wide. */
@@ -25210,12 +25967,14 @@ const SHORT_NAMES = {
   'pdf-to-ppt': 'PDF to PPT', 'qr-maker': 'QR Code', 'invoice-maker': 'Invoice', 'mail-merge': 'Mail Merge', 'split-by-size': 'Split PDF',
   'sheet-to-pdf': 'Excel to PDF', 'batch-process': 'Batch', 'smart-redact': 'Auto Redact', 'word-to-pdf': 'Word to PDF', 'biodata-maker': 'Biodata',
   'letter-maker': 'Letters', 'gstin-validator': 'GSTIN Check', 'image-compressor': 'Compress Photo', 'gst-calculator': 'GST Calc', 'age-calculator': 'Age Calc',
-  'salary-slip': 'Salary Slip', 'rent-receipt': 'Rent Receipt', 'pan-aadhaar-validator': 'PAN Check', 'amount-in-words': 'In Words', 'cgpa-calculator': 'CGPA to %'
+  'salary-slip': 'Salary Slip', 'rent-receipt': 'Rent Receipt', 'pan-aadhaar-validator': 'PAN Check', 'amount-in-words': 'In Words', 'cgpa-calculator': 'CGPA to %',
+  'income-tax-calculator': 'Income Tax', 'emi-calculator': 'EMI Calc', 'sip-calculator': 'SIP Calc', 'fd-calculator': 'FD / RD / PPF'
 };
 
 /* The tools people reach for most come first inside each group. */
 const HOME_ORDER = ['image-compressor', 'exam-photo', 'photo-studio', 'id-card', 'doc-scanner',
   'biodata-maker', 'letter-maker', 'cv-studio', 'salary-slip', 'rent-receipt',
+  'income-tax-calculator', 'emi-calculator', 'sip-calculator', 'fd-calculator',
   'gst-calculator', 'age-calculator', 'cgpa-calculator', 'amount-in-words', 'gstin-validator', 'pan-aadhaar-validator',
   'compress-pdf', 'merge-pdf', 'pdf-editor', 'sign-pdf', 'organize-pdf', 'split-by-size', 'unlock-pdf', 'protect-pdf', 'watermark-pdf', 'number-pdf', 'redact-pdf',
   'pdf-to-word', 'word-to-pdf', 'image-to-pdf', 'pdf-to-image', 'pdf-to-excel', 'sheet-to-pdf', 'ocr-pdf', 'translate-pdf',
@@ -25229,6 +25988,7 @@ const GUIDE_GROUPS = [
   { title: 'Marriage biodata and resume', icon: 'user', tools: ['biodata-maker', 'cv-studio'] },
   { title: 'GST, salary and rent', icon: 'percent', tools: ['gst-calculator', 'gstin-validator', 'invoice-maker', 'salary-slip', 'rent-receipt', 'amount-in-words', 'pan-aadhaar-validator', 'qr-maker'] },
   { title: 'PDF to an exact size', icon: 'minimize', tools: ['compress-pdf'] },
+  { title: 'Loans, SIP and income tax', icon: 'trending-up', tools: ['income-tax-calculator', 'emi-calculator', 'sip-calculator', 'fd-calculator'] },
   { title: 'Marks, CGPA and age', icon: 'graduation', tools: ['cgpa-calculator', 'age-calculator'] },
   { title: 'Aadhaar, PAN and passwords', icon: 'credit-card', tools: ['id-card', 'unlock-pdf', 'smart-redact'] },
   { title: 'Everyday PDF jobs', icon: 'layers', tools: ['organize-pdf', 'merge-pdf', 'sign-pdf', 'word-to-pdf', 'translate-pdf'] }
