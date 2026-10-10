@@ -11936,13 +11936,72 @@ const OCRPrep = (() => {
     };
     bg = run(run(bg, true, true), false, true);
     bg = run(run(bg, true, false), false, false);
+    // Big dark areas with no paper in reach (the table or floor around a photographed sheet, deep
+    // shadow past its edge) become white: left black they confuse the layout step and lines go missing.
+    const sorted = Float32Array.from(bg).sort(), paper = sorted[Math.floor(sorted.length * 0.9)] || 255;
+    const lo = Math.min(45, paper * 0.3), hi = lo + 30;
     const out = new Uint8ClampedArray(w * h);
     for (let y = 0; y < h; y++) {
       const fy = Math.min(sh - 1.001, Math.max(0, y / s - 0.5)), y0 = fy | 0, ty = fy - y0, r0 = y0 * sw, r1 = Math.min(sh - 1, y0 + 1) * sw;
       for (let x = 0; x < w; x++) {
         const fx = Math.min(sw - 1.001, Math.max(0, x / s - 0.5)), x0 = fx | 0, tx = fx - x0, x1 = Math.min(sw - 1, x0 + 1);
         const b = (bg[r0 + x0] * (1 - tx) + bg[r0 + x1] * tx) * (1 - ty) + (bg[r1 + x0] * (1 - tx) + bg[r1 + x1] * tx) * ty;
-        out[y * w + x] = g[y * w + x] * 255 / Math.max(b, 60);
+        const v = g[y * w + x] * 255 / Math.max(b, 60);
+        out[y * w + x] = b >= hi ? v : b <= lo ? 255 : v + (255 - v) * (hi - b) / (hi - lo);
+      }
+    }
+    return out;
+  }
+  /* After flatten() the paper is white everywhere, but text that sat in shadow is
+     still grey (and the shadow's noise is lifted with it). Stretch each area so its
+     own darkest ink becomes black again; areas without real ink are left alone. */
+  /* Is the paper lit unevenly (a shadow across a photo)? Compares the brightness of
+     the paper in different parts of the page; an evenly dim page does not count. */
+  function shadowed(g, w, h) {
+    const B = Math.max(8, Math.round(Math.max(w, h) / 40)), vals = [];
+    for (let by = 0; by < h; by += B) for (let bx = 0; bx < w; bx += B) {
+      let mx = 0;
+      for (let y = by; y < Math.min(h, by + B); y += 2) for (let x = bx; x < Math.min(w, bx + B); x += 2) if (g[y * w + x] > mx) mx = g[y * w + x];
+      if (mx > 40) vals.push(mx);
+    }
+    if (vals.length < 20) return false;
+    vals.sort((a, b) => a - b);
+    return vals[Math.floor(vals.length * 0.8)] > vals[Math.floor(vals.length * 0.2)] * 1.5;
+  }
+  function inkStretch(g, w, h) {
+    const s = Math.max(2, Math.round(Math.max(w, h) / 500));
+    const sw = Math.ceil(w / s), sh = Math.ceil(h / s);
+    let m = new Float32Array(sw * sh).fill(255);
+    for (let y = 0; y < h; y++) {
+      const r = y * w, br = ((y / s) | 0) * sw;
+      for (let x = 0; x < w; x++) { const v = g[r + x], i = br + ((x / s) | 0); if (v < m[i]) m[i] = v; }
+    }
+    const rad = Math.max(2, Math.round(Math.max(w, h) / 90 / s));
+    const pass = (src, horiz, isMin) => {
+      const out = new Float32Array(src.length), n = horiz ? sw : sh, cnt = horiz ? sh : sw;
+      for (let a = 0; a < cnt; a++) for (let b = 0; b < n; b++) {
+        let acc = isMin ? 255 : 0, k0 = Math.max(0, b - rad), k1 = Math.min(n - 1, b + rad);
+        for (let k = k0; k <= k1; k++) { const v = horiz ? src[a * sw + k] : src[k * sw + a]; if (isMin) { if (v < acc) acc = v; } else acc += v; }
+        out[horiz ? a * sw + b : b * sw + a] = isMin ? acc : acc / (k1 - k0 + 1);
+      }
+      return out;
+    };
+    m = pass(pass(m, true, true), false, true);
+    m = pass(pass(m, true, false), false, false);
+    // Only when ink darkness really differs across the page (a shadow); grey text is brought to the
+    // page's own darkest ink, not beyond it, so an evenly dim or noisy page is not amplified.
+    const inked = Array.from(m).filter(v => v < 175).sort((a, b) => a - b);
+    if (inked.length < 20) return g;
+    const p10 = inked[Math.floor(inked.length * 0.1)], p90 = inked[Math.floor(inked.length * 0.9)];
+    if (p90 - p10 < 45) return g;
+    const out = new Uint8ClampedArray(w * h);
+    for (let y = 0; y < h; y++) {
+      const gy = Math.min(sh - 1, (y / s) | 0);
+      for (let x = 0; x < w; x++) {
+        const ink = m[gy * sw + Math.min(sw - 1, (x / s) | 0)], v = g[y * w + x];
+        // only where the area holds real ink that is not already near black
+        const f = ink > p10 ? Math.max(0, Math.min(1, (ink - p10) / 25, (175 - ink) / 25)) : 0;
+        out[y * w + x] = f > 0 ? v + f * (p10 + (v - ink) * (255 - p10) / (255 - ink) - v) : v;
       }
     }
     return out;
@@ -12022,7 +12081,7 @@ const OCRPrep = (() => {
   }
   /* Give a canvas's pixel memory back now instead of whenever the GC runs. */
   function release(c) { if (c) { c.width = 0; c.height = 0; } }
-  return { grayOf, putGray, autoLevels, flatten, flattenColour, estimateSkew, binarize, rotate, release };
+  return { grayOf, putGray, autoLevels, flatten, flattenColour, shadowed, inkStretch, estimateSkew, binarize, rotate, release };
 })();
 
 /* ==========================================================================
@@ -12102,12 +12161,24 @@ const OCRPlus = (() => {
     if (prev && /^[\d,.]+$/.test(prev)) return t;
     const m = /^([(\[]?)([Xx%Z])(\d[\d,]*(?:\.\d+)?\/?-?\)?)?$/.exec(t);
     if (!m) return t;
+    if (m[3] && m[2] === 'x' && !AMOUNT_RE.test(m[3]) && !(next && RUPEE_NEXT.test(next))) return t;     // x4: a quantity, not ₹
     if (m[3]) return m[1] + '\u20B9' + m[3];
     return next && RUPEE_NEXT.test(next) ? m[1] + '\u20B9' : t;
   }
+  // an amount: 1,250 / 12,50,000 / 450.00 / 1250 (not a small count like 4)
+  const AMOUNT_RE = /^(\d{1,3}(,\d{2,3})+(\.\d+)?|\d+\.\d{1,2}|\d{3,})(\/-)?\)?$/;
   function fixRupee(text) {
-    return text.replace(/(^|[\s(\[])([Xx%Z])(?=(\d|\s?(?:\d|lakh|lac|crore)))/gim, (all, pre, ch, _n, off, whole) =>
-      /\d\s*$/.test(whole.slice(0, off + pre.length)) ? all : pre + '\u20B9');
+    return text.replace(/(^|[\s(\[])([Xx%Z])(?=(\d|\s?(?:\d|lakh|lac|crore)))/gim, (all, pre, ch, _n, off, whole) => {
+      if (/\d\s*$/.test(whole.slice(0, off + pre.length))) return all;
+      if (ch === 'x') {
+        const rest = whole.slice(off + all.length), num = /^\s?([\d,./-]+\)?)\s*(lakhs?|lacs?|crores?|cr\b)?/i.exec(rest);
+        if (num && !num[2] && !AMOUNT_RE.test(num[1])) return all;   // "Biscuits x4" stays a quantity
+      }
+      return pre + '\u20B9';
+    })
+      // a zero read inside a word: 0il -> Oil, T0TAL -> TOTAL
+      .replace(/(^|[^\p{L}\p{N}])0(?=\p{Ll}{2,}(?![\p{L}\p{N}]))/gmu, '$1O')
+      .replace(/(^|[^\p{L}\p{N}])(\p{Lu}+)0(\p{Lu}+)(?![\p{L}\p{N}])/gmu, '$1$2O$3');
   }
 
   /* A phone photo of a page lying on a table: find the sheet and flatten it into a
@@ -12121,6 +12192,11 @@ const OCRPlus = (() => {
     const A = canvas.width * canvas.height;
     const area = Math.abs(q.reduce((acc, p, i) => { const n = q[(i + 1) % 4]; return acc + p.x * n.y - n.x * p.y; }, 0)) / 2;
     if (area > A * 0.9 || area < A * 0.2) return canvas;
+    // A sheet photographed on a table has backdrop around it. An outline with two or more corners on
+    // the frame edge is a light patch of the photo (a shadow line), and cropping to it would lose text.
+    const mx = canvas.width * 0.015, my = canvas.height * 0.015;
+    const onEdge = q.filter(p => p.x < mx || p.y < my || p.x > canvas.width - mx || p.y > canvas.height - my).length;
+    if (onEdge >= 2) return canvas;
     for (let i = 0; i < 4; i++) {            // every corner close to a right angle, or it is not a sheet
       const a = q[(i + 3) % 4], b = q[i], c = q[(i + 1) % 4];
       const v1 = [a.x - b.x, a.y - b.y], v2 = [c.x - b.x, c.y - b.y];
@@ -12248,12 +12324,60 @@ const OCRPlus = (() => {
   /* One page: straighten, keep the colour image for the output, then read a
      contrast-boosted greyscale copy. A page that reads poorly (low confidence)
      is read once more after shadow and lighting removal; the better read wins. */
-  async function readPage(src, i, worker, opts, setPass) {
+  /* Quarter turn of a canvas, clockwise by t degrees (90, 180, 270). */
+  function quarterTurn(c, t) {
+    const o = document.createElement('canvas');
+    o.width = t % 180 ? c.height : c.width; o.height = t % 180 ? c.width : c.height;
+    const x = o.getContext('2d');
+    x.fillStyle = '#fff'; x.fillRect(0, 0, o.width, o.height);
+    x.translate(o.width / 2, o.height / 2); x.rotate(t * Math.PI / 180); x.drawImage(c, -c.width / 2, -c.height / 2);
+    return o;
+  }
+  /* Sideways or upside-down page? Text lines standing on end mean 90 or 270; a very
+     poor first read may mean 180. The candidates are read small and compared. */
+  async function orientationOf(data, canvas, worker, dpi) {
+    const lines = linesOf(data).filter(l => l.bbox && String(l.text || '').replace(/\s/g, '').length >= 3);
+    const vert = lines.filter(l => (l.bbox.y1 - l.bbox.y0) > 1.6 * (l.bbox.x1 - l.bbox.x0)).length;
+    const vertical = lines.length >= 3 && vert >= lines.length * 0.5;
+    if (!vertical && (data.confidence || 0) >= 55) return 0;
+    const score = (d) => { let n = 0; linesOf(d).forEach(l => (l.words || []).forEach(wd => {
+      const t = String(wd.text || '').replace(/[^\p{L}\p{N}]/gu, ''); if ((wd.confidence || 0) >= 70 && t.length >= 2) n += t.length; })); return n; };
+    const k = Math.min(1, 1100 / Math.max(canvas.width, canvas.height));
+    const small = document.createElement('canvas');
+    small.width = Math.max(1, Math.round(canvas.width * k)); small.height = Math.max(1, Math.round(canvas.height * k));
+    small.getContext('2d').drawImage(canvas, 0, 0, small.width, small.height);
+    try { await worker.setParameters({ user_defined_dpi: String(Math.max(70, Math.round(dpi * k))) }); } catch (e) {}
+    const scores = {};
+    try {
+      for (const t of vertical ? [90, 270] : [0, 180, 90, 270]) {
+        const c = t ? quarterTurn(small, t) : small;
+        scores[t] = score((await worker.recognize(c, {}, { text: true, blocks: true })).data);
+        if (t) OCRPrep.release(c);
+        if (t === 180 && scores[180] > Math.max(60, scores[0] * 3)) break;     // clearly upside down: no need to try the sides
+      }
+    } finally {
+      OCRPrep.release(small);
+      try { await worker.setParameters({ user_defined_dpi: String(dpi) }); } catch (e) {}
+    }
+    const best = Object.keys(scores).map(Number).sort((a, b) => scores[b] - scores[a])[0];
+    if (!best) return 0;
+    if (vertical) return scores[best] >= 10 ? best : 0;
+    return scores[best] > (scores[0] || 0) * 1.25 + 10 ? best : 0;
+  }
+
+  async function readPage(src, i, worker, opts, setPass, turn) {
     const pg = await src.render(i);
     let canvas = pg.canvas;
+    if (turn) {
+      const t = quarterTurn(canvas, turn); OCRPrep.release(canvas); canvas = t;
+      if (turn % 180) { const wp = pg.wPt; pg.wPt = pg.hPt; pg.hPt = wp; }
+    }
     const w = canvas.width, h = canvas.height;
     let ctx = canvas.getContext('2d');
-    const prep = (c) => OCRPrep.autoLevels(OCRPrep.flatten(OCRPrep.grayOf(c, w, h), w, h));
+    const prep = (c) => {
+      const g0 = OCRPrep.grayOf(c, w, h), f = OCRPrep.flatten(g0, w, h);
+      return OCRPrep.autoLevels(OCRPrep.shadowed(g0, w, h) ? OCRPrep.inkStretch(f, w, h) : f);
+    };
     let gray = prep(ctx);
     const skew = opts.deskew === false ? 0 : OCRPrep.estimateSkew(gray, w, h);
     if (skew) {
@@ -12262,7 +12386,8 @@ const OCRPlus = (() => {
       canvas = straight; ctx = canvas.getContext('2d');
       gray = prep(ctx);
     }
-    const rec = { wPt: pg.wPt, hPt: pg.hPt, pxPerPt: pg.pxPerPt, skew, enhanced: false, flattened: !!pg.flattened };
+    const rec = { wPt: pg.wPt, hPt: pg.hPt, pxPerPt: pg.pxPerPt, skew, enhanced: false, flattened: !!pg.flattened, turned: turn || 0 };
+    const dpi = Math.max(70, Math.min(600, Math.round(pg.pxPerPt * 72)));
     // tesseract.js defaults to "single block", which reads straight across two columns
     // (and across side-by-side From / Bill-to blocks); automatic layout finds them.
     try {
@@ -12277,6 +12402,10 @@ const OCRPlus = (() => {
       OCRPrep.putGray(ctx, gray, w, h);
       setPass(1);
       let data = (await worker.recognize(canvas, {}, { text: true, blocks: true })).data;
+      if (!turn && opts.autoRotate !== false) {
+        const t = await orientationOf(data, canvas, worker, dpi);
+        if (t) return readPage(src, i, worker, opts, setPass, t);
+      }
       if ((data.confidence || 0) < 62 && w * h <= 16e6) {
         setPass(2);
         OCRPrep.putGray(ctx, OCRPrep.binarize(gray, w, h), w, h);
@@ -17029,7 +17158,7 @@ const TOOL_DEFS = {
         <label class="out-card"><input type="radio" name="o_out" value="txt">
           <span><strong>Plain text</strong><small>Just the words, in reading order.</small></span></label>
       </div>
-      <p class="hint" style="margin-top:12px">Works on phone photos and faint, tilted or shadowed scans: pages are straightened and cleaned up automatically, right on your device.</p>
+      <p class="hint" style="margin-top:12px">Works on phone photos, receipts and faint, tilted, shadowed, sideways or upside-down scans: pages are turned upright, straightened and cleaned up automatically, right on your device.</p>
       <div class="field" style="margin-top:14px"><label for="o_lang">Document language</label>
       <select id="o_lang">${OCR_LANGS.map(([c, n]) => `<option value="${c}">${n}</option>`).join('')}</select></div>
       <p class="hint" id="o_langNote">The language pack downloads once on first use, then works offline.</p></div>`,
@@ -17064,9 +17193,11 @@ const TOOL_DEFS = {
         }
       }
       const tilted = pages.filter(p => p.skew).length, faint = pages.filter(p => p.enhanced).length;
-      const fixes = [tilted ? `straightened ${tilted} tilted page${tilted > 1 ? 's' : ''}` : '',
+      const turned = pages.filter(p => p.turned).length;
+      const fixes = [turned ? `turned ${turned} sideways or upside-down page${turned > 1 ? 's' : ''} upright` : '',
+        tilted ? `straightened ${tilted} tilted page${tilted > 1 ? 's' : ''}` : '',
         faint ? `cleaned up ${faint} faint or shadowed page${faint > 1 ? 's' : ''}` : ''].filter(Boolean);
-      if (fixes.length) desc += ' Along the way DocBrisk ' + fixes.join(' and ') + '.';
+      if (fixes.length) desc += ' Along the way DocBrisk ' + fixes.join(', ').replace(/, ([^,]*)$/, ' and $1') + '.';
       const unsure = [];
       pages.forEach((p, i) => (p.unsure || []).forEach(u => unsure.push(u.text + (pages.length > 1 ? ' (p' + (i + 1) + ')' : ''))));
       if (unsure.length) desc += ` Please check ${unsure.length === 1 ? 'this number' : 'these numbers'}, read with low confidence: ${unsure.slice(0, 15).join(', ')}${unsure.length > 15 ? ' …' : ''}.`;
