@@ -170,7 +170,8 @@
     "Income Tax Calculator FY 2026-27: New vs Old Regime",
     "EMI Calculator for Home, Car & Personal Loans",
     "SIP Calculator: Mutual Fund Returns",
-    "FD Calculator, RD & PPF Maturity Calculator"
+    "FD Calculator, RD & PPF Maturity Calculator",
+    "Excel Dashboard Maker: Automatic KPIs, Charts and Insights"
    ],
    "applicationSubCategory": "PDF and document tools"
   },
@@ -183,7 +184,7 @@
      "name": "Is DocBrisk free?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Yes for almost everything. 46 of the 55 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times."
+      "text": "Yes for almost everything. 47 of the 56 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times."
      }
     },
     {
@@ -610,9 +611,15 @@
      "position": 55,
      "name": "FD Calculator, RD & PPF Maturity Calculator",
      "url": "https://docbrisk.com/tool/fd-calculator"
+    },
+    {
+     "@type": "ListItem",
+     "position": 56,
+     "name": "Excel Dashboard Maker: Automatic KPIs, Charts and Insights",
+     "url": "https://docbrisk.com/tool/excel-dashboard"
     }
    ],
-   "numberOfItems": 55
+   "numberOfItems": 56
   }
  ]
 }
@@ -2430,6 +2437,45 @@ input.calc-big{font-size:1.35rem;font-weight:700;font-variant-numeric:tabular-nu
 .up-samples .btn{display:inline-flex;align-items:center;gap:7px;min-height:44px}
 .up-tip{margin:12px 0 0;font-size:.82rem;color:var(--ink-600)}
 
+/* Excel Dashboard Maker */
+.dx-try{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0 4px}
+.dx-how{list-style:none;counter-reset:dx;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:22px 0 0;padding:0}
+.dx-how li{counter-increment:dx;background:var(--paper-2,#f8f7f4);border:1px solid var(--line,#e7e2d9);border-radius:14px;padding:14px 14px 14px 48px;position:relative;font-size:.84rem}
+.dx-how li::before{content:counter(dx);position:absolute;left:14px;top:13px;width:24px;height:24px;border-radius:50%;background:var(--brand-600,#4f46e5);color:#fff;font-weight:700;font-size:.8rem;display:grid;place-items:center}
+.dx-how b{display:block;margin-bottom:2px}.dx-how span{color:var(--ink-500,#6b6357)}
+.dx-pt{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.dx-acts{display:flex;gap:6px;flex-wrap:wrap}
+.dx-sum{font-size:.85rem;margin:0 0 10px;color:var(--ink-600,#4b463e)}
+.dx-cols{display:flex;flex-wrap:wrap;gap:8px}
+.dx-col{display:flex;align-items:center;gap:6px;border:1px solid var(--line,#e7e2d9);border-radius:12px;padding:6px 8px;background:var(--paper,#fff);font-size:.8rem;max-width:100%}
+.dx-col b{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dx-col select{font-size:.75rem;padding:3px 22px 3px 6px;border-radius:8px;min-height:0;width:auto}
+.dx-col.dx-date{border-color:#93c5fd}.dx-col.dx-measure{border-color:#86efac}.dx-col.dx-category{border-color:#fcd34d}.dx-col.dx-entity{border-color:#c4b5fd}.dx-col.dx-id,.dx-col.dx-text{opacity:.7}
+.dx-group+.dx-group{margin-top:14px}
+.dx-group h4{margin:0 0 8px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-500,#6b6357)}
+.dx-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.dx-item{display:flex;flex-direction:column;gap:2px;border:1.5px solid var(--line,#e7e2d9);border-radius:12px;padding:10px 12px 10px 36px;position:relative;cursor:pointer;background:var(--paper,#fff);transition:border-color .15s,background .15s}
+.dx-item input{position:absolute;left:12px;top:12px;width:16px;height:16px;accent-color:var(--brand-600,#4f46e5)}
+.dx-item.on{border-color:var(--brand-600,#4f46e5);background:color-mix(in srgb,var(--brand-600,#4f46e5) 6%,var(--paper,#fff))}
+.dx-item .dx-kind{font-size:.68rem;color:var(--ink-500,#6b6357);text-transform:uppercase;letter-spacing:.05em}
+.dx-item .dx-kind em{font-style:normal;color:#16a34a;font-weight:700;text-transform:none;letter-spacing:0}
+.dx-item b{font-size:.86rem}.dx-item strong{font-size:1.02rem}.dx-item small{font-size:.72rem;color:var(--ink-500,#6b6357)}
+.dx-design{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.dx-design .field:last-child{grid-column:1/-1}
+.dx-themes{display:flex;flex-wrap:wrap;gap:8px}
+.dx-theme{display:flex;align-items:center;gap:3px;border:1.5px solid var(--line,#e7e2d9);border-radius:12px;padding:7px 10px;background:var(--paper,#fff);cursor:pointer;font-size:.8rem;color:inherit}
+.dx-theme i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.dx-theme span{margin-left:5px}
+.dx-theme.on{border-color:var(--brand-600,#4f46e5);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-600,#4f46e5) 18%,transparent)}
+.dx-preview{margin:18px 0}
+.dx-exports{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.dx-exp{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;align-items:start;text-align:left;border:1.5px solid var(--line,#e7e2d9);border-radius:14px;padding:14px;background:var(--paper,#fff);cursor:pointer;color:inherit;font:inherit;transition:border-color .15s,transform .15s}
+.dx-exp:hover{border-color:var(--brand-600,#4f46e5);transform:translateY(-1px)}
+.dx-exp [data-icon]{grid-row:1/3;color:var(--brand-600,#4f46e5);margin-top:2px}
+.dx-exp b{font-size:.92rem}.dx-exp small{font-size:.75rem;color:var(--ink-500,#6b6357);line-height:1.4}
+.dx-exp[disabled]{opacity:.6;cursor:progress}
+@media (max-width:560px){.dx-col b{max-width:110px}.dx-items{grid-template-columns:1fr 1fr}.dx-item{padding:9px 10px 9px 32px}.dx-item input{left:10px}}
+
 /* amount in words */
 .words-out{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .words-fig{font:400 1.7rem/1.15 var(--serif);color:var(--ink-900);margin:0 0 4px;font-variant-numeric:tabular-nums}
@@ -3176,9 +3222,10 @@ main:has(~#seo-about){padding-bottom:8px}
       <section id="emi-calculator"><h3><a href="/tool/emi-calculator" tabindex="-1">EMI Calculator for Home, Car &amp; Personal Loans</a></h3><p>Work out the monthly EMI, total interest and full amortisation schedule of any loan. Add a part payment to see the interest and months you save, and export the schedule to Excel.</p></section>
       <section id="sip-calculator"><h3><a href="/tool/sip-calculator" tabindex="-1">SIP Calculator: Mutual Fund Returns</a></h3><p>See what a monthly SIP or a lumpsum could grow to, plan a step-up SIP, or find the SIP you need for a goal such as ₹1 crore. Year-by-year growth, with inflation if you want it.</p></section>
       <section id="fd-calculator"><h3><a href="/tool/fd-calculator" tabindex="-1">FD Calculator, RD &amp; PPF Maturity Calculator</a></h3><p>Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table.</p></section>
+      <section id="excel-dashboard"><h3><a href="/tool/excel-dashboard" tabindex="-1">Excel Dashboard Maker: Automatic KPIs, Charts and Insights</a></h3><p>Upload an Excel or CSV file: DocBrisk reads your columns, suggests the KPIs and charts that matter, and builds the dashboard. Download it as a live Excel dashboard, HTML, PDF, PNG or a Power BI / Looker Studio kit.</p></section>
   </section>
   <section><h2>Frequently asked questions</h2>
-      <section><h3>Is DocBrisk free?</h3><p>Yes for almost everything. 46 of the 55 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times.</p></section>
+      <section><h3>Is DocBrisk free?</h3><p>Yes for almost everything. 47 of the 56 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times.</p></section>
       <section><h3>Are my documents uploaded to a server?</h3><p>No. All processing happens inside your browser using client-side JavaScript. Your files are read from disk into browser memory and written back out as a download — they are never transmitted. The single exception is Translate PDF, which sends extracted text (not your file) to a public translation service, and says so on the tool page.</p></section>
       <section><h3>Can I edit the existing text in a PDF?</h3><p>Yes. In the PDF Editor choose Edit text, click any line and type. DocBrisk matches the size, colour and font style, removes the original words from the page itself and checks the result pixel by pixel before saving. On scanned pages, or where a font makes in-place removal unsafe, the old line is covered with a matching background colour instead, and the export tells you which lines were handled that way. Replacement text uses the closest standard font: Helvetica, Times or Courier.</p></section>
       <section><h3>How is your redaction different from drawing a black box?</h3><p>Pages containing redactions are rasterised to an image with the black boxes permanently burned in, then re-embedded. The original text objects are discarded entirely, so nothing can be selected, searched, copied or recovered from the exported file.</p></section>
@@ -6799,7 +6846,8 @@ const TOOLS = [
   {"slug":"income-tax-calculator","name":"Income Tax Calculator","tint":"t-rose","icon":"receipt","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"Income Tax Calculator FY 2026-27: New vs Old Regime","blurb":"Compare your tax under the new and old regimes side by side, with the ₹12 lakh rebate, standard deduction, 80C, HRA, 80D and home loan interest. See which regime saves more."},
   {"slug":"emi-calculator","name":"EMI Calculator","tint":"t-cyan","icon":"calculator","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"EMI Calculator for Home, Car & Personal Loans","blurb":"Work out the monthly EMI, total interest and full amortisation schedule of any loan. Add a part payment to see the interest and months you save, and export the schedule to Excel."},
   {"slug":"sip-calculator","name":"SIP Calculator","tint":"t-lime","icon":"trending-up","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"SIP Calculator: Mutual Fund Returns","blurb":"See what a monthly SIP or a lumpsum could grow to, plan a step-up SIP, or find the SIP you need for a goal such as ₹1 crore. Year-by-year growth, with inflation if you want it."},
-  {"slug":"fd-calculator","name":"FD, RD & PPF Calculator","tint":"t-teal","icon":"landmark","badge":"New","isNew":true,"calc":true,"h1":"FD Calculator, RD & PPF Maturity Calculator","blurb":"Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table."}
+  {"slug":"fd-calculator","name":"FD, RD & PPF Calculator","tint":"t-teal","icon":"landmark","badge":"New","isNew":true,"calc":true,"h1":"FD Calculator, RD & PPF Maturity Calculator","blurb":"Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table."},
+  {"slug": "excel-dashboard", "name": "Excel Dashboard Maker", "tint": "t-indigo", "icon": "bar-chart", "badge": "New", "isNew": true, "h1": "Excel Dashboard Maker: Automatic KPIs, Charts and Insights", "blurb": "Upload an Excel or CSV file: DocBrisk reads your columns, suggests the KPIs and charts that matter, and builds the dashboard. Download it as a live Excel dashboard, HTML, PDF, PNG or a Power BI / Looker Studio kit."}
 ];
 
 /* Browsing category per tool, kept as a lookup separate from the TOOLS data
@@ -6819,12 +6867,15 @@ const TOOL_CATEGORIES = {
   'image-compressor':'Photo & ID',
   'gst-calculator':'Calculators & Checks', 'age-calculator':'Calculators & Checks', 'pan-aadhaar-validator':'Calculators & Checks', 'amount-in-words':'Calculators & Checks', 'cgpa-calculator':'Calculators & Checks',
   'salary-slip':'Letters & Forms', 'rent-receipt':'Letters & Forms',
-  'income-tax-calculator':'Money & Tax', 'emi-calculator':'Money & Tax', 'sip-calculator':'Money & Tax', 'fd-calculator':'Money & Tax'
+  'income-tax-calculator':'Money & Tax', 'emi-calculator':'Money & Tax', 'sip-calculator':'Money & Tax', 'fd-calculator':'Money & Tax',
+  'excel-dashboard':'Business & QR'
 };
 TOOLS.forEach(t => { t.cat = TOOL_CATEGORIES[t.slug] || 'More tools'; });
 const TOOL_CATS = ['All', 'Photo & ID', 'Letters & Forms', 'Money & Tax', 'Calculators & Checks', 'Edit & Secure', 'Convert', 'Business & QR'];
 
 const ICONS = {
+  'bar-chart':'<path d="M3 3v18h18"/><path d="M7 16v-5M12 16V7M17 16v-9"/>',
+  'code':'<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>',
   'calculator':'<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14v4M8 18h.01M12 18h.01"/>',
   'trending-up':'<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
   'landmark':'<path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7"/><path d="m12 2 9 5H3Z"/>',
@@ -7261,7 +7312,8 @@ const PDFEngine = (() => {
     'income-tax-calculator': [],
     'emi-calculator': [],
     'sip-calculator': [],
-    'fd-calculator': []
+    'fd-calculator': [],
+    'excel-dashboard': ['XLSX']
   };
   /* Tools that never reach for another library: no reason to fetch the other
      3 MB in the background on someone's mobile data. */
@@ -16858,7 +16910,8 @@ const NEXT_STEPS = {
   'income-tax-calculator': ["salary-slip","rent-receipt","emi-calculator"],
   'emi-calculator': ["income-tax-calculator","sip-calculator","fd-calculator"],
   'sip-calculator': ["fd-calculator","emi-calculator","income-tax-calculator"],
-  'fd-calculator': ["sip-calculator","income-tax-calculator","emi-calculator"]
+  'fd-calculator': ["sip-calculator","income-tax-calculator","emi-calculator"],
+  'excel-dashboard': ["sheet-to-pdf","extract-tables","mail-merge"]
 };
 
 function suggestNext(slug) {
@@ -17733,6 +17786,7 @@ const App = {
     else if (hash === 'tool/emi-calculator') { renderEmi(view); }
     else if (hash === 'tool/sip-calculator') { renderSip(view); }
     else if (hash === 'tool/fd-calculator') { renderDeposit(view); }
+    else if (hash === 'tool/excel-dashboard') { renderExcelDashboard(view); }
     else if (hash === 'guides') { renderGuides(view); }
     else if (hash === 'tool/doc-integrity') { renderIntegrity(view); }
     else if (hash === 'tool/batch-process') { renderBatch(view); }
@@ -17961,7 +18015,8 @@ const SEO_PAGES = {
   "income-tax-calculator": {"t":"Income Tax Calculator FY 2026-27: New vs Old Regime | DocBrisk","d":"Free income tax calculator for FY 2026-27 and 2025-26. Compare the new and old regime, with the ₹12 lakh rebate, ₹75,000 standard deduction, 80C and HRA.","h":"How to calculate your income tax","s":["Choose your age group and enter your gross salary and other income","Add 80C, HRA, 80D and home loan interest if you are weighing the old regime","Compare the tax under both regimes and see which one saves more"],"f":[["Is income up to ₹12 lakh tax-free in the new regime?","Yes. Under the new regime a resident individual with taxable income up to ₹12 lakh pays no tax because of the rebate of up to ₹60,000. A salaried person also gets the ₹75,000 standard deduction, so a salary of up to ₹12.75 lakh is tax-free."],["Which is better, the new or the old tax regime?","It depends on your deductions. With few deductions the new regime is almost always cheaper. The old regime can win when you claim large amounts for HRA, 80C, 80D and home loan interest. The calculator shows the deductions you would need for the old regime to break even."],["Did Budget 2026 change the tax slabs?","No. Budget 2026 kept the slabs, the ₹12 lakh rebate limit and the standard deduction unchanged, so FY 2026-27 uses the same rates as FY 2025-26."]]},
   "emi-calculator": {"t":"EMI Calculator: Home, Car & Personal Loan EMI | DocBrisk","d":"Calculate the EMI, total interest and amortisation schedule of a home, car, personal or education loan. See how much a part payment saves. Free, no sign-up.","h":"How to calculate a loan EMI","s":["Enter the loan amount, the interest rate and the tenure","Read the EMI, total interest and the year-wise schedule","Add a monthly or one-time prepayment to see the interest and months saved"],"f":[["How is EMI calculated?","EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r the monthly interest rate (annual rate ÷ 12 ÷ 100) and n the number of months. A ₹30 lakh loan at 8.5% for 20 years has an EMI of ₹26,035."],["Does prepaying a home loan save interest?","Yes. A part payment goes straight to the principal, so every later EMI carries less interest. On a ₹30 lakh, 20-year loan at 8.5%, paying ₹5 lakh extra after the first year cuts about ₹14 lakh of interest and 6 years of EMIs."],["Can I download the EMI schedule?","Yes. The schedule button saves every EMI with its principal, interest, prepayment and balance as a CSV file that opens in Excel or Google Sheets."]]},
   "sip-calculator": {"t":"SIP Calculator: Mutual Fund SIP & Lumpsum Returns | DocBrisk","d":"Estimate the returns of a monthly SIP, a lumpsum or a step-up SIP, or find the SIP you need for a goal like ₹1 crore. Year-by-year growth. Free and private.","h":"How to use the SIP calculator","s":["Pick SIP, lumpsum, step-up SIP or the goal planner","Enter the amount, the expected return and the number of years","Read the invested amount, the estimated returns and the year-by-year growth"],"f":[["How is SIP return calculated?","FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), where P is the monthly SIP, i the monthly return (annual rate ÷ 12 ÷ 100) and n the number of months. ₹5,000 a month for 10 years at 12% comes to about ₹11.6 lakh on ₹6 lakh invested."],["How much SIP is needed for ₹1 crore?","At an assumed 12% a year, about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years. The goal planner works it out for any target."],["What is a step-up SIP?","A SIP that grows by a fixed percentage every year, usually in line with your salary. ₹10,000 a month raised 10% every year for 20 years at 12% grows to about ₹1.99 crore, double a flat SIP."]]},
-  "fd-calculator": {"t":"FD Calculator, RD & PPF Calculator: Maturity Amount | DocBrisk","d":"Calculate the maturity amount of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a PPF account at 7.1%. Free, instant, private.","h":"How to calculate FD, RD or PPF maturity","s":["Choose FD, RD or PPF","Enter the amount, the interest rate and the period","Read the maturity value and the interest earned"],"f":[["How is FD interest calculated?","Most banks compound FD interest every quarter: maturity = P × (1 + r ÷ 400)^(4 × years). ₹1 lakh at 7% for 1 year becomes ₹1,07,186."],["How is RD maturity calculated?","Each monthly instalment earns quarterly compounded interest for the months it stays in the account, and the instalments are added up. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100."],["What will ₹1.5 lakh a year in PPF give after 15 years?","At the current 7.1%, about ₹40.68 lakh: ₹22.5 lakh deposited and ₹18.18 lakh of tax-free interest."]]}
+  "fd-calculator": {"t":"FD Calculator, RD & PPF Calculator: Maturity Amount | DocBrisk","d":"Calculate the maturity amount of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a PPF account at 7.1%. Free, instant, private.","h":"How to calculate FD, RD or PPF maturity","s":["Choose FD, RD or PPF","Enter the amount, the interest rate and the period","Read the maturity value and the interest earned"],"f":[["How is FD interest calculated?","Most banks compound FD interest every quarter: maturity = P × (1 + r ÷ 400)^(4 × years). ₹1 lakh at 7% for 1 year becomes ₹1,07,186."],["How is RD maturity calculated?","Each monthly instalment earns quarterly compounded interest for the months it stays in the account, and the instalments are added up. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100."],["What will ₹1.5 lakh a year in PPF give after 15 years?","At the current 7.1%, about ₹40.68 lakh: ₹22.5 lakh deposited and ₹18.18 lakh of tax-free interest."]]},
+  "excel-dashboard": {"t": "Excel Dashboard Maker: Auto KPI Dashboard from Excel or CSV | DocBrisk", "d": "Turn any Excel or CSV file into a dashboard in seconds: suggested KPIs, trend and breakdown charts, filters and insights. Download a live Excel dashboard, HTML, PDF or a Power BI kit. Free and private.", "h": "How to make a dashboard from an Excel sheet", "s": ["Upload your Excel or CSV file, or try the sample sales data", "Tick the suggested KPIs and charts, and pick a theme", "Download a live Excel dashboard, an HTML dashboard, a PDF, a PNG, or a Power BI / Looker Studio kit"], "f": [["Which files work?", "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."], ["Is the Excel dashboard live?", "Yes. The KPI cards and charts are formulas over the Data sheet, so when you paste new rows and recalculate, every number and chart updates."], ["Can I use it with Power BI or Looker Studio?", "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."], ["Is my data uploaded?", "No. The file is read and the dashboard is built inside your browser."]]}
 };
 
 /* The privacy question every tool gets, phrased for that tool. */
@@ -18121,6 +18176,7 @@ const toolMeta = (slug) => TOOLS.find(t => t.slug === slug) || { name: slug, blu
    ========================================================================== */
 const UploadGuide = (() => {
   const G = {
+    'excel-dashboard': {title: "What file works best", items: [["table", "One table per sheet", "Row 1 (or the first row under a title) holds the column names; every row below is one sale, invoice, employee or entry. Leave out merged cells and subtotal rows."], ["calendar", "A date column helps", "A column such as Order Date or Month turns on trends, growth versus last month and period filters."], ["trending-up", "Numbers and categories", "Amounts (Revenue, Cost, Units, Salary) become KPIs; text columns such as Region, Product or Status become breakdowns and filters."]], tip: "Exports from Tally, Zoho, Shopify, Google Sheets, a bank or any CRM work as they are. Download the sample to see the ideal shape."},
     'mail-merge': {
       title: 'You need two files',
       items: [
@@ -18628,7 +18684,8 @@ const SEARCH_ALIASES = {
   'income-tax-calculator': "income tax calculator new regime old regime tax slab fy 2026-27 2025-26 salary tax 87a rebate 12 lakh standard deduction 75000 80c hra tds itr aaykar kitna tax lagega",
   'emi-calculator': "emi calculator loan home loan car loan personal loan education loan interest amortisation schedule prepayment part payment kist emi kaise nikale",
   'sip-calculator': "sip calculator mutual fund returns lumpsum step up sip goal 1 crore investment compounding monthly sip return calculator",
-  'fd-calculator': "fd calculator fixed deposit rd recurring deposit ppf calculator maturity interest bank post office quarterly compounding sukanya"
+  'fd-calculator': "fd calculator fixed deposit rd recurring deposit ppf calculator maturity interest bank post office quarterly compounding sukanya",
+  'excel-dashboard': "excel dashboard maker kpi dashboard generator dashboard from excel csv automatic dashboard mis report sales dashboard chart graph power bi looker studio data analysis insights pivot analytics business intelligence"
 };
 const toolHaystack = (t) => (t.name + ' ' + (t.h1 || '') + ' ' + t.blurb + ' ' + t.slug.replace(/-/g, ' ') + ' ' +
   (SEARCH_ALIASES[t.slug] || '')).toLowerCase();
@@ -25061,7 +25118,13 @@ const LANDINGS = {
   "ppf-calculator": {"tool":"fd-calculator","opts":{"tab":"ppf"},"h1":"PPF Calculator","t":"PPF Calculator 2026: Maturity at 7.1% for 15+ Years | DocBrisk","d":"Calculate your PPF maturity amount and tax-free interest at 7.1%, for 15 years or extended in 5-year blocks, with a year-by-year table. Free.","lead":"Set to PPF already. Enter your yearly deposit.","body":["The PPF rate is 7.1% for October to December 2026. Depositing ₹1.5 lakh every year for 15 years builds about ₹40.68 lakh: ₹22.5 lakh of your money and about ₹18.18 lakh of interest, all tax-free.","After 15 years you can extend the account in 5-year blocks, with or without new deposits. Keep depositing ₹1.5 lakh and it reaches about ₹66.6 lakh at 20 years and ₹1.03 crore at 25."],"f":[["What is the maximum PPF deposit?","₹1,50,000 in a financial year, in one go or in instalments. The minimum is ₹500."],["When should I deposit in PPF?","Before the 5th of the month, and ideally before 5 April, so the deposit earns interest for the whole year."],["Is PPF interest taxable?","No. PPF is tax-free at every stage: deposits qualify for 80C in the old regime, and the interest and maturity are exempt."]],"kw":["ppf calculator","ppf interest calculator","ppf maturity calculator","public provident fund calculator","ppf calculator 2026","ppf return calculator"],"rel":["rd-calculator"]},
   "tax-on-12-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"1200000","other":"0"},"h1":"Income Tax on ₹12 Lakh Salary","t":"Income Tax on 12 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"How much tax on a ₹12 lakh salary in FY 2026-27? Nil in the new regime thanks to the ₹12 lakh rebate. See the old regime figure and your own numbers.","lead":"Set to a ₹12 lakh salary. Add your own income and deductions.","body":["A ₹12 lakh salary pays no income tax in the new regime. After the ₹75,000 standard deduction, the taxable income is ₹11.25 lakh, and the rebate for taxable income up to ₹12 lakh cancels the ₹52,500 of slab tax. In fact any salary up to ₹12.75 lakh is tax-free.","In the old regime the same salary pays ₹1,63,800 with no deductions, or about ₹1,01,400 with ₹2.25 lakh of 80C, 80D and NPS. The new regime wins unless you have very large deductions."],"f":[["Is a 12 lakh salary tax-free?","Yes, in the new regime, for a resident individual whose only income is the salary."],["What if I also have interest income?","It is added to your income. If the taxable total goes over ₹12 lakh, tax applies, with marginal relief so the tax never exceeds the amount above ₹12 lakh."],["Will my employer still deduct TDS?","If you choose the new regime and your projected taxable income stays within ₹12 lakh, there should be no TDS on salary."]],"kw":["income tax on 12 lakh salary","12 lakh salary tax","12 lakh income tax new regime","tax on 12.75 lakh salary","12 lakh tax free","12 lakh salary tax calculation"],"rel":["tax-on-15-lakh-salary","tax-on-20-lakh-salary"]},
   "tax-on-15-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"1500000","other":"0"},"h1":"Income Tax on ₹15 Lakh Salary","t":"Income Tax on 15 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"Tax on a ₹15 lakh salary in FY 2026-27 is ₹97,500 in the new regime. Compare it with the old regime and your own deductions. Free calculator.","lead":"Set to a ₹15 lakh salary. Add your own income and deductions.","body":["On a ₹15 lakh salary the new regime tax is ₹97,500 including cess. The taxable income is ₹14.25 lakh after the ₹75,000 standard deduction: nil up to ₹4 lakh, ₹20,000 on the next ₹4 lakh, ₹40,000 on the next ₹4 lakh and ₹33,750 on the last ₹2.25 lakh, plus 4% cess.","In the old regime the same salary pays ₹2,57,400 with no deductions and about ₹1,87,200 with ₹2.25 lakh of deductions. You would need roughly ₹5.45 lakh of old-regime deductions for the two to break even."],"f":[["How much is the monthly tax on 15 lakh?","About ₹8,125 a month in the new regime."],["Can HRA make the old regime better at 15 lakh?","Only if HRA, 80C, 80D, home loan interest and other deductions together come to roughly ₹5.45 lakh or more. Enter yours to check."],["Is the employer's NPS contribution allowed in the new regime?","Yes, up to 14% of basic pay. It lowers the taxable income in both regimes."]],"kw":["income tax on 15 lakh salary","15 lakh salary tax new regime","tax on 15 lakh income","15 lakh salary tax calculation","15 lakh ctc tax","tax for 15 lakh package"],"rel":["tax-on-12-lakh-salary","tax-on-20-lakh-salary"]},
-  "tax-on-20-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"2000000","other":"0"},"h1":"Income Tax on ₹20 Lakh Salary","t":"Income Tax on 20 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"Tax on a ₹20 lakh salary in FY 2026-27 is ₹1,92,400 in the new regime. Compare it with the old regime, slab by slab, with your deductions.","lead":"Set to a ₹20 lakh salary. Add your own income and deductions.","body":["A ₹20 lakh salary pays ₹1,92,400 in the new regime, including cess: the taxable income is ₹19.25 lakh after the standard deduction, and the slabs charge 5%, 10%, 15% and then 20% on the part above ₹16 lakh.","In the old regime it is ₹4,13,400 with no deductions, and still about ₹2,96,400 with ₹3.75 lakh of deductions including a home loan. At this income the old regime only wins with very large HRA and home loan claims."],"f":[["What is the monthly tax on 20 lakh?","About ₹16,033 a month in the new regime."],["Which tax slab is a 20 lakh salary in?","In the new regime the top slab reached is 20% (₹16 to 20 lakh). In the old regime it is 30% (above ₹10 lakh)."],["Does surcharge apply at 20 lakh?","No. Surcharge starts only when income is above ₹50 lakh."]],"kw":["income tax on 20 lakh salary","20 lakh salary tax new regime","tax on 20 lakh income","20 lakh ctc tax","20 lakh salary tax calculation","tax for 20 lakh package"],"rel":["tax-on-15-lakh-salary","tax-on-12-lakh-salary"]}
+  "tax-on-20-lakh-salary": {"tool":"income-tax-calculator","opts":{"salary":"2000000","other":"0"},"h1":"Income Tax on ₹20 Lakh Salary","t":"Income Tax on 20 Lakh Salary: New vs Old Regime 2026-27 | DocBrisk","d":"Tax on a ₹20 lakh salary in FY 2026-27 is ₹1,92,400 in the new regime. Compare it with the old regime, slab by slab, with your deductions.","lead":"Set to a ₹20 lakh salary. Add your own income and deductions.","body":["A ₹20 lakh salary pays ₹1,92,400 in the new regime, including cess: the taxable income is ₹19.25 lakh after the standard deduction, and the slabs charge 5%, 10%, 15% and then 20% on the part above ₹16 lakh.","In the old regime it is ₹4,13,400 with no deductions, and still about ₹2,96,400 with ₹3.75 lakh of deductions including a home loan. At this income the old regime only wins with very large HRA and home loan claims."],"f":[["What is the monthly tax on 20 lakh?","About ₹16,033 a month in the new regime."],["Which tax slab is a 20 lakh salary in?","In the new regime the top slab reached is 20% (₹16 to 20 lakh). In the old regime it is 30% (above ₹10 lakh)."],["Does surcharge apply at 20 lakh?","No. Surcharge starts only when income is above ₹50 lakh."]],"kw":["income tax on 20 lakh salary","20 lakh salary tax new regime","tax on 20 lakh income","20 lakh ctc tax","20 lakh salary tax calculation","tax for 20 lakh package"],"rel":["tax-on-15-lakh-salary","tax-on-12-lakh-salary"]},
+  /* ---------- Excel Dashboard Maker ---------- */
+  "sales-dashboard-excel": {"h1": "Sales Dashboard from Excel, Made Automatically", "t": "Sales Dashboard in Excel: Make One Automatically from Your Data | DocBrisk", "d": "Upload your sales sheet and get revenue, growth, profit, top products, regions and sales reps as a ready dashboard. Download as a live Excel dashboard, HTML or PDF. Free.", "lead": "Upload a sales export with dates, products, regions and amounts: the KPIs and charts are picked for you.", "body": ["A good sales dashboard answers four questions at a glance: how much did we sell, is it growing, where does it come from, and who or what is driving it. DocBrisk finds the revenue, cost and quantity columns in your sheet and builds exactly those views: total revenue and profit with growth against last month, a monthly trend, region and channel breakdowns, and the top products and sales reps.", "The Excel download is a real dashboard, not a picture: the KPI cards and charts are formulas and native Excel charts over a Data sheet, so next month you paste the new rows and it updates."], "f": [["What columns does a sales dashboard need?", "A date, an amount (revenue or sales), and at least one category such as product, region, channel or sales rep. Cost and units add profit, margin and price per unit."], ["Can I filter by region or month?", "Yes. Filters for the main categories and a date range are added automatically, in the preview and in the HTML dashboard."], ["Does it work with Tally or Zoho exports?", "Yes. Export the sales register to Excel and upload it. A title block above the header row is skipped automatically."]], "kw": ["sales dashboard in excel", "excel sales dashboard", "sales dashboard maker", "sales report dashboard", "sales dashboard template", "monthly sales dashboard"], "rel": ["kpi-dashboard-generator", "mis-report-dashboard"], "tool": "excel-dashboard"},
+  "kpi-dashboard-generator": {"h1": "KPI Dashboard Generator", "t": "KPI Dashboard Generator: Suggested KPIs from Your Excel Data | DocBrisk", "d": "Upload a spreadsheet and get the right KPIs suggested for it: totals, growth, margins, completion rates and top performers. Pick them and download the dashboard. Free.", "lead": "Not sure which KPIs to track? Upload your data and DocBrisk suggests them, with the formula for each.", "body": ["Choosing KPIs is the hard part of any dashboard. DocBrisk reads each column's name and values to work out what it means: money, quantities, dates, regions, products, people or statuses. From that it proposes headline numbers, trends, breakdowns and rankings, and derived KPIs such as profit, profit margin, target achievement and completion rate.", "Every suggestion shows how it is calculated, and you tick only the ones you want. The dashboard is rebuilt instantly as you choose."], "f": [["What is a KPI dashboard?", "A one-page view of the few numbers that show how a business or team is doing, such as revenue, growth, margin and target achievement, with charts that explain them."], ["How are the KPIs chosen?", "From the column names and the data: amounts become totals and averages, a date adds growth and trends, categories add breakdowns, and pairs such as revenue and cost add profit and margin."], ["Can I change a column's meaning?", "Yes. Each column shows how it was read (date, number, category, name, ID); change any that are wrong and the suggestions update."]], "kw": ["kpi dashboard generator", "kpi dashboard", "kpi dashboard in excel", "kpi dashboard template", "kpi report maker", "business kpi dashboard"], "rel": ["sales-dashboard-excel", "mis-report-dashboard"], "tool": "excel-dashboard"},
+  "mis-report-dashboard": {"h1": "MIS Report Dashboard from Excel", "t": "MIS Report Dashboard: Turn Excel MIS into Charts and KPIs | DocBrisk", "d": "Make a monthly MIS report dashboard from your Excel data in minutes: KPIs with month-on-month change, trends, breakdowns and written insights. Download as PDF or a live Excel workbook.", "lead": "Upload the month's MIS data and get a management-ready dashboard with month-on-month change and written insights.", "body": ["A monthly MIS report usually takes hours of pivot tables and copy-pasted charts. Upload the raw data instead: DocBrisk builds the KPI cards with change against last month, the trend charts and the breakdowns by branch, product or department, and writes the key insights in plain English.", "Send the PDF to management, keep the Excel workbook as next month's template, or share the HTML dashboard that anyone can open and filter."], "f": [["What is an MIS dashboard?", "A management information system report in visual form: the period's key numbers, how they changed, and where they came from."], ["Can I make the MIS report every month?", "Yes. Keep the downloaded Excel dashboard, paste next month's rows into its Data sheet and recalculate, or upload the new file here."], ["Are the insights written automatically?", "Yes: growth against the previous period, the best period, the biggest contributors and how concentrated the results are."]], "kw": ["mis report in excel", "mis report dashboard", "mis report format", "monthly mis report", "mis dashboard", "management report dashboard"], "rel": ["sales-dashboard-excel", "kpi-dashboard-generator"], "tool": "excel-dashboard"},
+  "power-bi-dashboard-from-excel": {"h1": "Power BI Dashboard from Excel: Free Starter Kit", "t": "Power BI Dashboard from Excel: Free Kit with DAX Measures & Theme | DocBrisk", "d": "Upload Excel and get a Power BI starter kit: clean data, ready DAX measures, a date table, a matching theme file and a step-by-step visual build guide. Looker Studio kit too.", "lead": "Upload your Excel file, pick the KPIs, and download the Power BI kit: data, DAX measures, theme and build guide.", "body": ["Building a Power BI report from a spreadsheet means cleaning the data, writing DAX measures, creating a date table and choosing a layout. The kit does that groundwork: data.csv with clean headers and proper dates, measures.dax with a measure for every KPI (and month-on-month growth), a date table formula, a theme.json in your chosen colours, and a guide listing each visual and its fields.", "The same file also exports a Looker Studio kit with calculated fields, and an HTML dashboard that shows the finished layout before you build it."], "f": [["Does it create a .pbix file?", "No: a .pbix can only be saved by Power BI Desktop. The kit gives you everything to build it in about 15 minutes: data, measures, theme and a step-by-step guide."], ["Which DAX measures are included?", "A measure for every KPI you picked: SUM, AVERAGE, COUNTROWS, DISTINCTCOUNT, DIVIDE-based margins and achievement, plus month-on-month change using a date table."], ["Is there a Looker Studio version?", "Yes. The Looker Studio kit has the clean data, calculated-field formulas and a build guide."]], "kw": ["power bi dashboard from excel", "excel to power bi", "power bi dashboard template", "dax measures for sales", "looker studio dashboard from excel", "power bi starter kit"], "rel": ["kpi-dashboard-generator", "excel-to-html-dashboard"], "tool": "excel-dashboard"},
+  "excel-to-html-dashboard": {"h1": "Interactive HTML Dashboard from Excel", "t": "Excel to HTML Dashboard: Interactive Charts in One File | DocBrisk", "d": "Convert an Excel sheet into an interactive HTML, CSS and JavaScript dashboard with filters and charts in a single file that works offline. Free, no coding.", "lead": "Upload Excel and download a single HTML file: an interactive dashboard with filters that opens in any browser.", "body": ["The HTML dashboard is one self-contained file: your data, the charts and the filters are all inside it. Open it on a laptop or phone, email it, or put it on any web host or intranet. It needs no internet connection, no login and no Power BI licence.", "Charts are crisp SVG, the layout adapts to small screens, and the filters for region, product or month recalculate every card and chart instantly."], "f": [["Do I need to know coding?", "No. Pick the KPIs and a theme; the HTML, CSS and JavaScript are written for you."], ["Can I host it on my website?", "Yes. Upload the single .html file to any web host, Google Drive or an intranet."], ["Does it work offline?", "Yes. Everything, including the data, is inside the file."]], "kw": ["excel to html dashboard", "html dashboard from excel", "interactive dashboard html", "javascript dashboard from excel", "dashboard in html css js", "offline dashboard"], "rel": ["power-bi-dashboard-from-excel", "sales-dashboard-excel"], "tool": "excel-dashboard"}
 };
 
 /* Render a landing page: the real tool, already set up, with its own copy. */
@@ -25076,7 +25139,8 @@ function renderLanding(view, slug, again) {
     'pan-aadhaar-validator': renderIdValidator, 'gstin-validator': renderGstin, 'organize-pdf': renderOrganize,
     'gst-calculator': (v) => renderGstCalc(v, L.opts), 'age-calculator': (v) => renderAgeCalc(v, L.opts),
     'amount-in-words': (v) => renderAmountWords(v, L.opts), 'cgpa-calculator': (v) => renderCgpa(v, L.opts),
-    'income-tax-calculator': (v) => renderIncomeTax(v, L.opts), 'emi-calculator': (v) => renderEmi(v, L.opts), 'sip-calculator': (v) => renderSip(v, L.opts), 'fd-calculator': (v) => renderDeposit(v, L.opts)
+    'income-tax-calculator': (v) => renderIncomeTax(v, L.opts), 'emi-calculator': (v) => renderEmi(v, L.opts), 'sip-calculator': (v) => renderSip(v, L.opts), 'fd-calculator': (v) => renderDeposit(v, L.opts),
+    'excel-dashboard': renderExcelDashboard
   };
   (custom[L.tool] || ((v) => TOOL_DEFS[L.tool] ? renderStandardTool(v, L.tool) : renderHome(v)))(view);
 
@@ -26872,6 +26936,1354 @@ function renderIncomeTax(view, opts) {
 }
 
 /* ==========================================================================
+   Excel Dashboard Maker: the dashboard runtime.
+   Self-contained on purpose: the same function draws the live preview here
+   and is embedded in the downloaded HTML dashboard, so the file works
+   offline, filters included, exactly like the preview.
+   payload = { title, subtitle, theme, cols:[{label,type,unit}], rows:[[...]],
+               items:[{id,kind,title,value,dim,date,grain,top,wide}], filters:[colIndex], dateCol }
+   value = { calc:'sum'|'avg'|'count'|'distinct'|'ratio'|'margin'|'diff'|'share', m, a, b, c, vals, unit }
+   ========================================================================== */
+const DASH_RUNTIME = function () {
+  'use strict';
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const THEMES = {
+    corporate: { name: 'Corporate Blue', bg: '#f4f6fb', card: '#ffffff', ink: '#0f172a', mute: '#64748b', line: '#e2e8f0', accent: '#2563eb', head: '#0f2a5f', headInk: '#ffffff',
+      pal: ['#2563eb', '#0ea5e9', '#14b8a6', '#f59e0b', '#8b5cf6', '#ef4444', '#64748b', '#22c55e', '#ec4899', '#a3a3a3'] },
+    emerald: { name: 'Emerald', bg: '#f2f8f5', card: '#ffffff', ink: '#052e1f', mute: '#4b6358', line: '#d8e8df', accent: '#059669', head: '#064e3b', headInk: '#ffffff',
+      pal: ['#059669', '#0d9488', '#84cc16', '#f59e0b', '#0284c7', '#e11d48', '#6b7280', '#a855f7', '#14b8a6', '#a3a3a3'] },
+    midnight: { name: 'Midnight', bg: '#0b1220', card: '#121b2e', ink: '#e5edf8', mute: '#8da0bb', line: '#24324d', accent: '#38bdf8', head: '#0f1a30', headInk: '#e5edf8',
+      pal: ['#38bdf8', '#a78bfa', '#34d399', '#fbbf24', '#f472b6', '#fb7185', '#94a3b8', '#4ade80', '#22d3ee', '#cbd5e1'] },
+    sunset: { name: 'Sunset', bg: '#fdf6f0', card: '#ffffff', ink: '#2a1408', mute: '#7c5a45', line: '#f1e0d2', accent: '#ea580c', head: '#7c2d12', headInk: '#ffffff',
+      pal: ['#ea580c', '#f59e0b', '#dc2626', '#db2777', '#7c3aed', '#0891b2', '#78716c', '#65a30d', '#f97316', '#a3a3a3'] },
+    mono: { name: 'Monochrome', bg: '#f5f5f4', card: '#ffffff', ink: '#111111', mute: '#666666', line: '#e5e5e5', accent: '#111111', head: '#111111', headInk: '#ffffff',
+      pal: ['#111111', '#525252', '#a3a3a3', '#2563eb', '#d4d4d4', '#737373', '#404040', '#e5e5e5', '#262626', '#bdbdbd'] }
+  };
+  const escH = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const trunc = (s, n) => { s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
+
+  /* ---------------- numbers ---------------- */
+  function compact(n) {
+    const a = Math.abs(n), s = n < 0 ? '-' : '';
+    const f = (v, u) => s + (v >= 100 ? Math.round(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)).toString().replace(/\.0+$|(\.\d*?)0+$/, '$1') + u;
+    if (a >= 1e7) return f(a / 1e7, ' Cr');
+    if (a >= 1e5) return f(a / 1e5, ' L');
+    if (a >= 1e3) return s + Math.round(a).toLocaleString('en-IN');
+    return s + (a >= 100 ? Math.round(a) : +a.toFixed(2)).toLocaleString('en-IN');
+  }
+  function fmt(n, unit, full) {
+    if (n == null || !isFinite(n)) return '–';
+    if (unit === 'pct') return (Math.abs(n) >= 100 ? Math.round(n) : n.toFixed(1)) + '%';
+    const body = full ? (Math.abs(n) >= 100 ? Math.round(n) : +n.toFixed(2)).toLocaleString('en-IN') : compact(n);
+    return unit === 'inr' ? (n < 0 ? '-₹' + body.replace(/^-/, '') : '₹' + body) : body;
+  }
+
+  /* ---------------- time ---------------- */
+  function grainFor(minIso, maxIso) {
+    const d = (Date.parse(maxIso) - Date.parse(minIso)) / 864e5;
+    return d > 6 * 366 ? 'year' : d > 2.2 * 366 ? 'quarter' : d > 75 ? 'month' : d > 20 ? 'week' : 'day';
+  }
+  function periodKey(iso, g) {
+    if (!iso) return '';
+    if (g === 'year') return iso.slice(0, 4);
+    if (g === 'quarter') return iso.slice(0, 4) + '-Q' + (Math.floor((+iso.slice(5, 7) - 1) / 3) + 1);
+    if (g === 'month') return iso.slice(0, 7);
+    if (g === 'week') { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7)); return d.toISOString().slice(0, 10); }
+    return iso.slice(0, 10);
+  }
+  function periodLabel(k, g) {
+    if (g === 'year') return k;
+    if (g === 'quarter') return k.slice(5) + ' ' + k.slice(0, 4);
+    if (g === 'month') return MON[+k.slice(5, 7) - 1] + ' ' + k.slice(0, 4);
+    return (+k.slice(8, 10)) + ' ' + MON[+k.slice(5, 7) - 1] + (g === 'week' ? '' : '');
+  }
+  const GRAIN_WORD = { year: 'year', quarter: 'quarter', month: 'month', week: 'week', day: 'day' };
+
+  /* ---------------- measures ---------------- */
+  const num = (v) => (typeof v === 'number' && isFinite(v) ? v : null);
+  function measure(rows, v) {
+    let s = 0, n = 0, sa = 0, sb = 0, hit = 0;
+    switch (v.calc) {
+      case 'count': return rows.length;
+      case 'distinct': { const set = new Set(); rows.forEach(r => { const x = r[v.c]; if (x !== '' && x != null) set.add(x); }); return set.size; }
+      case 'sum': rows.forEach(r => { const x = num(r[v.m]); if (x != null) s += x; }); return s;
+      case 'avg': rows.forEach(r => { const x = num(r[v.m]); if (x != null) { s += x; n++; } }); return n ? s / n : null;
+      case 'ratio': case 'margin': case 'diff':
+        rows.forEach(r => { const a = num(r[v.a]), b = num(r[v.b]); if (a != null) sa += a; if (b != null) sb += b; });
+        if (v.calc === 'diff') return sa - sb;
+        if (v.calc === 'ratio') return sb ? sa / sb * 100 : null;
+        return sa ? (sa - sb) / sa * 100 : null;
+      case 'share': { const set = new Set(v.vals || []); rows.forEach(r => { if (set.has(r[v.c])) hit++; }); return rows.length ? hit / rows.length * 100 : null; }
+      default: return null;
+    }
+  }
+  function groupBy(rows, ci, v, top, others) {
+    const g = new Map();
+    rows.forEach(r => { const k = r[ci] === '' || r[ci] == null ? '(blank)' : r[ci]; if (!g.has(k)) g.set(k, []); g.get(k).push(r); });
+    let out = [...g.entries()].map(([k, rs]) => ({ k, label: String(k), v: measure(rs, v), rows: rs.length }));
+    out.sort((a, b) => (b.v || 0) - (a.v || 0));
+    if (top && out.length > top) {
+      const head = out.slice(0, others ? top - 1 : top);
+      if (others && ['sum', 'count'].includes(v.calc)) {
+        const rest = out.slice(top - 1).reduce((a, x) => a + (x.v || 0), 0);
+        head.push({ k: '__others', label: 'Others', v: rest });
+      }
+      out = head;
+    }
+    return out;
+  }
+  function timeSeries(rows, di, v, g) {
+    const m = new Map();
+    rows.forEach(r => { const k = periodKey(r[di], g); if (!k) return; if (!m.has(k)) m.set(k, []); m.get(k).push(r); });
+    return [...m.keys()].sort().map(k => ({ k, label: periodLabel(k, g), v: measure(m.get(k), v) }));
+  }
+
+  /* A last period with far fewer days of data than usual (a month that is still
+     running) would show a false drop; growth figures use complete periods only. */
+  // Judged by the calendar (how far into its last period the data reaches), not by row counts,
+  // so a thin filter (one region, one product) is never mistaken for a part month.
+  let maxDate = '', monthly = false;
+  function dropPartial(rows, di, g, ts) {
+    if (ts.length < 3 || g === 'day' || !maxDate || (monthly && g !== 'week')) return ts;   // month-level data is never part-filled
+    const last = ts[ts.length - 1];
+    if (last.k !== periodKey(maxDate, g)) return ts;
+    const d = new Date(maxDate + 'T00:00:00Z'), day = d.getUTCDate(), mon = d.getUTCMonth();
+    const partial = g === 'week' ? ((d.getUTCDay() + 6) % 7) < 4 : g === 'month' ? day < 21 : g === 'quarter' ? (mon % 3 === 0 || (mon % 3 === 1 && day < 15)) : g === 'year' ? mon < 9 : false;
+    return partial ? ts.slice(0, -1) : ts;
+  }
+
+  /* ---------------- charts (SVG) ---------------- */
+  function niceTicks(lo, hi, n) {
+    if (hi === lo) hi = lo + 1;
+    const raw = (hi - lo) / (n || 4), p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+    const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+    const a = Math.floor(lo / step) * step, b = Math.ceil(hi / step) * step, out = [];
+    for (let x = a; x <= b + step / 2; x += step) out.push(+x.toFixed(10));
+    return out;
+  }
+  const W = 640, H = 300;
+  const svgOpen = (t, extra) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="100%" role="img" font-family="Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif" ${extra || ''}><desc>${escH(t || '')}</desc>`;
+  function yAxis(ticks, y, L, R, th, unit) {
+    return ticks.map(t => `<line x1="${L}" x2="${W - R}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="${th.line}" stroke-width="1"/>` +
+      `<text x="${L - 8}" y="${(y(t) + 4).toFixed(1)}" text-anchor="end" font-size="11" fill="${th.mute}">${escH(fmt(t, unit))}</text>`).join('');
+  }
+  function bar(series, th, unit, title) {
+    const L = 64, R = 14, T = 18, B = series.length > 7 ? 74 : 44, n = Math.max(1, series.length);
+    const vals = series.map(s => s.v || 0), lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+    const ticks = niceTicks(lo, hi, 4), y0 = ticks[0], y1 = ticks[ticks.length - 1];
+    const y = (v) => T + (H - T - B) * (1 - (v - y0) / (y1 - y0 || 1));
+    const slot = (W - L - R) / n, bw = Math.min(56, slot * 0.66);
+    let s = svgOpen(title) + yAxis(ticks, y, L, R, th, unit);
+    series.forEach((d, i) => {
+      const x = L + slot * i + (slot - bw) / 2, v = d.v || 0, top = y(Math.max(v, 0)), h = Math.abs(y(v) - y(0));
+      s += `<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.5, h).toFixed(1)}" rx="3" fill="${d.k === '__others' ? th.mute : th.pal[0]}"><title>${escH(d.label)}: ${escH(fmt(v, unit, true))}</title></rect>`;
+      if (n <= 12) s += `<text x="${(x + bw / 2).toFixed(1)}" y="${(v >= 0 ? top - 5 : top + h + 13).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="600" fill="${th.ink}">${escH(fmt(v, unit))}</text>`;
+      const lx = x + bw / 2, ly = H - B + 16;
+      s += n > 7 ? `<text transform="translate(${lx.toFixed(1)},${ly}) rotate(-35)" text-anchor="end" font-size="11" fill="${th.mute}">${escH(trunc(d.label, 14))}</text>`
+        : `<text x="${lx.toFixed(1)}" y="${ly}" text-anchor="middle" font-size="11" fill="${th.mute}">${escH(trunc(d.label, 12))}</text>`;
+    });
+    return s + `<line x1="${L}" x2="${W - R}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}" stroke="${th.mute}" stroke-width="1"/></svg>`;
+  }
+  function hbar(series, th, unit, title) {
+    const L = 150, R = 70, T = 10, B = 10, n = Math.max(1, series.length), rowH = (H - T - B) / n, bh = Math.min(24, rowH * 0.66);
+    const hi = Math.max(0, ...series.map(s => s.v || 0)) || 1;
+    let s = svgOpen(title);
+    series.forEach((d, i) => {
+      const yy = T + rowH * i + (rowH - bh) / 2, w = Math.max(1, (W - L - R) * Math.max(0, d.v || 0) / hi);
+      s += `<text x="${L - 10}" y="${(yy + bh / 2 + 4).toFixed(1)}" text-anchor="end" font-size="12" fill="${th.ink}">${escH(trunc(d.label, 22))}</text>` +
+        `<rect x="${L}" y="${yy.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" rx="3" fill="${th.pal[i === 0 ? 0 : 1] || th.pal[0]}" opacity="${i === 0 ? 1 : 0.85}"><title>${escH(d.label)}: ${escH(fmt(d.v, unit, true))}</title></rect>` +
+        `<text x="${(L + w + 6).toFixed(1)}" y="${(yy + bh / 2 + 4).toFixed(1)}" font-size="12" font-weight="600" fill="${th.ink}">${escH(fmt(d.v, unit))}</text>`;
+    });
+    return s + '</svg>';
+  }
+  function line(multi, th, unit, title) {
+    // multi: [{name, pts:[{label, v}]}], all on the same x labels
+    const L = 64, R = 16, T = multi.length > 1 ? 34 : 18, B = 40, labels = (multi[0] || { pts: [] }).pts.map(p => p.label), n = labels.length;
+    const all = [].concat(...multi.map(m => m.pts.map(p => p.v || 0))), lo = Math.min(0, ...all), hi = Math.max(0, ...all);
+    const ticks = niceTicks(lo, hi, 4), y0 = ticks[0], y1 = ticks[ticks.length - 1];
+    const y = (v) => T + (H - T - B) * (1 - (v - y0) / (y1 - y0 || 1));
+    const x = (i) => L + (n <= 1 ? (W - L - R) / 2 : (W - L - R) * i / (n - 1));
+    let s = svgOpen(title, '') + `<defs><linearGradient id="dbxg${title.length}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${th.pal[0]}" stop-opacity="0.28"/><stop offset="1" stop-color="${th.pal[0]}" stop-opacity="0"/></linearGradient></defs>` + yAxis(ticks, y, L, R, th, unit);
+    const every = Math.max(1, Math.ceil(n / 8));
+    labels.forEach((lb, i) => {
+      const lastOne = i === n - 1, show = lastOne || (i % every === 0 && i <= n - 1 - every * 0.6);
+      if (show) s += `<text x="${x(i).toFixed(1)}" y="${H - B + 18}" text-anchor="${n > 1 && lastOne ? 'end' : 'middle'}" font-size="11" fill="${th.mute}">${escH(lb)}</text>`;
+    });
+    multi.forEach((m, si) => {
+      const col = th.pal[si % th.pal.length], pts = m.pts.map((p, i) => [x(i), y(p.v || 0)]);
+      if (!pts.length) return;
+      const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+      if (si === 0 && multi.length === 1) s += `<path d="${d} L ${pts[pts.length - 1][0].toFixed(1)} ${y(Math.max(0, y0)).toFixed(1)} L ${pts[0][0].toFixed(1)} ${y(Math.max(0, y0)).toFixed(1)} Z" fill="url(#dbxg${title.length})"/>`;
+      s += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>`;
+      if (n <= 40) m.pts.forEach((p, i) => { s += `<circle cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="${n <= 16 ? 3.6 : 2.4}" fill="${th.card}" stroke="${col}" stroke-width="2"><title>${escH(p.label)}: ${escH(fmt(p.v, unit, true))}</title></circle>`; });
+      if (multi.length > 1) s += `<rect x="${L + si * 170}" y="8" width="12" height="12" rx="2" fill="${col}"/><text x="${L + si * 170 + 18}" y="18" font-size="12" fill="${th.ink}">${escH(trunc(m.name, 22))}</text>`;
+    });
+    return s + '</svg>';
+  }
+  function donut(series, th, unit, title) {
+    const cx = 150, cy = 150, r = 118, ir = 72, total = series.reduce((a, d) => a + Math.max(0, d.v || 0), 0) || 1;
+    let s = svgOpen(title), ang = -Math.PI / 2;
+    series.forEach((d, i) => {
+      const v = Math.max(0, d.v || 0), a2 = ang + (v / total) * Math.PI * 2, big = a2 - ang > Math.PI ? 1 : 0, col = d.k === '__others' ? th.mute : th.pal[i % th.pal.length];
+      const p = (a, rr) => (cx + rr * Math.cos(a)).toFixed(2) + ' ' + (cy + rr * Math.sin(a)).toFixed(2);
+      if (v / total > 0.9999) s += `<circle cx="${cx}" cy="${cy}" r="${(r + ir) / 2}" fill="none" stroke="${col}" stroke-width="${r - ir}"/>`;
+      else if (v > 0) s += `<path d="M ${p(ang, r)} A ${r} ${r} 0 ${big} 1 ${p(a2, r)} L ${p(a2, ir)} A ${ir} ${ir} 0 ${big} 0 ${p(ang, ir)} Z" fill="${col}"><title>${escH(d.label)}: ${escH(fmt(d.v, unit, true))} (${(v / total * 100).toFixed(1)}%)</title></path>`;
+      const ly = 40 + i * 30;
+      if (i < 8) s += `<rect x="300" y="${ly - 11}" width="14" height="14" rx="3" fill="${col}"/><text x="322" y="${ly}" font-size="13" fill="${th.ink}">${escH(trunc(d.label, 20))}</text>` +
+        `<text x="${W - 16}" y="${ly}" text-anchor="end" font-size="13" font-weight="600" fill="${th.ink}">${(v / total * 100).toFixed(1)}%</text>`;
+      ang = a2;
+    });
+    return s + `<text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="12" fill="${th.mute}">Total</text><text x="${cx}" y="${cy + 18}" text-anchor="middle" font-size="19" font-weight="700" fill="${th.ink}">${escH(fmt(total, unit))}</text></svg>`;
+  }
+  function stack(periods, cats, cells, th, unit, title) {
+    // cells[pi][ci] = value
+    const L = 64, R = 14, T = 36, B = 40, n = Math.max(1, periods.length);
+    const tot = periods.map((p, i) => cells[i].reduce((a, v) => a + Math.max(0, v || 0), 0)), hi = Math.max(1, ...tot);
+    const ticks = niceTicks(0, hi, 4), y1 = ticks[ticks.length - 1], y = (v) => T + (H - T - B) * (1 - v / (y1 || 1));
+    const slot = (W - L - R) / n, bw = Math.min(46, slot * 0.7), every = Math.max(1, Math.ceil(n / 8));
+    let s = svgOpen(title) + yAxis(ticks, y, L, R, th, unit);
+    periods.forEach((p, i) => {
+      let acc = 0; const x = L + slot * i + (slot - bw) / 2;
+      cats.forEach((c, ci) => {
+        const v = Math.max(0, cells[i][ci] || 0); if (!v) return;
+        s += `<rect x="${x.toFixed(1)}" y="${y(acc + v).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y(acc) - y(acc + v)).toFixed(1)}" fill="${c === 'Others' ? th.mute : th.pal[ci % th.pal.length]}"><title>${escH(p)} · ${escH(c)}: ${escH(fmt(v, unit, true))}</title></rect>`;
+        acc += v;
+      });
+      if (i === n - 1 || (i % every === 0 && i <= n - 1 - every * 0.6)) s += `<text x="${(x + bw / 2).toFixed(1)}" y="${H - B + 18}" text-anchor="${i === n - 1 && n > 1 ? 'end' : 'middle'}" font-size="11" fill="${th.mute}">${escH(p)}</text>`;
+    });
+    cats.forEach((c, ci) => { s += `<rect x="${L + ci * 112}" y="8" width="12" height="12" rx="2" fill="${c === 'Others' ? th.mute : th.pal[ci % th.pal.length]}"/><text x="${L + ci * 112 + 17}" y="18" font-size="11.5" fill="${th.ink}">${escH(trunc(c, 13))}</text>`; });
+    return s + '</svg>';
+  }
+  function spark(vals, col) {
+    if (!vals || vals.length < 2) return '';
+    const lo = Math.min(...vals), hi = Math.max(...vals), w = 120, h = 34;
+    const pts = vals.map((v, i) => (i * w / (vals.length - 1)).toFixed(1) + ',' + (h - 3 - (h - 6) * ((v - lo) / ((hi - lo) || 1))).toFixed(1)).join(' ');
+    return `<svg class="dbx-spark" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+  }
+
+  /* ---------------- computing one item ---------------- */
+  function compute(p, rows, it) {
+    const th = THEMES[p.theme] || THEMES.corporate, v = it.value, unit = v.unit;
+    const di = it.date != null ? it.date : p.dateCol, grain = it.grain || p.grain;
+    if (it.kind === 'card') {
+      const val = measure(rows, v);
+      let delta = null, sp = null;
+      if (di != null && grain) {
+        let ts = timeSeries(rows, di, v, grain);
+        ts = dropPartial(rows, di, grain, ts);
+        if (ts.length >= 2) {
+          const cur = ts[ts.length - 1], prev = ts[ts.length - 2];
+          if (cur.v != null && prev.v != null) delta = { d: unit === 'pct' ? cur.v - prev.v : prev.v ? (cur.v - prev.v) / Math.abs(prev.v) * 100 : null, cur: cur.label, prev: prev.label, pts: unit === 'pct' };
+          if (['sum', 'count', 'distinct', 'diff'].includes(v.calc) || unit === 'pct' || v.calc === 'avg') sp = ts.slice(-12).map(x => x.v || 0);
+        }
+      }
+      return { val, delta, sp, th };
+    }
+    if (it.kind === 'line') {
+      const series = (it.values || [v]).map(vv => ({ name: vv.name || it.title, pts: timeSeries(rows, di, vv, grain) }));
+      return { svg: line(series, th, unit, it.title), data: series };
+    }
+    if (it.kind === 'stack') {
+      const topCats = groupBy(rows, it.dim, v, it.top || 5, false).map(x => x.k);
+      const set = new Set(topCats), keys = [...new Set(rows.map(r => periodKey(r[di], grain)).filter(Boolean))].sort();
+      const cats = topCats.map(String).concat(rows.some(r => !set.has(r[it.dim])) ? ['Others'] : []);
+      const cells = keys.map(k => {
+        const rs = rows.filter(r => periodKey(r[di], grain) === k);
+        return cats.map((c, ci) => measure(c === 'Others' && ci === cats.length - 1 && !set.has(c) ? rs.filter(r => !set.has(r[it.dim])) : rs.filter(r => String(r[it.dim]) === c), v));
+      });
+      return { svg: stack(keys.map(k => periodLabel(k, grain)), cats, cells, th, unit, it.title), data: { keys, cats, cells } };
+    }
+    if (it.kind === 'table') {
+      const vals = it.values || [v], g = groupBy(rows, it.dim, vals[0], it.top || 10, false);
+      const rowsHtml = g.map(x => {
+        const rs = rows.filter(r => String(r[it.dim] === '' || r[it.dim] == null ? '(blank)' : r[it.dim]) === x.label);
+        return `<tr><td>${escH(x.label)}</td>${vals.map(vv => `<td>${escH(fmt(measure(rs, vv), vv.unit, true))}</td>`).join('')}</tr>`;
+      }).join('');
+      return { html: `<div class="dbx-tbl"><table><thead><tr><th>${escH(p.cols[it.dim].label)}</th>${vals.map(vv => `<th>${escH(vv.name || it.title)}</th>`).join('')}</tr></thead><tbody>${rowsHtml}</tbody></table></div>`, data: g };
+    }
+    const top = it.top || (it.kind === 'donut' ? 6 : it.kind === 'hbar' ? 10 : 12);
+    const g = groupBy(rows, it.dim, v, top, it.kind === 'donut');
+    const fn = it.kind === 'donut' ? donut : it.kind === 'hbar' ? hbar : bar;
+    return { svg: fn(g, th, unit, it.title), data: g };
+  }
+
+  /* ---------------- filters and insights ---------------- */
+  function filtered(p, st) {
+    const di = p.dateCol, g = p.grain;
+    return p.rows.filter(r => {
+      for (const ci in st.f) if (st.f[ci] !== '' && String(r[ci]) !== st.f[ci]) return false;
+      if (di != null && (st.from || st.to)) { const k = periodKey(r[di], g); if (!k || (st.from && k < st.from) || (st.to && k > st.to)) return false; }
+      return true;
+    });
+  }
+  function insights(p, rows) {
+    const out = [], main = p.items.find(i => i.kind === 'card' && ['sum', 'diff'].includes(i.value.calc)) || p.items.find(i => i.kind === 'card' && i.value.calc === 'count') || p.items.find(i => i.kind === 'card');
+    const low = (s) => (/^[A-Z0-9 &/.-]+$/.test(s) ? s : s.toLowerCase());
+    if (!main || !rows.length) return out;
+    const v = main.value, name = main.title.replace(/^(Total|Number of)\s+/i, '');
+    if (p.dateCol != null && p.grain) {
+      const ts = dropPartial(rows, p.dateCol, p.grain, timeSeries(rows, p.dateCol, v, p.grain)).filter(x => x.v != null);
+      if (ts.length >= 2) {
+        const a = ts[ts.length - 1], b = ts[ts.length - 2], ch = b.v ? (a.v - b.v) / Math.abs(b.v) * 100 : null;
+        if (ch != null) out.push(`${escH(name)} ${ch >= 0 ? 'rose' : 'fell'} <strong>${Math.abs(ch).toFixed(1)}%</strong> in ${escH(a.label)} compared with ${escH(b.label)} (${escH(fmt(a.v, v.unit))} against ${escH(fmt(b.v, v.unit))}).`);
+        const best = ts.reduce((m, x) => (x.v > m.v ? x : m), ts[0]);
+        out.push(`Best ${GRAIN_WORD[p.grain]}: <strong>${escH(best.label)}</strong> with ${escH(fmt(best.v, v.unit))}.`);
+        if (ts.length >= 6) {
+          const h = Math.floor(ts.length / 2), s1 = ts.slice(0, h).reduce((t, x) => t + x.v, 0) / h, s2 = ts.slice(-h).reduce((t, x) => t + x.v, 0) / h;
+          if (s1) out.push(`Average per ${GRAIN_WORD[p.grain]} in the latest ${h} ${GRAIN_WORD[p.grain]}s is ${s2 >= s1 ? 'up' : 'down'} <strong>${Math.abs((s2 - s1) / Math.abs(s1) * 100).toFixed(1)}%</strong> on the ${h} before.`);
+        }
+      }
+    }
+    if (['sum', 'count'].includes(v.calc)) {
+      const dims = [...new Set(p.items.filter(i => i.dim != null && ['bar', 'donut', 'hbar'].includes(i.kind)).map(i => i.dim))].slice(0, 2);
+      const total = measure(rows, v);
+      dims.forEach(ci => {
+        const g = groupBy(rows, ci, v, 0, false);
+        if (g.length < 2 || !total) return;
+        const share = g[0].v / total * 100, top3 = g.slice(0, 3).reduce((a, x) => a + x.v, 0) / total * 100;
+        out.push(`<strong>${escH(g[0].label)}</strong> leads ${escH(low(p.cols[ci].label))} with ${share.toFixed(1)}% of ${escH(low(name))}${g.length > 3 ? `; the top 3 make up ${top3.toFixed(0)}%` : ''}.` +
+          (share > 40 && g.length > 3 ? ' That is a heavy dependence on one.' : ''));
+        const last = g[g.length - 1];
+        if (g.length >= 4) out.push(`Smallest ${escH(low(p.cols[ci].label))}: ${escH(last.label)} (${escH(fmt(last.v, v.unit))}).`);
+      });
+    }
+    // averages and rates by group: who is highest and lowest
+    p.items.filter(i => i.kind === 'bar' && ['avg', 'ratio', 'margin'].includes(i.value.calc) && i.dim != null).slice(0, 2).forEach(i => {
+      const g = groupBy(rows, i.dim, i.value, 0, false).filter(x => x.v != null);
+      if (g.length >= 2) out.push(`Highest ${escH(low(i.value.name || i.title))}: <strong>${escH(g[0].label)}</strong> (${escH(fmt(g[0].v, i.value.unit))}); lowest: ${escH(g[g.length - 1].label)} (${escH(fmt(g[g.length - 1].v, i.value.unit))}).`);
+    });
+    p.items.filter(i => i.kind === 'card' && ['margin', 'ratio', 'share'].includes(i.value.calc)).slice(0, 2).forEach(i => {
+      const x = measure(rows, i.value); if (x != null) out.push(`${escH(i.title)} stands at <strong>${escH(fmt(x, 'pct'))}</strong> for the selection.`);
+    });
+    return out.slice(0, 7);
+  }
+
+  /* ---------------- the page ---------------- */
+  const CSS = `
+.dbx{--bg:#f4f6fb;--card:#fff;--ink:#0f172a;--mute:#64748b;--line:#e2e8f0;--acc:#2563eb;--head:#0f2a5f;--headInk:#fff;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;border-radius:18px;padding:0 0 18px;overflow:hidden;line-height:1.4}
+.dbx *{box-sizing:border-box}
+.dbx-head{background:var(--head);color:var(--headInk);padding:22px 24px 18px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;justify-content:space-between}
+.dbx h1,.dbx h2,.dbx figcaption{font-family:inherit}
+.dbx .dbx-head h1{margin:0;font-size:1.45rem;font-weight:750;letter-spacing:-.01em;color:var(--headInk);line-height:1.2}
+.dbx .dbx-head p{margin:4px 0 0;opacity:.78;font-size:.84rem;color:var(--headInk)}
+.dbx-filters{display:flex;flex-wrap:wrap;gap:8px}
+.dbx .dbx-filters label{display:flex;flex-direction:column;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;opacity:.92;gap:3px;color:var(--headInk);margin:0;font-weight:600}
+.dbx .dbx-filters select{font:inherit;font-size:.82rem;padding:6px 28px 6px 10px;border-radius:9px;border:1px solid rgba(255,255,255,.3)!important;background:rgba(255,255,255,.14) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 10px center!important;color:var(--headInk)!important;max-width:180px;min-height:0;width:auto;text-transform:none;letter-spacing:0;-webkit-appearance:none;appearance:none;box-shadow:none}
+.dbx .dbx-filters option{color:#111;background:#fff}
+.dbx-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;padding:18px 18px 0}
+.dbx-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px 12px;position:relative;min-height:112px;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.dbx-card span{display:block;font-size:.74rem;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.dbx-card strong{display:block;font-size:1.65rem;font-weight:750;margin:6px 0 2px;letter-spacing:-.02em;color:var(--ink)}
+.dbx-card em{font-style:normal;font-size:.76rem;font-weight:650}
+.dbx-card em small{font-weight:500;color:var(--mute)}
+.dbx-card .up{color:#16a34a}.dbx-card .down{color:#dc2626}
+.dbx-spark{position:absolute;right:12px;top:12px;opacity:.85;width:84px;height:26px}
+.dbx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px;padding:14px 18px 0}
+.dbx-ch{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 8px;min-width:0}
+.dbx-ch.wide{grid-column:1/-1}
+.dbx .dbx-ch figcaption{font-weight:700;font-size:.92rem;margin:0 0 6px;color:var(--ink)}
+.dbx-ch svg{display:block;max-width:100%;height:auto}
+.dbx-tbl{overflow:auto;max-height:340px}
+.dbx-tbl table{width:100%;border-collapse:collapse;font-size:.84rem}
+.dbx-tbl th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mute);border-bottom:2px solid var(--line);padding:7px 8px;position:sticky;top:0;background:var(--card)}
+.dbx-tbl td{padding:7px 8px;border-bottom:1px solid var(--line)}
+.dbx-tbl td+td,.dbx-tbl th+th{text-align:right;font-variant-numeric:tabular-nums}
+.dbx-ins{margin:14px 18px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+.dbx .dbx-ins h2{margin:0 0 6px;font-size:.95rem;color:var(--ink);font-weight:700}
+.dbx-ins ul{margin:0;padding-left:18px;font-size:.88rem}
+.dbx-ins li{margin:5px 0}
+.dbx-foot{margin:12px 18px 0;font-size:.72rem;color:var(--mute)}
+.dbx-empty{padding:40px;text-align:center;color:var(--mute)}
+@media (max-width:560px){.dbx-head{padding:18px 16px}.dbx-cards,.dbx-grid{padding-left:12px;padding-right:12px}.dbx-card strong{font-size:1.35rem}.dbx-filters select{max-width:140px}}
+@media print{.dbx-filters{display:none}.dbx{border-radius:0}}`;
+
+  function themeVars(th) { return `--bg:${th.bg};--card:${th.card};--ink:${th.ink};--mute:${th.mute};--line:${th.line};--acc:${th.accent};--head:${th.head};--headInk:${th.headInk}`; }
+  function renderBody(p, st) {
+    const th = THEMES[p.theme] || THEMES.corporate, rows = filtered(p, st);
+    if (!rows.length) return { cards: '<div class="dbx-empty">No rows match these filters.</div>', charts: '', ins: [] };
+    const cards = p.items.filter(i => i.kind === 'card').map(it => {
+      const r = compute(p, rows, it);
+      const dl = r.delta && r.delta.d != null ? `<em class="${r.delta.d >= 0 ? 'up' : 'down'}">${r.delta.d >= 0 ? '▲' : '▼'} ${Math.abs(r.delta.d).toFixed(1)}${r.delta.pts ? ' pts' : '%'} <small>${escH(r.delta.cur)} vs ${escH(r.delta.prev)}</small></em>` : '';
+      return `<div class="dbx-card"><span>${escH(it.title)}</span><strong>${escH(fmt(r.val, it.value.unit))}</strong>${dl}${spark(r.sp, th.pal[0])}</div>`;
+    }).join('');
+    const charts = p.items.filter(i => i.kind !== 'card').map(it => {
+      const r = compute(p, rows, it);
+      return `<figure class="dbx-ch${it.wide ? ' wide' : ''}"><figcaption>${escH(it.title)}</figcaption>${r.svg || r.html || ''}</figure>`;
+    }).join('');
+    return { cards, charts, ins: insights(p, rows), n: rows.length };
+  }
+  function render(root, p, st) {
+    st = st || { f: {}, from: '', to: '' };
+    prime(p);
+    const th = THEMES[p.theme] || THEMES.corporate;
+    const b = renderBody(p, st);
+    const opts = (ci) => { const vals = [...new Set(p.rows.map(r => r[ci]).filter(x => x !== '' && x != null))].sort((a, c) => String(a).localeCompare(String(c), undefined, { numeric: true })); return vals.slice(0, 300); };
+    let periods = [];
+    if (p.dateCol != null && p.grain) periods = [...new Set(p.rows.map(r => periodKey(r[p.dateCol], p.grain)).filter(Boolean))].sort();
+    const fl = (p.filters || []).map(ci => `<label>${escH(trunc(p.cols[ci].label, 18))}<select data-f="${ci}"><option value="">All</option>${opts(ci).map(v => `<option${st.f[ci] === String(v) ? ' selected' : ''}>${escH(v)}</option>`).join('')}</select></label>`).join('') +
+      (periods.length > 1 ? `<label>From<select data-from><option value="">Start</option>${periods.map(k => `<option value="${k}"${st.from === k ? ' selected' : ''}>${escH(periodLabel(k, p.grain))}</option>`).join('')}</select></label>` +
+        `<label>To<select data-to><option value="">Latest</option>${periods.map(k => `<option value="${k}"${st.to === k ? ' selected' : ''}>${escH(periodLabel(k, p.grain))}</option>`).join('')}</select></label>` : '');
+    root.innerHTML = `<style>${CSS}</style><div class="dbx" style="${themeVars(th)}">
+      <div class="dbx-head"><div><h1>${escH(p.title)}</h1><p>${escH(p.subtitle || '')}${b.n != null && b.n !== p.rows.length ? ` · showing ${b.n.toLocaleString('en-IN')} of ${p.rows.length.toLocaleString('en-IN')} rows` : ''}</p></div><div class="dbx-filters">${fl}</div></div>
+      <div class="dbx-cards">${b.cards}</div><div class="dbx-grid">${b.charts}</div>
+      ${b.ins.length ? `<div class="dbx-ins"><h2>Key insights</h2><ul>${b.ins.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
+      <p class="dbx-foot">${escH(p.foot || 'Made with DocBrisk Excel Dashboard Maker')}</p></div>`;
+    root.querySelectorAll('[data-f]').forEach(s => s.addEventListener('change', () => { st.f[s.dataset.f] = s.value; render(root, p, st); }));
+    const fr = root.querySelector('[data-from]'), to = root.querySelector('[data-to]');
+    if (fr) fr.addEventListener('change', () => { st.from = fr.value; render(root, p, st); });
+    if (to) to.addEventListener('change', () => { st.to = to.value; render(root, p, st); });
+    return st;
+  }
+
+  /* ---------------- poster (PNG and PDF pages) ---------------- */
+  function poster(p, st, pageH) {
+    st = st || { f: {}, from: '', to: '' };
+    prime(p);
+    const th = THEMES[p.theme] || THEMES.corporate, rows = filtered(p, st), PW = 1600, M = 28, G = 18;
+    const blocks = [];       // { h, draw(y) -> svg }
+    const head = (sub) => ({ h: 104, draw: (y) => `<rect x="0" y="${y}" width="${PW}" height="88" fill="${th.head}"/><text x="${M}" y="${y + 46}" font-size="30" font-weight="750" fill="${th.headInk}">${escH(p.title)}</text><text x="${M}" y="${y + 72}" font-size="15" fill="${th.headInk}" opacity=".8">${escH(sub)}</text>` });
+    const filt = Object.entries(st.f).filter(([, v]) => v).map(([ci, v]) => p.cols[ci].label + ': ' + v).join(' · ');
+    blocks.push(head((p.subtitle || '') + (filt ? ' · ' + filt : '')));
+    const cards = p.items.filter(i => i.kind === 'card'), cw = (PW - 2 * M - G * 3) / 4;
+    for (let i = 0; i < cards.length; i += 4) {
+      const row = cards.slice(i, i + 4);
+      blocks.push({ h: 150 + G, draw: (y) => row.map((it, k) => {
+        const r = compute(p, rows, it), x = M + k * (cw + G);
+        const dl = r.delta && r.delta.d != null ? `<text x="${x + 20}" y="${y + 122}" font-size="15" font-weight="650" fill="${r.delta.d >= 0 ? '#16a34a' : '#dc2626'}">${r.delta.d >= 0 ? '▲' : '▼'} ${Math.abs(r.delta.d).toFixed(1)}${r.delta.pts ? ' pts' : '%'}  <tspan fill="${th.mute}" font-weight="400">${escH(r.delta.cur)} vs ${escH(r.delta.prev)}</tspan></text>` : '';
+        const sp = r.sp && r.sp.length > 1 ? (() => { const lo = Math.min(...r.sp), hi = Math.max(...r.sp); return `<polyline fill="none" stroke="${th.pal[0]}" stroke-width="2.4" points="${r.sp.map((v, j) => (x + cw - 150 + j * 130 / (r.sp.length - 1)).toFixed(1) + ',' + (y + 64 - 34 * ((v - lo) / ((hi - lo) || 1))).toFixed(1)).join(' ')}"/>`; })() : '';
+        return `<rect x="${x}" y="${y}" width="${cw}" height="150" rx="16" fill="${th.card}" stroke="${th.line}"/><text x="${x + 20}" y="${y + 34}" font-size="14" font-weight="650" fill="${th.mute}" letter-spacing="1">${escH(it.title.toUpperCase())}</text>` +
+          `<text x="${x + 20}" y="${y + 88}" font-size="40" font-weight="750" fill="${th.ink}">${escH(fmt(r.val, it.value.unit))}</text>${dl}${sp}`;
+      }).join('') });
+    }
+    const charts = p.items.filter(i => i.kind !== 'card'), half = (PW - 2 * M - G) / 2;
+    let pend = [];
+    const flush = () => {
+      if (!pend.length) return;
+      const row = pend; pend = [];
+      const ch = 470;
+      blocks.push({ h: ch + G, draw: (y) => row.map((it, k) => {
+        const w = it.wide || row.length === 1 && it.wide ? PW - 2 * M : half, x = M + k * (half + G), r = compute(p, rows, it);
+        let inner = r.svg ? r.svg.replace('<svg ', `<svg x="${x + 16}" y="${y + 50}" width="${w - 32}" height="${ch - 64}" `).replace(/ width="100%"/, '') : '';
+        if (!inner && r.data) inner = (r.data.slice ? r.data : []).slice(0, 12).map((d, j) => `<text x="${x + 24}" y="${y + 86 + j * 28}" font-size="15" fill="${th.ink}">${escH(trunc(d.label, 40))}</text><text x="${x + w - 24}" y="${y + 86 + j * 28}" text-anchor="end" font-size="15" font-weight="650" fill="${th.ink}">${escH(fmt(d.v, it.value.unit, true))}</text>`).join('');
+        return `<rect x="${x}" y="${y}" width="${w}" height="${ch}" rx="16" fill="${th.card}" stroke="${th.line}"/><text x="${x + 22}" y="${y + 36}" font-size="19" font-weight="700" fill="${th.ink}">${escH(it.title)}</text>${inner}`;
+      }).join('') });
+    };
+    charts.forEach(it => { if (it.wide) { flush(); pend = [it]; flush(); } else { pend.push(it); if (pend.length === 2) flush(); } });
+    flush();
+    const ins = insights(p, rows).map(x => x.replace(/<[^>]+>/g, ''));
+    if (ins.length) blocks.push({ h: 60 + ins.length * 30 + G, draw: (y) => `<rect x="${M}" y="${y}" width="${PW - 2 * M}" height="${44 + ins.length * 30}" rx="16" fill="${th.card}" stroke="${th.line}"/><text x="${M + 22}" y="${y + 32}" font-size="19" font-weight="700" fill="${th.ink}">Key insights</text>` +
+      ins.map((t, j) => `<text x="${M + 22}" y="${y + 66 + j * 30}" font-size="15.5" fill="${th.ink}">• ${escH(trunc(t, 170))}</text>`).join('') });
+    // paginate
+    const pages = []; let cur = [], y = 0;
+    const H0 = pageH || Infinity;
+    blocks.forEach((b, i) => {
+      if (y + b.h > H0 - 40 && cur.length) { pages.push({ parts: cur, h: H0 }); cur = []; y = 0; const hb = head((p.subtitle || '') + ' · continued'); cur.push(hb.draw(0)); y = hb.h; }
+      cur.push(b.draw(y + (i === 0 ? 0 : 0))); y += b.h;
+    });
+    pages.push({ parts: cur, h: pageH || y + 34 });
+    return pages.map(pg => `<svg xmlns="http://www.w3.org/2000/svg" width="${PW}" height="${Math.ceil(pg.h)}" viewBox="0 0 ${PW} ${Math.ceil(pg.h)}" font-family="Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif"><rect width="100%" height="100%" fill="${th.bg}"/>${pg.parts.join('')}<text x="${M}" y="${Math.ceil(pg.h) - 14}" font-size="12" fill="${th.mute}">${escH(p.foot || 'Made with DocBrisk Excel Dashboard Maker')}</text></svg>`);
+  }
+
+  function mount(root, p) { return render(root, p, { f: {}, from: '', to: '' }); }
+  function prime(p) {
+    maxDate = ''; monthly = p.dateCol != null;
+    if (p.dateCol != null) p.rows.forEach(r => { const v = r[p.dateCol]; if (v) { if (v > maxDate) maxDate = v; if (!/-01$/.test(v)) monthly = false; } });
+  }
+  return { mount, render, poster, prime, compute, measure, groupBy, timeSeries, periodKey, periodLabel, grainFor, fmt, THEMES, CSS, filtered, insights };
+};
+
+/* ==========================================================================
+   Excel Dashboard Maker: reading, understanding and exporting.
+     read     every sheet of .xlsx/.xls/.csv; the header row is found even
+              under a title block
+     profile  each column typed (date, measure, category, entity, id, text)
+              and given a meaning from its name (revenue, cost, region …)
+     suggest  KPIs and charts ranked for this data; derived ones too
+              (profit, margin, target achievement, completion rate)
+     export   live Excel dashboard (formulas + native charts), HTML (the
+              runtime embedded), PDF, PNG, Power BI and Looker Studio kits
+   ========================================================================== */
+const DashGen = (() => {
+  const RT = DASH_RUNTIME();
+  const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12 };
+  const ROLE = [
+    ['revenue', /revenue|sales|turnover|amount|value|billing|gmv|income|receipts?|collection|net\s*sales|gross\s*sales|invoice\s*amt|price\s*total|achieved|achievement|actuals?\b/i, 10],
+    ['total', /^total$|^grand\s*total$|total\s*(amount|amt|value)/i, 8],
+    ['profit', /profit|margin\s*amt|earnings|ebitda|net\s*income|contribution/i, 9],
+    ['target', /target|budget|goal|plan(ned)?|quota|forecast/i, 6],
+    ['cost', /cost|expense|spend|cogs|purchase|outflow|payment|paid/i, 7],
+    ['qty', /qty|quantity|units|volume|pcs|pieces|orders?\s*count|no\.?\s*of/i, 7],
+    ['price', /price|rate|mrp|unit\s*cost|per\s*unit|avg|average|aov/i, 4],
+    ['discount', /discount|rebate|markdown/i, 4],
+    ['tax', /gst|tax|cgst|sgst|igst|vat|tds/i, 3],
+    ['salary', /salary|ctc|wage|pay|stipend|bonus|incentive|commission/i, 6],
+    ['score', /score|rating|marks|grade|nps|csat|satisfaction|percent|%|ratio|rate$/i, 5],
+    ['hours', /hours|hrs|duration|days|time|tat|aging|age/i, 4]
+  ];
+  const DIMROLE = [
+    ['region', /region|zone|state|city|country|territory|area|location|branch|district|circle|cluster|market/i, 9],
+    ['category', /category|segment|type|class|group|department|dept|division|line|family|vertical|channel|source|mode|platform|brand/i, 8],
+    ['product', /product|item|sku|service|model|material|article|plan|course|scheme/i, 8],
+    ['status', /status|stage|state$|result|outcome|priority|flag/i, 7],
+    ['person', /sales\s*person|salesperson|rep|agent|employee|staff|manager|owner|executive|name|assignee|handled|cashier|teacher|doctor/i, 6],
+    ['customer', /customer|client|party|buyer|account|dealer|distributor|vendor|supplier|retailer|student|patient|member/i, 7],
+    ['time', /month|year|quarter|week|fy|period/i, 5]
+  ];
+  const AVG_HINT = /price|rate|mrp|avg|average|score|rating|marks|percent|%|ratio|age|nps|csat|satisfaction|tat|aging|days|hours/i;
+  const ID_HINT = /(^|\b)(id|code|no\.?|number|num|phone|mobile|contact|pin|pincode|zip|aadhaar|pan|gstin|ifsc|account\s*no|invoice\s*no|order\s*no|bill\s*no|serial|sr\.?\s*no|s\.?\s*no)(\b|$)/i;
+  const POS_STATUS = /^(complete|completed|done|closed|delivered|paid|won|success|successful|approved|active|present|resolved|yes|shipped|fulfilled|converted|passed|pass)$/i;
+
+  /* ---------------- reading ---------------- */
+  async function readFile(file) {
+    if (typeof XLSX === 'undefined') await window.ensureLib('XLSX');
+    const buf = await file.arrayBuffer();
+    let wb;
+    const isText = /\.(csv|txt|tsv)$/i.test(file.name || '') || /text\/(csv|plain)/.test(file.type || '');
+    try {
+      // CSV: decoded as UTF-8 (₹ and Hindi intact) and kept as text, so 05/03/2026 stays 5 March (India), not May 3
+      if (isText) {
+        let txt = new TextDecoder('utf-8').decode(buf);
+        if (txt.includes('\uFFFD')) txt = new TextDecoder('windows-1252').decode(buf);
+        wb = XLSX.read(txt.replace(/^\uFEFF/, ''), { type: 'string', raw: true });
+      } else wb = XLSX.read(buf, { type: 'array', cellDates: true, dense: false });
+    }
+    catch (e) { throw new Error('That file could not be read as a spreadsheet. Save it as .xlsx or .csv and try again.'); }
+    const sheets = wb.SheetNames.map(name => {
+      const aoa = XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1, raw: true, defval: '', blankrows: false });
+      return { name, aoa };
+    }).filter(s => s.aoa.length >= 2);
+    if (!sheets.length) throw new Error('No sheet in this file has a header row and data under it.');
+    return sheets;
+  }
+  // The header row is the first of the top 15 rows that is mostly text and is followed by data.
+  function table(aoa) {
+    let hi = 0, best = -1;
+    for (let i = 0; i < Math.min(15, aoa.length - 1); i++) {
+      const r = aoa[i], filled = r.filter(v => v !== '' && v != null), text = filled.filter(v => typeof v === 'string' && !/^[\d.,\s₹%-]+$/.test(v));
+      const next = aoa[i + 1] || [], nf = next.filter(v => v !== '' && v != null).length;
+      const score = text.length * 2 + (filled.length >= 2 ? 3 : 0) + (nf >= filled.length * 0.5 ? 2 : 0) - (filled.length - text.length) * 2;
+      if (filled.length >= 2 && text.length >= filled.length * 0.7 && score > best) { best = score; hi = i; if (filled.length >= Math.max(...aoa.slice(0, 15).map(x => x.filter(v => v !== '').length)) * 0.8) break; }
+    }
+    const head = aoa[hi], width = Math.max(...aoa.slice(hi, hi + 50).map(r => r.length));
+    const used = new Set(), headers = [];
+    for (let c = 0; c < width; c++) {
+      let h = String(head[c] == null ? '' : head[c]).replace(/\s+/g, ' ').trim() || 'Column ' + (c + 1), k = h, n = 2;
+      while (used.has(k.toLowerCase())) k = h + ' ' + n++;
+      used.add(k.toLowerCase()); headers.push(k);
+    }
+    let rows = aoa.slice(hi + 1).filter(r => r.some(v => v !== '' && v != null));
+    // drop a trailing "Total" row: it would double every sum
+    while (rows.length > 2 && /^(grand\s*)?total|^sum$/i.test(String(rows[rows.length - 1].find(v => v !== '') || ''))) rows = rows.slice(0, -1);
+    // drop columns that are empty everywhere
+    const keep = headers.map((h, c) => rows.some(r => r[c] !== '' && r[c] != null));
+    return { headers: headers.filter((h, c) => keep[c]), rows: rows.map(r => headers.map((h, c) => r[c] == null ? '' : r[c]).filter((v, c) => keep[c])), headerRow: hi };
+  }
+
+  /* ---------------- values ---------------- */
+  const iso = (d) => (d instanceof Date && !isNaN(d) ? new Date(d.getTime() - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10) : '');
+  function parseDate(v) {
+    if (v instanceof Date) return iso(v);
+    if (typeof v === 'number') return '';
+    const s = String(v).trim();
+    if (!s || s.length > 30) return '';
+    let m = s.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
+    if (m) return ok(+m[1], +m[2], +m[3]);
+    m = s.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})$/);
+    if (m) { const y = m[3].length === 2 ? 2000 + +m[3] : +m[3]; return +m[2] > 12 ? ok(y, +m[1], +m[2]) : ok(y, +m[2], +m[1]); }   // India: day first
+    m = s.match(/^(\d{1,2})[\s-]([A-Za-z]{3,9})[\s-,]*(\d{2,4})$/);
+    if (m && MONTHS[m[2].slice(0, 4).toLowerCase()] || m && MONTHS[m[2].slice(0, 3).toLowerCase()]) return ok(m[3].length === 2 ? 2000 + +m[3] : +m[3], MONTHS[m[2].slice(0, 3).toLowerCase()], +m[1]);
+    m = s.match(/^([A-Za-z]{3,9})[\s-,']*(\d{2,4})$/);
+    if (m && MONTHS[m[1].slice(0, 3).toLowerCase()]) return ok(m[2].length === 2 ? 2000 + +m[2] : +m[2], MONTHS[m[1].slice(0, 3).toLowerCase()], 1);
+    m = s.match(/^([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})$/);
+    if (m && MONTHS[m[1].slice(0, 3).toLowerCase()]) return ok(+m[3], MONTHS[m[1].slice(0, 3).toLowerCase()], +m[2]);
+    return '';
+    function ok(y, mo, d) { return y >= 1900 && y <= 2200 && mo >= 1 && mo <= 12 && d >= 1 && d <= 31 ? `${y}-${String(mo).padStart(2, '0')}-${String(d).padStart(2, '0')}` : ''; }
+  }
+  function parseNum(v) {
+    if (typeof v === 'number') return isFinite(v) ? v : null;
+    if (typeof v === 'boolean' || v instanceof Date) return null;
+    let s = String(v).trim();
+    if (!s) return null;
+    const neg = /^\(.*\)$/.test(s) || /^-/.test(s.replace(/^[₹$€£\s]+|rs\.?\s*/i, ''));
+    const pct = /%$/.test(s);
+    s = s.replace(/^\(|\)$/g, '').replace(/₹|rs\.?|inr|\$|€|£|,|\s|%|\/-$/gi, '').replace(/^-/, '');
+    let mul = 1;
+    const u = s.match(/^([\d.]+)(k|l|lakh|lakhs|lac|cr|crore|crores|m|mn)$/i);
+    if (u) { s = u[1]; mul = { k: 1e3, l: 1e5, lakh: 1e5, lakhs: 1e5, lac: 1e5, cr: 1e7, crore: 1e7, crores: 1e7, m: 1e6, mn: 1e6 }[u[2].toLowerCase()]; }
+    if (!/^\d*\.?\d+$/.test(s)) return null;
+    const n = parseFloat(s) * mul * (neg ? -1 : 1);
+    return pct ? n : n;
+  }
+
+  /* ---------------- profiling ---------------- */
+  function profile(t) {
+    const N = t.rows.length, S = t.rows.length > 4000 ? t.rows.filter((r, i) => i % Math.ceil(N / 4000) === 0) : t.rows;
+    return t.headers.map((label, c) => {
+      const vals = S.map(r => r[c]).filter(v => v !== '' && v != null);
+      const nonEmpty = vals.length;
+      const col = { label, c, type: 'text', unit: 'num', role: '', score: 0, nulls: S.length - nonEmpty };
+      if (!nonEmpty) return Object.assign(col, { type: 'empty' });
+      const dates = vals.filter(v => parseDate(v)).length;
+      const nums = vals.filter(v => parseNum(v) != null).length;
+      const bools = vals.filter(v => /^(yes|no|y|n|true|false)$/i.test(String(v).trim()) || typeof v === 'boolean').length;
+      const distinct = new Set(vals.map(v => (v instanceof Date ? iso(v) : String(v).trim().toLowerCase()))).size;
+      col.distinct = distinct;
+      const strAvg = vals.reduce((a, v) => a + String(v).length, 0) / nonEmpty;
+      const isDateName = /date|dt$|day|month|period|time|created|ordered|invoice\s*dt|joining|dob/i.test(label);
+      // Excel serial numbers under a date heading are dates too
+      const serial = nums === nonEmpty && isDateName && vals.every(v => { const n = parseNum(v); return n > 20000 && n < 80000; });
+      if (dates >= nonEmpty * 0.85 || serial) {
+        col.type = 'date'; col.serial = serial;
+        // a fact about the row (joined, born, expires), not when the row happened
+        col.attr = /join|hire|birth|dob|expir|valid|due|renew|start|end|admission|enrol|registration/i.test(label);
+        return col;
+      }
+      if (bools >= nonEmpty * 0.95 && distinct <= 2) { col.type = 'category'; col.role = 'status'; return col; }
+      if (nums >= nonEmpty * 0.9) {
+        const ns = vals.map(parseNum).filter(v => v != null);
+        const ints = ns.every(n => Number.isInteger(n));
+        if (ID_HINT.test(label) && !ROLE.some(([, re]) => re.test(label) && !/no\.?\s*of/i.test(label))) { col.type = 'id'; return col; }
+        if (ints && /year|fy/i.test(label) && ns.every(n => n >= 1990 && n <= 2100)) { col.type = 'category'; col.role = 'time'; col.sortNum = true; return col; }
+        if (ints && /month/i.test(label) && ns.every(n => n >= 1 && n <= 12)) { col.type = 'category'; col.role = 'time'; col.sortNum = true; return col; }
+        if (ints && distinct === nonEmpty && nonEmpty > 20 && ns.every((n, i) => i === 0 || Math.abs(n - ns[i - 1]) <= 2)) { col.type = 'id'; return col; }   // 1, 2, 3 … row numbers
+        col.type = 'measure';
+        const rr = ROLE.find(([, re]) => re.test(label));
+        col.role = rr ? rr[0] : '';
+        col.score = (rr ? rr[2] : 3) + (ns.some(n => n !== ns[0]) ? 1 : -5);
+        col.agg = AVG_HINT.test(label) && !/total/i.test(label) ? 'avg' : 'sum';
+        col.unit = /percent|%|ratio|rate\b|margin\s*%/i.test(label) && ns.every(n => Math.abs(n) <= 100) ? 'pct'
+          : (/₹|rs\b|inr|amount|amt|revenue|sales|price|cost|profit|value|salary|ctc|expense|income|budget|target|payment|fee|mrp|gst|tax|discount|spend|billing|turnover|collection|wage|bonus|commission|gmv|ebitda|invoice/i.test(label) ||
+             vals.some(v => typeof v === 'string' && /₹|rs\.?/i.test(v))) && !/qty|quantity|units|count|pcs|percent|%/i.test(label) ? 'inr' : 'num';
+        col.min = Math.min(...ns); col.max = Math.max(...ns);
+        col.bounded = col.min >= 0 && col.max <= 100;
+        return col;
+      }
+      const dr = DIMROLE.find(([, re]) => re.test(label));
+      col.role = dr ? dr[0] : '';
+      if (distinct <= 40 || (distinct <= 300 && distinct <= nonEmpty * 0.25)) col.type = 'category';
+      else if (strAvg > 45) col.type = 'text';
+      else col.type = 'entity';
+      if (col.type !== 'text' && ID_HINT.test(label) && distinct > nonEmpty * 0.7) col.type = 'id';
+      col.score = (dr ? dr[2] : 3) + (col.type === 'category' && distinct >= 2 && distinct <= 12 ? 3 : 0) - (distinct < 2 ? 9 : 0);
+      return col;
+    });
+  }
+  // Rows as clean arrays: dates as ISO strings, measures as numbers, the rest as text.
+  function clean(t, cols) {
+    return t.rows.map(r => cols.map((col, i) => {
+      const v = r[col.c];
+      if (v === '' || v == null) return col.type === 'measure' ? null : '';
+      if (col.type === 'date') return col.serial ? iso(new Date(Math.round((parseNum(v) - 25569) * 864e5) + new Date().getTimezoneOffset() * 6e4)) : parseDate(v);
+      if (col.type === 'measure') return parseNum(v);
+      if (col.sortNum) return String(parseNum(v));
+      return v instanceof Date ? iso(v) : typeof v === 'boolean' ? (v ? 'Yes' : 'No') : String(v).trim();
+    }));
+  }
+
+  /* ---------------- suggestions ---------------- */
+  const plural = (s) => /s$/i.test(s) ? s : /y$/i.test(s) && !/[aeiou]y$/i.test(s) ? s.slice(0, -1) + 'ies' : s + 's';
+  // "Amount (₹)" -> "Amount", "Sales in Rs" -> "Sales": units show in the numbers already
+  const nice = (l) => String(l).replace(/\s*[\[(](₹|rs\.?|inr|in\s*(₹|rs\.?|inr|lakhs?|crores?)|%)[\])]\s*/ig, ' ').replace(/\s+in\s+(₹|rs\.?|inr)$/i, '').trim();
+  const PERSON_NOUN = /^(employees|students|patients|members|customers|candidates|staff|teachers|agents|leads|clients|vendors|suppliers|dealers|policies|accounts)$/i;
+  function suggest(cols, rows, sheetName) {
+    cols = cols.map(c => Object.assign({}, c, { label: nice(c.label) || c.label }));
+    const M = cols.map((c, i) => Object.assign({ i }, c)).filter(c => c.type === 'measure' && c.score > 0).sort((a, b) => b.score - a.score);
+    const D = cols.map((c, i) => Object.assign({ i }, c)).filter(c => c.type === 'date' && !c.attr).sort((a, b) => a.nulls - b.nulls);
+    const AD = cols.map((c, i) => Object.assign({ i }, c)).filter(c => c.type === 'date' && c.attr);
+    const C = cols.map((c, i) => Object.assign({ i }, c)).filter(c => c.type === 'category' && c.distinct >= 2).sort((a, b) => b.score - a.score);
+    const E = cols.map((c, i) => Object.assign({ i }, c)).filter(c => c.type === 'entity').sort((a, b) => b.score - a.score);
+    const di = D.length ? D[0].i : null;
+    const out = [];
+    let seq = 0;
+    const add = (o) => { o.id = 's' + (++seq); out.push(o); return o; };
+    const vOf = (m) => ({ calc: m.agg === 'avg' ? 'avg' : 'sum', m: m.i, unit: m.unit, name: (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label });
+    const by = (r) => M.find(m => m.role === r);
+    const rev = by('revenue') || by('total') || by('salary'), cost = by('cost'), profit = by('profit'), target = by('target'), qty = by('qty');
+    const cap = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    const NOUNS = /order|invoice|bill|ticket|lead|txn|transaction|booking|policy|claim|loan|application|employee|emp\b|student|roll|patient|member|customer|candidate|teacher|agent|vendor|supplier|dealer|account/i;
+    const nounWord = (w) => ({ txn: 'Transaction', emp: 'Employee', roll: 'Student' }[w.toLowerCase()] || cap(w));
+    const noun = (() => {
+      const idc = cols.find(c => c.type === 'id' && NOUNS.test(c.label));
+      if (idc) return plural(nounWord(idc.label.match(NOUNS)[0]));
+      // one row per person or thing: "Student Name" -> Students
+      const per = cols.find(c => (c.type === 'entity' || c.type === 'category') && NOUNS.test(c.label) && c.distinct >= rows.length * 0.9);
+      if (per) return plural(nounWord(per.label.match(NOUNS)[0]));
+      const sn = String(sheetName || '').replace(/sheet\s*\d*/i, '').trim();
+      return sn && sn.length <= 18 && !/data|report|export|^\d/i.test(sn) && !ROLE.some(([, re]) => re.test(sn)) && !/\d/.test(sn) ? sn : 'Records';
+    })();
+    // A sheet with one row per person (students, employees): numbers that are not money are averaged,
+    // since the sum of everyone's marks or ratings means nothing.
+    const perEntity = PERSON_NOUN.test(noun) || cols.some(c => c.type === 'entity' && c.distinct >= rows.length * 0.95 && /name/i.test(c.label));
+    if (perEntity) M.forEach(m => { if (m.unit !== 'inr' && !['qty', 'revenue', 'cost', 'profit', 'target'].includes(m.role)) m.agg = 'avg'; });
+    if (target && rev && rev !== target && rev.unit !== target.unit && (rev.unit === 'inr' || target.unit === 'inr')) rev.unit = target.unit = 'inr';
+    const monthlyData = D.length > 0 && rows.every(r => !r[D[0].i] || /-01$/.test(r[D[0].i]));
+    const transactional = cols.some(c => c.type === 'id') || (D.length > 0 && !monthlyData) || perEntity;
+    // headline numbers
+    const titleOf = (m) => /^(total|grand total)$/i.test(m.label) ? (m.agg === 'avg' ? 'Average Total' : 'Grand Total') : (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label;
+    M.slice(0, 5).forEach((m, k) => add({ group: 'Headline numbers', kind: 'card', title: titleOf(m), value: Object.assign(vOf(m), { name: titleOf(m) }), score: m.score + (k === 0 ? 4 : 0) }));
+    add({ group: 'Headline numbers', kind: 'card', title: (perEntity ? 'Number of ' : 'Total ') + noun, value: { calc: 'count', unit: 'num', name: noun }, score: !M.length ? 10 : perEntity ? 12 : transactional ? 6 : 2 });
+    if (rev && cost && !profit) {
+      add({ group: 'Headline numbers', kind: 'card', title: 'Profit', value: { calc: 'diff', a: rev.i, b: cost.i, unit: rev.unit, name: 'Profit' }, score: 11, why: `${rev.label} minus ${cost.label}` });
+      add({ group: 'Headline numbers', kind: 'card', title: 'Profit Margin', value: { calc: 'margin', a: rev.i, b: cost.i, unit: 'pct', name: 'Profit Margin' }, score: 10, why: `(${rev.label} − ${cost.label}) ÷ ${rev.label}` });
+    }
+    if (rev && profit) add({ group: 'Headline numbers', kind: 'card', title: 'Profit Margin', value: { calc: 'ratio', a: profit.i, b: rev.i, unit: 'pct', name: 'Profit Margin' }, score: 10, why: `${profit.label} ÷ ${rev.label}` });
+    const actual = rev || M.find(m => m !== target && m.unit === (target && target.unit));
+    if (target && actual && actual !== target) add({ group: 'Headline numbers', kind: 'card', title: 'Target Achievement', value: { calc: 'ratio', a: actual.i, b: target.i, unit: 'pct', name: 'Achievement' }, score: 11, why: `${actual.label} ÷ ${target.label}` });
+    if (rev && rev.agg === 'sum' && rows.length > 20 && transactional && !perEntity) add({ group: 'Headline numbers', kind: 'card', title: 'Average per ' + noun.replace(/s$/, '').replace(/ie$/, 'y'), value: { calc: 'avg', m: rev.i, unit: rev.unit, name: 'Average ' + rev.label }, score: 6 });
+    if (qty && rev && qty !== rev) add({ group: 'Headline numbers', kind: 'card', title: 'Average Price per Unit', value: { calc: 'ratio', a: rev.i, b: qty.i, unit: 'inr', name: 'Price per unit', perUnit: true }, score: 5, why: `${rev.label} ÷ ${qty.label}` });
+    const ent = E.find(e => e.role === 'customer') || E.find(e => e.role === 'product') || C.find(c => c.role === 'customer' && c.distinct > 12);
+    if (ent && ent.distinct < rows.length * 0.9) add({ group: 'Headline numbers', kind: 'card', title: 'Unique ' + plural(ent.label.replace(/\s*name$/i, '')), value: { calc: 'distinct', c: ent.i, unit: 'num', name: 'Unique ' + ent.label }, score: 7 });
+    const st = C.find(c => c.role === 'status');
+    if (st) {
+      const vals = [...new Set(rows.map(r => r[st.i]).filter(Boolean))], pos = vals.filter(v => POS_STATUS.test(String(v).trim()));
+      const yes = pos.length === 1 && /^(yes|y|true)$/i.test(pos[0]);
+      if (pos.length && pos.length < vals.length) add({ group: 'Headline numbers', kind: 'card', title: yes ? `${st.label} %` : pos.length === 1 ? `${pos[0]} Rate` : 'Completion Rate', value: { calc: 'share', c: st.i, vals: pos, unit: 'pct', name: 'Share ' + pos.join('/') }, score: 8, why: `share of rows where ${st.label} is ${pos.join(' or ')}` });
+    }
+    // the headline measure: money first; on a sheet of people, the head count
+    const main = M[0] && !(perEntity && M[0].unit !== 'inr' && M[0].agg === 'avg') && !(perEntity && /^(employees|staff|members)$/i.test(noun)) ? vOf(M[0]) : { calc: 'count', unit: 'num', name: noun };
+    const mainName = main.calc === 'count' ? noun : M[0].label;
+    // trends
+    if (di != null) {
+      add({ group: 'Trends over time', kind: 'line', title: `${mainName} trend`, value: main, score: 12, wide: true });
+      if (rev && cost) add({ group: 'Trends over time', kind: 'line', title: `${rev.label} vs ${cost.label}`, value: vOf(rev), values: [vOf(rev), vOf(cost)], score: 8 });
+      else if (M[1] && M[1].unit === (M[0] || {}).unit) add({ group: 'Trends over time', kind: 'line', title: `${M[0].label} and ${M[1].label}`, value: vOf(M[0]), values: [vOf(M[0]), vOf(M[1])], score: 6 });
+      else if (M[1]) add({ group: 'Trends over time', kind: 'line', title: `${M[1].label} trend`, value: vOf(M[1]), score: 6 });
+      if (!M.length) add({ group: 'Trends over time', kind: 'bar-time', title: `${noun} over time`, value: main, score: 9 });
+    }
+    // dates that describe the row (joining, birth): how many per year, never a timeline for growth figures
+    AD.slice(0, 1).forEach(a => add({ group: 'Trends over time', kind: 'line', title: `${noun} by ${a.label.replace(/^date\s+of\s+/i, '')} (per year)`, value: { calc: 'count', unit: 'num', name: noun }, date: a.i, grain: 'year', score: 6 }));
+    if (di != null) {
+      if (C[0] && C[0].distinct <= 12) add({ group: 'Trends over time', kind: 'stack', title: `${mainName} by ${C[0].label} over time`, value: main, dim: C[0].i, top: 5, score: 7, wide: true });
+    }
+    // breakdowns
+    C.slice(0, 4).forEach((c, k) => {
+      if (c.distinct <= 7 && c.role !== 'time') add({ group: 'Breakdowns', kind: 'donut', title: `${mainName} share by ${c.label}`, value: main, dim: c.i, top: 6, score: 9 - k });
+      add({ group: 'Breakdowns', kind: c.distinct > 8 && c.role !== 'time' ? 'hbar' : 'bar', title: `${mainName} by ${c.label}`, value: main, dim: c.i, top: c.role === 'time' ? 24 : 12, score: 9 - k - (c.distinct <= 7 ? 1 : 0), sort: c.role === 'time' });
+    });
+    if (M[1] && C[0]) add({ group: 'Breakdowns', kind: 'bar', title: `${M[1].label} by ${C[0].label}`, value: vOf(M[1]), dim: C[0].i, top: 12, score: 5 });
+    if (main.calc === 'count' && M[0] && C[0]) add({ group: 'Breakdowns', kind: 'bar', title: `${titleOf(M[0])} by ${C[0].label}`, value: vOf(M[0]), dim: C[0].i, top: 12, score: 8 });
+    if (target && rev && rev !== target && C[0]) add({ group: 'Breakdowns', kind: 'bar', title: `Target Achievement by ${C[0].label}`, value: { calc: 'ratio', a: rev.i, b: target.i, unit: 'pct', name: 'Achievement' }, dim: C[0].i, top: 12, score: 9 });
+    if (rev && cost && C[0]) add({ group: 'Breakdowns', kind: 'bar', title: `Profit Margin by ${C[0].label}`, value: { calc: 'margin', a: rev.i, b: cost.i, unit: 'pct', name: 'Margin' }, dim: C[0].i, top: 12, score: 7 });
+    // rankings
+    // rank by money (or the main number); counting rows per person ranks nothing when each person has one row
+    const rankV = main.calc === 'count' && M[0] ? Object.assign(vOf(M[0]), { name: titleOf(M[0]) }) : main, rankName = main.calc === 'count' && M[0] ? M[0].label : mainName;
+    E.concat(C.filter(c => c.distinct > 12)).slice(0, 3).forEach((e, k) => {
+      if (rankV.calc === 'count' && e.distinct >= rows.length * 0.9) return;
+      add({ group: 'Rankings', kind: 'hbar', title: `Top 10 ${plural(e.label.replace(/\s*name$/i, ''))} by ${rankName}`, value: rankV, dim: e.i, top: 10, score: 8 - k });
+    });
+    // tables
+    const tdim = C[0] || E[0];
+    if (tdim && M.length) add({ group: 'Tables', kind: 'table', title: `${tdim.label} summary`, value: vOf(M[0]), values: M.slice(0, 4).map(vOf).concat([{ calc: 'count', unit: 'num', name: noun }]), dim: tdim.i, top: 15, score: 5, wide: true });
+    out.sort((a, b) => b.score - a.score);
+    // recommended: the best 4–6 cards and 4–5 charts, without two charts saying the same thing
+    const goodCards = out.filter(o => o.kind === 'card' && o.score >= 4), cards = goodCards.slice(0, goodCards.length > 5 ? 6 : 4);
+    const seenDim = new Set(), charts = [];
+    out.filter(o => o.kind !== 'card').forEach(o => { const key = o.kind === 'line' || o.kind === 'bar-time' ? 'time:' + o.title : 'dim:' + o.dim + ':' + o.value.calc; if (charts.length < 5 && !seenDim.has(key)) { seenDim.add(key); if (o.dim != null) seenDim.add('dim:' + o.dim + ':' + o.value.calc); charts.push(o); } });
+    cards.concat(charts).forEach(o => { o.rec = true; });
+    out.forEach(o => { if (o.kind !== 'card' && o.value && o.value.calc === 'count' && !o.value.name) o.value.name = noun; });
+    return { items: out, dateCol: di, filters: C.filter(c => c.distinct <= 40 && c.role !== 'time').slice(0, 3).map(c => c.i), labels: cols.map(c => c.label) };
+  }
+
+  /* ---------------- payload ---------------- */
+  function payload(state) {
+    const cols = state.cols.map((c, i) => ({ label: (state.labels && state.labels[i]) || c.label, type: c.type, unit: c.unit, agg: c.agg }));
+    let minD = '', maxD = '';
+    if (state.dateCol != null) state.rows.forEach(r => { const d = r[state.dateCol]; if (d) { if (!minD || d < minD) minD = d; if (!maxD || d > maxD) maxD = d; } });
+    const grain = state.grain && state.grain !== 'auto' ? state.grain : (minD ? RT.grainFor(minD, maxD) : null);
+    const items = state.chosen.map(id => state.sugg.find(s => s.id === id)).filter(Boolean).map(s => {
+      const it = Object.assign({}, s);
+      if (it.kind === 'bar-time') { it.kind = 'line'; }
+      return it;
+    });
+    const span = minD ? ` · ${RT.periodLabel(RT.periodKey(minD, 'month'), 'month')} to ${RT.periodLabel(RT.periodKey(maxD, 'month'), 'month')}` : '';
+    return { title: state.title, subtitle: `${state.rows.length.toLocaleString('en-IN')} rows from ${state.fileName}${state.sheet ? ' · ' + state.sheet : ''}${span}`,
+      theme: state.theme, cols, rows: state.rows, items, filters: state.filters, dateCol: state.dateCol, grain };
+  }
+
+  /* ---------------- exports: HTML ---------------- */
+  function htmlFile(p) {
+    const json = JSON.stringify(p).replace(/</g, '\\u003c').replace(/[\u2028\u2029]/g, (c) => '\\u' + c.charCodeAt(0).toString(16));
+    return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${String(p.title).replace(/</g, '&lt;')}</title>
+<meta name="generator" content="DocBrisk Excel Dashboard Maker (docbrisk.com)">
+<style>body{margin:0;padding:16px;background:${(RT.THEMES[p.theme] || RT.THEMES.corporate).bg}}#app{max-width:1400px;margin:0 auto}</style></head>
+<body><div id="app"></div>
+<script>
+${DASH_RUNTIME.toString().replace(/^function/, 'const DASH_RUNTIME = function')};
+DASH_RUNTIME().mount(document.getElementById('app'), ${json});
+<\/script></body></html>`;
+  }
+
+  /* ---------------- exports: PNG / PDF ---------------- */
+  async function svgToCanvas(svg, scale) {
+    const img = new Image();
+    const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+    try {
+      img.src = url; await img.decode();
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * scale); c.height = Math.round(img.height * scale);
+      const x = c.getContext('2d'); x.scale(scale, scale); x.drawImage(img, 0, 0);
+      return c;
+    } finally { URL.revokeObjectURL(url); }
+  }
+  async function png(p, st) {
+    const [svg] = RT.poster(p, st);
+    const c = await svgToCanvas(svg, 1.25);
+    return new Promise(res => c.toBlob(res, 'image/png'));
+  }
+  async function pdf(p, st) {
+    if (typeof PDFLib === 'undefined') await window.ensureLib('PDFLib');
+    const pages = RT.poster(p, st, 1131), doc = await PDFLib.PDFDocument.create();
+    doc.setTitle(p.title); doc.setCreator('DocBrisk Excel Dashboard Maker');
+    for (const svg of pages) {
+      const c = await svgToCanvas(svg, 1.5);
+      const img = await doc.embedJpg(await new Promise(res => c.toBlob(b => b.arrayBuffer().then(res), 'image/jpeg', 0.92)));
+      const pg = doc.addPage([842, 595]);
+      pg.drawImage(img, { x: 0, y: 0, width: 842, height: 595 });
+    }
+    return doc.save();
+  }
+
+  /* ---------------- exports: Excel (live formulas + native charts) ---------------- */
+  const X = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+  const colL = (n) => { let s = ''; n++; while (n) { const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; };
+  const serial = (isoD) => { const [y, m, d] = isoD.split('-').map(Number); return (Date.UTC(y, m - 1, d) - Date.UTC(1899, 11, 30)) / 864e5; };
+  const qs = (name) => "'" + String(name).replace(/'/g, "''") + "'";
+  // style ids (see styles below)
+  const S = { hdr: 1, date: 2, inr: 3, num: 4, title: 5, sub: 6, cardLabel: 7, cardInr: 8, cardNum: 9, cardPct: 10, cardNote: 11, month: 12, pct: 13, bold: 14, dec: 15, cardDec: 16, text: 17, wrap: 18 };
+  const STYLES = (accent, soft) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+<numFmts count="6"><numFmt numFmtId="164" formatCode="dd\\-mmm\\-yyyy"/><numFmt numFmtId="165" formatCode="[&gt;=10000000]&quot;₹&quot;#\\,##\\,##\\,##0;[&gt;=100000]&quot;₹&quot;#\\,##\\,##0;&quot;₹&quot;#,##0"/><numFmt numFmtId="166" formatCode="[&gt;=10000000]#\\,##\\,##\\,##0;[&gt;=100000]#\\,##\\,##0;#,##0"/><numFmt numFmtId="167" formatCode="0.0%"/><numFmt numFmtId="168" formatCode="mmm\\ yyyy"/><numFmt numFmtId="169" formatCode="#,##0.00"/></numFmts>
+<fonts count="7"><font><sz val="11"/><color theme="1"/><name val="Calibri"/><family val="2"/><scheme val="minor"/></font><font><b/><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="20"/><color rgb="FF${accent}"/><name val="Calibri"/><family val="2"/></font><font><sz val="10"/><color rgb="FF64748B"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="20"/><color rgb="FF0F172A"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/><family val="2"/></font><font><i/><sz val="10"/><color rgb="FF64748B"/><name val="Calibri"/><family val="2"/></font></fonts>
+<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF${soft}"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FF${accent}"/><bgColor indexed="64"/></patternFill></fill></fills>
+<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left/><right/><top/><bottom style="thin"><color rgb="FFE2E8F0"/></bottom><diagonal/></border></borders>
+<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+<cellXfs count="19">
+<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
+<xf numFmtId="0" fontId="5" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"><alignment vertical="center" wrapText="1"/></xf>
+<xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="165" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="166" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>
+<xf numFmtId="0" fontId="6" fillId="0" borderId="0" xfId="0" applyFont="1"/>
+<xf numFmtId="0" fontId="3" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"><alignment vertical="bottom" indent="1"/></xf>
+<xf numFmtId="165" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
+<xf numFmtId="166" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
+<xf numFmtId="167" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
+<xf numFmtId="0" fontId="3" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment vertical="top" indent="1"/></xf>
+<xf numFmtId="168" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="167" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/>
+<xf numFmtId="169" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="169" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
+<xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
+<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment wrapText="1" vertical="top"/></xf>
+</cellXfs>
+<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
+</styleSheet>`;
+  function cellXml(ref, v, style, formula) {
+    const s = style ? ` s="${style}"` : '';
+    if (formula) {
+      if (typeof v === 'string') return `<c r="${ref}"${s} t="str"><f>${X(formula)}</f><v>${X(v)}</v></c>`;
+      return `<c r="${ref}"${s}><f>${X(formula)}</f>${v == null || !isFinite(v) ? '' : `<v>${v}</v>`}</c>`;
+    }
+    if (v == null || v === '') return style ? `<c r="${ref}"${s}/>` : '';
+    if (typeof v === 'number') return isFinite(v) ? `<c r="${ref}"${s}><v>${v}</v></c>` : '';
+    return `<c r="${ref}"${s} t="inlineStr"><is><t xml:space="preserve">${X(v)}</t></is></c>`;
+  }
+  function sheetXml(rowsXml, opt) {
+    opt = opt || {};
+    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews><sheetView workbookViewId="0"${opt.grid === false ? ' showGridLines="0"' : ''}${opt.active ? ' tabSelected="1"' : ''}>${opt.freeze ? '<pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/>' : ''}</sheetView></sheetViews>
+<sheetFormatPr defaultRowHeight="15"/>${opt.cols ? `<cols>${opt.cols.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('')}</cols>` : ''}
+<sheetData>${rowsXml}</sheetData>${opt.merge && opt.merge.length ? `<mergeCells count="${opt.merge.length}">${opt.merge.map(m => `<mergeCell ref="${m}"/>`).join('')}</mergeCells>` : ''}
+<pageMargins left="0.5" right="0.5" top="0.6" bottom="0.6" header="0.3" footer="0.3"/>${opt.landscape ? '<pageSetup orientation="landscape" fitToHeight="0"/>' : ''}${opt.drawing ? '<drawing r:id="rId1"/>' : ''}${opt.table ? '<tableParts count="1"><tablePart r:id="rId1"/></tableParts>' : ''}
+</worksheet>`;
+  }
+  const row = (r, cells, ht) => `<row r="${r}"${ht ? ` ht="${ht}" customHeight="1"` : ''}>${cells.join('')}</row>`;
+  // Excel formula for one value spec over the Data sheet (whole columns, so added rows count too)
+  function fx(v, colRef, crit) {
+    const R = (i) => `Data!$${colRef(i)}:$${colRef(i)}`, c = crit || '';
+    const S1 = (i) => crit ? `SUMIFS(${R(i)}${c})` : `SUM(${R(i)})`;
+    switch (v.calc) {
+      case 'sum': return S1(v.m);
+      case 'avg': return crit ? `IFERROR(AVERAGEIFS(${R(v.m)}${c}),0)` : `AVERAGE(${R(v.m)})`;
+      case 'count': return crit ? `COUNTIFS(${c.slice(1)})` : null;
+      case 'diff': return `${S1(v.a)}-${S1(v.b)}`;
+      case 'ratio': return `IFERROR(${S1(v.a)}/${S1(v.b)},0)`;
+      case 'margin': return `IFERROR((${S1(v.a)}-${S1(v.b)})/${S1(v.a)},0)`;
+      case 'share': return crit ? null : `IFERROR((${v.vals.map(x => `COUNTIF(${R(v.c)},"${String(x).replace(/"/g, '""')}")`).join('+')})/COUNTA(${R(v.c)}),0)`;
+      default: return null;
+    }
+  }
+  function chartXml(o) {
+    // o: { type: 'col'|'bar'|'line'|'donut'|'stack', title, cats: { ref, vals }, series: [{ name, nameRef, ref, vals, color }], fmt, colors }
+    const strCache = (vals) => `<c:strCache><c:ptCount val="${vals.length}"/>${vals.map((v, i) => `<c:pt idx="${i}"><c:v>${X(v)}</c:v></c:pt>`).join('')}</c:strCache>`;
+    const numCache = (vals) => `<c:numCache><c:formatCode>General</c:formatCode><c:ptCount val="${vals.length}"/>${vals.map((v, i) => v == null || !isFinite(v) ? '' : `<c:pt idx="${i}"><c:v>${v}</c:v></c:pt>`).join('')}</c:numCache>`;
+    const fill = (c) => `<c:spPr><a:solidFill><a:srgbClr val="${c}"/></a:solidFill></c:spPr>`;
+    const lineSp = (c) => `<c:spPr><a:ln w="28575" cap="rnd"><a:solidFill><a:srgbClr val="${c}"/></a:solidFill><a:round/></a:ln></c:spPr>`;
+    const tx = (s) => `<c:tx><c:strRef><c:f>${X(s.nameRef)}</c:f>${strCache([s.name])}</c:strRef></c:tx>`;
+    const cat = `<c:cat><c:strRef><c:f>${X(o.cats.ref)}</c:f>${strCache(o.cats.vals)}</c:strRef></c:cat>`;
+    const val = (s) => `<c:val><c:numRef><c:f>${X(s.ref)}</c:f>${numCache(s.vals)}</c:numRef></c:val>`;
+    const title = `<c:title><c:tx><c:rich><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="1200" b="1"/></a:pPr><a:r><a:rPr lang="en-IN" sz="1200" b="1"/><a:t>${X(o.title)}</a:t></a:r></a:p></c:rich></c:tx><c:overlay val="0"/></c:title><c:autoTitleDeleted val="0"/>`;
+    const axes = (horizontal) => `<c:catAx><c:axId val="5001"/><c:scaling><c:orientation val="${horizontal ? 'maxMin' : 'minMax'}"/></c:scaling><c:delete val="0"/><c:axPos val="${horizontal ? 'l' : 'b'}"/><c:numFmt formatCode="General" sourceLinked="0"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="5002"/><c:crosses val="autoZero"/><c:auto val="1"/><c:lblAlgn val="ctr"/><c:lblOffset val="100"/><c:noMultiLvlLbl val="0"/></c:catAx>` +
+      `<c:valAx><c:axId val="5002"/><c:scaling><c:orientation val="minMax"/></c:scaling><c:delete val="0"/><c:axPos val="${horizontal ? 'b' : 'l'}"/><c:majorGridlines><c:spPr><a:ln w="9525"><a:solidFill><a:srgbClr val="E2E8F0"/></a:solidFill></a:ln></c:spPr></c:majorGridlines><c:numFmt formatCode="${X(o.fmt || '#,##0')}" sourceLinked="0"/><c:majorTickMark val="none"/><c:minorTickMark val="none"/><c:tickLblPos val="nextTo"/><c:crossAx val="5001"/><c:crosses val="${horizontal ? 'max' : 'autoZero'}"/><c:crossBetween val="between"/></c:valAx>`;
+    let plot;
+    if (o.type === 'donut') {
+      const s = o.series[0];
+      plot = `<c:doughnutChart><c:varyColors val="1"/><c:ser><c:idx val="0"/><c:order val="0"/>${tx(s)}${o.cats.vals.map((v, i) => `<c:dPt><c:idx val="${i}"/><c:bubble3D val="0"/>${fill(o.colors[i % o.colors.length])}</c:dPt>`).join('')}` +
+        `<c:dLbls><c:numFmt formatCode="0%" sourceLinked="0"/><c:spPr><a:noFill/><a:ln><a:noFill/></a:ln></c:spPr><c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="1"><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill></a:defRPr></a:pPr><a:endParaRPr lang="en-IN"/></a:p></c:txPr><c:showLegendKey val="0"/><c:showVal val="0"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="1"/><c:showBubbleSize val="0"/><c:showLeaderLines val="0"/></c:dLbls>${cat}${val(s)}</c:ser><c:firstSliceAng val="0"/><c:holeSize val="58"/></c:doughnutChart>`;
+    } else if (o.type === 'line') {
+      plot = `<c:lineChart><c:grouping val="standard"/><c:varyColors val="0"/>${o.series.map((s, i) => `<c:ser><c:idx val="${i}"/><c:order val="${i}"/>${tx(s)}${lineSp(s.color)}<c:marker><c:symbol val="circle"/><c:size val="5"/>${fill(s.color)}</c:marker>${cat}${val(s)}<c:smooth val="0"/></c:ser>`).join('')}<c:marker val="1"/><c:axId val="5001"/><c:axId val="5002"/></c:lineChart>` + axes(false);
+    } else {
+      const horizontal = o.type === 'bar', stacked = o.type === 'stack';
+      plot = `<c:barChart><c:barDir val="${horizontal ? 'bar' : 'col'}"/><c:grouping val="${stacked ? 'stacked' : 'clustered'}"/><c:varyColors val="0"/>${o.series.map((s, i) => `<c:ser><c:idx val="${i}"/><c:order val="${i}"/>${tx(s)}${fill(s.color)}<c:invertIfNegative val="0"/>${cat}${val(s)}</c:ser>`).join('')}<c:gapWidth val="${stacked ? 55 : 70}"/>${stacked ? '<c:overlap val="100"/>' : ''}<c:axId val="5001"/><c:axId val="5002"/></c:barChart>` + axes(horizontal);
+    }
+    const legend = o.series.length > 1 || o.type === 'donut' ? `<c:legend><c:legendPos val="${o.type === 'donut' ? 'r' : 't'}"/><c:overlay val="0"/></c:legend>` : '';
+    return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><c:roundedCorners val="0"/><c:chart>${title}<c:plotArea><c:layout/>${plot}</c:plotArea>${legend}<c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart><c:spPr><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill><a:ln w="9525"><a:solidFill><a:srgbClr val="E2E8F0"/></a:solidFill></a:ln></c:spPr></c:chartSpace>`;
+  }
+  async function xlsx(p) {
+    if (typeof JSZip === 'undefined') await window.ensureLib('JSZip');
+    const th = RT.THEMES[p.theme] || RT.THEMES.corporate;
+    RT.prime(p);
+    const acc = (p.theme === 'midnight' ? '1E3A5F' : th.head.replace('#', '').toUpperCase()), soft = 'F1F5F9';
+    const pal = th.pal.map(c => c.replace('#', '').toUpperCase());
+    const cols = p.cols, nRows = p.rows.length, last = nRows + 1;
+    const colRef = (i) => colL(i);
+    const zip = new JSZip();
+    /* --- Data sheet --- */
+    const dataRows = [row(1, cols.map((c, i) => cellXml(colL(i) + '1', c.label, S.hdr)), 22)];
+    p.rows.forEach((r, k) => {
+      const rn = k + 2;
+      dataRows.push(row(rn, cols.map((c, i) => {
+        const v = r[i], ref = colL(i) + rn;
+        if (v === '' || v == null) return '';
+        if (c.type === 'date') return /^\d{4}-\d{2}-\d{2}$/.test(v) ? cellXml(ref, serial(v), S.date) : cellXml(ref, String(v));
+        if (c.type === 'measure') return cellXml(ref, v, c.unit === 'inr' ? S.inr : c.unit === 'pct' ? S.dec : Number.isInteger(v) ? S.num : S.dec);
+        if (c.type === 'id') return cellXml(ref, String(v), S.text);
+        return cellXml(ref, String(v));
+      })));
+    });
+    const widths = cols.map((c, i) => Math.min(42, Math.max(10, c.label.length + 3, ...p.rows.slice(0, 200).map(r => String(r[i] == null ? '' : r[i]).length + 2))));
+    /* --- Calc sheet: one block per chart, values from SUMIFS so they follow the data --- */
+    const calcRows = [row(1, [cellXml('A1', 'Chart data (formulas over the Data sheet: edit the data and every chart and number updates)', S.sub)])];
+    let cr = 3;
+    const charts = [];
+    const crit = (ci, ref) => `,Data!$${colRef(ci)}:$${colRef(ci)},${ref}`;
+    const grainStep = { day: '+1', week: '+7', month: 'EDATE(%,1)', quarter: 'EDATE(%,3)', year: 'EDATE(%,12)' };
+    const nextOf = (ref, g0) => { const g = grainStep[g0 || p.grain] || grainStep.month; return g.includes('%') ? g.replace('%', ref) : ref + g; };
+    const startOf = (k, g0) => { const g = g0 || p.grain; return g === 'quarter' ? k.slice(0, 4) + '-' + String((+k.slice(6) - 1) * 3 + 1).padStart(2, '0') + '-01' : g === 'year' ? k + '-01-01' : g === 'month' ? k + '-01' : k; };
+    for (const it of p.items.filter(i => i.kind !== 'card')) {
+      const r0 = cr, vals = it.values || [it.value];
+      calcRows.push(row(cr, [cellXml('A' + cr, it.title, S.bold)])); cr++;
+      const hdrRow = cr;
+      if (it.kind === 'line') {
+        // A: the period's name (chart labels), B: its first day (what the formulas compare against)
+        const dI = it.date != null ? it.date : p.dateCol, gI = it.grain || p.grain;
+        const ts = vals.map(v => RT.timeSeries(p.rows, dI, v, gI));
+        calcRows.push(row(cr, [cellXml('A' + cr, 'Period', S.hdr), cellXml('B' + cr, 'Starts', S.hdr)].concat(vals.map((v, j) => cellXml(colL(j + 2) + cr, v.name || it.title, S.hdr))))); cr++;
+        const first = cr;
+        ts[0].forEach((pt, k) => {
+          const bref = '$B$' + cr, cells = [cellXml('A' + cr, pt.label), cellXml('B' + cr, serial(startOf(pt.k, gI)), S.date)];
+          vals.forEach((v, j) => {
+            const dcol = `Data!$${colRef(dI)}:$${colRef(dI)}`;
+            const f = fx(v, colRef, `,${dcol},">="&${bref},${dcol},"<"&${nextOf(bref, gI)}`), cv = ts[j][k] ? ts[j][k].v : null;
+            cells.push(cellXml(colL(j + 2) + cr, cv == null ? 0 : (v.unit === 'pct' ? cv / 100 : cv), v.unit === 'pct' ? S.pct : v.unit === 'inr' ? S.inr : S.num, f || undefined));
+          });
+          calcRows.push(row(cr, cells)); cr++;
+        });
+        charts.push({ type: 'line', title: it.title, fmt: vals[0].unit === 'pct' ? '0%' : vals[0].unit === 'inr' ? '"₹"#,##0' : '#,##0',
+          cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: ts[0].map(x => x.label) },
+          series: vals.map((v, j) => ({ name: v.name || it.title, nameRef: `Calc!$${colL(j + 2)}$${hdrRow}`, ref: `Calc!$${colL(j + 2)}$${first}:$${colL(j + 2)}$${cr - 1}`, vals: ts[j].map(x => x.v == null ? null : v.unit === 'pct' ? x.v / 100 : x.v), color: pal[j % pal.length] })) });
+      } else if (it.kind === 'stack') {
+        const r = RT.compute(p, p.rows, it), d = r.data;
+        calcRows.push(row(cr, [cellXml('A' + cr, 'Period', S.hdr)].concat(d.cats.map((c, j) => cellXml(colL(j + 1) + cr, c, S.hdr))))); cr++;
+        const first = cr;
+        d.keys.forEach((k, pi) => { calcRows.push(row(cr, [cellXml('A' + cr, RT.periodLabel(k, p.grain))].concat(d.cats.map((c, j) => cellXml(colL(j + 1) + cr, d.cells[pi][j] || 0, it.value.unit === 'inr' ? S.inr : S.num))))); cr++; });
+        charts.push({ type: 'stack', title: it.title, fmt: it.value.unit === 'inr' ? '"₹"#,##0' : '#,##0', cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: d.keys.map(k => RT.periodLabel(k, p.grain)) },
+          series: d.cats.map((c, j) => ({ name: c, nameRef: `Calc!$${colL(j + 1)}$${hdrRow}`, ref: `Calc!$${colL(j + 1)}$${first}:$${colL(j + 1)}$${cr - 1}`, vals: d.cells.map(x => x[j] || 0), color: c === 'Others' ? '94A3B8' : pal[j % pal.length] })) });
+      } else {
+        const r = RT.compute(p, p.rows, it), g = (r.data || []).filter(x => x.k !== undefined);
+        const vv = it.kind === 'table' ? vals : [it.value];
+        calcRows.push(row(cr, [cellXml('A' + cr, p.cols[it.dim].label, S.hdr)].concat(vv.map((v, j) => cellXml(colL(j + 1) + cr, v.name || it.title, S.hdr))))); cr++;
+        const first = cr;
+        g.forEach(x => {
+          const a = '$A$' + cr, isOthers = x.k === '__others';
+          const cells = [cellXml('A' + cr, x.label)];
+          vv.forEach((v, j) => {
+            const rows2 = isOthers ? null : p.rows.filter(rr => String(rr[it.dim] === '' || rr[it.dim] == null ? '(blank)' : rr[it.dim]) === x.label);
+            const cv = isOthers ? x.v : RT.measure(rows2, v);
+            const f = isOthers || x.label === '(blank)' ? null : fx(v, colRef, crit(it.dim, a));
+            cells.push(cellXml(colL(j + 1) + cr, cv == null ? 0 : v.unit === 'pct' ? cv / 100 : cv, v.unit === 'pct' ? S.pct : v.unit === 'inr' ? S.inr : S.num, f || undefined));
+          });
+          calcRows.push(row(cr, cells)); cr++;
+        });
+        if (it.kind !== 'table') charts.push({ type: it.kind === 'donut' ? 'donut' : it.kind === 'hbar' ? 'bar' : 'col', title: it.title, fmt: it.value.unit === 'pct' ? '0%' : it.value.unit === 'inr' ? '"₹"#,##0' : '#,##0',
+          cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: g.map(x => x.label) }, colors: pal.concat(['94A3B8']),
+          series: [{ name: it.value.name || it.title, nameRef: `Calc!$B$${hdrRow}`, ref: `Calc!$B$${first}:$B$${cr - 1}`, vals: g.map(x => x.v == null ? null : it.value.unit === 'pct' ? x.v / 100 : x.v), color: pal[0] }] });
+        else charts.push({ table: true, title: it.title, from: r0, to: cr - 1, width: vv.length + 1 });
+      }
+      cr += 2;
+    }
+    /* --- Dashboard sheet --- */
+    const dash = [], merge = [];
+    dash.push(row(1, [cellXml('B1', p.title, S.title)], 34)); merge.push('B1:M1');
+    dash.push(row(2, [cellXml('B2', p.subtitle + ' · numbers below are live formulas over the Data sheet', S.sub)])); merge.push('B2:M2');
+    const cards = p.items.filter(i => i.kind === 'card');
+    let rr = 4;
+    const countCol = cols.reduce((b, c, i) => (b == null || (c.type !== 'measure' && p.rows.filter(r => r[i] === '' || r[i] == null).length < p.rows.filter(r => r[b] === '' || r[b] == null).length) ? i : b), null) || 0;
+    for (let i = 0; i < cards.length; i += 4) {
+      const lab = [], valc = [], note = [];
+      cards.slice(i, i + 4).forEach((it, k) => {
+        const c0 = 1 + k * 3, a = colL(c0), b = colL(c0 + 1), v = it.value, rc = RT.compute(p, p.rows, it);
+        let f = fx(v, colRef);
+        if (v.calc === 'count') f = `COUNTA(Data!$${colRef(countCol)}:$${colRef(countCol)})-1`;
+        if (v.calc === 'distinct') f = nRows <= 5000 ? `SUMPRODUCT((Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}<>"")/COUNTIF(Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last},Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}&""))` : null;
+        const cached = rc.val == null ? 0 : v.unit === 'pct' ? rc.val / 100 : rc.val;
+        lab.push(cellXml(a + rr, it.title.toUpperCase(), S.cardLabel), cellXml(b + rr, '', S.cardLabel));
+        valc.push(cellXml(a + (rr + 1), cached, v.unit === 'pct' ? S.cardPct : v.unit === 'inr' ? S.cardInr : Number.isInteger(cached) ? S.cardNum : S.cardDec, f || undefined), cellXml(b + (rr + 1), '', S.cardNum));
+        const dl = rc.delta && rc.delta.d != null ? `${rc.delta.d >= 0 ? '▲' : '▼'} ${Math.abs(rc.delta.d).toFixed(1)}${rc.delta.pts ? ' pts' : '%'} ${rc.delta.cur} vs ${rc.delta.prev}` : (it.why || '');
+        note.push(cellXml(a + (rr + 2), dl, S.cardNote), cellXml(b + (rr + 2), '', S.cardNote));
+        merge.push(`${a}${rr}:${b}${rr}`, `${a}${rr + 1}:${b}${rr + 1}`, `${a}${rr + 2}:${b}${rr + 2}`);
+      });
+      dash.push(row(rr, lab, 20), row(rr + 1, valc, 34), row(rr + 2, note, 18));
+      rr += 4;
+    }
+    const chartTop = rr + 1;
+    // the drawing: two charts per row, 8 columns x 18 rows each
+    const anchors = [];
+    let ci = 0, tablesNote = [];
+    charts.forEach(ch => {
+      if (ch.table) { tablesNote.push(ch); return; }
+      const colA = (ci % 2) * 6 + 1, rowA = chartTop + Math.floor(ci / 2) * 19;
+      anchors.push({ ch, n: anchors.length + 1, from: [colA, rowA - 1], to: [colA + 6, rowA + 17] });
+      ci++;
+    });
+    let after = chartTop + Math.ceil(ci / 2) * 19 + 1;
+    if (tablesNote.length) { dash.push(row(after, [cellXml('B' + after, 'Summary tables are on the Calc sheet: ' + tablesNote.map(t => t.title).join(', '), S.sub)])); after += 2; }
+    const ins = RT.insights(p, p.rows).map(x => x.replace(/<[^>]+>/g, ''));
+    if (ins.length) {
+      dash.push(row(after, [cellXml('B' + after, 'Key insights', S.bold)])); after++;
+      ins.forEach(t => { dash.push(row(after, [cellXml('B' + after, '• ' + t, S.wrap)], 30)); merge.push(`B${after}:M${after}`); after++; });
+    }
+    const dashCols = [2].concat(Array(15).fill(0).map((x, i) => (i % 3 === 2 ? 2 : 13)));
+    zip.file('xl/worksheets/sheet1.xml', sheetXml(dash.join(''), { grid: false, active: true, cols: dashCols, merge, drawing: anchors.length > 0, landscape: true, tab: acc }));
+    zip.file('xl/worksheets/sheet2.xml', sheetXml(calcRows.join(''), { cols: [28, 18, 18, 18, 18, 18, 18] }));
+    zip.file('xl/worksheets/sheet3.xml', sheetXml(dataRows.join(''), { freeze: true, cols: widths, table: true }));
+    const insRows = [row(1, [cellXml('A1', 'Key insights', S.title)], 30)].concat(ins.map((t, i) => row(i + 3, [cellXml('A' + (i + 3), '• ' + t, S.wrap)], 30)))
+      .concat([row(ins.length + 5, [cellXml('A' + (ins.length + 5), 'How this workbook works: the Dashboard and Calc sheets are formulas over the Data sheet. Paste new rows into the Data table and press F9 (or reopen) to refresh every number and chart.', S.wrap)], 45)]);
+    zip.file('xl/worksheets/sheet4.xml', sheetXml(insRows.join(''), { cols: [120] }));
+    // table on the data sheet
+    zip.file('xl/tables/table1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" id="1" name="DataTable" displayName="DataTable" ref="A1:${colL(cols.length - 1)}${last}" totalsRowShown="0"><autoFilter ref="A1:${colL(cols.length - 1)}${last}"/><tableColumns count="${cols.length}">${cols.map((c, i) => `<tableColumn id="${i + 1}" name="${X(c.label)}"/>`).join('')}</tableColumns><tableStyleInfo name="TableStyleMedium2" showFirstColumn="0" showLastColumn="0" showRowStripes="1" showColumnStripes="0"/></table>`);
+    zip.file('xl/worksheets/_rels/sheet3.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/table" Target="../tables/table1.xml"/></Relationships>`);
+    if (anchors.length) {
+      zip.file('xl/worksheets/_rels/sheet1.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing1.xml"/></Relationships>`);
+      zip.file('xl/drawings/drawing1.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">${anchors.map(a => `<xdr:twoCellAnchor editAs="oneCell"><xdr:from><xdr:col>${a.from[0]}</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>${a.from[1]}</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from><xdr:to><xdr:col>${a.to[0]}</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>${a.to[1]}</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to><xdr:graphicFrame macro=""><xdr:nvGraphicFramePr><xdr:cNvPr id="${a.n + 1}" name="Chart ${a.n}"/><xdr:cNvGraphicFramePr/></xdr:nvGraphicFramePr><xdr:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></xdr:xfrm><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId${a.n}"/></a:graphicData></a:graphic></xdr:graphicFrame><xdr:clientData/></xdr:twoCellAnchor>`).join('')}</xdr:wsDr>`);
+      zip.file('xl/drawings/_rels/drawing1.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${anchors.map(a => `<Relationship Id="rId${a.n}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="../charts/chart${a.n}.xml"/>`).join('')}</Relationships>`);
+      anchors.forEach(a => zip.file(`xl/charts/chart${a.n}.xml`, chartXml(a.ch)));
+    }
+    zip.file('xl/styles.xml', STYLES(acc, soft));
+    zip.file('xl/workbook.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView activeTab="0"/></bookViews><sheets><sheet name="Dashboard" sheetId="1" r:id="rId1"/><sheet name="Calc" sheetId="2" r:id="rId2"/><sheet name="Data" sheetId="3" r:id="rId3"/><sheet name="Insights" sheetId="4" r:id="rId4"/></sheets><calcPr calcId="191029" fullCalcOnLoad="1"/></workbook>`);
+    zip.file('xl/_rels/workbook.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${[1, 2, 3, 4].map(i => `<Relationship Id="rId${i}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i}.xml"/>`).join('')}<Relationship Id="rId5" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
+    zip.file('_rels/.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/></Relationships>`);
+    const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+    zip.file('docProps/core.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>${X(p.title)}</dc:title><dc:creator>DocBrisk Excel Dashboard Maker</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${now}</dcterms:created></cp:coreProperties>`);
+    zip.file('[Content_Types].xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>${[1, 2, 3, 4].map(i => `<Override PartName="/xl/worksheets/sheet${i}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/xl/tables/table1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/>${anchors.length ? '<Override PartName="/xl/drawings/drawing1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/>' : ''}${anchors.map(a => `<Override PartName="/xl/charts/chart${a.n}.xml" ContentType="application/vnd.openxmlformats-officedocument.drawingml.chart+xml"/>`).join('')}<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/></Types>`);
+    return zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }
+
+  /* ---------------- exports: Power BI and Looker Studio kits ---------------- */
+  function csv(p) {
+    const q = (v) => { const s = v == null ? '' : String(v); return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    return '\uFEFF' + [p.cols.map(c => q(c.label)).join(',')].concat(p.rows.map(r => r.map((v, i) => q(p.cols[i].type === 'measure' && v == null ? '' : v)).join(','))).join('\r\n');
+  }
+  function daxFor(p) {
+    const T = "'Data'", col = (i) => `${T}[${p.cols[i].label.replace(/]/g, ']]')}]`;
+    const name = (s) => s.replace(/[\[\]]/g, '');
+    const one = (v) => {
+      switch (v.calc) {
+        case 'sum': return `SUM(${col(v.m)})`;
+        case 'avg': return `AVERAGE(${col(v.m)})`;
+        case 'count': return `COUNTROWS(${T})`;
+        case 'distinct': return `DISTINCTCOUNT(${col(v.c)})`;
+        case 'diff': return `SUM(${col(v.a)}) - SUM(${col(v.b)})`;
+        case 'ratio': return `DIVIDE(SUM(${col(v.a)}), SUM(${col(v.b)}))`;
+        case 'margin': return `DIVIDE(SUM(${col(v.a)}) - SUM(${col(v.b)}), SUM(${col(v.a)}))`;
+        case 'share': return `DIVIDE(CALCULATE(COUNTROWS(${T}), ${col(v.c)} IN {${v.vals.map(x => '"' + String(x).replace(/"/g, '""') + '"').join(', ')}}), COUNTROWS(${T}))`;
+        default: return 'BLANK()';
+      }
+    };
+    const seen = new Set(), lines = ['// DAX measures for Power BI Desktop. In the Data table: Modelling > New measure, then paste one block at a time.', '// Percentages: set the measure format to Percentage in the ribbon.', ''];
+    p.items.forEach(it => (it.values || [it.value]).forEach(v => {
+      const n = name(it.kind === 'card' ? it.title : (v.name || it.title));
+      if (seen.has(n)) return; seen.add(n);
+      lines.push(`${n} = ${one(v)}`, '');
+      if (p.dateCol != null && it.kind === 'card' && ['sum', 'count', 'diff', 'distinct'].includes(v.calc)) lines.push(`${n} MoM % =\nVAR cur = [${n}]\nVAR prev = CALCULATE([${n}], DATEADD('Date'[Date], -1, MONTH))\nRETURN DIVIDE(cur - prev, prev)`, '');
+    }));
+    if (p.dateCol != null) lines.push(`// Date table (Modelling > New table), then mark it as a date table and relate 'Date'[Date] to ${col(p.dateCol)}:`,
+      `Date = ADDCOLUMNS(CALENDAR(MIN(${col(p.dateCol)}), MAX(${col(p.dateCol)})), "Year", YEAR([Date]), "Month", FORMAT([Date], "MMM YYYY"), "MonthNo", YEAR([Date]) * 100 + MONTH([Date]), "Quarter", "Q" & QUARTER([Date]) & " " & YEAR([Date]))`);
+    return lines.join('\n');
+  }
+  function lookerFor(p) {
+    const f = (i) => p.cols[i].label;
+    const one = (v) => {
+      switch (v.calc) {
+        case 'sum': return `SUM(${f(v.m)})`;
+        case 'avg': return `AVG(${f(v.m)})`;
+        case 'count': return 'COUNT(*)  (or Record Count)';
+        case 'distinct': return `COUNT_DISTINCT(${f(v.c)})`;
+        case 'diff': return `SUM(${f(v.a)}) - SUM(${f(v.b)})`;
+        case 'ratio': return `SUM(${f(v.a)}) / SUM(${f(v.b)})`;
+        case 'margin': return `(SUM(${f(v.a)}) - SUM(${f(v.b)})) / SUM(${f(v.a)})`;
+        case 'share': return `SUM(CASE WHEN ${f(v.c)} IN (${v.vals.map(x => "'" + String(x).replace(/'/g, "\\'") + "'").join(', ')}) THEN 1 ELSE 0 END) / COUNT(${f(v.c)})`;
+        default: return '';
+      }
+    };
+    return ['Looker Studio calculated fields (Resource > Manage added data sources > Edit > Add a field):', ''].concat(
+      p.items.map(it => `${it.kind === 'card' ? it.title : (it.value.name || it.title)}\n  Formula: ${one(it.value)}${it.value.unit === 'pct' ? '\n  Type: Number > Percent' : it.value.unit === 'inr' ? '\n  Type: Currency > Indian Rupee (INR)' : ''}\n`)).join('\n');
+  }
+  const VISUAL = { card: ['Card', 'Scorecard'], line: ['Line chart', 'Time series chart'], bar: ['Clustered column chart', 'Column chart'], hbar: ['Clustered bar chart', 'Bar chart'], donut: ['Donut chart', 'Donut chart'], stack: ['Stacked column chart', 'Stacked column chart'], table: ['Table', 'Table'] };
+  function themeJson(p) {
+    const th = RT.THEMES[p.theme] || RT.THEMES.corporate;
+    return JSON.stringify({ name: 'DocBrisk ' + th.name, dataColors: th.pal, background: th.card, foreground: th.ink, tableAccent: th.accent,
+      visualStyles: { '*': { '*': { title: [{ fontSize: 12, fontColor: { solid: { color: th.ink } } }], background: [{ color: { solid: { color: th.card } }, transparency: 0 }], border: [{ show: true, color: { solid: { color: th.line } }, radius: 12 }] } }, page: { '*': { background: [{ color: { solid: { color: th.bg } }, transparency: 0 }] } } } }, null, 2);
+  }
+  function guideHtml(p, tool) {
+    const th = RT.THEMES[p.theme] || RT.THEMES.corporate;
+    const e = (s) => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const fields = (it) => it.kind === 'card' ? `Fields: measure <b>${e(it.title)}</b>` : it.kind === 'line' || it.kind === 'stack' ? `X-axis: <b>${tool === 'pbi' ? "'Date'[Month]" : e(p.cols[p.dateCol].label) + ' (Year Month)'}</b> · Y-axis: <b>${e((it.values || [it.value]).map(v => v.name || it.title).join(', '))}</b>${it.kind === 'stack' ? ` · Legend: <b>${e(p.cols[it.dim].label)}</b>` : ''}`
+      : `Axis / dimension: <b>${e(p.cols[it.dim].label)}</b> · Value: <b>${e(it.value.name || it.title)}</b>${it.top ? ` · Top ${it.top} (filter: Top N by value)` : ''}`;
+    const steps = tool === 'pbi' ? [
+      'Open <b>Power BI Desktop</b> (free from Microsoft). Choose <b>Get data &gt; Text/CSV</b> and pick <b>data.csv</b> from this folder. Click <b>Transform data</b>, check the column types (dates as Date, amounts as Decimal number), rename the query to <b>Data</b>, then <b>Close &amp; Apply</b>.',
+      p.dateCol != null ? 'Create the date table: <b>Modelling &gt; New table</b> and paste the <b>Date = …</b> line from <b>measures.dax</b>. Then <b>Model view</b>: drag <b>Date[Date]</b> onto <b>Data[' + e(p.cols[p.dateCol].label) + ']</b>.' : '',
+      'Add the measures: select the Data table, <b>Modelling &gt; New measure</b>, and paste each measure from <b>measures.dax</b>.',
+      'Apply the colours: <b>View &gt; Themes &gt; Browse for themes</b> and choose <b>theme.json</b>.',
+      'Build the visuals below in this order (cards along the top, charts in a two-column grid), and add slicers for ' + (p.filters.map(i => '<b>' + e(p.cols[i].label) + '</b>').join(', ') || 'your key columns') + '.'
+    ].filter(Boolean) : [
+      'Open <b>lookerstudio.google.com</b> and create a <b>Blank report</b>. Add data: choose <b>File upload</b> and upload <b>data.csv</b> (or put it in Google Sheets and use the <b>Google Sheets</b> connector, which refreshes when the sheet changes).',
+      'Check the field types: dates as <b>Date</b>, amounts as <b>Currency (INR)</b> or <b>Number</b>.',
+      'Add the calculated fields listed in <b>looker-studio-fields.txt</b>.',
+      'Theme: <b>Theme and layout &gt; Customise</b>; use accent <b>' + th.accent + '</b> and the chart colours ' + th.pal.slice(0, 5).join(', ') + '.',
+      'Build the charts below, and add <b>drop-down list controls</b> for ' + (p.filters.map(i => '<b>' + e(p.cols[i].label) + '</b>').join(', ') || 'your key columns') + (p.dateCol != null ? ' plus a <b>date range control</b>' : '') + '.'
+    ];
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(p.title)}: ${tool === 'pbi' ? 'Power BI' : 'Looker Studio'} build guide</title>
+<style>body{font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:860px;margin:0 auto;padding:28px 18px;color:#0f172a;line-height:1.6}h1{color:${th.head};margin-bottom:4px}ol li{margin:8px 0}table{border-collapse:collapse;width:100%;font-size:.92rem}td,th{border-bottom:1px solid #e2e8f0;padding:8px;text-align:left;vertical-align:top}th{background:#f1f5f9}.k{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}</style></head><body>
+<h1>${e(p.title)}</h1><p>${tool === 'pbi' ? 'Power BI' : 'Looker Studio'} build guide from DocBrisk Excel Dashboard Maker. ${e(p.subtitle)}.</p>
+<h2>Steps</h2><ol>${steps.map(s => `<li>${s}</li>`).join('')}</ol>
+<h2>Visuals to build</h2><table><tr><th>#</th><th>Visual</th><th>Title</th><th>Fields</th></tr>${p.items.map((it, i) => `<tr><td>${i + 1}</td><td>${VISUAL[it.kind] ? VISUAL[it.kind][tool === 'pbi' ? 0 : 1] : it.kind}</td><td>${e(it.title)}</td><td>${fields(it)}</td></tr>`).join('')}</table>
+<h2>Colours</h2><p>${th.pal.slice(0, 8).map(c => `<span class="k" style="background:${c}"></span>${c}`).join(' &nbsp; ')}</p>
+<p style="color:#64748b;font-size:.85rem">The file <b>dashboard.html</b> in this folder is the finished dashboard: open it in any browser to see the target layout.</p></body></html>`;
+  }
+  async function kit(p, tool) {
+    if (typeof JSZip === 'undefined') await window.ensureLib('JSZip');
+    const z = new JSZip();
+    z.file('data.csv', csv(p));
+    z.file('dashboard.html', htmlFile(p));
+    if (tool === 'pbi') { z.file('measures.dax', daxFor(p)); z.file('theme.json', themeJson(p)); z.file('START HERE - Power BI guide.html', guideHtml(p, 'pbi')); }
+    else { z.file('looker-studio-fields.txt', lookerFor(p)); z.file('START HERE - Looker Studio guide.html', guideHtml(p, 'looker')); }
+    return z.generateAsync({ type: 'blob', compression: 'DEFLATE' });
+  }
+
+  /* ---------------- a realistic sample to try ---------------- */
+  function sampleRows() {
+    let seed = 20261010;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+    const pick = (a) => a[Math.floor(rnd() * a.length)];
+    const regions = { North: ['Delhi', 'Punjab', 'Uttar Pradesh', 'Haryana'], South: ['Karnataka', 'Tamil Nadu', 'Kerala', 'Telangana'], West: ['Maharashtra', 'Gujarat', 'Rajasthan'], East: ['West Bengal', 'Odisha', 'Bihar'] };
+    const regW = ['North', 'North', 'South', 'South', 'South', 'West', 'West', 'West', 'East'];
+    const products = [['Smartphone X1', 'Electronics', 18999], ['Wireless Earbuds', 'Electronics', 2499], ['Smart Watch', 'Electronics', 4999], ['LED TV 43"', 'Electronics', 27999],
+      ['Mixer Grinder', 'Home & Kitchen', 3499], ['Air Fryer', 'Home & Kitchen', 6999], ['Water Purifier', 'Home & Kitchen', 12499], ['Cotton Kurta', 'Fashion', 1299],
+      ['Running Shoes', 'Fashion', 3299], ['Denim Jeans', 'Fashion', 1799], ['Basmati Rice 5kg', 'Grocery', 649], ['Cold-Pressed Oil 5L', 'Grocery', 1199]];
+    const reps = ['Aarav Mehta', 'Priya Nair', 'Rohan Gupta', 'Sneha Reddy', 'Vikram Singh', 'Ananya Iyer', 'Karan Malhotra', 'Divya Joshi'];
+    const channels = ['Online', 'Online', 'Retail Store', 'Retail Store', 'Distributor'];
+    const out = [['Order Date', 'Order ID', 'Region', 'State', 'Channel', 'Product', 'Category', 'Sales Rep', 'Units', 'Unit Price', 'Revenue', 'Cost', 'Status']];
+    let id = 10001;
+    for (let m = 0; m < 24; m++) {
+      const y = 2024 + Math.floor((m + 9) / 12), mo = (m + 9) % 12 + 1, season = 1 + 0.35 * Math.sin((mo - 3) / 12 * Math.PI * 2) + (mo === 10 || mo === 11 ? 0.45 : 0), growth = 1 + m * 0.018;
+      const n = Math.round(46 * season * growth + rnd() * 10);
+      for (let k = 0; k < n; k++) {
+        const reg = pick(regW), [prod, cat, price] = pick(products), units = 1 + Math.floor(rnd() * rnd() * (cat === 'Grocery' ? 12 : 4));
+        const disc = rnd() < 0.3 ? 0.1 : 0, rev = Math.round(units * price * (1 - disc)), cost = Math.round(rev * (cat === 'Electronics' ? 0.78 : cat === 'Grocery' ? 0.82 : 0.6) * (0.95 + rnd() * 0.1));
+        const day = 1 + Math.floor(rnd() * 28), status = rnd() < 0.86 ? 'Delivered' : rnd() < 0.55 ? 'Returned' : 'Cancelled';
+        out.push([new Date(y, mo - 1, day), 'ORD-' + id++, reg, pick(regions[reg]), pick(channels), prod, cat, pick(reps), units, price, rev, cost, status]);
+      }
+    }
+    return out;
+  }
+  async function sampleFile() {
+    if (typeof XLSX === 'undefined') await window.ensureLib('XLSX');
+    const ws = XLSX.utils.aoa_to_sheet(sampleRows(), { cellDates: true, dateNF: 'dd-mmm-yyyy' });
+    ws['!cols'] = [12, 11, 8, 15, 12, 20, 15, 15, 7, 10, 11, 11, 10].map(w => ({ wch: w }));
+    const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'Sales');
+    const out = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
+    return new File([out], 'sample-sales-data.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }
+
+  return { RT, readFile, table, profile, clean, suggest, payload, htmlFile, png, pdf, xlsx, kit, csv, daxFor, sampleFile, parseDate, parseNum };
+})();
+
+/* ---------------- Excel Dashboard Maker: the tool page ---------------- */
+function renderExcelDashboard(view) {
+  const TYPE_LABEL = { date: 'Date', measure: 'Number to total', category: 'Category', entity: 'Name / item', id: 'ID (ignore)', text: 'Free text (ignore)', empty: 'Empty' };
+  const TYPE_ICON = { date: 'calendar', measure: 'trending-up', category: 'layers', entity: 'users', id: 'hash', text: 'file-text', empty: 'x' };
+  const KIND_LABEL = { card: 'KPI card', line: 'Line chart', 'bar-time': 'Column chart', bar: 'Column chart', hbar: 'Bar chart', donut: 'Donut chart', stack: 'Stacked columns', table: 'Table' };
+  view.innerHTML = toolShell('excel-dashboard', `
+    <div id="dxStart">
+      ${dropzoneMarkup('Excel (.xlsx, .xls) or CSV file', '.xlsx,.xls,.xlsm,.xlsb,.csv,.ods')}
+      <div class="dx-try"><button type="button" class="btn btn-primary" id="dxTry"><span data-icon="sparkles" data-icon-size="16"></span> Try it with sample sales data</button>
+        <button type="button" class="btn btn-ghost" id="dxSampleDl"><span data-icon="download" data-icon-size="16"></span> Download the sample Excel</button></div>
+      <ol class="dx-how">
+        <li><b>Upload</b><span>Any Excel or CSV export: sales, expenses, HR, inventory, marks, leads.</span></li>
+        <li><b>KPIs found for you</b><span>Totals, growth, margins, top performers and trends, picked from your columns.</span></li>
+        <li><b>Pick and design</b><span>Tick what matters, choose a theme, filter by region, product or month.</span></li>
+        <li><b>Download</b><span>A live Excel dashboard, an HTML dashboard, PDF, PNG, or a Power BI / Looker Studio kit.</span></li>
+      </ol>
+    </div>
+    <div id="dxWork" class="hidden">
+      <section class="panel"><div class="panel-title dx-pt"><span>1 · Your data</span><button type="button" class="btn btn-ghost btn-sm" id="dxNew">Use another file</button></div><div id="dxData"></div></section>
+      <section class="panel"><div class="panel-title dx-pt"><span>2 · Suggested KPIs and charts</span><span class="dx-acts"><button type="button" class="btn btn-ghost btn-sm" data-pick="rec">Recommended</button><button type="button" class="btn btn-ghost btn-sm" data-pick="all">All</button><button type="button" class="btn btn-ghost btn-sm" data-pick="none">None</button></span></div><div id="dxKpis"></div></section>
+      <section class="panel"><div class="panel-title">3 · Design</div>
+        <div class="dx-design">
+          <div class="field"><label for="dxTitle">Dashboard title</label><input id="dxTitle" type="text" maxlength="90"></div>
+          <div class="field"><label for="dxGrain">Show time by</label><select id="dxGrain"><option value="auto">Automatic</option><option value="day">Day</option><option value="week">Week</option><option value="month">Month</option><option value="quarter">Quarter</option><option value="year">Year</option></select></div>
+          <div class="field"><label>Theme</label><div class="dx-themes" id="dxThemes"></div></div>
+        </div></section>
+      <section class="dx-preview" id="dxPreview" aria-live="polite"></section>
+      <section class="panel"><div class="panel-title">4 · Download your dashboard</div>
+        <div class="dx-exports">
+          <button type="button" class="dx-exp" data-exp="xlsx"><span data-icon="table" data-icon-size="22"></span><b>Excel dashboard</b><small>KPI cards and native charts driven by live formulas: paste new data and it updates</small></button>
+          <button type="button" class="dx-exp" data-exp="html"><span data-icon="code" data-icon-size="22"></span><b>HTML dashboard</b><small>One file, works offline in any browser, with the same filters. Share it or host it</small></button>
+          <button type="button" class="dx-exp" data-exp="pdf"><span data-icon="file-text" data-icon-size="22"></span><b>PDF report</b><small>A4 landscape pages for email and print (uses the filters you set above)</small></button>
+          <button type="button" class="dx-exp" data-exp="png"><span data-icon="image" data-icon-size="22"></span><b>PNG image</b><small>One picture of the whole dashboard for slides and WhatsApp</small></button>
+          <button type="button" class="dx-exp" data-exp="pbi"><span data-icon="layers" data-icon-size="22"></span><b>Power BI kit</b><small>Clean data, DAX measures, theme file and a step-by-step build guide</small></button>
+          <button type="button" class="dx-exp" data-exp="looker"><span data-icon="globe" data-icon-size="22"></span><b>Looker Studio kit</b><small>Clean data, calculated fields and a build guide for Google Looker Studio</small></button>
+        </div>
+        <p class="hint" id="dxStatus" aria-live="polite" style="text-align:center;margin:12px 0 0"></p></section>
+      <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span><span>Your spreadsheet is read and turned into a dashboard inside your browser. It is never uploaded.</span></div>
+    </div>`);
+  hydrateIcons(view);
+  const RT = DashGen.RT;
+  let S = null, filt = null;
+  const drop = initDropzone({ accept: '.xlsx,.xls,.xlsm,.xlsb,.csv,.ods', onChange: (files) => { if (files[0]) load(files[0]); } });
+  const busy = (m) => { $('#dxStatus').textContent = m || ''; };
+
+  async function load(file) {
+    clearError();
+    try {
+      setStatus('Reading ' + file.name + '…');
+      const sheets = await DashGen.readFile(file);
+      S = { fileName: file.name, sheets, sheetIdx: 0, theme: 'corporate', grain: 'auto', title: '' };
+      useSheet(0);
+      $('#dxStart').classList.add('hidden'); $('#dxWork').classList.remove('hidden');
+      setStatus('');
+      $('#dxWork').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) { setStatus(''); showError(e.message || String(e)); }
+  }
+  function useSheet(i) {
+    S.sheetIdx = i;
+    const sh = S.sheets[i];
+    S.sheet = S.sheets.length > 1 ? sh.name : '';
+    S.table = DashGen.table(sh.aoa);
+    if (!S.table.rows.length) throw new Error('That sheet has a header but no rows under it.');
+    S.cols = DashGen.profile(S.table);
+    S.title = S.title || (sh.name && !/^sheet\s*\d*$/i.test(sh.name) ? sh.name : S.fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ')).replace(/\b\w/g, c => c.toUpperCase()) + ' Dashboard';
+    analyse(true);
+  }
+  function analyse(resetPick) {
+    S.rows = DashGen.clean(S.table, S.cols);
+    const sg = DashGen.suggest(S.cols, S.rows, S.sheets[S.sheetIdx].name);
+    S.sugg = sg.items; S.dateCol = sg.dateCol; S.filters = sg.filters; S.labels = sg.labels;
+    if (resetPick || !S.chosen) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id);
+    else { const keep = new Set(S.chosen); S.chosen = S.sugg.filter(x => keep.has(x.id)).map(x => x.id); if (!S.chosen.length) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id); }
+    filt = null;
+    drawData(); drawKpis(); drawDesign(); preview();
+  }
+  function drawData() {
+    const c = S.cols, n = S.rows.length;
+    $('#dxData').innerHTML = `
+      ${S.sheets.length > 1 ? `<div class="field" style="max-width:320px"><label for="dxSheet">Sheet</label><select id="dxSheet">${S.sheets.map((s, i) => `<option value="${i}"${i === S.sheetIdx ? ' selected' : ''}>${esc(s.name)} (${s.aoa.length - 1} rows)</option>`).join('')}</select></div>` : ''}
+      <p class="dx-sum"><b>${n.toLocaleString('en-IN')}</b> rows · <b>${c.filter(x => x.type !== 'empty').length}</b> columns in <b>${esc(S.fileName)}</b>${S.table.headerRow ? ` · header found on row ${S.table.headerRow + 1}` : ''}. Check how each column was understood; change any that are wrong.</p>
+      <div class="dx-cols">${c.map((col, i) => col.type === 'empty' ? '' : `<label class="dx-col dx-${col.type}"><span data-icon="${TYPE_ICON[col.type]}" data-icon-size="14"></span><b title="${esc(col.label)}">${esc(col.label)}</b>
+        <select data-ci="${i}" aria-label="Type of ${esc(col.label)}">${['date', 'measure', 'category', 'entity', 'id', 'text'].map(t => `<option value="${t}"${t === col.type ? ' selected' : ''}>${TYPE_LABEL[t]}</option>`).join('')}</select>
+        ${col.type === 'measure' ? `<select data-unit="${i}" aria-label="Unit of ${esc(col.label)}"><option value="inr"${col.unit === 'inr' ? ' selected' : ''}>₹</option><option value="num"${col.unit === 'num' ? ' selected' : ''}>123</option><option value="pct"${col.unit === 'pct' ? ' selected' : ''}>%</option></select>
+          <select data-agg="${i}" aria-label="How to combine ${esc(col.label)}"><option value="sum"${col.agg !== 'avg' ? ' selected' : ''}>Sum</option><option value="avg"${col.agg === 'avg' ? ' selected' : ''}>Average</option></select>` : ''}</label>`).join('')}</div>`;
+    hydrateIcons($('#dxData'));
+    const sh = $('#dxSheet'); if (sh) sh.addEventListener('change', () => { S.title = ''; try { useSheet(+sh.value); } catch (e) { showError(e.message); } });
+    $$('#dxData [data-ci]').forEach(s => s.addEventListener('change', () => {
+      const col = S.cols[+s.dataset.ci]; col.type = s.value;
+      if (col.type === 'measure') { col.agg = col.agg || 'sum'; col.unit = col.unit || 'num'; col.score = col.score > 0 ? col.score : 5; }
+      if (col.type === 'category' || col.type === 'entity') { col.score = col.score > 0 ? col.score : 4; col.distinct = col.distinct || new Set(S.table.rows.map(r => r[col.c])).size; }
+      analyse(false);
+    }));
+    $$('#dxData [data-unit]').forEach(s => s.addEventListener('change', () => { S.cols[+s.dataset.unit].unit = s.value; analyse(false); }));
+    $$('#dxData [data-agg]').forEach(s => s.addEventListener('change', () => { S.cols[+s.dataset.agg].agg = s.value; analyse(false); }));
+  }
+  function drawKpis() {
+    const groups = [...new Set(S.sugg.map(x => x.group))], chosen = new Set(S.chosen), p = DashGen.payload(Object.assign({}, S, { chosen: [] }));
+    $('#dxKpis').innerHTML = !S.sugg.length ? '<p class="hint">No numbers or categories to build KPIs from. Mark at least one column as "Number to total" or "Category" above.</p>' :
+      groups.map(g => `<div class="dx-group"><h4>${esc(g)}</h4><div class="dx-items">${S.sugg.filter(x => x.group === g).map(x => {
+        let val = '';
+        if (x.kind === 'card') { try { val = RT.fmt(RT.measure(S.rows, x.value), x.value.unit); } catch (e) { val = ''; } }
+        return `<label class="dx-item${chosen.has(x.id) ? ' on' : ''}"><input type="checkbox" value="${x.id}"${chosen.has(x.id) ? ' checked' : ''}>
+          <span class="dx-kind">${KIND_LABEL[x.kind] || x.kind}${x.rec ? ' · <em>recommended</em>' : ''}</span><b>${esc(x.title)}</b>${val ? `<strong>${esc(val)}</strong>` : ''}${x.why ? `<small>${esc(x.why)}</small>` : ''}</label>`;
+      }).join('')}</div></div>`).join('');
+    void p;
+    $$('#dxKpis input').forEach(cb => cb.addEventListener('change', () => {
+      cb.closest('.dx-item').classList.toggle('on', cb.checked);
+      S.chosen = $$('#dxKpis input:checked').map(x => x.value);
+      preview();
+    }));
+  }
+  function drawDesign() {
+    $('#dxTitle').value = S.title;
+    $('#dxGrain').value = S.grain;
+    $('#dxThemes').innerHTML = Object.entries(RT.THEMES).map(([k, t]) => `<button type="button" class="dx-theme${k === S.theme ? ' on' : ''}" data-theme="${k}" aria-pressed="${k === S.theme}" title="${esc(t.name)}">
+      <i style="background:${t.head}"></i><i style="background:${t.pal[0]}"></i><i style="background:${t.pal[1]}"></i><i style="background:${t.pal[3]}"></i><span>${esc(t.name)}</span></button>`).join('');
+    $$('#dxThemes [data-theme]').forEach(b => b.addEventListener('click', () => { S.theme = b.dataset.theme; drawDesign(); preview(); }));
+  }
+  function preview() {
+    const el = $('#dxPreview');
+    if (!S.chosen.length) { el.innerHTML = '<div class="panel"><p class="hint" style="margin:0">Tick at least one KPI or chart above to see the dashboard.</p></div>'; return; }
+    filt = RT.render(el, DashGen.payload(S), filt || undefined);
+  }
+  $('#dxTitle').addEventListener('input', () => { S.title = $('#dxTitle').value.trim() || 'Dashboard'; preview(); });
+  $('#dxGrain').addEventListener('change', () => { S.grain = $('#dxGrain').value; filt = null; preview(); });
+  $$('[data-pick]').forEach(b => b.addEventListener('click', () => {
+    const m = b.dataset.pick;
+    S.chosen = m === 'none' ? [] : S.sugg.filter(x => m === 'all' || x.rec).map(x => x.id);
+    drawKpis(); preview();
+  }));
+  $('#dxNew').addEventListener('click', () => { S = null; $('#dxWork').classList.add('hidden'); $('#dxStart').classList.remove('hidden'); drop.files.length = 0; $('#fileList').classList.add('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  $('#dxTry').addEventListener('click', async () => { try { load(await DashGen.sampleFile()); } catch (e) { showError(e.message); } });
+  $('#dxSampleDl').addEventListener('click', async () => { try { downloadBlob(await DashGen.sampleFile(), 'sample-sales-data.xlsx'); } catch (e) { showError(e.message); } });
+
+  const stemOf = () => (S.title || 'dashboard').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '-').toLowerCase().slice(0, 60) || 'dashboard';
+  $$('[data-exp]').forEach(b => b.addEventListener('click', () => runTask(b, async () => {
+    if (!S || !S.chosen.length) throw new Error('Tick at least one KPI or chart first.');
+    const p = DashGen.payload(S), kind = b.dataset.exp, t0 = performance.now();
+    busy({ xlsx: 'Building the Excel workbook with live formulas and charts…', html: 'Packing the HTML dashboard…', pdf: 'Laying out the PDF pages…', png: 'Drawing the image…', pbi: 'Preparing the Power BI kit…', looker: 'Preparing the Looker Studio kit…' }[kind]);
+    if (kind === 'xlsx') downloadBlob(await DashGen.xlsx(p), stemOf() + '.xlsx');
+    else if (kind === 'html') downloadBlob(new Blob([DashGen.htmlFile(p)], { type: 'text/html' }), stemOf() + '.html');
+    else if (kind === 'pdf') downloadBytes(await DashGen.pdf(p, filt), 'application/pdf', stemOf() + '.pdf');
+    else if (kind === 'png') downloadBlob(await DashGen.png(p, filt), stemOf() + '.png');
+    else downloadBlob(await DashGen.kit(p, kind), stemOf() + (kind === 'pbi' ? '-power-bi-kit.zip' : '-looker-studio-kit.zip'));
+    busy(`Done in ${((performance.now() - t0) / 1000).toFixed(1)}s, made on your device.`);
+  })));
+}
+
+/* ==========================================================================
    PAN, Aadhaar, GSTIN and IFSC validator
    ========================================================================== */
 const Verhoeff = (() => {
@@ -27769,6 +29181,7 @@ const QUICK_TASKS = [
   ['compress-pdf', 'Compress a PDF', 'PDF का साइज़ कम करें'],
   ['image-compressor', 'Photo to 20, 50 or 100 KB', 'फ़ोटो का साइज़ KB में घटाएँ'],
   ['exam-photo', 'Exam photo & signature', 'फ़ॉर्म के लिए फ़ोटो और सिग्नेचर'],
+  ['excel-dashboard', 'Dashboard from Excel', 'Excel से डैशबोर्ड और KPI'],
   ['biodata-maker', 'Marriage biodata', 'शादी का बायोडाटा बनाएँ'],
   ['letter-maker', 'Application or letter', 'आवेदन पत्र लिखें'],
   ['id-card', 'Print Aadhaar front & back', 'आधार कार्ड प्रिंट करें'],
@@ -27794,7 +29207,7 @@ const SHORT_NAMES = {
   'sheet-to-pdf': 'Excel to PDF', 'batch-process': 'Batch', 'smart-redact': 'Auto Redact', 'word-to-pdf': 'Word to PDF', 'biodata-maker': 'Biodata',
   'letter-maker': 'Letters', 'gstin-validator': 'GSTIN Check', 'image-compressor': 'Compress Photo', 'gst-calculator': 'GST Calc', 'age-calculator': 'Age Calc',
   'salary-slip': 'Salary Slip', 'rent-receipt': 'Rent Receipt', 'pan-aadhaar-validator': 'PAN Check', 'amount-in-words': 'In Words', 'cgpa-calculator': 'CGPA to %',
-  'income-tax-calculator': 'Income Tax', 'emi-calculator': 'EMI Calc', 'sip-calculator': 'SIP Calc', 'fd-calculator': 'FD / RD / PPF'
+  'income-tax-calculator': 'Income Tax', 'emi-calculator': 'EMI Calc', 'sip-calculator': 'SIP Calc', 'fd-calculator': 'FD / RD / PPF', 'excel-dashboard': 'Excel Dashboard'
 };
 
 /* The tools people reach for most come first inside each group. */
@@ -27804,7 +29217,7 @@ const HOME_ORDER = ['image-compressor', 'exam-photo', 'photo-studio', 'id-card',
   'gst-calculator', 'age-calculator', 'cgpa-calculator', 'amount-in-words', 'gstin-validator', 'pan-aadhaar-validator',
   'compress-pdf', 'merge-pdf', 'pdf-editor', 'sign-pdf', 'organize-pdf', 'split-by-size', 'unlock-pdf', 'protect-pdf', 'watermark-pdf', 'number-pdf', 'redact-pdf',
   'pdf-to-word', 'word-to-pdf', 'image-to-pdf', 'pdf-to-image', 'pdf-to-excel', 'sheet-to-pdf', 'ocr-pdf', 'translate-pdf',
-  'invoice-maker', 'qr-maker', 'mail-merge', 'qr-stamp'];
+  'excel-dashboard', 'invoice-maker', 'qr-maker', 'mail-merge', 'qr-stamp'];
 const homeRank = (slug) => { const i = HOME_ORDER.indexOf(slug); return i < 0 ? 999 : i; };
 
 /* Landing pages grouped for the home page and /guides. */
