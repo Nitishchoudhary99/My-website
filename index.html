@@ -2403,6 +2403,33 @@ input.calc-big{font-size:1.35rem;font-weight:700;font-variant-numeric:tabular-nu
 @media(min-width:820px){.fin-two{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.fin-tbl{font-size:.8rem}.fin-tbl th,.fin-tbl td{padding:7px 8px}.fin-donut svg{width:108px;height:108px}}
 
+/* ---- "What to upload" guide on tool pages ---- */
+.up-guide{margin:0 0 18px;border:1px solid var(--brand-200);background:var(--brand-50);border-radius:14px;overflow:hidden}
+.up-guide>summary{display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 16px;cursor:pointer;list-style:none;color:var(--brand-700, #4338ca)}
+.up-guide>summary::-webkit-details-marker{display:none}
+.up-guide>summary strong{font-size:.95rem;color:var(--ink-900)}
+.up-guide>summary em{margin-left:auto;font:600 .75rem var(--font);font-style:normal;color:var(--ink-500)}
+.up-guide-body{padding:0 16px 16px}
+.up-items{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:720px){.up-items{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}}
+.up-item{display:flex;gap:12px;background:var(--white);border:1px solid var(--ink-200);border-radius:12px;padding:12px 14px}
+.up-ic{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--brand-50);color:var(--brand-600)}
+.up-item b{display:block;font-size:.92rem;color:var(--ink-900);margin-bottom:2px}
+.up-item p{margin:0;font-size:.86rem;line-height:1.5;color:var(--ink-700)}
+.up-guide code{font:600 .82em var(--mono);background:var(--mark-soft, #fff7d1);color:var(--ink-900);padding:1px 5px;border-radius:5px;white-space:nowrap}
+.up-example{display:grid;gap:10px;margin-top:12px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:820px){.up-example{grid-template-columns:1.1fr 1.2fr 1.1fr;align-items:stretch}}
+.up-ex-card{background:var(--white);border:1px dashed var(--ink-300);border-radius:12px;padding:10px 12px;min-width:0}
+.up-ex-card p{margin:4px 0 0;font-size:.86rem;line-height:1.55;color:var(--ink-800)}
+.up-ex-out{border-style:solid;border-color:var(--ok-bd);background:var(--ok-bg)}
+.up-ex-h{display:block;font:700 .66rem var(--font);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-500)}
+.up-ex-tbl{width:100%;border-collapse:collapse;margin-top:6px;font-size:.78rem}
+.up-ex-tbl th,.up-ex-tbl td{border:1px solid var(--ink-200);padding:4px 6px;text-align:left;white-space:nowrap}
+.up-ex-tbl th{background:var(--ink-50);font-weight:700;color:var(--ink-700)}
+.up-samples{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.up-samples .btn{display:inline-flex;align-items:center;gap:7px;min-height:44px}
+.up-tip{margin:12px 0 0;font-size:.82rem;color:var(--ink-600)}
+
 /* amount in words */
 .words-out{margin-top:16px;display:flex;flex-direction:column;gap:10px}
 .words-fig{font:400 1.7rem/1.15 var(--serif);color:var(--ink-900);margin:0 0 4px;font-variant-numeric:tabular-nums}
@@ -16818,7 +16845,7 @@ const App = {
     else if (hash === 'admin-addins') { renderAddinAdmin(view); }
     else if (hash === 'admin') { renderAdmin(view); }
     else if (hash === 'tool/invoice-maker') { renderInvoice(view); }
-    else if (hash === 'tool/mail-merge') { renderMailMerge(view); DocxMerge.mount(view); }
+    else if (hash === 'tool/mail-merge') { renderMailMerge(view); DocxMerge.mount(view); MergeSamples.wire(view); hydrateIcons(view); }
     else if (hash === 'tool/split-by-size') { renderSplitSize(view); }
     else if (hash === 'tool/sheet-to-pdf') { renderSheetToPdf(view); }
     else if (hash === 'security') { renderStatic(view, 'security'); }
@@ -17224,6 +17251,214 @@ function updateNavState() {
 const toolMeta = (slug) => TOOLS.find(t => t.slug === slug) || { name: slug, blurb: '', tint: 't-indigo', icon: 'square' };
 
 /* ------------------------------------------------------- shared tool shell */
+/* ==========================================================================
+   "What to upload" guides (v4.9)
+   Tools that need a particular file, or two files, say so before the first
+   upload: what each file is, how it must look, and (for mail merge) sample
+   files to download or to try the tool with straight away.
+   ========================================================================== */
+const UploadGuide = (() => {
+  const G = {
+    'mail-merge': {
+      title: 'You need two files',
+      items: [
+        ['file-text', '1. A template', 'A Word file (.docx) with the changing parts typed as fields in double curly brackets, like {{Name}} or {{Course}}. Design it in Word or Google Docs as usual. For a ready-made PDF certificate, use the PDF template tab and click where each field goes.'],
+        ['table', '2. A data file', 'An Excel (.xlsx) or CSV file. Row 1 holds the column names, spelt the same as your fields (Name, Course …). Every row below it becomes one certificate or letter.']
+      ],
+      example: true, samples: true,
+      tip: 'Column names are matched without caring about capitals or spaces, so {{Student Name}} finds a column called "student name".'
+    },
+    'compare-pdf': {
+      title: 'You need two versions of the same PDF',
+      items: [
+        ['file-text', 'Original', 'The earlier version, for example the contract you sent.'],
+        ['file-check', 'Revised', 'The version you got back. Every difference between the two is highlighted.']
+      ]
+    },
+    'id-card': {
+      title: 'What to upload',
+      items: [
+        ['camera', 'Front side', 'A photo or scan of the front of the card (JPG or PNG), or a 1-page PDF.'],
+        ['camera', 'Back side (optional)', 'The back of the card. Both sides are placed on one A4 page at the real card size, ready to print.']
+      ],
+      tip: 'Take the photo flat, in good light, with the whole card in view and no glare on the photo or the numbers.'
+    },
+    'batch-process': {
+      title: 'What to upload',
+      items: [['layers', 'Many PDFs at once', 'Select all the PDFs together (Ctrl or Shift while clicking, or a long-press on a phone). One action is applied to every file and you get a ZIP back.']]
+    },
+    'sheet-to-pdf': {
+      title: 'What to upload',
+      items: [['table', 'An Excel or CSV file', 'Each sheet becomes a table in the PDF. Keep the column headings in row 1; they repeat at the top of every page.']]
+    },
+    'merge-pdf': {
+      title: 'What to upload',
+      items: [['layers', 'Two or more PDFs', 'Pick them in the order they should appear: the first file you pick becomes the first pages.']]
+    },
+    'image-to-pdf': {
+      title: 'What to upload',
+      items: [['image', 'Photos or scans', 'JPG, PNG or WebP, as many as you like. Each image becomes one page, in the order shown.']]
+    },
+    'ocr-pdf': {
+      title: 'What to upload',
+      items: [['scan', 'A scanned PDF or a photo', 'A scan from a printer or a phone photo of a page. Pick the document\'s language below for the best accuracy.']],
+      tip: 'If the PDF already has selectable text, PDF to Word is faster and exact.'
+    },
+    'unlock-pdf': {
+      title: 'What to upload',
+      items: [['lock', 'A password-protected PDF', 'You need its password. e-Aadhaar uses the first 4 letters of your name in capitals plus your birth year (e.g. SURE1990); bank statements often use your date of birth or customer ID.']]
+    },
+    'gstin-validator': {
+      title: 'What to paste or upload',
+      items: [['table', 'GST numbers', 'Paste one GSTIN per line, or load a CSV or Excel file: any column that contains GSTINs is found automatically.']]
+    },
+    'pan-aadhaar-validator': {
+      title: 'What to paste or upload',
+      items: [['table', 'PAN, Aadhaar, GSTIN or IFSC numbers', 'Paste one per line (mixed types are fine), or load a CSV or Excel column of them. Nothing leaves your device.']]
+    },
+    'doc-integrity': {
+      title: 'What to upload',
+      items: [['shield', 'The PDF you want to check', 'A certificate, bill or statement someone sent you. It is checked for signs of editing after it was created.']]
+    }
+  };
+
+  function html(slug) {
+    const g = G[slug];
+    if (!g) return '';
+    return `<details class="up-guide" open>
+      <summary><span data-icon="sparkles" data-icon-size="16"></span><strong>${esc(g.title)}</strong><em>Show / hide</em></summary>
+      <div class="up-guide-body">
+        <div class="up-items">${g.items.map(([ic, t, d]) => `<div class="up-item"><span class="up-ic" data-icon="${ic}" data-icon-size="18"></span>
+          <div><b>${esc(t)}</b><p>${esc(d).replace(/\{\{([^}]+)\}\}/g, '<code>{{$1}}</code>')}</p></div></div>`).join('')}</div>
+        ${g.example ? `<div class="up-example" aria-label="Example">
+          <div class="up-ex-card"><span class="up-ex-h">Template (Word)</span>
+            <p>This is to certify that <code>{{Name}}</code> has completed <code>{{Course}}</code> on <code>{{Date}}</code>.</p></div>
+          <div class="up-ex-card"><span class="up-ex-h">Data file (Excel)</span>
+            <table class="up-ex-tbl"><tr><th>Name</th><th>Course</th><th>Date</th></tr>
+              <tr><td>Riya Sharma</td><td>Python Basics</td><td>12 Oct 2026</td></tr>
+              <tr><td>Aman Gupta</td><td>Excel for Office</td><td>12 Oct 2026</td></tr></table></div>
+          <div class="up-ex-card up-ex-out"><span class="up-ex-h">Result: one file per row</span>
+            <p>This is to certify that <b>Riya Sharma</b> has completed <b>Python Basics</b> on <b>12 Oct 2026</b>.</p></div>
+        </div>` : ''}
+        ${g.samples ? `<div class="up-samples">
+          <button type="button" class="btn btn-primary btn-sm" data-sample="try"><span data-icon="sparkles" data-icon-size="15"></span> Try it with sample files</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-sample="docx"><span data-icon="download" data-icon-size="15"></span> Sample Word template</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-sample="xlsx"><span data-icon="download" data-icon-size="15"></span> Sample Excel data</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-sample="pdf"><span data-icon="download" data-icon-size="15"></span> Sample PDF certificate</button>
+        </div>` : ''}
+        ${g.tip ? `<p class="up-tip">${esc(g.tip).replace(/\{\{([^}]+)\}\}/g, '<code>{{$1}}</code>')}</p>` : ''}
+      </div></details>`;
+  }
+  return { html, has: (slug) => !!G[slug] };
+})();
+
+/* Sample files for mail merge, made on the device. */
+const MergeSamples = (() => {
+  const ROWS = [
+    ['Name', 'Course', 'Date', 'Grade', 'Email'],
+    ['Riya Sharma', 'Python Basics', '12 October 2026', 'A', 'riya@example.com'],
+    ['Aman Gupta', 'Excel for Office', '12 October 2026', 'A+', 'aman@example.com'],
+    ['Priya Nair', 'Digital Marketing', '12 October 2026', 'B+', 'priya@example.com'],
+    ['Mohammed Irfan', 'Tally with GST', '12 October 2026', 'A', 'irfan@example.com'],
+    ['Sneha Patil', 'Spoken English', '12 October 2026', 'A', 'sneha@example.com']
+  ];
+  const XML = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
+  const run = (t, o) => `<w:r><w:rPr><w:rFonts w:ascii="Georgia" w:hAnsi="Georgia"/>${o && o.b ? '<w:b/>' : ''}${o && o.c ? `<w:color w:val="${o.c}"/>` : ''}<w:sz w:val="${(o && o.sz) || 28}"/></w:rPr><w:t xml:space="preserve">${t}</w:t></w:r>`;
+  const para = (runs, after, before) => `<w:p><w:pPr><w:jc w:val="center"/><w:spacing w:before="${before || 0}" w:after="${after || 200}"/></w:pPr>${runs}</w:p>`;
+
+  async function docx() {
+    if (typeof JSZip === 'undefined') await window.ensureLib('JSZip');
+    const z = new JSZip();
+    z.file('[Content_Types].xml', XML + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>');
+    z.file('_rels/.rels', XML + '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+    const border = (s) => `<w:${s} w:val="double" w:sz="18" w:space="24" w:color="4F46E5"/>`;
+    z.file('word/document.xml', XML + `<w:document ${W}><w:body>` +
+      para(run('CERTIFICATE OF COMPLETION', { b: 1, c: '4F46E5', sz: 64 }), 520, 600) +
+      para(run('This is to certify that', { sz: 34 }), 240) +
+      para(run('{{Name}}', { b: 1, sz: 64 }), 320) +
+      para(run('has successfully completed the course', { sz: 34 }), 240) +
+      para(run('{{Course}}', { b: 1, c: '1E3A8A', sz: 46 }), 240) +
+      para(run('on {{Date}} with grade ', { sz: 32 }) + run('{{Grade}}', { b: 1, sz: 32 }) + run('.', { sz: 32 }), 1100) +
+      para(run('________________________                    ________________________', { sz: 26 }), 60) +
+      para(run('Course Director                                                     Principal', { sz: 26, c: '475569' })) +
+      `<w:sectPr><w:pgSz w:w="16838" w:h="11906" w:orient="landscape"/><w:pgMar w:top="1300" w:right="1300" w:bottom="1300" w:left="1300" w:header="0" w:footer="0" w:gutter="0"/>` +
+      `<w:pgBorders w:offsetFrom="page">${border('top')}${border('left')}${border('bottom')}${border('right')}</w:pgBorders></w:sectPr>` +
+      '</w:body></w:document>');
+    const blob = await z.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    return new File([blob], 'sample-certificate-template.docx', { type: blob.type });
+  }
+
+  async function xlsx() {
+    try {
+      if (typeof XLSX === 'undefined') await window.ensureLib('XLSX');
+      const wb = XLSX.utils.book_new(), ws = XLSX.utils.aoa_to_sheet(ROWS);
+      ws['!cols'] = [{ wch: 18 }, { wch: 20 }, { wch: 18 }, { wch: 8 }, { wch: 22 }];
+      XLSX.utils.book_append_sheet(wb, ws, 'Students');
+      const out = XLSX.write(wb, { type: 'array', bookType: 'xlsx' });
+      return new File([out], 'sample-data.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    } catch (e) {
+      const csv = '﻿' + ROWS.map(r => r.join(',')).join('\r\n');
+      return new File([csv], 'sample-data.csv', { type: 'text/csv' });
+    }
+  }
+
+  async function pdf() {
+    if (typeof PDFLib === 'undefined') await window.ensureLib('PDFLib');
+    const doc = await PDFLib.PDFDocument.create();
+    const page = doc.addPage([841.89, 595.28]);
+    const T = await doc.embedFont(PDFLib.StandardFonts.TimesRomanBold), R = await doc.embedFont(PDFLib.StandardFonts.TimesRoman);
+    const ink = PDFLib.rgb(.12, .16, .3), brand = PDFLib.rgb(.31, .27, .9), W = 841.89;
+    page.drawRectangle({ x: 24, y: 24, width: W - 48, height: 547, borderColor: brand, borderWidth: 3 });
+    page.drawRectangle({ x: 34, y: 34, width: W - 68, height: 527, borderColor: brand, borderWidth: .8 });
+    const mid = (t, f, s, y, c) => page.drawText(t, { x: (W - f.widthOfTextAtSize(t, s)) / 2, y, size: s, font: f, color: c || ink });
+    mid('CERTIFICATE OF COMPLETION', T, 34, 470, brand);
+    mid('This is to certify that', R, 18, 405);
+    page.drawLine({ start: { x: 230, y: 350 }, end: { x: W - 230, y: 350 }, thickness: .8, color: ink });
+    mid('has successfully completed the course', R, 18, 300);
+    page.drawLine({ start: { x: 260, y: 250 }, end: { x: W - 260, y: 250 }, thickness: .8, color: ink });
+    mid('Click above each line to place the Name and Course fields', R, 10, 210, PDFLib.rgb(.45, .5, .58));
+    page.drawLine({ start: { x: 120, y: 110 }, end: { x: 320, y: 110 }, thickness: .8, color: ink });
+    page.drawLine({ start: { x: W - 320, y: 110 }, end: { x: W - 120, y: 110 }, thickness: .8, color: ink });
+    page.drawText('Course Director', { x: 170, y: 92, size: 12, font: R, color: ink });
+    page.drawText('Principal', { x: W - 248, y: 92, size: 12, font: R, color: ink });
+    return new File([await doc.save()], 'sample-certificate.pdf', { type: 'application/pdf' });
+  }
+
+  /* Puts a file into an <input type=file> exactly as if the user had picked it. */
+  function feed(input, file) {
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function wire(view) {
+    view.querySelectorAll('[data-sample]').forEach(b => b.addEventListener('click', async () => {
+      const kind = b.dataset.sample;
+      b.disabled = true;
+      try {
+        if (kind === 'docx') downloadBlob(await docx(), 'sample-certificate-template.docx');
+        else if (kind === 'xlsx') { const f = await xlsx(); downloadBlob(f, f.name); }
+        else if (kind === 'pdf') downloadBlob(await pdf(), 'sample-certificate.pdf');
+        else {
+          // the Word tab shows the whole flow end to end, so the try-out uses it
+          const tab = view.querySelector('[data-mm="docx"]'); if (tab) tab.click();
+          feed($('#mdTplIn'), await docx());
+          await new Promise(r => setTimeout(r, 400));
+          feed($('#mdCsvIn'), await xlsx());
+          const g = view.querySelector('.up-guide'); if (g) g.open = false;
+          const target = $('#mdInfo') || $('#mdPanel');
+          if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 600);
+          dbToast('Sample template and data loaded. Check the preview, then create the files.', 5000);
+        }
+      } catch (e) { showError(e.message || 'The sample could not be made.'); }
+      b.disabled = false;
+    }));
+  }
+  return { wire, docx, xlsx, pdf };
+})();
+
 function toolShell(slug, body) {
   const m = toolMeta(slug);
   return `
@@ -17238,6 +17473,7 @@ function toolShell(slug, body) {
       <h1>${esc(m.h1 || m.name)}</h1>
       <p>${esc(m.blurb)}</p>
     </div>
+    ${UploadGuide.html(slug)}
     ${body}
     <div id="errorBox" class="alert alert-err hidden" role="alert"></div>
   </div>
