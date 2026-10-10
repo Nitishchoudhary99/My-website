@@ -2562,6 +2562,521 @@ html[data-theme="dark"] .mk-stage{background:#0f0d0a}
 html[data-theme="dark"] .modal-back,html[data-theme="dark"] .palette-backdrop{background:rgba(0,0,0,.66)}
 html[data-theme="dark"] .ic-thumb{background:repeating-conic-gradient(#3a352e 0 25%,#2b2722 0 50%) 50%/14px 14px}
 html[data-theme="dark"] .t-slate{background:var(--ink-100);color:var(--ink-900)}
+
+/* ==========================================================================
+   v4.8 UI refresh: consistent controls, real mobile menu, colour-coded tools,
+   compact phone hero, cleaner tool pages and content pages, AA contrast.
+   Appended last so it wins over the older layers above.
+   ========================================================================== */
+/* ---- chrome: tokens, header, menu, footer, toasts ---- */
+:root{
+  --ink-500:#6e665a; --ink-400:#8a8174;
+  --brand-ink:var(--brand-700); --ring:var(--brand-600); --field-bd:#958c7f;
+  --ctl-h:40px; --ctl-r:10px;
+  --sh:41 31 15;
+  --elev-2:0 1px 0 var(--ink-200),0 12px 28px -18px rgb(var(--sh)/.45);
+  --elev-3:0 30px 70px -28px rgb(var(--sh)/.55),0 0 0 1px rgb(var(--sh)/.07);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media(pointer:coarse){:root{--ctl-h:44px}}
+html[data-theme="dark"]{--ink-400:#958c7e;--brand-ink:#a9acff;--ring:#a9acff;--field-bd:#7a7266;--sh:0 0 0}
+
+/* CLS: reserve the header before renderChrome() fills it */
+.site-header{min-height:calc(var(--hdr) + 1px + env(safe-area-inset-top,0px))}
+html{scroll-padding-top:calc(var(--hdr) + 16px)}
+html[data-theme="dark"] .site-header{background:rgba(32,29,24,.94)}
+
+/* one control size for every header button */
+.header-right{gap:8px}
+.kbd-search,.theme-btn,.nav-toggle,.header-right>.btn,.chip-acct{
+  height:var(--ctl-h);min-height:var(--ctl-h);border-radius:var(--ctl-r);
+  border:1px solid var(--ink-200);background:var(--paper);color:var(--ink-700);
+  transition:background-color .15s,border-color .15s,color .15s,transform .1s}
+.kbd-search,.theme-btn,.nav-toggle{min-width:var(--ctl-h)}
+.theme-btn,.nav-toggle{width:var(--ctl-h)}
+@media(max-width:720px){.kbd-search{width:var(--ctl-h)}}
+@media(max-width:380px){.kbd-search,.nav-toggle{width:var(--ctl-h);min-width:var(--ctl-h)}.header-right{gap:6px}}
+.header-right>.btn{padding:0 14px;font-size:.84rem}
+.kbd-search:hover,.theme-btn:hover,.nav-toggle:hover,.header-right>.btn:hover{border-color:var(--ink-400);color:var(--ink-900);background:var(--paper)}
+.nav-toggle[aria-expanded="true"]{background:var(--ink-100);border-color:var(--ink-300)}
+
+/* desktop nav: hover and current page look different */
+.nav-desktop a{position:relative;color:var(--ink-600)}
+.nav-desktop a:hover{background:var(--ink-100);color:var(--ink-900)}
+.nav-desktop a[aria-current="page"]{background:transparent;color:var(--brand-ink)}
+.nav-desktop a[aria-current="page"]::after{content:"";position:absolute;left:13px;right:13px;bottom:-14px;height:2px;border-radius:2px;background:var(--brand-600)}
+
+/* mobile menu: a real sheet, current page marked, multi-column on tablets */
+.nav-mobile{padding:8px 0 14px}
+.nav-mobile.open{display:grid!important;grid-template-columns:minmax(0,1fr);gap:2px;animation:navIn .18s var(--ease)}
+@media(min-width:560px){.nav-mobile.open{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 12px}}
+@media(min-width:900px){.nav-mobile.open{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.nav-mobile a,.nav-mobile .nav-theme{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border-radius:10px;font:600 1rem/1.25 var(--font);color:var(--ink-800)}
+.nav-mobile a[aria-current="page"]{background:var(--brand-50);color:var(--brand-ink);box-shadow:inset 3px 0 0 var(--brand-600)}
+.nav-mobile .nav-theme{border-top:1px solid var(--ink-200);border-radius:0 0 10px 10px;margin-top:6px;padding-top:14px;color:var(--ink-600)}
+@keyframes navIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* press feedback instead of Android's grey tap rectangle */
+a,button,summary,label,[role=button]{-webkit-tap-highlight-color:transparent}
+.btn,.kbd-search,.theme-btn,.nav-toggle,.tool-act,.chip-filter,.seg button{transition:background-color .15s,border-color .15s,color .15s,box-shadow .15s,transform .1s var(--ease)}
+.btn:active:not(:disabled),.kbd-search:active,.theme-btn:active,.nav-toggle:active,.tool-act:active,.chip-filter:active{transform:scale(.97)}
+.btn-primary{box-shadow:0 1px 0 rgba(255,255,255,.16) inset,0 -2px 0 rgba(0,0,0,.18) inset,0 8px 18px -10px rgba(79,70,229,.7)}
+.btn-primary:active:not(:disabled){box-shadow:0 2px 0 rgba(0,0,0,.18) inset}
+
+/* one focus ring, visible in both themes */
+:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+input:focus,select:focus,textarea:focus{border-color:var(--brand-600);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-600) 26%,transparent)}
+html[data-theme="dark"] input:focus,html[data-theme="dark"] select:focus,html[data-theme="dark"] textarea:focus{border-color:var(--brand-500);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-500) 35%,transparent)}
+
+/* fields */
+input[type=text],input[type=number],input[type=password],input[type=email],input[type=date],input[type=month],input[type=search],select,textarea,.fin-in{border-color:var(--field-bd);border-radius:10px}
+html[data-theme="dark"] input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]):not([type=file]):not([type=submit]):not([type=button]),html[data-theme="dark"] select,html[data-theme="dark"] textarea{border-color:var(--field-bd)}
+label{font-size:.8125rem;color:var(--ink-700)}
+.seg button,.seg-btn{border-radius:7px}
+
+/* toast: full width on phones, above the docked buttons, theme aware */
+.toast{left:16px;right:16px;margin:0 auto;width:max-content;max-width:min(520px,calc(100vw - 32px));transform:translateY(16px);
+  bottom:calc(16px + env(safe-area-inset-bottom,0px));border-radius:14px;padding:12px 18px;font-size:.9rem;line-height:1.4;box-shadow:var(--elev-3)}
+.toast.show{transform:none}
+body:has(.action-dock.on) .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+
+/* footer */
+.footer-grid h4{color:var(--ink-500)}
+.footer-bottom{color:var(--ink-500)}
+.sig .role,.sig .name{display:block}
+.sig-mark{background:linear-gradient(135deg,#4f46e5,#312e81);color:#fff}
+.site-footer{padding-bottom:calc(30px + env(safe-area-inset-bottom,0px))}
+body:has(.action-dock.on) .site-footer{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+@media(pointer:coarse){.footer-grid li{margin-bottom:0}}
+
+/* text colours that failed AA */
+.linkish,.card-cta,.action-more,.remembered .linkish{color:var(--brand-ink)}
+.breadcrumb{color:var(--ink-500)}
+@media(max-width:340px){.header-right .kbd-search{display:inline-flex;justify-content:center;padding:0}.header-right>.btn{padding:0 10px}}
+
+/* ---- home ---- */
+
+/* 1. category colour: one muted hue per category, both themes */
+[data-cat="Photo & ID"]{--cat:#b4233f;--cat-bg:#fce8ec}
+[data-cat="Letters & Forms"]{--cat:#985000;--cat-bg:#fbefd6}
+[data-cat="Money & Tax"]{--cat:#17703f;--cat-bg:#def2e5}
+[data-cat="Calculators & Checks"]{--cat:#0b5f99;--cat-bg:#e0eff9}
+[data-cat="Edit & Secure"]{--cat:#4338ca;--cat-bg:#e9eafd}
+[data-cat="Convert"]{--cat:#0d6b63;--cat-bg:#d9f0ec}
+[data-cat="Business & QR"]{--cat:#7a2fc4;--cat-bg:#f1e7fc}
+html[data-theme="dark"] [data-cat="Photo & ID"]{--cat:#ff9fb1;--cat-bg:#3a1d24}
+html[data-theme="dark"] [data-cat="Letters & Forms"]{--cat:#f6c56b;--cat-bg:#382a12}
+html[data-theme="dark"] [data-cat="Money & Tax"]{--cat:#74d9a0;--cat-bg:#16291e}
+html[data-theme="dark"] [data-cat="Calculators & Checks"]{--cat:#86c9f5;--cat-bg:#132636}
+html[data-theme="dark"] [data-cat="Edit & Secure"]{--cat:#a9acff;--cat-bg:#232142}
+html[data-theme="dark"] [data-cat="Convert"]{--cat:#6fd8c9;--cat-bg:#11302c}
+html[data-theme="dark"] [data-cat="Business & QR"]{--cat:#d2adff;--cat-bg:#2c1f3d}
+:root{--cat-on:#fff}
+html[data-theme="dark"]{--cat-on:#17140f}
+
+.cat-sec .card-icon[class*="t-"],.qt-card[data-cat] .card-icon[class*="t-"]{background:var(--cat-bg);color:var(--cat);box-shadow:none}
+.cat-h h3{display:flex;align-items:center;gap:9px}
+.cat-h h3::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--cat);flex-shrink:0}
+.cat-h span{font:700 .7rem/1 var(--font);color:var(--cat);background:var(--cat-bg);padding:4px 8px;border-radius:999px;letter-spacing:.02em}
+.chip-filter[data-cat]:not([data-cat="All"])::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cat);margin-right:7px;flex-shrink:0;display:inline-block}
+.chip-filter.on::before{background:currentColor}
+@media (hover:hover){
+  .cat-sec .tool-tile:hover .card-icon[class*="t-"],.qt-card[data-cat]:hover .card-icon[class*="t-"]{background:var(--cat);color:var(--cat-on)}
+}
+
+/* 2. tool tiles: content pinned to the top, hover only on real hover */
+.tool-tile{align-content:start}
+@media (hover:none){.tool-tile:hover,.qt-card:hover{transform:none;box-shadow:none}}
+.tool-tile:focus-visible,.qt-card:focus-visible{outline-offset:3px;border-color:var(--brand-600)}
+
+/* 3. phone hero: headline, short lead, the file button and trust pills in the first screen */
+@media (max-width:599px){
+  main:has(> #view > .home-hero:first-child){padding-top:18px}
+  .home-hero{gap:14px;margin:0 0 34px;grid-template-areas:"copy" "extras" "sheet"}
+  .home-hero h1{font-size:clamp(2.1rem,10.4vw,2.55rem);max-width:none;line-height:1;margin:0 0 10px;text-wrap:balance}
+  .home-hero .lead{font-size:.95rem;line-height:1.5}
+  .facts{gap:6px;margin:0}
+  .facts li{font-size:.76rem;font-weight:600;padding:4px 10px 4px 8px;border:1px solid var(--ink-200);border-radius:999px;background:var(--paper);gap:5px;line-height:1.4}
+  .facts li svg{width:14px;height:14px}
+  .sheet{min-height:0;padding:16px 16px 14px;clip-path:polygon(0 0,calc(100% - 24px) 0,100% 24px,100% 100%,0 100%)}
+  .sheet::after{width:24px;height:24px}
+  .sheet-lines{display:none}
+  .home-hero .sheet-wrap::before{top:16px;right:36px;font-size:.58rem;padding:5px 7px 4px;letter-spacing:.18em}
+  .sheet-empty{gap:2px}
+  .sheet-empty .sheet-title{font-size:1.06rem;max-width:19ch;line-height:1.25}
+  .sheet-empty .sheet-sub{font-size:.78rem;margin:2px 0 12px}
+  #sheetPick{width:100%;min-height:48px;font-size:.95rem}
+  .sheet-note{margin-top:10px;font-size:.74rem}
+  .home-sec{margin-top:52px}
+}
+
+/* 4. phone quick tasks: a 2-column grid that shows all 14 jobs */
+@media (max-width:699px){
+  .qt{margin-bottom:36px}
+  .qt-head{margin-bottom:12px}
+  .qt-head h2{font-size:1.75rem}
+  .qt-head p{display:none}
+  .qt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;padding:0;overflow:visible}
+  .qt-card{flex-direction:row;align-items:center;gap:10px;padding:10px;min-height:62px}
+  .qt-card .card-icon{width:34px;height:34px;border-radius:9px}
+  .qt-card b{font-size:.82rem;line-height:1.22}
+  .qt-card small{font-size:.74rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+}
+
+/* 5. phone tool index: equal tiles, badge in the corner, sticky category row */
+@media (max-width:619px){
+  .cat-grid .tool-tile{min-height:96px;padding:14px 4px 10px;justify-content:flex-start}
+  .cat-grid .tool-tile .tag-new,.cat-grid .tool-tile .tag-pro{position:absolute;top:5px;right:5px;font-size:.6rem;padding:1px 6px}
+  .tool-filter{position:sticky;top:calc(var(--hdr) + env(safe-area-inset-top) - 62px);z-index:6;background:var(--desk);margin:0 calc(-1 * var(--gutter,16px)) 12px;padding:8px var(--gutter,16px);box-shadow:0 1px 0 var(--ink-200)}
+  .tool-filter .cat-chips{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+}
+
+/* 6. filter row on tablets and laptops: search on its own line, chips never orphaned */
+@media (min-width:620px) and (max-width:1279px){
+  .tool-filter{display:grid;gap:10px}
+  .tool-filter .search-box{max-width:520px}
+  .tool-filter .cat-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .tool-filter .cat-chips .chip-filter{flex-shrink:0;white-space:nowrap}
+}
+@media (min-width:1280px){.tool-filter .search-box{flex:0 1 360px}}
+
+/* 7. touch targets that were 18-42 px */
+@media (pointer:coarse){
+  .chip-filter{min-height:44px}
+  .guide-group li a{min-height:44px;padding:11px 0}
+  .guide-more a{display:inline-flex;align-items:center;min-height:44px}
+}
+
+/* 8. small text that failed AA, tiny badges */
+.tag-new{font-size:.68rem;padding:2px 8px}
+.tag-pro{font-size:.68rem}
+.guide-group li a::after,.guide-group>summary::after{color:var(--ink-500)}
+
+/* 9. comparison table on phones: one row = one card */
+@media (max-width:599px){
+  .vs thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .vs tbody tr{display:grid;grid-template-columns:1fr 1fr;column-gap:12px;padding:12px 14px;border-bottom:1px solid var(--ink-100)}
+  .vs tbody tr:last-child{border-bottom:0}
+  .vs tbody th{grid-column:1/-1;width:auto;padding:0 0 6px;border:0;font-weight:700;color:var(--ink-900)}
+  .vs td{padding:0;border:0;font-size:.82rem;line-height:1.4}
+  .vs td::before{display:block;font:700 .62rem/1.4 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-500);margin-bottom:2px}
+  .vs td.us::before{content:"DocBrisk"}
+  .vs td:not(.us)::before{content:"Upload sites"}
+}
+
+/* 10. add-ins box: no empty 148 px hole */
+.ax-minis:empty{display:none}
+
+@media (max-width:399px){.home-hero .sheet-wrap::before{display:none}}
+
+/* 11. tablets 600-959: the headline uses the width, the sheet stops being a blank A4 */
+@media (min-width:600px) and (max-width:959px){
+  .home-hero h1{font-size:clamp(2.8rem,7vw,3.6rem);max-width:17ch;line-height:1;text-wrap:balance}
+  .home-hero{grid-template-areas:"copy" "extras" "sheet";gap:20px}
+  .facts{margin:0}
+  .sheet{min-height:0;padding:26px 28px 22px}
+  .sheet-lines{margin-bottom:18px}
+  .sheet-lines i:nth-child(n+4){display:none}
+}
+
+/* 12. badge flows after the last word instead of floating at the side */
+@media (min-width:620px){
+  .tool-tile .tname{display:block}
+  .tool-tile .tname .tag-new,.tool-tile .tname .tag-pro{display:inline-block;vertical-align:2px;margin-left:6px;line-height:1.35}
+}
+
+/* 13. guides: masonry columns, no half-empty rows */
+@media (min-width:760px){
+  .home-guides .guide-groups{display:block;columns:2 300px;column-gap:14px}
+  .home-guides .guide-group{break-inside:avoid;margin:0 0 14px;display:block}
+}
+@media (min-width:1100px){.home-guides .guide-groups{columns:3}}
+
+/* 14. comparison table: the DocBrisk column reads as the winner */
+.vs{border-collapse:separate;border-spacing:0}
+.vs thead th:nth-child(2){color:var(--brand-700)}
+.vs td.us{background:var(--ok-bg)}
+.vs thead th:nth-child(2){background:var(--ok-bg)}
+
+/* 15. FAQ: two columns on wide screens instead of a 820 px strip */
+@media (min-width:1100px){
+  .home-faq{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);column-gap:56px;align-items:start}
+  .home-faq h2{grid-column:1;grid-row:1 / span 20;position:sticky;top:calc(var(--hdr) + 24px)}
+  .home-faq details{grid-column:2}
+}
+
+/* 16. returning visitors: "Your tools" is one swipeable row on phones, not a 320 px stack */
+@media (max-width:619px){
+  .recent.top{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--gutter,16px)) 18px;padding:2px var(--gutter,16px);
+    -webkit-mask-image:linear-gradient(90deg,#000 86%,transparent);mask-image:linear-gradient(90deg,#000 86%,transparent)}
+  .recent.top::-webkit-scrollbar{display:none}
+  .recent.top>*{flex-shrink:0;white-space:nowrap}
+  .recent.top .mine-stat{flex-basis:auto;margin-left:4px}
+}
+
+@media (max-width:359px){.qt-card{flex-direction:column;align-items:flex-start;gap:8px}}
+@media (max-width:619px){
+  .tool-filter:focus-within{top:calc(var(--hdr) + env(safe-area-inset-top))}
+  .cat-sec{scroll-margin-top:calc(var(--hdr) + 72px)}
+}
+/* 17. muted text on the desk background passes AA */
+.home-sec-head p,.qt-head p,.tool-count{color:var(--ink-600)}
+.faq summary::after{color:var(--ink-500)}
+/* 18. the whole FAQ card is the button */
+.faq details{padding:0;background:var(--paper)}
+.faq summary{padding:18px 20px}
+.faq details p{margin:0;padding:0 20px 18px}
+.ax-home:has(.ax-minis:empty){grid-template-columns:1fr}
+@media (max-width:599px){.home-sec{margin-top:52px}}
+@media (max-width:380px){:root{--gutter:16px}}
+
+/* ---- tool pages ---- */
+:root{--ink-500:#726a5e;--field-bd:#948b7d;--focus-ring:0 0 0 1px var(--brand-600),0 0 0 4px rgba(79,70,229,.22)}
+html[data-theme="dark"]{--field-bd:#736b60;--focus-ring:0 0 0 1px var(--brand-500),0 0 0 4px rgba(129,133,246,.30)}
+
+/* 1. segmented controls: a real track with rounded thumbs */
+.seg{padding:3px;gap:3px;background:var(--ink-100);border:1px solid var(--ink-200);border-radius:11px}
+.seg button{border-radius:8px;transition:background-color .15s ease,color .15s ease}
+.seg button:not(.on):hover{background:var(--paper);color:var(--ink-900)}
+.seg button.on{background:var(--brand-600);color:#fff;box-shadow:0 1px 2px rgba(23,20,15,.2),inset 0 -1px 0 rgba(0,0,0,.15)}
+.seg.fin-unit{border:0;padding:2px;background:var(--ink-100)}
+.seg.fin-unit button{min-height:34px;padding:4px 11px;border-radius:7px}
+@media(max-width:480px){
+  .seg-wide:has(>button:nth-child(4)){flex-wrap:wrap}
+  .seg-wide:has(>button:nth-child(4))>button{flex:1 1 calc(50% - 3px);min-height:42px}
+}
+
+/* 2. money inputs: equal boxes on wide forms, full-width stacked boxes on narrow ones */
+.calc-form{container-type:inline-size}
+.fin-lab label{flex:1 1 auto}
+.fin-in{flex:0 0 13.5rem;border-color:var(--field-bd);min-height:46px;cursor:text}
+.fin-in input[type=text],.fin-in input[type=number]{flex:1 1 0;width:0;min-width:0;align-self:stretch}
+.fin-in-wide{flex:1 1 100%}
+.fin-in:focus-within{border-color:var(--brand-600);box-shadow:var(--focus-ring)}
+@container (max-width:440px){
+  .fin-lab{flex-direction:column;align-items:stretch;gap:6px}
+  .fin-in{flex:none;width:100%;min-height:50px;padding:0 6px 0 14px}
+  .fin-in input[type=text],.fin-in input[type=number]{font-size:1.15rem!important}
+}
+.calc-table td:last-child{white-space:nowrap}
+.calc-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.calc-actions .btn{justify-content:center}
+@media(max-width:520px){.fin-donut{flex-direction:column;align-items:stretch}.fin-donut svg{align-self:center}}
+@media(min-width:820px) and (min-height:700px){.calc-out{position:sticky;top:calc(var(--hdr) + 16px)}}
+
+/* fields: visible edges and a firm focus ring */
+input[type=text],input[type=number],input[type=email],input[type=password],input[type=date],input[type=month],select,textarea{border-color:var(--field-bd)}
+input:focus,select:focus,textarea:focus{border-color:var(--brand-600);box-shadow:var(--focus-ring)}
+
+/* 3. tool head on phones: the blurb uses the full width */
+@media(max-width:640px){
+  .tool-head{grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center}
+  .tool-head .card-icon{grid-row:auto;width:40px;height:40px}
+  .tool-head h1{font-size:clamp(1.5rem,6.6vw,1.8rem);line-height:1.08}
+  .tool-head p{grid-column:1/-1;font-size:.9rem;line-height:1.55;color:var(--ink-600)}
+}
+/* breadcrumb + pin/share */
+.breadcrumb{color:var(--ink-500)}
+.breadcrumb a{color:var(--ink-700)}
+@media(pointer:coarse){.tool-act{min-width:44px;height:44px}}
+
+/* 4. drop zone: ruled edges, clean writing area; compact once a file is in */
+.dropzone{--dz-bg:var(--paper);--dz-rule:rgba(23,20,15,.06);background-color:var(--dz-bg);
+  background-image:radial-gradient(closest-side,var(--dz-bg) 55%,transparent),repeating-linear-gradient(180deg,transparent 0 29px,var(--dz-rule) 29px 30px);
+  transition:border-color .15s ease,background-color .15s ease}
+html[data-theme="dark"] .dropzone{--dz-rule:rgba(255,255,255,.045);background-image:radial-gradient(closest-side,var(--dz-bg) 55%,transparent),repeating-linear-gradient(180deg,transparent 0 29px,var(--dz-rule) 29px 30px)}
+.dropzone:hover,.dropzone.dragover{--dz-bg:var(--brand-50)}
+.dropzone em{color:var(--ink-500)}
+.dropzone-icon{transition:transform .18s ease}
+.dropzone:hover .dropzone-icon,.dropzone.dragover .dropzone-icon{transform:translateY(-2px)}
+.dropzone:has(+ .file-list:not(.hidden)){display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;column-gap:12px;text-align:left;padding:10px 14px;background-image:none;border-style:dashed}
+.dropzone:has(+ .file-list:not(.hidden)) .dropzone-icon{width:40px;height:40px;margin:0;box-shadow:none}
+.dropzone:has(+ .file-list:not(.hidden)) em{display:none}
+.dropzone:has(+ .file-list:not(.hidden)) strong{font-size:.9rem;color:var(--brand-700)}
+.file-list{margin-top:10px}
+.file-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 6px 8px 10px;background:var(--paper);border-color:var(--ink-200)}
+.file-row::before{content:"";width:34px;height:34px;border-radius:8px;background:var(--brand-50) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 3v5h5'/%3E%3C/svg%3E") center/17px no-repeat}
+.file-row .size,.out-size{font:600 .76rem var(--font);font-variant-numeric:tabular-nums;color:var(--ink-500)}
+.file-row button{color:var(--ink-500);border-radius:8px}
+.file-row button:hover{background:var(--err-bg)}
+
+/* 5. option panels and chips */
+.size-chips span{flex-basis:100%;margin:0 0 2px}
+.size-chips button{border-radius:8px;border-color:var(--field-bd);background:var(--paper)}
+.panel-title,.calc-hero span,.hint,.opt-check small{color:var(--ink-500)}
+
+/* primary action: taller, with a pressed state */
+#runBtn,.action-dock .btn{min-height:52px;font-size:1rem;border-radius:12px}
+.btn-primary:active{transform:translateY(1px);box-shadow:0 4px 10px -6px rgba(79,70,229,.6),inset 0 -1px 0 rgba(0,0,0,.18)}
+.progress{height:8px;background:var(--ink-100);box-shadow:inset 0 0 0 1px var(--ink-200)}
+.progress-bar{background:linear-gradient(90deg,var(--brand-600),var(--brand-500))}
+
+/* 6. result: left aligned, a check badge, warn tone */
+.result{text-align:left;padding:18px}
+.result h3{display:flex;align-items:center;gap:10px;font-size:1.05rem;color:var(--ok)}
+.result h3::before{content:"";flex:0 0 28px;height:28px;border-radius:50%;background:var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E") center/15px no-repeat}
+.result p{color:var(--ink-700);font-size:.88rem;line-height:1.55;margin:0 0 14px 38px}
+.out-file{background:var(--paper)}
+.out-btns .btn{min-height:48px}
+.next-steps{text-align:left}
+.next-steps>div{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.next-steps .btn{justify-content:space-between}
+
+/* 7. related grid: an app-launcher on phones */
+@media(max-width:619px){
+  .related .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .related .tool-tile{grid-template-columns:36px minmax(0,1fr);padding:12px;gap:4px 10px;align-items:center}
+  .related .tool-tile .card-icon{width:36px;height:36px;grid-row:auto}
+  .related .tool-tile .tname{font-size:.84rem;line-height:1.25;flex-wrap:wrap;gap:4px}
+  .related .tool-tile .tblurb{display:none}
+  .related .tool-tile:hover{transform:none;box-shadow:none}
+}
+
+/* 8. biodata design picker: two columns of swatch buttons on phones */
+@media(max-width:560px){
+  .theme-pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .theme-pick button{font-size:.76rem;line-height:1.25;text-align:left;min-height:46px;padding:8px 10px}
+  .theme-pick button i{flex:0 0 18px}
+}
+
+/* expandable sections inside calculators read as controls, not captions */
+.calc-form details.mk-sec>summary.panel-title{font:700 .92rem var(--font);text-transform:none;letter-spacing:0;color:var(--ink-800);margin-bottom:0;min-height:44px}
+.calc-form details.mk-sec>summary.panel-title::after{content:'+';display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--paper);border:1px solid var(--ink-200);color:var(--brand-700);font-size:1.05rem}
+.calc-form details.mk-sec[open]>summary.panel-title{margin-bottom:12px}
+.calc-form details.mk-sec[open]>summary.panel-title::after{content:'\2212'}
+.calc-form details.mk-sec{padding:10px 14px}
+
+/* SSR guide on first load (#seo-about): numbered steps like the in-app guide */
+#seo-about .prose ol{list-style:none;padding:0;counter-reset:st;display:flex;flex-direction:column;gap:8px}
+#seo-about .prose ol>li{counter-increment:st;position:relative;padding:12px 14px 12px 52px;margin:0;background:var(--paper);border:1px solid var(--ink-200);border-radius:12px;color:var(--ink-700)}
+#seo-about .prose ol>li::before{content:counter(st);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--brand-600);color:#fff;font:800 .8rem/26px var(--font);text-align:center}
+#seo-about .faq summary::after{color:var(--brand-600)}
+.site-header:empty{height:calc(var(--hdr) + 1px + env(safe-area-inset-top))}
+
+/* ---- content pages ---- */
+/* tokens: muted text that passes AA on the desk */
+:root{--ink-500:#6b6357}
+html[data-theme="dark"]{--ink-400:#918879}
+
+/* rhythm: no double margins at the top of a prose block */
+.prose>:first-child{margin-top:0}
+#seo-about>section{margin-top:clamp(36px,6vw,48px)!important}
+
+/* reading column */
+.prose p,.prose li{font-size:clamp(.95rem,.9rem + .2vw,1.02rem);line-height:1.7;color:var(--ink-700)}
+.prose p{max-width:68ch}
+.prose h3{font-size:1.08rem;margin:1.6em 0 .6em}
+
+/* SSR guide = same look as the in-app .landing-guide */
+#seo-about{max-width:1040px}
+#seo-about>.prose{max-width:none}
+@media(min-width:900px){
+  #seo-about:has(>#tool-about+.faq){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:40px;align-items:start}
+  #seo-about:has(>#tool-about+.faq)>#tool-about{grid-row:span 2}
+  #seo-about:has(>#tool-about+.faq)>.faq,#seo-about:has(>#tool-about+.faq)>#related-tools{grid-column:2}
+  #seo-about:has(>#tool-about+.faq)>#all-tools{grid-column:1/-1}
+}
+#seo-about #tool-about>ol,#seo-about #exam-guide>ol{list-style:none;padding:0;margin:0 0 18px;counter-reset:step;display:flex;flex-direction:column;gap:10px}
+#seo-about #tool-about>ol>li,#seo-about #exam-guide>ol>li{counter-increment:step;display:flex;gap:12px;align-items:flex-start;margin:0;background:var(--paper);border:1px solid var(--ink-200);border-radius:12px;padding:12px 14px;font-size:.93rem;line-height:1.5;color:var(--ink-700)}
+#seo-about #tool-about>ol>li::before,#seo-about #exam-guide>ol>li::before{content:counter(step);flex:0 0 26px;height:26px;margin-top:-1px;border-radius:50%;background:var(--brand-600);color:#fff;font:800 .8rem/26px var(--font);text-align:center}
+#seo-about p[style*="#475569"]{color:var(--ink-500)!important;font-size:.85rem!important}
+
+/* FAQ: the whole row is the tap target */
+.faq h2{margin-bottom:14px}
+.faq details{background:var(--paper);padding:0;margin-bottom:8px;border-radius:12px;transition:border-color .15s}
+.faq details[open]{border-color:var(--ink-300)}
+.faq summary{padding:15px 18px;min-height:52px;font-size:.95rem;line-height:1.4;color:var(--ink-900);border-radius:inherit}
+.faq summary::after{color:var(--brand-600);flex-shrink:0}
+.faq details p{margin:0;padding:0 18px 16px;font-size:.92rem;line-height:1.65;color:var(--ink-600)}
+
+/* related links as chips */
+#seo-about #related-tools ul,#seo-about #other-exams ul,#seo-about #tool-searches ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+#seo-about #related-tools li,#seo-about #other-exams li,#seo-about #tool-searches li{margin:0}
+#seo-about #other-exams a,#seo-about #tool-searches a,#seo-about.seo-landing #related-tools a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border:1px solid var(--ink-300);border-radius:10px;background:var(--paper);color:var(--ink-800);font-weight:600;font-size:.88rem;line-height:1.3;text-decoration:none}
+
+/* "All DocBrisk tools": a quiet directory panel, not a wall of bullets */
+#all-tools{margin-top:56px!important;padding:clamp(18px,4vw,28px);background:var(--paper);border:1px solid var(--ink-200);border-radius:var(--radius-lg)}
+#all-tools h2{font:700 .75rem/1.2 var(--font)!important;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-600);margin:0 0 8px!important}
+#all-tools ul+h2{margin-top:22px!important;padding-top:18px;border-top:1px solid var(--ink-200)}
+#all-tools ul{list-style:none;padding:0!important;margin:0;columns:2 140px!important;column-gap:20px!important}
+@media(min-width:760px){#all-tools ul{columns:3!important}}
+@media(min-width:1100px){#all-tools ul{columns:4!important}}
+#all-tools li{break-inside:avoid;margin:0;font-size:.84rem;line-height:1.35}
+#all-tools a{display:block;padding:7px 0;color:var(--ink-700)}
+#all-tools a:hover{color:var(--brand-700)}
+
+/* guides index: masonry columns so long groups don't stretch short ones */
+.guides-page>.prose{margin-left:0}
+@media(min-width:760px){.guides-page .guide-groups{display:block;columns:2;column-gap:14px}.guides-page .guide-group{break-inside:avoid;margin:0 0 14px}}
+@media(min-width:1100px){.guides-page .guide-groups{columns:3}}
+.guide-group li a{padding:12px 0;min-height:44px}
+.guide-group>summary{min-height:44px}
+.guide-rel a{min-height:44px}
+
+/* static pages: breadcrumb on the same column as the article */
+.breadcrumb:has(+article.prose){max-width:760px;margin-inline:auto}
+
+/* pricing */
+.price-card{background:var(--paper);display:flex;flex-direction:column}
+.price-card .pro-list{flex:1}
+.price-card.featured{background:linear-gradient(180deg,var(--brand-50),var(--paper) 46%);box-shadow:0 1px 0 var(--ink-200),0 24px 40px -28px rgba(79,70,229,.55)}
+.price strong{font-family:var(--serif);font-weight:400;font-size:3.4rem;letter-spacing:-.02em}
+.badge{font-size:.68rem;padding:5px 10px}
+.price-card .hint{font-size:.8rem}
+
+/* exam page: spec table */
+#exam-guide table{border:1px solid var(--ink-200);border-radius:12px;border-collapse:separate!important;border-spacing:0;background:var(--paper);overflow:hidden}
+#exam-guide th,#exam-guide td{border-bottom-color:var(--ink-200)!important}
+#exam-guide th{background:var(--ink-50);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-600)}
+#exam-guide tr:last-child td{border-bottom:0!important}
+#exam-guide td:nth-child(2),#exam-guide td:nth-child(3){font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink-900)}
+@media(max-width:480px){
+  #exam-guide thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  #exam-guide table,#exam-guide tbody,#exam-guide tr,#exam-guide td{display:block}
+  #exam-guide tr{padding:12px 14px;border-bottom:1px solid var(--ink-200)}
+  #exam-guide tr:last-child{border-bottom:0}
+  #exam-guide td{border:0!important;padding:2px 0!important}
+  #exam-guide td:first-child{font-weight:700;color:var(--ink-900);font-size:1rem}
+  #exam-guide td:nth-child(n+2){display:inline}
+  #exam-guide td:nth-child(n+3)::before{content:" \00b7  ";color:var(--ink-400)}
+}
+
+/* dark-theme defects */
+html[data-theme="dark"] .ep-card{background:var(--paper)!important}
+html[data-theme="dark"] .ep-stage{background:repeating-conic-gradient(#2b2722 0 25%,#211e19 0 50%) 0 0/16px 16px!important}
+html[data-theme="dark"] .ax-ribbon,html[data-theme="dark"] .ax-icon,html[data-theme="dark"] .ax-checklist>li.ok::before{color:#0b2416}
+html[data-theme="dark"] .ax-ribbon b{background:rgba(0,0,0,.14)}
+
+/* focus ring for fields that pass 3:1 */
+input:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(79,70,229,.32)}
+html[data-theme="dark"] input:focus,html[data-theme="dark"] select:focus,html[data-theme="dark"] textarea:focus{box-shadow:0 0 0 3px rgba(129,133,246,.55)}
+
+/* small-text floor */
+.footer-grid h4{font-size:.75rem;color:var(--ink-500)}
+.footer-bottom,.breadcrumb{color:var(--ink-500)}
+.breadcrumb{font-size:.82rem}
+.dropzone em{color:var(--ink-500)}
+.sig .role{font-size:.66rem;color:var(--ink-500)}
+
+/* spacing around the SSR block */
+main:has(~#seo-about){padding-bottom:8px}
+#seo-about{padding-bottom:56px}
+#seo-about>#related-tools{margin-top:32px!important}
+/* directory groups as disclosure (needs worker markup: <details class="dir-group"><summary><h2>..</h2></summary><ul>..</ul></details>) */
+#all-tools .dir-group+.dir-group{border-top:1px solid var(--ink-200);margin-top:4px}
+#all-tools .dir-group>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px}
+#all-tools .dir-group>summary::-webkit-details-marker{display:none}
+#all-tools .dir-group>summary h2{margin:0!important;padding:0!important;border:0!important}
+#all-tools .dir-group>summary::after{content:'+';color:var(--brand-600);font-size:1.25rem;line-height:1}
+#all-tools .dir-group[open]>summary::after{content:'\2212'}
+#all-tools .dir-group>summary .n{font:600 .75rem var(--font);color:var(--ink-500);margin-left:6px;letter-spacing:0;text-transform:none}
+#all-tools .dir-group>ul{padding-bottom:12px!important}
+@media(max-width:759px){#all-tools ul{columns:2!important;column-gap:16px!important}#all-tools li{font-size:.82rem}#all-tools a{padding:8px 0;min-height:0}}
+
+/* one muted-text value for every layer above (AA on the desk background) */
+:root{--ink-500:#6b6357}
+/* footer links: a comfortable tap height on touch screens */
+@media(pointer:coarse){#siteFooter li a{display:inline-flex;align-items:center;min-height:36px}}
 </style>
 </head>
 <body>
@@ -26066,7 +26581,7 @@ function renderHome(view) {
     <div class="qt-head"><h2 id="qtH">What do you need to do?</h2>
       <p>${pinned.length ? 'Pinned tools stay at the top.' : 'Open a tool and tap Pin to keep it at the top of this page.'}</p></div>
     <div class="qt-grid">
-      ${QUICK_TASKS.map(([s, label, hi]) => { const t = bySlug(s); return t ? `<a class="qt-card" href="/tool/${s}">
+      ${QUICK_TASKS.map(([s, label, hi]) => { const t = bySlug(s); return t ? `<a class="qt-card" href="/tool/${s}" data-cat="${esc(t.cat)}">
         <span class="card-icon ${t.tint}" data-icon="${t.icon}" data-icon-size="19"></span>
         <span><b>${esc(label)}</b><small lang="hi">${esc(hi)}</small></span></a>` : ''; }).join('')}
     </div>
@@ -28409,9 +28924,6 @@ function renderPricing(view) {
               : `<button class="btn btn-primary btn-block" onclick="openUpgradeModal('DocBrisk Pro')">Pay by UPI — ${PLAN.CURRENCY}${PLAN.PRICE_INR}</button>`}
         <p class="hint" style="text-align:center;margin-top:10px">UPI to <code>${PLAN.UPI_VPA}</code></p>
       </div>
-    </div>
-    <div class="alert alert-warn" style="max-width:760px;margin:26px auto 0">
-      <strong>Note for whoever deploys this:</strong> UPI payments go to a real VPA, but a browser cannot confirm a transfer took place — activation runs on the honour system and stores the UTR locally for you to reconcile by hand. That is workable at low volume; past that you need a server that checks payment status (a UPI payment gateway, or bank statement polling) and returns a signed session, otherwise the Pro flag can simply be switched on in devtools.
     </div>
     <section class="faq" style="max-width:760px;margin:48px auto 0">
       <h2 style="text-align:center">Pricing questions</h2>
