@@ -2501,6 +2501,8 @@ input.calc-big{font-size:1.35rem;font-weight:700;font-variant-numeric:tabular-nu
 .dx-preview figcaption[contenteditable],.dx-preview .dbx-card span[contenteditable]{outline:none;border-radius:4px;cursor:text}
 .dx-preview figcaption[contenteditable]:focus,.dx-preview .dbx-card span[contenteditable]:focus{box-shadow:0 0 0 2px var(--brand-600,#4f46e5)}
 .dx-exp .tag-pro{margin-left:6px;vertical-align:1px}
+.dx-notes{margin:0 0 12px;border-left:3px solid var(--brand-600,#4f46e5);background:var(--paper-2,#f8f7f4);border-radius:0 10px 10px 0;padding:8px 12px;font-size:.82rem}
+.dx-notes ul{margin:4px 0 0;padding-left:18px}.dx-notes li{margin:2px 0}
 
 /* amount in words */
 .words-out{margin-top:16px;display:flex;flex-direction:column;gap:10px}
@@ -18042,7 +18044,7 @@ const SEO_PAGES = {
   "emi-calculator": {"t":"EMI Calculator: Home, Car & Personal Loan EMI | DocBrisk","d":"Calculate the EMI, total interest and amortisation schedule of a home, car, personal or education loan. See how much a part payment saves. Free, no sign-up.","h":"How to calculate a loan EMI","s":["Enter the loan amount, the interest rate and the tenure","Read the EMI, total interest and the year-wise schedule","Add a monthly or one-time prepayment to see the interest and months saved"],"f":[["How is EMI calculated?","EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r the monthly interest rate (annual rate ÷ 12 ÷ 100) and n the number of months. A ₹30 lakh loan at 8.5% for 20 years has an EMI of ₹26,035."],["Does prepaying a home loan save interest?","Yes. A part payment goes straight to the principal, so every later EMI carries less interest. On a ₹30 lakh, 20-year loan at 8.5%, paying ₹5 lakh extra after the first year cuts about ₹14 lakh of interest and 6 years of EMIs."],["Can I download the EMI schedule?","Yes. The schedule button saves every EMI with its principal, interest, prepayment and balance as a CSV file that opens in Excel or Google Sheets."]]},
   "sip-calculator": {"t":"SIP Calculator: Mutual Fund SIP & Lumpsum Returns | DocBrisk","d":"Estimate the returns of a monthly SIP, a lumpsum or a step-up SIP, or find the SIP you need for a goal like ₹1 crore. Year-by-year growth. Free and private.","h":"How to use the SIP calculator","s":["Pick SIP, lumpsum, step-up SIP or the goal planner","Enter the amount, the expected return and the number of years","Read the invested amount, the estimated returns and the year-by-year growth"],"f":[["How is SIP return calculated?","FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), where P is the monthly SIP, i the monthly return (annual rate ÷ 12 ÷ 100) and n the number of months. ₹5,000 a month for 10 years at 12% comes to about ₹11.6 lakh on ₹6 lakh invested."],["How much SIP is needed for ₹1 crore?","At an assumed 12% a year, about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years. The goal planner works it out for any target."],["What is a step-up SIP?","A SIP that grows by a fixed percentage every year, usually in line with your salary. ₹10,000 a month raised 10% every year for 20 years at 12% grows to about ₹1.99 crore, double a flat SIP."]]},
   "fd-calculator": {"t":"FD Calculator, RD & PPF Calculator: Maturity Amount | DocBrisk","d":"Calculate the maturity amount of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a PPF account at 7.1%. Free, instant, private.","h":"How to calculate FD, RD or PPF maturity","s":["Choose FD, RD or PPF","Enter the amount, the interest rate and the period","Read the maturity value and the interest earned"],"f":[["How is FD interest calculated?","Most banks compound FD interest every quarter: maturity = P × (1 + r ÷ 400)^(4 × years). ₹1 lakh at 7% for 1 year becomes ₹1,07,186."],["How is RD maturity calculated?","Each monthly instalment earns quarterly compounded interest for the months it stays in the account, and the instalments are added up. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100."],["What will ₹1.5 lakh a year in PPF give after 15 years?","At the current 7.1%, about ₹40.68 lakh: ₹22.5 lakh deposited and ₹18.18 lakh of tax-free interest."]]},
-  "excel-dashboard": {"t": "Excel Dashboard Maker: Auto KPI Dashboard from Excel or CSV | DocBrisk", "d": "Turn any Excel or CSV file into a dashboard in seconds: suggested KPIs, plain-English questions, click-to-filter charts, projections and insights. Download live Excel, PowerPoint, HTML, PDF or a Power BI kit. Private.", "h": "How to make a dashboard from an Excel sheet", "s": ["Upload your Excel or CSV file, or try the sample sales data", "Tick the suggested KPIs and charts, and pick a theme", "Download a live Excel dashboard, an HTML dashboard, a PDF, a PNG, or a Power BI / Looker Studio kit"], "f": [["Which files work?", "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."], ["Is the Excel dashboard live?", "Yes. The KPI cards and charts are formulas over the Data sheet, so when you paste new rows and recalculate, every number and chart updates."], ["Can I use it with Power BI or Looker Studio?", "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."], ["Can I ask questions about my data?", "Yes. Type a question such as \"top 5 products by profit in 2026\" or \"monthly sales trend for South\" and the chart is added to the dashboard. Questions are answered on your device."], ["Which downloads are free?", "HTML, PDF and PNG are free. Excel, PowerPoint and the Power BI / Looker Studio kits are part of DocBrisk Pro, and every free account can try them 3 times."], ["Is my data uploaded?", "No. The file is read and the dashboard is built inside your browser."]]}
+  "excel-dashboard": {"t": "Excel Dashboard Maker: Auto KPI Dashboard from Excel or CSV | DocBrisk", "d": "Turn any Excel or CSV file into a dashboard in seconds: suggested KPIs, plain-English questions, click-to-filter charts, projections and insights. Download live Excel, PowerPoint, HTML, PDF or a Power BI kit. Private.", "h": "How to make a dashboard from an Excel sheet", "s": ["Upload your Excel or CSV file, or try the sample sales data", "Tick the suggested KPIs and charts, and pick a theme", "Download a live Excel dashboard, an HTML dashboard, a PDF, a PNG, or a Power BI / Looker Studio kit"], "f": [["My Excel is not a simple table. Will it work?", "Yes. Title rows, merged or two-row headers, months or quarters across the columns, P&L statements, pivot-table exports with subtotals, bank statements, values in lakhs or crores and one sheet per month are all recognised and reshaped automatically, and the page lists what was changed."], ["Which files work?", "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."], ["Is the Excel dashboard live?", "Yes. The KPI cards and charts are formulas over the Data sheet, so when you paste new rows and recalculate, every number and chart updates."], ["Can I use it with Power BI or Looker Studio?", "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."], ["Can I ask questions about my data?", "Yes. Type a question such as \"top 5 products by profit in 2026\" or \"monthly sales trend for South\" and the chart is added to the dashboard. Questions are answered on your device."], ["Which downloads are free?", "HTML, PDF and PNG are free. Excel, PowerPoint and the Power BI / Looker Studio kits are part of DocBrisk Pro, and every free account can try them 3 times."], ["Is my data uploaded?", "No. The file is read and the dashboard is built inside your browser."]]}
 };
 
 /* The privacy question every tool gets, phrased for that tool. */
@@ -27000,7 +27002,7 @@ const DASH_RUNTIME = function () {
       if (a >= 1e4) return g(a / 1e3, 'K');
       return s + (a >= 100 ? Math.round(a) : +a.toFixed(2)).toLocaleString('en-US');
     }
-    const f = (v, u) => s + (v >= 100 ? Math.round(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)).toString().replace(/\.0+$|(\.\d*?)0+$/, '$1') + u;
+    const f = (v, u) => s + (v >= 1000 ? Math.round(v).toLocaleString('en-IN') : (v >= 100 ? Math.round(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)).toString().replace(/\.0+$|(\.\d*?)0+$/, '$1')) + u;
     if (a >= 1e7) return f(a / 1e7, ' Cr');
     if (a >= 1e5) return f(a / 1e5, ' L');
     if (a >= 1e3) return s + Math.round(a).toLocaleString('en-IN');
@@ -27018,17 +27020,20 @@ const DASH_RUNTIME = function () {
     const d = (Date.parse(maxIso) - Date.parse(minIso)) / 864e5;
     return d > 6 * 366 ? 'year' : d > 2.2 * 366 ? 'quarter' : d > 75 ? 'month' : d > 20 ? 'week' : 'day';
   }
+  // FISCAL: Indian financial year (April to March): "Q1 FY26" is April to June 2025
+  let FISCAL = false;
   function periodKey(iso, g) {
     if (!iso) return '';
-    if (g === 'year') return iso.slice(0, 4);
-    if (g === 'quarter') return iso.slice(0, 4) + '-Q' + (Math.floor((+iso.slice(5, 7) - 1) / 3) + 1);
+    const y = +iso.slice(0, 4), mo = +iso.slice(5, 7);
+    if (g === 'year') return FISCAL ? String(mo >= 4 ? y + 1 : y) : iso.slice(0, 4);
+    if (g === 'quarter') return FISCAL ? (mo >= 4 ? y + 1 : y) + '-Q' + (Math.floor(((mo - 4 + 12) % 12) / 3) + 1) : iso.slice(0, 4) + '-Q' + (Math.floor((mo - 1) / 3) + 1);
     if (g === 'month') return iso.slice(0, 7);
     if (g === 'week') { const d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7)); return d.toISOString().slice(0, 10); }
     return iso.slice(0, 10);
   }
   function periodLabel(k, g) {
-    if (g === 'year') return k;
-    if (g === 'quarter') return k.slice(5) + ' ' + k.slice(0, 4);
+    if (g === 'year') return FISCAL ? `FY ${+k - 1}-${String(k).slice(2)}` : k;
+    if (g === 'quarter') return FISCAL ? `${k.slice(5)} FY${k.slice(2, 4)}` : k.slice(5) + ' ' + k.slice(0, 4);
     if (g === 'month') return MON[+k.slice(5, 7) - 1] + ' ' + k.slice(0, 4);
     return (+k.slice(8, 10)) + ' ' + MON[+k.slice(5, 7) - 1] + (g === 'week' ? '' : '');
   }
@@ -27066,9 +27071,13 @@ const DASH_RUNTIME = function () {
       case 'ratio': case 'margin': case 'diff':
         rows.forEach(r => { const a = num(r[v.a]), b = num(r[v.b]); if (a != null) sa += a; if (b != null) sb += b; });
         if (v.calc === 'diff') return sa - sb;
-        if (v.calc === 'ratio') return sb ? sa / sb * 100 : null;
+        if (v.calc === 'ratio') return sb ? sa / sb * (v.unit === 'pct' ? 100 : 1) : null;
         return sa ? (sa - sb) / sa * 100 : null;
       case 'share': { const set = new Set(v.vals || []); rows.forEach(r => { if (set.has(r[v.c])) hit++; }); return rows.length ? hit / rows.length * 100 : null; }
+      // a balance or stock level is never added up over time: the closing figure is the last one
+      case 'last': { let best = null, bd = ''; rows.forEach(r => { const x = num(r[v.m]); if (x == null) return; const dd = v.d != null ? String(r[v.d] || '') : ''; if (best == null || dd >= bd) { best = x; bd = dd; } }); return best; }
+      // snapshot data (stock per SKU per week): the total of the latest snapshot
+      case 'latest': { let md = ''; rows.forEach(r => { const dd = r[v.d]; if (dd && dd > md) md = dd; }); let tot = 0, any = false; rows.forEach(r => { if (r[v.d] === md) { const x = num(r[v.m]); if (x != null) { tot += x; any = true; } } }); return any ? tot : null; }
       default: return null;
     }
   }
@@ -27103,7 +27112,7 @@ const DASH_RUNTIME = function () {
     const last = ts[ts.length - 1];
     if (last.k !== periodKey(maxDate, g)) return ts;
     const d = new Date(maxDate + 'T00:00:00Z'), day = d.getUTCDate(), mon = d.getUTCMonth();
-    const partial = g === 'week' ? ((d.getUTCDay() + 6) % 7) < 4 : g === 'month' ? day < 21 : g === 'quarter' ? (mon % 3 === 0 || (mon % 3 === 1 && day < 15)) : g === 'year' ? mon < 9 : false;
+    const partial = g === 'week' ? ((d.getUTCDay() + 6) % 7) < 4 : g === 'month' ? day < 21 : g === 'quarter' ? (mon % 3 === 0 || (mon % 3 === 1 && day < 15)) : g === 'year' ? (FISCAL ? (mon - 3 + 12) % 12 : mon) < 9 : false;
     return partial ? ts.slice(0, -1) : ts;
   }
 
@@ -27531,7 +27540,7 @@ const DASH_RUNTIME = function () {
 
   function mount(root, p) { return render(root, p, { f: {}, from: '', to: '' }); }
   function prime(p) {
-    CUR = p.currency == null ? '₹' : p.currency; SYS = p.numfmt === 'intl' ? 'intl' : 'in';
+    CUR = p.currency == null ? '₹' : p.currency; SYS = p.numfmt === 'intl' ? 'intl' : 'in'; FISCAL = !!p.fiscal;
     maxDate = ''; monthly = p.dateCol != null;
     if (p.dateCol != null) p.rows.forEach(r => { const v = r[p.dateCol]; if (v) { if (v > maxDate) maxDate = v; if (!/-01$/.test(v)) monthly = false; } });
   }
@@ -27553,6 +27562,9 @@ const DashGen = (() => {
   const RT = DASH_RUNTIME();
   const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12 };
   const ROLE = [
+    ['debit', /withdrawal|debit|\bdr\.?\b|paid\s*out|outflow|money\s*out|payments?\s*made/i, 9],
+    ['credit', /deposit|credit|\bcr\.?\b|paid\s*in|inflow|money\s*in|received/i, 9],
+    ['balance', /balance|closing|opening|stock\s*on\s*hand|on\s*hand|in\s*stock|inventory\s*(level|qty)|stock\s*qty|outstanding|available\s*qty|\bsoh\b|closing\s*stock/i, 8],
     ['revenue', /revenue|sales|turnover|amount|value|billing|gmv|income|receipts?|collection|net\s*sales|gross\s*sales|invoice\s*amt|price\s*total|achieved|achievement|actuals?\b/i, 10],
     ['total', /^total$|^grand\s*total$|total\s*(amount|amt|value)/i, 8],
     ['profit', /profit|margin\s*amt|earnings|ebitda|net\s*income|contribution/i, 9],
@@ -27563,7 +27575,7 @@ const DashGen = (() => {
     ['discount', /discount|rebate|markdown/i, 4],
     ['tax', /gst|tax|cgst|sgst|igst|vat|tds/i, 3],
     ['salary', /salary|ctc|wage|pay|stipend|bonus|incentive|commission/i, 6],
-    ['score', /score|rating|marks|grade|nps|csat|satisfaction|percent|%|ratio|rate$/i, 5],
+    ['score', /score|rating|marks|grade|\bnps\b|csat|satisfaction|percent|%|\bratio\b|\brate$/i, 5],
     ['hours', /hours|hrs|duration|days|time|tat|aging|age/i, 4]
   ];
   const DIMROLE = [
@@ -27575,7 +27587,7 @@ const DashGen = (() => {
     ['customer', /customer|client|party|buyer|account|dealer|distributor|vendor|supplier|retailer|student|patient|member/i, 7],
     ['time', /month|year|quarter|week|fy|period/i, 5]
   ];
-  const AVG_HINT = /price|rate|mrp|avg|average|score|rating|marks|percent|%|ratio|age|nps|csat|satisfaction|tat|aging|days|hours/i;
+  const AVG_HINT = /\b(price|prices|rate|rates|mrp|avg|average|score|scores|rating|ratings|marks|percent|percentage|ratio|age|nps|csat|satisfaction|tat|aging|ageing|days|hours)\b|%/i;
   const ID_HINT = /(^|\b)(id|code|no\.?|number|num|phone|mobile|contact|pin|pincode|zip|aadhaar|pan|gstin|ifsc|account\s*no|invoice\s*no|order\s*no|bill\s*no|serial|sr\.?\s*no|s\.?\s*no)(\b|$)/i;
   const POS_STATUS = /^(complete|completed|done|closed|delivered|paid|won|success|successful|approved|active|present|resolved|yes|shipped|fulfilled|converted|passed|pass)$/i;
 
@@ -27595,9 +27607,13 @@ const DashGen = (() => {
     }
     catch (e) { throw new Error('That file could not be read as a spreadsheet. Save it as .xlsx or .csv and try again.'); }
     const sheets = wb.SheetNames.map(name => {
-      const aoa = XLSX.utils.sheet_to_json(wb.Sheets[name], { header: 1, raw: true, defval: '', blankrows: false });
-      return { name, aoa };
-    }).filter(s => s.aoa.length >= 2);
+      const ws = wb.Sheets[name];
+      if (!ws || !ws['!ref']) return { name, aoa: [] };
+      const aoa = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: '', blankrows: true });
+      const rg = XLSX.utils.decode_range(ws['!ref']);
+      fillMerges(aoa, ws['!merges'], rg.s.r, rg.s.c);
+      return { name, aoa, hidden: !!(wb.Workbook && wb.Workbook.Sheets && (wb.Workbook.Sheets.find(x => x.name === name) || {}).Hidden) };
+    }).filter(s => s.aoa.filter(r => !isBlankRow(r)).length >= 2 && !s.hidden);
     if (!sheets.length) throw new Error('No sheet in this file has a header row and data under it.');
     return sheets;
   }
@@ -27649,7 +27665,8 @@ const DashGen = (() => {
     if (typeof v === 'number') return isFinite(v) ? v : null;
     if (typeof v === 'boolean' || v instanceof Date) return null;
     let s = String(v).trim();
-    if (!s) return null;
+    if (!s || EMPTY_TOK.test(s)) return null;
+    if (/^[-–—]$/.test(s)) return 0;
     const neg = /^\(.*\)$/.test(s) || /^-/.test(s.replace(/^[₹$€£\s]+|rs\.?\s*/i, ''));
     const pct = /%$/.test(s);
     s = s.replace(/^\(|\)$/g, '').replace(/₹|rs\.?|inr|\$|€|£|,|\s|%|\/-$/gi, '').replace(/^-/, '');
@@ -27661,14 +27678,298 @@ const DashGen = (() => {
     return pct ? n : n;
   }
 
+  /* ---------------- understanding any layout ----------------
+     Real files are rarely one clean table. Before profiling, every sheet is
+     reshaped into one: the main block is found, merged and two-row headers
+     are combined, subtotal and grand-total rows dropped, pivot-style blank
+     labels filled down, months or quarters spread across columns turned into
+     a Period column, statement layouts (Revenue, Cost … as rows) turned into
+     measures, "in lakhs" scaled, and bank narrations split into mode and
+     party. Every change is reported to the user. */
+  const MONTHS3 = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  const EMPTY_TOK = /^(n\/?a|nil|null|none|#n\/a|#value!|#ref!|#div\/0!|#name\?|not available|na\.)$/i;
+  const TOTAL_RE = /^(grand\s*total|sub\s*-?\s*total|total|totals|net\s*total|overall)\b|\b(sub\s*)?total$/i;
+  const SUMMARY_HEAD = /^(total|grand\s*total|ytd|ytd\s*total|average|avg|mean|sum|full\s*year|fy\s*total|annual\s*total|cumulative|variance|var\.?|growth|change|%\s*change|yoy|mom|cagr|share|%|remarks?|notes?|comments?)\b/i;
+  const METRIC_WORD = /revenue|sales|income|turnover|cost|cogs|expense|expenditure|spend|profit|ebitda|ebit|\bpat\b|\bpbt\b|margin|units|qty|quantity|orders|volume|gross|net|tax|salary|payroll|budget|target|actual|achieved|collection|receipts|payments|cash|headcount|customers|leads|visits|conversion|interest|depreciation|amortisation|amortization|dividend|eps|capex|opex|footfall|bills|invoices/i;
+  const fy0 = (y) => (y < 100 ? 2000 + y : y);
+  function monthIdx(s) { const k = MONTHS3.indexOf(String(s).slice(0, 3).toLowerCase()); return k >= 0 && /^[a-z]+\.?$/i.test(s) && (s.length <= 4 || 'january february march april may june july august september october november december sept'.split(' ').includes(s.toLowerCase().replace('.', ''))) ? k + 1 : 0; }
+  /* A column heading as a period: { iso, grain, monthOnly } or null */
+  function parsePeriod(v) {
+    if (v instanceof Date) { const s = iso(v); return s ? { iso: s, grain: s.endsWith('-01') ? 'month' : 'day' } : null; }
+    if (typeof v === 'number') {
+      if (Number.isInteger(v) && v >= 1990 && v <= 2100) return { iso: v + '-01-01', grain: 'year' };
+      return null;
+    }
+    const s = String(v == null ? '' : v).trim().replace(/\s+/g, ' ');
+    if (!s || s.length > 24) return null;
+    let m;
+    if ((m = s.match(/^(?:fy|f\.y\.?)\s*'?(\d{2}|\d{4})$/i))) { const y = fy0(+m[1]); return { iso: `${y - 1}-04-01`, grain: 'year', fy: true }; }
+    if ((m = s.match(/^(?:fy|f\.y\.?)?\s*(\d{4})\s*[-–/]\s*(\d{2}|\d{4})$/i))) {
+      const a = +m[1], b = +m[2];
+      if (b === (a + 1) % 100 || b === a + 1) return { iso: `${a}-04-01`, grain: 'year', fy: true };
+      if (m[2].length === 2 && b >= 1 && b <= 12 && !/fy/i.test(s)) return { iso: `${a}-${m[2]}-01`, grain: 'month' };
+      return null;
+    }
+    if ((m = s.match(/^q(?:tr|uarter)?\s*-?\s*([1-4])\s*[-'’ ]*\s*(fy|f\.y\.?)?\s*'?(\d{2}|\d{4})?$/i)) || (m = s.match(/^(?:(fy)\s*'?(\d{2}|\d{4})\s*[-' ]*\s*)q([1-4])$/i) && [m[0], m[3], m[1], m[2]])) {
+      const q = +m[1], fy = !!m[2], y = m[3] ? fy0(+m[3]) : null;
+      if (fy) { const mo = ((q - 1) * 3 + 3) % 12 + 1, yr = q === 4 ? y : y - 1; return { iso: `${yr}-${String(mo).padStart(2, '0')}-01`, grain: 'quarter', fy: true }; }
+      return { iso: `${y || 0}-${String((q - 1) * 3 + 1).padStart(2, '0')}-01`, grain: 'quarter', noYear: !y };
+    }
+    if ((m = s.match(/^([a-z]{3,9})\.?[\s\-'’,]*(\d{2}|\d{4})$/i)) && monthIdx(m[1])) return { iso: `${fy0(+m[2])}-${String(monthIdx(m[1])).padStart(2, '0')}-01`, grain: 'month' };
+    if ((m = s.match(/^(\d{4})[-/.](\d{1,2})$/)) && +m[2] >= 1 && +m[2] <= 12) return { iso: `${m[1]}-${String(+m[2]).padStart(2, '0')}-01`, grain: 'month' };
+    if ((m = s.match(/^(\d{1,2})[-/.](\d{4})$/)) && +m[1] >= 1 && +m[1] <= 12) return { iso: `${m[2]}-${String(+m[1]).padStart(2, '0')}-01`, grain: 'month' };
+    if (monthIdx(s)) return { iso: `0-${String(monthIdx(s)).padStart(2, '0')}-01`, grain: 'month', noYear: true };
+    if (/^\d{4}$/.test(s) && +s >= 1990 && +s <= 2100) return { iso: s + '-01-01', grain: 'year' };
+    const d = parseDate(s);
+    return d ? { iso: d, grain: 'day' } : null;
+  }
+  // "2025 Sales", "Sales Q1 FY26", "Apr-25 Units" -> { period, metric }
+  function splitPeriod(h) {
+    const s = String(h == null ? '' : h).trim();
+    const whole = parsePeriod(h);
+    if (whole) return { p: whole, metric: '' };
+    const words = s.split(/\s+/);
+    for (let k = 1; k < words.length && k <= 3; k++) {
+      const a = words.slice(0, k).join(' '), b = words.slice(k).join(' ');
+      const pa = parsePeriod(a); if (pa && pa.grain !== 'day' && !parsePeriod(b)) return { p: pa, metric: b.replace(/^[-–:(]+|[)]+$/g, '').trim() };
+      const c = words.slice(0, words.length - k).join(' '), e = words.slice(words.length - k).join(' ');
+      const pe = parsePeriod(e); if (pe && pe.grain !== 'day' && !parsePeriod(c)) return { p: pe, metric: c.replace(/[-–:(]+$/g, '').trim() };
+    }
+    return null;
+  }
+  function fillMerges(aoa, merges, r0, c0) {
+    (merges || []).forEach(mg => {
+      const v = (aoa[mg.s.r - r0] || [])[mg.s.c - c0];
+      if (v === '' || v == null) return;
+      for (let r = mg.s.r; r <= mg.e.r; r++) for (let c = mg.s.c; c <= mg.e.c; c++) {
+        const rr = aoa[r - r0]; if (!rr) continue;
+        if (rr[c - c0] === '' || rr[c - c0] == null) rr[c - c0] = v;
+      }
+    });
+  }
+  const isBlankRow = (r) => !r || r.every(v => v === '' || v == null);
+  const isNumCell = (v) => typeof v === 'number' || (typeof v === 'string' && parseNum(v) != null && !parsePeriod(v));
+  const headerish = (v) => v instanceof Date || (typeof v === 'number' ? !!parsePeriod(v) : typeof v === 'string' && v.trim() !== '' && (!/^[\d.,\s₹%()-]+$/.test(v) || !!parsePeriod(v)));
+  // Title text above the table: unit ("₹ in lakhs") and subject ("Sales MIS")
+  function scaleOf(text) {
+    const t = String(text || '').toLowerCase();
+    if (/(in|₹|rs\.?|inr)\s*(crores?|cr\b)|\(\s*(crores?|cr)\s*\)|₹\s*cr\b/.test(t)) return { k: 1e7, word: 'crores' };
+    if (/(in|₹|rs\.?|inr)\s*(lakhs?|lacs?|lakh)|\(\s*(lakhs?|lacs?)\s*\)/.test(t)) return { k: 1e5, word: 'lakhs' };
+    if (/(in|₹|rs\.?|inr|\$|usd)\s*(millions?|mn\b)|\(\s*(millions?|mn)\s*\)/.test(t)) return { k: 1e6, word: 'millions' };
+    if (/(in|₹|rs\.?|inr|\$)\s*(thousands?|'000|000s)|\(\s*('000|000s|thousands?)\s*\)/.test(t)) return { k: 1e3, word: 'thousands' };
+    return null;
+  }
+  function shape(sheet) {
+    const notes = [];
+    let aoa = sheet.aoa.map(r => (r || []).slice());
+    const width = Math.max(0, ...aoa.map(r => r.length));
+    aoa = aoa.map(r => { while (r.length < width) r.push(''); return r; });
+    // 1. the main block: the biggest run of rows between gaps of two or more empty rows
+    const blocks = []; let cur = null, gap = 0;
+    aoa.forEach((r, i) => {
+      if (isBlankRow(r)) { gap++; if (gap >= 2 && cur) { blocks.push(cur); cur = null; } return; }
+      if (!cur) cur = { s: i, e: i, cells: 0 }; cur.e = i; gap = 0;
+      cur.cells += r.filter(v => v !== '' && v != null).length;
+    });
+    if (cur) blocks.push(cur);
+    const best = blocks.filter(b => b.e > b.s).sort((a, b) => b.cells - a.cells)[0] || blocks[0] || { s: 0, e: aoa.length - 1 };
+    const above = aoa.slice(Math.max(0, best.s - 6), best.s).map(r => r.filter(v => v !== '' && v != null).join(' ')).join(' ');
+    let block = aoa.slice(best.s, best.e + 1).filter(r => !isBlankRow(r));
+    if (blocks.length > 1 && best !== blocks[0]) notes.push('Used the main table on the sheet and skipped the smaller blocks around it.');
+    // 2. header row(s)
+    let hi = 0, bestScore = -1;
+    for (let i = 0; i < Math.min(15, block.length - 1); i++) {
+      const r = block[i], filled = r.filter(v => v !== '' && v != null), hd = filled.filter(headerish);
+      const next = block[i + 1] || [], nf = next.filter(v => v !== '' && v != null).length;
+      const score = hd.length * 2 + (filled.length >= 2 ? 3 : 0) + (nf >= filled.length * 0.5 ? 2 : 0) - (filled.length - hd.length) * 2;
+      if (filled.length >= 2 && hd.length >= filled.length * 0.7 && score > bestScore) { bestScore = score; hi = i; if (filled.length >= Math.max(...block.slice(0, 15).map(x => x.filter(v => v !== '').length)) * 0.8) break; }
+    }
+    const titleText = above + ' ' + block.slice(0, hi).map(r => r.filter(v => v !== '' && v != null).join(' ')).join(' ') + ' ' + (sheet.name || '');
+    let head = block[hi].map(v => (v instanceof Date ? v : v == null ? '' : v));
+    let body = block.slice(hi + 1);
+    // a second header row: under columns that hold numbers further down, it is all text ("Sales", "Units")
+    const numericCol = head.map((h, c) => { const vs = body.slice(1, 25).map(r => r[c]).filter(v => v !== '' && v != null); return vs.length >= 2 && vs.filter(isNumCell).length >= vs.length * 0.7; });
+    if (body.length > 2) {
+      const r1 = body[0], cand = numericCol.map((isN, c) => isN ? r1[c] : null).filter(v => v !== null);
+      if (cand.length >= 2 && cand.every(v => typeof v === 'string' && v.trim() && !isNumCell(v)) && new Set(cand.map(String)).size < cand.length + 1) {
+        head = head.map((h, c) => {
+          const sub = r1[c] == null ? '' : String(r1[c]).trim(), top = h instanceof Date ? h : String(h == null ? '' : h).trim();
+          if (!sub || String(top) === sub) return top || sub;
+          if (!top) return sub;
+          return (top instanceof Date ? iso(top).slice(0, 7) : top) + ' ' + sub;
+        });
+        body = body.slice(1);
+        notes.push('Combined the two header rows (for example "' + head.find((h, c) => numericCol[c] && String(h).includes(' ')) + '").');
+      }
+    }
+    // 3. pivot-table words in headings
+    const aggHint = {};
+    head = head.map((h, c) => {
+      if (h instanceof Date || typeof h === 'number') return h;
+      let s = String(h).replace(/\s+/g, ' ').trim();
+      const m = s.match(/^(sum|total|count|average|avg|mean|max|min|maximum|minimum)\s+of\s+(.+)$/i);
+      if (m) { s = m[2]; aggHint[c] = /count/i.test(m[1]) ? 'count' : /av|mean/i.test(m[1]) ? 'avg' : 'sum'; }
+      if (/^row\s*labels?$/i.test(s)) s = '';
+      return s;
+    });
+    // 4. subtotal and grand-total rows go (they would double every sum)
+    const dimCols = head.map((h, c) => c).filter(c => !numericCol[c]).slice(0, 4);
+    let dropped = 0;
+    body = body.filter(r => {
+      const lab = dimCols.map(c => r[c]).find(v => typeof v === 'string' && v.trim()) || '';
+      if (TOTAL_RE.test(String(lab).trim())) { dropped++; return false; }
+      return true;
+    });
+    if (dropped) notes.push(`Left out ${dropped} total and subtotal row${dropped === 1 ? '' : 's'}, so nothing is counted twice.`);
+    // empty headings get a name from what is in the column
+    const REGION_V = /^(north|south|east|west|central|north[\s-]?east|north[\s-]?west|south[\s-]?east|south[\s-]?west|ne|nw|se|sw)(\s+(zone|region|india))?$/i;
+    const STATE_V = /^(andhra pradesh|arunachal pradesh|assam|bihar|chhattisgarh|goa|gujarat|haryana|himachal pradesh|jharkhand|karnataka|kerala|madhya pradesh|maharashtra|manipur|meghalaya|mizoram|nagaland|odisha|orissa|punjab|rajasthan|sikkim|tamil nadu|telangana|tripura|uttar pradesh|uttarakhand|west bengal|delhi|jammu (and|&) kashmir|ladakh|puducherry|chandigarh|ap|up|mp|tn|wb)$/i;
+    const CITY_V = /^(mumbai|delhi|new delhi|bengaluru|bangalore|chennai|kolkata|hyderabad|pune|ahmedabad|jaipur|lucknow|surat|nagpur|indore|bhopal|patna|chandigarh|kochi|coimbatore|noida|gurgaon|gurugram|thane|vadodara|visakhapatnam|ludhiana|agra|nashik|rajkot|madurai|varanasi|ranchi|guwahati|bhubaneswar|mysuru|mysore|dehradun|raipur|kanpur|amritsar)$/i;
+    const semantic = (vs) => {
+      const s = vs.map(v => String(v).trim()).filter(Boolean); if (!s.length) return '';
+      const share = (re) => s.filter(v => re.test(v)).length / s.length;
+      return share(REGION_V) >= 0.8 ? 'Region' : share(STATE_V) >= 0.8 ? 'State' : share(CITY_V) >= 0.8 ? 'City' : s.every(v => monthIdx(v)) ? 'Month' : '';
+    };
+    head = head.map((h, c) => {
+      if (h !== '' && h != null) return h;
+      const vs = body.slice(0, 50).map(r => r[c]).filter(v => v !== '' && v != null);
+      if (!vs.length) return '';
+      if (vs.every(v => v instanceof Date || parseDate(v))) return 'Date';
+      if (vs.every(v => typeof v === 'string' && /@/.test(v))) return 'Email';
+      if (vs.every(isNumCell)) return 'Value';
+      return semantic(vs) || (c === 0 || dimCols[0] === c ? 'Item' : 'Column ' + (c + 1));
+    });
+    // 5. labels written once per group (pivot style) are filled down
+    dimCols.slice(0, 3).forEach(c => {
+      const vals = body.map(r => r[c]), blanks = vals.filter(v => v === '' || v == null).length, filled = vals.length - blanks;
+      if (!blanks || !filled || vals[0] === '' || vals[0] == null) return;
+      const distinct = new Set(vals.filter(v => v !== '' && v != null)).size;
+      const rowsHaveData = body.filter(r => (r[c] === '' || r[c] == null) && r.some((v, k) => k !== c && v !== '' && v != null)).length;
+      if (distinct <= Math.max(2, filled) && filled <= vals.length * 0.75 && rowsHaveData >= blanks * 0.8) {
+        let last = '';
+        body.forEach(r => { if (r[c] === '' || r[c] == null) r[c] = last; else last = r[c]; });
+        notes.push(`Filled in "${head[c] || 'the first column'}" where it was written only once per group.`);
+      }
+    });
+    // 6. periods across the columns -> one Period column
+    const sp = head.map(h => (h === '' ? null : splitPeriod(h)));
+    const pcols = sp.map((x, c) => (x && numericCol[c] ? c : -1)).filter(c => c >= 0);
+    let grainHint = null, scale = scaleOf(titleText);
+    const periodsDistinct = new Set(pcols.map(c => sp[c].p.iso)).size;
+    if (pcols.length >= 3 && periodsDistinct >= 2 || (periodsDistinct >= 2 && pcols.length >= 2 && pcols.every(c => sp[c].metric))) {
+      // months without a year: take it from the title ("FY 2025-26", "2025"), in order
+      if (pcols.some(c => sp[c].p.noYear)) {
+        const fyM = titleText.match(/(?:fy|f\.y\.?)\s*(\d{4})\s*[-–/]\s*(\d{2,4})/i), yM = titleText.match(/\b(20\d{2})\b/);
+        let y = fyM ? +fyM[1] : yM ? +yM[1] : new Date().getFullYear(), prev = 0;
+        pcols.forEach(c => { const p = sp[c].p; if (!p.noYear) return; const mo = +p.iso.slice(5, 7); if (prev && mo < prev) y++; prev = mo; p.iso = `${y}-${p.iso.slice(5)}`; delete p.noYear; });
+      }
+      const idCols = head.map((h, c) => c).filter(c => !pcols.includes(c) && !(numericCol[c] && (SUMMARY_HEAD.test(String(head[c])) || c > pcols[0])) && head[c] !== '');
+      const skipped = head.map((h, c) => c).filter(c => !pcols.includes(c) && !idCols.includes(c) && head[c] !== '');
+      const metrics = [...new Set(pcols.map(c => sp[c].metric))];
+      // a statement layout: the first label column names the measures (Revenue, Cost, EBITDA …)
+      const mCol = idCols.find(c => { const vs = [...new Set(body.map(r => String(r[c] || '').trim()).filter(Boolean))]; return vs.length >= 2 && vs.length <= 40 && vs.filter(v => METRIC_WORD.test(v)).length >= vs.length * 0.5; });
+      const restIds = idCols.filter(c => c !== mCol);
+      const valueName = (() => {
+        const w = titleText.match(/\b(sales|revenue|turnover|collections?|expenses?|spend|production|purchases?|orders|units|volume|profit|footfall|attendance|budget|target|headcount)\b/i);
+        return w ? w[1].charAt(0).toUpperCase() + w[1].slice(1).toLowerCase() : sheet.name && !/sheet\s*\d*/i.test(sheet.name) && METRIC_WORD.test(sheet.name) ? sheet.name : 'Value';
+      })();
+      const grains = pcols.map(c => sp[c].p.grain);
+      var fiscalHint = pcols.some(c => sp[c].p.fy) || /\b(fy|f\.y\.|financial\s+year)\b/i.test(titleText);
+      grainHint = grains.every(g => g === grains[0]) ? grains[0] : null;
+      const out = new Map(), order = [];
+      const metricNames = new Set();
+      body.forEach(r => {
+        const ids = restIds.map(c => r[c]);
+        pcols.forEach(c => {
+          const raw = r[c];
+          if (raw === '' || raw == null) return;
+          const metric = mCol != null ? String(r[mCol] || '').trim() || valueName : (sp[c].metric || valueName);
+          metricNames.add(metric);
+          const key = JSON.stringify(ids) + '|' + sp[c].p.iso;
+          if (!out.has(key)) { out.set(key, { ids, period: sp[c].p.iso, m: {} }); order.push(key); }
+          out.get(key).m[metric] = raw;
+        });
+      });
+      const mlist = [...metricNames];
+      const headers = restIds.map(c => String(head[c])).concat(['Period'], mlist);
+      const rows = order.map(k => { const o = out.get(k); return o.ids.concat([o.period], mlist.map(m => (o.m[m] === undefined ? '' : o.m[m]))); });
+      const plab = { month: 'months', quarter: 'quarters', year: 'years', day: 'dates' }[grainHint] || 'periods';
+      notes.push(mCol != null
+        ? `Read as a statement: ${mlist.length} line items (${mlist.slice(0, 4).join(', ')}${mlist.length > 4 ? '…' : ''}) across ${periodsDistinct} ${plab}, turned into one row per period.`
+        : `${periodsDistinct} ${plab} were spread across the columns; turned them into a Period column${metrics.filter(Boolean).length ? ' with ' + metrics.filter(Boolean).join(', ') : ''} (${rows.length} rows).`);
+      if (skipped.length) notes.push(`Left out summary column${skipped.length === 1 ? '' : 's'} ${skipped.map(c => '"' + head[c] + '"').join(', ')}, which repeat the monthly figures.`);
+      return finish({ headers, rows, notes, grainHint, scale, sheet, title: titleText, aggHint: {}, fiscal: fiscalHint });
+    }
+    return finish({ headers: head.map(h => (h instanceof Date ? iso(h) : String(h))), rows: body, notes, grainHint, scale, sheet, title: titleText, aggHint, headerRow: best.s + hi, fiscal: /\b(fy|f\.y\.|financial\s+year)\b/i.test(titleText) });
+  }
+  function finish(o) {
+    let headers = o.headers, rows = o.rows;
+    // unique, non-empty headings; drop columns that are empty everywhere
+    const used = new Set();
+    headers = headers.map((h, c) => { let k = String(h || '').replace(/\s+/g, ' ').trim() || 'Column ' + (c + 1), n = 2; const b = k; while (used.has(k.toLowerCase())) k = b + ' ' + n++; used.add(k.toLowerCase()); return k; });
+    const keep = headers.map((h, c) => rows.some(r => r[c] !== '' && r[c] != null));
+    const t = { headers: headers.filter((h, c) => keep[c]), rows: rows.map(r => headers.map((h, c) => (r[c] == null ? '' : r[c])).filter((v, c) => keep[c])), notes: o.notes, grainHint: o.grainHint, headerRow: o.headerRow || 0, aggHint: {}, fiscal: !!o.fiscal };
+    Object.entries(o.aggHint || {}).forEach(([c, a]) => { const nc = keep.slice(0, +c).filter(Boolean).length; if (keep[c]) t.aggHint[nc] = a; });
+    // "₹ in lakhs" in the title: amounts are scaled to real rupees
+    if (o.scale) t.scale = o.scale;
+    // Indian bank narrations: "UPI-SWIGGY-…", "NEFT-SALARY …" -> Mode and Party
+    const nar = t.headers.findIndex((h, c) => /narration|description|particulars|remarks|details|transaction/i.test(h) && t.rows.filter(r => /^(upi|neft|imps|rtgs|pos|atm|ach|nach|chq|clg|inf|mmt|bil|ecs|nfs|int\.?|by|to)\b/i.test(String(r[c] || '').trim())).length >= t.rows.length * 0.3);
+    if (nar >= 0) {
+      const MODE = /^(upi|neft|imps|rtgs|pos|atm|ach|nach|ecs|chq|cheque|clg|nfs|int|bil|mmt|inf)/i;
+      const mode = (s) => { const m = String(s).trim().match(MODE); return m ? ({ chq: 'Cheque', cheque: 'Cheque', clg: 'Cheque', int: 'Interest', nfs: 'ATM', bil: 'Bill Pay', mmt: 'IMPS', inf: 'Transfer', ach: 'Auto-debit', nach: 'Auto-debit', ecs: 'Auto-debit' }[m[1].toLowerCase()] || m[1].toUpperCase()) : 'Other'; };
+      const party = (s) => {
+        const parts = String(s).trim().split(/[-/:*]+/).map(x => x.trim()).filter(Boolean);
+        let p = parts.length > 1 && MODE.test(parts[0]) ? parts[1] : parts[0] || '';
+        if (/^(d|cr|dr|wdl|p2a|p2m)$/i.test(p) && parts[2]) p = parts[2];
+        p = p.replace(/@.*$/, '').replace(/\d{6,}/g, '').replace(/\s{2,}/g, ' ').trim();
+        return p ? p.toLowerCase().replace(/\b\w/g, c => c.toUpperCase()) : 'Other';
+      };
+      t.headers.push('Mode', 'Party');
+      t.textCols = [nar];
+      t.rows.forEach(r => { r.push(mode(r[nar]), party(r[nar])); });
+      o.notes.push(`Read "${t.headers[nar]}" as bank narrations and added Mode (UPI, NEFT, ATM…) and Party columns.`);
+    }
+    // one amount column with a Dr / Cr marker -> Debit and Credit columns
+    const drcr = t.headers.findIndex((h, c) => { const vs = t.rows.map(r => String(r[c] || '').trim().toLowerCase()).filter(Boolean); return vs.length >= t.rows.length * 0.8 && vs.every(v => /^(dr|cr|d|c|debit|credit)\.?$/.test(v)); });
+    if (drcr >= 0) {
+      const amt = t.headers.findIndex((h, c) => c !== drcr && /amount|amt|value/i.test(h) && t.rows.filter(r => parseNum(r[c]) != null).length >= t.rows.length * 0.8);
+      if (amt >= 0) {
+        t.headers.push('Debit', 'Credit');
+        t.rows.forEach(r => { const dr = /^(dr|d|debit)/i.test(String(r[drcr]).trim()); r.push(dr ? r[amt] : '', dr ? '' : r[amt]); });
+        o.notes.push(`Split "${t.headers[amt]}" into Debit and Credit using the "${t.headers[drcr]}" column.`);
+      }
+    }
+    return t;
+  }
+  /* Sheets with the same columns (one per month or branch) are offered combined. */
+  function sheetOptions(sheets) {
+    const shaped = sheets.map(s => { try { return Object.assign(shape(s), { name: s.name }); } catch (e) { return null; } }).filter(t => t && t.rows.length);
+    const sig = (t) => t.headers.map(h => h.toLowerCase().trim()).sort().join('|');
+    const groups = new Map();
+    shaped.forEach(t => { const k = sig(t); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(t); });
+    const opts = shaped.map(t => ({ label: `${t.name} (${t.rows.length.toLocaleString('en-IN')} rows)`, table: t, name: t.name, score: t.rows.length * t.headers.length }));
+    groups.forEach(g => {
+      if (g.length < 2) return;
+      const per = g.map(t => parsePeriod(t.name));
+      const asDate = per.every(Boolean), col = asDate ? (per[0].grain === 'year' ? 'Year' : 'Month') : 'Sheet';
+      const headers = g[0].headers.concat([col]);
+      const rows = [].concat(...g.map((t, k) => t.rows.map(r => { const o = t.headers.map(h => r[t.headers.indexOf(h)]); const idx = g[0].headers.map(h => t.headers.findIndex(x => x.toLowerCase().trim() === h.toLowerCase().trim())); return idx.map(i => (i >= 0 ? r[i] : '')).concat([asDate ? per[k].iso : t.name]); })));
+      const table = { headers, rows, notes: [`Combined ${g.length} sheets with the same columns (${g.map(t => t.name).join(', ')}) and added a ${col} column.`].concat(g[0].notes), grainHint: asDate ? per[0].grain : g[0].grainHint, headerRow: 0, aggHint: g[0].aggHint, scale: g[0].scale };
+      opts.push({ label: `All ${g.length} sheets combined: ${g.map(t => t.name).slice(0, 4).join(', ')}${g.length > 4 ? '…' : ''} (${rows.length.toLocaleString('en-IN')} rows)`, table, name: g.map(t => t.name).join(' + '), score: rows.length * headers.length * 1.5 });
+    });
+    opts.sort((a, b) => b.score - a.score);
+    return opts;
+  }
+
   /* ---------------- profiling ---------------- */
   function profile(t) {
     const N = t.rows.length, S = t.rows.length > 4000 ? t.rows.filter((r, i) => i % Math.ceil(N / 4000) === 0) : t.rows;
     return t.headers.map((label, c) => {
-      const vals = S.map(r => r[c]).filter(v => v !== '' && v != null);
+      const vals = S.map(r => r[c]).filter(v => v !== '' && v != null && !(typeof v === 'string' && EMPTY_TOK.test(v.trim())));
       const nonEmpty = vals.length;
       const col = { label, c, type: 'text', unit: 'num', role: '', score: 0, nulls: S.length - nonEmpty };
       if (!nonEmpty) return Object.assign(col, { type: 'empty' });
+      if (t.textCols && t.textCols.includes(c)) return col;
       const dates = vals.filter(v => parseDate(v)).length;
       const nums = vals.filter(v => parseNum(v) != null).length;
       const bools = vals.filter(v => /^(yes|no|y|n|true|false)$/i.test(String(v).trim()) || typeof v === 'boolean').length;
@@ -27696,10 +27997,13 @@ const DashGen = (() => {
         const rr = ROLE.find(([, re]) => re.test(label));
         col.role = rr ? rr[0] : '';
         col.score = (rr ? rr[2] : 3) + (ns.some(n => n !== ns[0]) ? 1 : -5);
-        col.agg = AVG_HINT.test(label) && !/total/i.test(label) ? 'avg' : 'sum';
+        col.agg = t.aggHint && t.aggHint[c] === 'avg' ? 'avg' : AVG_HINT.test(label) && !/total/i.test(label) ? 'avg' : 'sum';
+        if (col.role === 'balance') { col.agg = 'last'; col.score = 7; }
         col.unit = /percent|%|ratio|rate\b|margin\s*%/i.test(label) && ns.every(n => Math.abs(n) <= 100) ? 'pct'
           : (/₹|rs\b|inr|amount|amt|revenue|sales|price|cost|profit|value|salary|ctc|expense|income|budget|target|payment|fee|mrp|gst|tax|discount|spend|billing|turnover|collection|wage|bonus|commission|gmv|ebitda|invoice/i.test(label) ||
-             vals.some(v => typeof v === 'string' && /₹|rs\.?/i.test(v))) && !/qty|quantity|units|count|pcs|percent|%/i.test(label) ? 'inr' : 'num';
+             vals.some(v => typeof v === 'string' && /₹|rs\.?/i.test(v)) || ['debit', 'credit'].includes(col.role) || (col.role === 'balance' && !/stock|qty|units|hand|soh/i.test(label)) ||
+             (t.scale && !/qty|quantity|units|count|pcs|%|percent|margin|ratio|headcount|orders|customers/i.test(label))) && !/qty|quantity|units|count|pcs|percent|%|stock\s*on|on\s*hand/i.test(label) ? 'inr' : 'num';
+        if (/margin|%|percent|ratio/i.test(label) && ns.every(n => Math.abs(n) <= 100)) { col.unit = 'pct'; col.agg = 'avg'; }
         col.min = Math.min(...ns); col.max = Math.max(...ns);
         col.bounded = col.min >= 0 && col.max <= 100;
         return col;
@@ -27720,7 +28024,7 @@ const DashGen = (() => {
       const v = r[col.c];
       if (v === '' || v == null) return col.type === 'measure' ? null : '';
       if (col.type === 'date') return col.serial ? iso(new Date(Math.round((parseNum(v) - 25569) * 864e5) + new Date().getTimezoneOffset() * 6e4)) : parseDate(v);
-      if (col.type === 'measure') return parseNum(v);
+      if (col.type === 'measure') { const n = parseNum(v); return n != null && t.scale && col.unit === 'inr' ? Math.round(n * t.scale.k * 100) / 100 : n; }
       if (col.sortNum) return String(parseNum(v));
       return v instanceof Date ? iso(v) : typeof v === 'boolean' ? (v ? 'Yes' : 'No') : String(v).trim();
     }));
@@ -27742,7 +28046,19 @@ const DashGen = (() => {
     const out = [];
     let seq = 0;
     const add = (o) => { o.id = 's' + (++seq); out.push(o); return o; };
-    const vOf = (m) => ({ calc: m.agg === 'avg' ? 'avg' : 'sum', m: m.i, unit: m.unit, name: (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label });
+    // balances and stock levels: the closing figure (bank) or the latest snapshot's total (stock per SKU per week)
+    const snapshot = (() => {
+      if (di == null) return false;
+      const per = new Map(); rows.forEach(r => { const k = r[di]; if (k) per.set(k, (per.get(k) || 0) + 1); });
+      const counts = [...per.values()].sort((a, b) => a - b); if (!counts.length || counts[counts.length >> 1] < 2) return false;
+      const labs = cols.map((c, i) => i).filter(i => cols[i].type === 'category' || cols[i].type === 'entity');
+      return labs.length > 0 && new Set(rows.map(r => r[di] + '|' + labs.map(i => r[i]).join('|'))).size >= rows.length * 0.95;
+    })();
+    // in stock snapshots, money columns that are not flows (sold, purchased …) are levels too: stock value
+    if (snapshot && M.some(m => m.agg === 'last')) M.forEach(m => { if (m.agg === 'sum' && m.unit === 'inr' && !/sold|sales|revenue|purchase|bought|received|issued|consum|dispatch|order|return|spend|cost of goods/i.test(m.label)) m.agg = 'last'; });
+    const isBank = cols.some(c => c.type === 'measure' && c.role === 'debit') && cols.some(c => c.type === 'measure' && c.role === 'credit');
+    const vOf = (m) => m.agg === 'last' ? { calc: isBank || !snapshot ? 'last' : 'latest', m: m.i, d: di, unit: m.unit, name: (isBank || !snapshot ? 'Closing ' : 'Latest ') + m.label.replace(/^closing\s+/i, '') }
+      : ({ calc: m.agg === 'avg' ? 'avg' : 'sum', m: m.i, unit: m.unit, name: (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label });
     const by = (r) => M.find(m => m.role === r);
     const rev = by('revenue') || by('total') || by('salary'), cost = by('cost'), profit = by('profit'), target = by('target'), qty = by('qty');
     const cap = (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
@@ -27763,20 +28079,43 @@ const DashGen = (() => {
     if (perEntity) M.forEach(m => { if (m.unit !== 'inr' && !['qty', 'revenue', 'cost', 'profit', 'target'].includes(m.role)) m.agg = 'avg'; });
     if (target && rev && rev !== target && rev.unit !== target.unit && (rev.unit === 'inr' || target.unit === 'inr')) rev.unit = target.unit = 'inr';
     const monthlyData = D.length > 0 && rows.every(r => !r[D[0].i] || /-01$/.test(r[D[0].i]));
-    const transactional = cols.some(c => c.type === 'id') || (D.length > 0 && !monthlyData) || perEntity;
+    const transactional = !snapshot && (cols.some(c => c.type === 'id') || (D.length > 0 && !monthlyData) || perEntity);
     // headline numbers
-    const titleOf = (m) => /^(total|grand total)$/i.test(m.label) ? (m.agg === 'avg' ? 'Average Total' : 'Grand Total') : (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label;
+    const titleOf = (m) => m.agg === 'last' ? vOf(m).name : /^(total|grand total)$/i.test(m.label) ? (m.agg === 'avg' ? 'Average Total' : 'Grand Total') : (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label;
+    // bank statements: money in, money out, net flow, closing balance; spend by party and mode
+    if (isBank) {
+      const dr = by('debit'), cr = by('credit'), bal = by('balance');
+      const party = cols.map((c, i) => Object.assign({ i }, c)).find(c => c.label === 'Party'), mode = cols.map((c, i) => Object.assign({ i }, c)).find(c => c.label === 'Mode');
+      add({ group: 'Headline numbers', kind: 'card', title: 'Money In', value: { calc: 'sum', m: cr.i, unit: 'inr', name: 'Money In' }, score: 20, why: 'total of ' + cr.label });
+      add({ group: 'Headline numbers', kind: 'card', title: 'Money Out', value: { calc: 'sum', m: dr.i, unit: 'inr', name: 'Money Out' }, score: 19.5, why: 'total of ' + dr.label });
+      add({ group: 'Headline numbers', kind: 'card', title: 'Net Cash Flow', value: { calc: 'diff', a: cr.i, b: dr.i, unit: 'inr', name: 'Net Cash Flow' }, score: 19, why: 'money in minus money out' });
+      if (bal) add({ group: 'Headline numbers', kind: 'card', title: 'Closing Balance', value: { calc: 'last', m: bal.i, d: di, unit: 'inr', name: 'Closing Balance' }, score: 18.5, why: 'the last balance in the statement' });
+      if (di != null) {
+        add({ group: 'Trends over time', kind: 'line', title: 'Money In vs Money Out', value: { calc: 'sum', m: cr.i, unit: 'inr', name: 'Money In' }, values: [{ calc: 'sum', m: cr.i, unit: 'inr', name: 'Money In' }, { calc: 'sum', m: dr.i, unit: 'inr', name: 'Money Out' }], score: 18, wide: true });
+        if (bal) add({ group: 'Trends over time', kind: 'line', title: 'Balance over time', value: { calc: 'last', m: bal.i, d: di, unit: 'inr', name: 'Closing Balance' }, score: 16, forecast: false });
+      }
+      if (party) { add({ group: 'Rankings', kind: 'hbar', title: 'Where the money goes: top 10 parties', value: { calc: 'sum', m: dr.i, unit: 'inr', name: 'Money Out' }, dim: party.i, top: 10, score: 17 });
+        add({ group: 'Rankings', kind: 'hbar', title: 'Where the money comes from', value: { calc: 'sum', m: cr.i, unit: 'inr', name: 'Money In' }, dim: party.i, top: 8, score: 12 }); }
+      if (mode) add({ group: 'Breakdowns', kind: 'donut', title: 'Money Out by payment mode', value: { calc: 'sum', m: dr.i, unit: 'inr', name: 'Money Out' }, dim: mode.i, top: 6, score: 16.5 });
+      add({ group: 'Headline numbers', kind: 'card', title: 'Transactions', value: { calc: 'count', unit: 'num', name: 'Transactions' }, score: 9 });
+      M.sort((a, b) => (a.role === 'debit' ? -1 : 0) - (b.role === 'debit' ? -1 : 0));
+    }
     M.slice(0, 5).forEach((m, k) => add({ group: 'Headline numbers', kind: 'card', title: titleOf(m), value: Object.assign(vOf(m), { name: titleOf(m) }), score: m.score + (k === 0 ? 4 : 0) }));
     add({ group: 'Headline numbers', kind: 'card', title: (perEntity ? 'Number of ' : 'Total ') + noun, value: { calc: 'count', unit: 'num', name: noun }, score: !M.length ? 10 : perEntity ? 12 : transactional ? 6 : 2 });
     if (rev && cost && !profit) {
       add({ group: 'Headline numbers', kind: 'card', title: 'Profit', value: { calc: 'diff', a: rev.i, b: cost.i, unit: rev.unit, name: 'Profit' }, score: 11, why: `${rev.label} minus ${cost.label}` });
       add({ group: 'Headline numbers', kind: 'card', title: 'Profit Margin', value: { calc: 'margin', a: rev.i, b: cost.i, unit: 'pct', name: 'Profit Margin' }, score: 10, why: `(${rev.label} − ${cost.label}) ÷ ${rev.label}` });
     }
-    if (rev && profit) add({ group: 'Headline numbers', kind: 'card', title: 'Profit Margin', value: { calc: 'ratio', a: profit.i, b: rev.i, unit: 'pct', name: 'Profit Margin' }, score: 10, why: `${profit.label} ÷ ${rev.label}` });
+    const profits = M.filter(m => m.role === 'profit' && m.unit !== 'pct');
+    if (rev && profits.length) profits.slice(0, 3).forEach((pf, k) => {
+      const t = profits.length === 1 && !/gross|net|ebitda|operating/i.test(pf.label) ? 'Profit Margin' : pf.label.replace(/\s*profit$/i, '') + (/ebitda|ebit/i.test(pf.label) ? ' Margin' : ' Profit Margin');
+      if (cols.some(c => c.type === 'measure' && c.unit === 'pct' && c.label.toLowerCase().includes(t.toLowerCase().replace(' margin', '')))) return;
+      add({ group: 'Headline numbers', kind: 'card', title: t, value: { calc: 'ratio', a: pf.i, b: rev.i, unit: 'pct', name: t }, score: 10 - k * 0.5, why: `${pf.label} ÷ ${rev.label}` });
+    });
     const actual = rev || M.find(m => m !== target && m.unit === (target && target.unit));
     if (target && actual && actual !== target) add({ group: 'Headline numbers', kind: 'card', title: 'Target Achievement', value: { calc: 'ratio', a: actual.i, b: target.i, unit: 'pct', name: 'Achievement' }, score: 11, why: `${actual.label} ÷ ${target.label}` });
-    if (rev && rev.agg === 'sum' && rows.length > 20 && transactional && !perEntity) add({ group: 'Headline numbers', kind: 'card', title: 'Average per ' + noun.replace(/s$/, '').replace(/ie$/, 'y'), value: { calc: 'avg', m: rev.i, unit: rev.unit, name: 'Average ' + rev.label }, score: 6 });
-    if (qty && rev && qty !== rev) add({ group: 'Headline numbers', kind: 'card', title: 'Average Price per Unit', value: { calc: 'ratio', a: rev.i, b: qty.i, unit: 'inr', name: 'Price per unit', perUnit: true }, score: 5, why: `${rev.label} ÷ ${qty.label}` });
+    if (rev && rev.agg === 'sum' && rows.length > 20 && transactional && !perEntity && !isBank) add({ group: 'Headline numbers', kind: 'card', title: 'Average per ' + noun.replace(/s$/, '').replace(/ie$/, 'y'), value: { calc: 'avg', m: rev.i, unit: rev.unit, name: 'Average ' + rev.label }, score: 6 });
+    if (qty && rev && qty !== rev && rev.agg === 'sum' && qty.agg === 'sum') add({ group: 'Headline numbers', kind: 'card', title: 'Average Price per Unit', value: { calc: 'ratio', a: rev.i, b: qty.i, unit: 'inr', name: 'Price per unit', perUnit: true }, score: 5, why: `${rev.label} ÷ ${qty.label}` });
     const ent = E.find(e => e.role === 'customer') || E.find(e => e.role === 'product') || C.find(c => c.role === 'customer' && c.distinct > 12);
     if (ent && ent.distinct < rows.length * 0.9) add({ group: 'Headline numbers', kind: 'card', title: 'Unique ' + plural(ent.label.replace(/\s*name$/i, '')), value: { calc: 'distinct', c: ent.i, unit: 'num', name: 'Unique ' + ent.label }, score: 7 });
     const st = C.find(c => c.role === 'status');
@@ -27789,12 +28128,15 @@ const DashGen = (() => {
     const main = M[0] && !(perEntity && M[0].unit !== 'inr' && M[0].agg === 'avg') && !(perEntity && /^(employees|staff|members)$/i.test(noun)) ? vOf(M[0]) : { calc: 'count', unit: 'num', name: noun };
     const mainName = main.calc === 'count' ? noun : M[0].label;
     // trends
-    if (di != null) {
+    if (di != null && !isBank) {
       add({ group: 'Trends over time', kind: 'line', title: `${mainName} trend`, value: main, score: 12, wide: true });
       if (rev && cost) add({ group: 'Trends over time', kind: 'line', title: `${rev.label} vs ${cost.label}`, value: vOf(rev), values: [vOf(rev), vOf(cost)], score: 8 });
       else if (M[1] && M[1].unit === (M[0] || {}).unit) add({ group: 'Trends over time', kind: 'line', title: `${M[0].label} and ${M[1].label}`, value: vOf(M[0]), values: [vOf(M[0]), vOf(M[1])], score: 6 });
       else if (M[1]) add({ group: 'Trends over time', kind: 'line', title: `${M[1].label} trend`, value: vOf(M[1]), score: 6 });
       if (!M.length) add({ group: 'Trends over time', kind: 'bar-time', title: `${noun} over time`, value: main, score: 9 });
+      if (profits.length >= 2) add({ group: 'Trends over time', kind: 'line', title: profits.slice(0, 3).map(m => m.label).join(', ') + ' trend', value: vOf(profits[0]), values: profits.slice(0, 3).map(vOf), score: 9, wide: !C.length });
+      M.filter(m => m.unit === 'pct').slice(0, 2).forEach((m, k) => add({ group: 'Trends over time', kind: 'line', title: `${m.label} trend`, value: vOf(m), score: 7 - k }));
+      if (!C.length && M[0]) add({ group: 'Trends over time', kind: 'bar-time', title: `${titleOf(M[0])} by period`, value: vOf(M[0]), score: 8 });
     }
     // dates that describe the row (joining, birth): how many per year, never a timeline for growth figures
     AD.slice(0, 1).forEach(a => add({ group: 'Trends over time', kind: 'line', title: `${noun} by ${a.label.replace(/^date\s+of\s+/i, '')} (per year)`, value: { calc: 'count', unit: 'num', name: noun }, date: a.i, grain: 'year', score: 6 }));
@@ -27820,14 +28162,21 @@ const DashGen = (() => {
     // tables
     const tdim = C[0] || E[0];
     if (tdim && M.length) add({ group: 'Tables', kind: 'table', title: `${tdim.label} summary`, value: vOf(M[0]), values: M.slice(0, 4).map(vOf).concat([{ calc: 'count', unit: 'num', name: noun }]), dim: tdim.i, top: 15, score: 5, wide: true });
+    const seenSig = new Set();
     out.sort((a, b) => b.score - a.score);
+    for (let k = out.length - 1; k >= 0; k--) { /* keep the first (best) of each signature */ }
+    const uniq = [];
+    out.forEach(o => { const v = o.value || {}, sig = [o.kind === 'bar-time' ? 'line' : o.kind, v.calc, v.m, v.a, v.b, v.c, o.dim, (o.values || []).map(x => x.calc + x.m).join(',')].join('|'); if (seenSig.has(sig)) return; seenSig.add(sig); uniq.push(o); });
+    out.length = 0; uniq.forEach(o => out.push(o));
     // recommended: the best 4–6 cards and 4–5 charts, without two charts saying the same thing
     const goodCards = out.filter(o => o.kind === 'card' && o.score >= 4), cards = goodCards.slice(0, goodCards.length > 5 ? 6 : 4);
     const seenDim = new Set(), charts = [];
     out.filter(o => o.kind !== 'card').forEach(o => { const key = o.kind === 'line' || o.kind === 'bar-time' ? 'time:' + o.title : 'dim:' + o.dim + ':' + o.value.calc; if (charts.length < 5 && !seenDim.has(key)) { seenDim.add(key); if (o.dim != null) seenDim.add('dim:' + o.dim + ':' + o.value.calc); charts.push(o); } });
     cards.concat(charts).forEach(o => { o.rec = true; });
     out.forEach(o => { if (o.kind !== 'card' && o.value && o.value.calc === 'count' && !o.value.name) o.value.name = noun; });
-    return { items: out, dateCol: di, filters: C.filter(c => c.distinct <= 40 && c.role !== 'time').slice(0, 3).map(c => c.i), labels: cols.map(c => c.label) };
+    const filters = C.filter(c => c.distinct <= 40 && c.role !== 'time').slice(0, 3).map(c => c.i);
+    if (isBank) { const md = cols.findIndex(c => c.label === 'Mode'); if (md >= 0 && !filters.includes(md)) filters.unshift(md); }
+    return { items: out, dateCol: di, filters: filters.slice(0, 3), labels: cols.map(c => c.label) };
   }
 
   /* ---------------- ask in plain English ----------------
@@ -28003,7 +28352,7 @@ const DashGen = (() => {
     const span = minD ? ` · ${RT.periodLabel(RT.periodKey(minD, 'month'), 'month')} to ${RT.periodLabel(RT.periodKey(maxD, 'month'), 'month')}` : '';
     return { title: state.title, subtitle: `${state.rows.length.toLocaleString('en-IN')} rows from ${state.fileName}${state.sheet ? ' · ' + state.sheet : ''}${span}`,
       theme: state.theme, cols, rows: state.rows, items, filters: state.filters, dateCol: state.dateCol, grain,
-      currency: state.currency == null ? '₹' : state.currency, numfmt: state.numfmt || 'in' };
+      currency: state.currency == null ? '₹' : state.currency, numfmt: state.numfmt || 'in', fiscal: !!state.fiscal };
   }
 
   /* ---------------- data health ---------------- */
@@ -28055,7 +28404,7 @@ const DashGen = (() => {
       value: mapV(it.value), values: it.values && it.values.map(mapV), dim: L(it.dim), date: L(it.date),
       where: it.where && Object.assign({}, it.where, { f: Object.fromEntries(Object.entries(it.where.f || {}).map(([k, v]) => [L(+k), v])) })
     }));
-    const tpl = { name: name || S.title, savedAt: new Date().toISOString().slice(0, 10), title: S.title, theme: S.theme, grain: S.grain, currency: S.currency, numfmt: S.numfmt, items };
+    const tpl = { name: name || S.title, savedAt: new Date().toISOString().slice(0, 10), title: S.title, theme: S.theme, grain: S.grain, currency: S.currency, numfmt: S.numfmt, fiscal: !!S.fiscal, items };
     const list = tplList().filter(x => x.name !== tpl.name); list.unshift(tpl);
     try { localStorage.setItem(TPL_KEY, JSON.stringify(list.slice(0, 12))); } catch (e) { throw new Error('Your browser would not save it (private mode or storage full).'); }
     return tpl;
@@ -28073,7 +28422,7 @@ const DashGen = (() => {
       where: it.where && Object.assign({}, it.where, { f: Object.fromEntries(Object.entries(it.where.f || {}).map(([k2, v]) => [I(k2), v]).filter(([k2]) => k2 != null)) }) }));
     S.sugg = items.concat(S.sugg.filter(x => x.group !== 'From your saved design'));
     S.chosen = items.map(x => x.id);
-    Object.assign(S, { title: tp.title, theme: tp.theme || S.theme, grain: tp.grain || 'auto', currency: tp.currency == null ? S.currency : tp.currency, numfmt: tp.numfmt || S.numfmt });
+    Object.assign(S, { title: tp.title, theme: tp.theme || S.theme, grain: tp.grain || 'auto', currency: tp.currency == null ? S.currency : tp.currency, numfmt: tp.numfmt || S.numfmt, fiscal: tp.fiscal == null ? S.fiscal : tp.fiscal });
   }
   function deleteTemplate(name) { try { localStorage.setItem(TPL_KEY, JSON.stringify(tplList().filter(x => x.name !== name))); } catch (e) {} }
 
@@ -28182,19 +28531,19 @@ DASH_RUNTIME().mount(document.getElementById('app'), ${json});
   const serial = (isoD) => { const [y, m, d] = isoD.split('-').map(Number); return (Date.UTC(y, m - 1, d) - Date.UTC(1899, 11, 30)) / 864e5; };
   const qs = (name) => "'" + String(name).replace(/'/g, "''") + "'";
   // style ids (see styles below)
-  const S = { hdr: 1, date: 2, inr: 3, num: 4, title: 5, sub: 6, cardLabel: 7, cardInr: 8, cardNum: 9, cardPct: 10, cardNote: 11, month: 12, pct: 13, bold: 14, dec: 15, cardDec: 16, text: 17, wrap: 18 };
+  const S = { hdr: 1, date: 2, inr: 3, num: 4, title: 5, sub: 6, cardLabel: 7, cardInr: 8, cardNum: 9, cardPct: 10, cardNote: 11, month: 12, pct: 13, bold: 14, dec: 15, cardDec: 16, text: 17, wrap: 18, cardCr: 19, cardL: 20, cardIntl: 21 };
   const moneyFmt = (cur, sys) => {
     const q = cur ? `&quot;${X(cur)}&quot;` : '';
     return sys === 'intl' ? `${q}#,##0` : `[&gt;=10000000]${q}#\\,##\\,##\\,##0;[&gt;=100000]${q}#\\,##\\,##0;${q}#,##0`;
   };
   const STYLES = (accent, soft, cur, sys) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-<numFmts count="6"><numFmt numFmtId="164" formatCode="dd\\-mmm\\-yyyy"/><numFmt numFmtId="165" formatCode="${moneyFmt(cur, sys)}"/><numFmt numFmtId="166" formatCode="${moneyFmt('', sys)}"/><numFmt numFmtId="167" formatCode="0.0%"/><numFmt numFmtId="168" formatCode="mmm\\ yyyy"/><numFmt numFmtId="169" formatCode="#,##0.00"/></numFmts>
+<numFmts count="9"><numFmt numFmtId="170" formatCode="${cur ? `&quot;${X(cur)}&quot;` : ''}#,##0.00&quot; Cr&quot;"/><numFmt numFmtId="171" formatCode="${cur ? `&quot;${X(cur)}&quot;` : ''}#,##0.00&quot; L&quot;"/><numFmt numFmtId="172" formatCode="${sys === 'intl' ? `[&gt;=1000000000]${cur ? `&quot;${X(cur)}&quot;` : ''}#,##0.0,,,&quot;B&quot;;[&gt;=1000000]${cur ? `&quot;${X(cur)}&quot;` : ''}#,##0.0,,&quot;M&quot;;${cur ? `&quot;${X(cur)}&quot;` : ''}#,##0` : '#,##0'}"/><numFmt numFmtId="164" formatCode="dd\\-mmm\\-yyyy"/><numFmt numFmtId="165" formatCode="${moneyFmt(cur, sys)}"/><numFmt numFmtId="166" formatCode="${moneyFmt('', sys)}"/><numFmt numFmtId="167" formatCode="0.0%"/><numFmt numFmtId="168" formatCode="mmm\\ yyyy"/><numFmt numFmtId="169" formatCode="#,##0.00"/></numFmts>
 <fonts count="7"><font><sz val="11"/><color theme="1"/><name val="Calibri"/><family val="2"/><scheme val="minor"/></font><font><b/><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="20"/><color rgb="FF${accent}"/><name val="Calibri"/><family val="2"/></font><font><sz val="10"/><color rgb="FF64748B"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="20"/><color rgb="FF0F172A"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/><family val="2"/></font><font><i/><sz val="10"/><color rgb="FF64748B"/><name val="Calibri"/><family val="2"/></font></fonts>
 <fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF${soft}"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FF${accent}"/><bgColor indexed="64"/></patternFill></fill></fills>
 <borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left/><right/><top/><bottom style="thin"><color rgb="FFE2E8F0"/></bottom><diagonal/></border></borders>
 <cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
-<cellXfs count="19">
+<cellXfs count="22">
 <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
 <xf numFmtId="0" fontId="5" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"><alignment vertical="center" wrapText="1"/></xf>
 <xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
@@ -28214,6 +28563,9 @@ DASH_RUNTIME().mount(document.getElementById('app'), ${json});
 <xf numFmtId="169" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
 <xf numFmtId="49" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>
 <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment wrapText="1" vertical="top"/></xf>
+<xf numFmtId="170" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
+<xf numFmtId="171" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
+<xf numFmtId="172" fontId="4" fillId="2" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1"><alignment horizontal="left" vertical="center" indent="1"/></xf>
 </cellXfs>
 <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
 </styleSheet>`;
@@ -28250,6 +28602,8 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
       case 'ratio': return `IFERROR(${S1(v.a)}/${S1(v.b)},0)`;
       case 'margin': return `IFERROR((${S1(v.a)}-${S1(v.b)})/${S1(v.a)},0)`;
       case 'share': return crit ? null : `IFERROR((${v.vals.map(x => `COUNTIF(${R(v.c)},"${String(x).replace(/"/g, '""')}")`).join('+')})/COUNTA(${R(v.c)}),0)`;
+      case 'latest': return crit || v.d == null ? null : `SUMIFS(${R(v.m)},${R(v.d)},MAX(${R(v.d)}))`;
+      case 'last': return null;
       default: return null;
     }
   }
@@ -28315,7 +28669,12 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
     const crit = (ci, ref) => `,Data!$${colRef(ci)}:$${colRef(ci)},${ref}`;
     const grainStep = { day: '+1', week: '+7', month: 'EDATE(%,1)', quarter: 'EDATE(%,3)', year: 'EDATE(%,12)' };
     const nextOf = (ref, g0) => { const g = grainStep[g0 || p.grain] || grainStep.month; return g.includes('%') ? g.replace('%', ref) : ref + g; };
-    const startOf = (k, g0) => { const g = g0 || p.grain; return g === 'quarter' ? k.slice(0, 4) + '-' + String((+k.slice(6) - 1) * 3 + 1).padStart(2, '0') + '-01' : g === 'year' ? k + '-01-01' : g === 'month' ? k + '-01' : k; };
+    const startOf = (k, g0) => {
+      const g = g0 || p.grain;
+      if (p.fiscal && g === 'quarter') { const Y = +k.slice(0, 4), q = +k.slice(6), mo = ((q - 1) * 3 + 3) % 12 + 1; return `${q === 4 ? Y : Y - 1}-${String(mo).padStart(2, '0')}-01`; }
+      if (p.fiscal && g === 'year') return `${+k - 1}-04-01`;
+      return g === 'quarter' ? k.slice(0, 4) + '-' + String((+k.slice(6) - 1) * 3 + 1).padStart(2, '0') + '-01' : g === 'year' ? k + '-01-01' : g === 'month' ? k + '-01' : k;
+    };
     for (const it of p.items.filter(i => i.kind !== 'card')) {
       const r0 = cr, vals = it.values || [it.value], base = RT.whereRows(p, p.rows, it.where), wc = whereCrit(it.where);
       calcRows.push(row(cr, [cellXml('A' + cr, it.title, S.bold)])); cr++;
@@ -28384,9 +28743,14 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
         if (v.calc === 'count') f = wcc ? `COUNTIFS(${wcc.slice(1)})` : `COUNTA(Data!$${colRef(countCol)}:$${colRef(countCol)})-1`;
         if (v.calc === 'distinct' && wcc) f = null;
         if (v.calc === 'distinct' && !wcc) f = nRows <= 5000 ? `SUMPRODUCT((Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}<>"")/COUNTIF(Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last},Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}&""))` : null;
-        const cached = rc.val == null ? 0 : v.unit === 'pct' ? rc.val / 100 : rc.val;
+        let cached = rc.val == null ? 0 : v.unit === 'pct' ? rc.val / 100 : rc.val;
+        // big amounts read like the dashboard: ₹1,224.00 Cr, ₹48.90 L (or 1.2M); the formula stays live
+        let st = v.unit === 'pct' ? S.cardPct : v.unit === 'inr' ? S.cardInr : Number.isInteger(cached) ? S.cardNum : S.cardDec;
+        if (p.numfmt === 'intl' && Math.abs(cached) >= 1e6 && v.unit !== 'pct') st = S.cardIntl;
+        else if (p.numfmt !== 'intl' && v.unit === 'inr' && Math.abs(cached) >= 1e7) { cached = cached / 1e7; f = f ? `(${f})/10000000` : f; st = S.cardCr; }
+        else if (p.numfmt !== 'intl' && v.unit === 'inr' && Math.abs(cached) >= 1e5) { cached = cached / 1e5; f = f ? `(${f})/100000` : f; st = S.cardL; }
         lab.push(cellXml(a + rr, it.title.toUpperCase(), S.cardLabel), cellXml(b + rr, '', S.cardLabel));
-        valc.push(cellXml(a + (rr + 1), cached, v.unit === 'pct' ? S.cardPct : v.unit === 'inr' ? S.cardInr : Number.isInteger(cached) ? S.cardNum : S.cardDec, f || undefined), cellXml(b + (rr + 1), '', S.cardNum));
+        valc.push(cellXml(a + (rr + 1), cached, st, f || undefined), cellXml(b + (rr + 1), '', S.cardNum));
         const dl = rc.delta && rc.delta.d != null ? `${rc.delta.d >= 0 ? '▲' : '▼'} ${Math.abs(rc.delta.d).toFixed(1)}${rc.delta.pts ? ' pts' : '%'} ${rc.delta.cur} vs ${rc.delta.prev}` : (it.why || '');
         note.push(cellXml(a + (rr + 2), dl, S.cardNote), cellXml(b + (rr + 2), '', S.cardNote));
         merge.push(`${a}${rr}:${b}${rr}`, `${a}${rr + 1}:${b}${rr + 1}`, `${a}${rr + 2}:${b}${rr + 2}`);
@@ -28411,7 +28775,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
       dash.push(row(after, [cellXml('B' + after, 'Key insights', S.bold)])); after++;
       ins.forEach(t => { dash.push(row(after, [cellXml('B' + after, '• ' + t, S.wrap)], 30)); merge.push(`B${after}:M${after}`); after++; });
     }
-    const dashCols = [2].concat(Array(15).fill(0).map((x, i) => (i % 3 === 2 ? 2 : 13)));
+    const dashCols = [2].concat(Array(15).fill(0).map((x, i) => (i % 3 === 2 ? 2 : 15)));
     zip.file('xl/worksheets/sheet1.xml', sheetXml(dash.join(''), { grid: false, active: true, cols: dashCols, merge, drawing: anchors.length > 0, landscape: true, tab: acc }));
     zip.file('xl/worksheets/sheet2.xml', sheetXml(calcRows.join(''), { cols: [28, 18, 18, 18, 18, 18, 18] }));
     zip.file('xl/worksheets/sheet3.xml', sheetXml(dataRows.join(''), { freeze: true, cols: widths, table: true }));
@@ -28465,6 +28829,8 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
         case 'ratio': return `DIVIDE(SUM(${col(v.a)}), SUM(${col(v.b)}))`;
         case 'margin': return `DIVIDE(SUM(${col(v.a)}) - SUM(${col(v.b)}), SUM(${col(v.a)}))`;
         case 'share': return `DIVIDE(CALCULATE(COUNTROWS(${T}), ${col(v.c)} IN {${v.vals.map(x => '"' + String(x).replace(/"/g, '""') + '"').join(', ')}}), COUNTROWS(${T}))`;
+        case 'last': return v.d != null ? `LASTNONBLANKVALUE(${col(v.d)}, SUM(${col(v.m)}))` : `SUM(${col(v.m)})`;
+        case 'latest': return v.d != null ? `VAR d = MAX(${col(v.d)}) RETURN CALCULATE(SUM(${col(v.m)}), ${col(v.d)} = d)` : `SUM(${col(v.m)})`;
         default: return 'BLANK()';
       }
     };
@@ -28497,6 +28863,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
         case 'diff': return `SUM(${f(v.a)}) - SUM(${f(v.b)})`;
         case 'ratio': return `SUM(${f(v.a)}) / SUM(${f(v.b)})`;
         case 'margin': return `(SUM(${f(v.a)}) - SUM(${f(v.b)})) / SUM(${f(v.a)})`;
+        case 'last': case 'latest': return `SUM(${f(v.m)})  (show it on a chart filtered to the latest ${v.d != null ? f(v.d) : 'date'})`;
         case 'share': return `SUM(CASE WHEN ${f(v.c)} IN (${v.vals.map(x => "'" + String(x).replace(/'/g, "\\'") + "'").join(', ')}) THEN 1 ELSE 0 END) / COUNT(${f(v.c)})`;
         default: return '';
       }
@@ -28582,7 +28949,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
   }
 
   return { RT, readFile, table, profile, clean, suggest, payload, htmlFile, png, pdf, xlsx, pptx, kit, csv, daxFor, sampleFile, parseDate, parseNum,
-    nlq, askExamples, health, dedupe, saveTemplate, matchTemplates, applyTemplate, deleteTemplate, tplList };
+    nlq, askExamples, health, dedupe, saveTemplate, matchTemplates, applyTemplate, deleteTemplate, tplList, shape, sheetOptions, parsePeriod };
 })();
 
 /* ---------------- Excel Dashboard Maker: the tool page ---------------- */
@@ -28615,6 +28982,7 @@ function renderExcelDashboard(view) {
           <div class="field"><label for="dxTitle">Dashboard title</label><input id="dxTitle" type="text" maxlength="90"></div>
           <div class="field"><label for="dxGrain">Show time by</label><select id="dxGrain"><option value="auto">Automatic</option><option value="day">Day</option><option value="week">Week</option><option value="month">Month</option><option value="quarter">Quarter</option><option value="year">Year</option></select></div>
           <div class="field"><label for="dxCur">Currency</label><select id="dxCur"><option value="₹">₹ Indian rupee</option><option value="$">$ US dollar</option><option value="€">€ Euro</option><option value="£">£ Pound</option><option value="AED ">AED Dirham</option><option value="SAR ">SAR Riyal</option><option value="S$">S$ Singapore dollar</option><option value="A$">A$ Australian dollar</option><option value="">No symbol</option></select></div>
+          <div class="field"><label for="dxFy">Year runs</label><select id="dxFy"><option value="0">January to December</option><option value="1">April to March (Indian FY)</option></select></div>
           <div class="field"><label for="dxNum">Number style</label><select id="dxNum"><option value="in">Indian: 12.5 L, 1.2 Cr</option><option value="intl">International: 125K, 1.2M</option></select></div>
           <div class="field dx-span"><label>Theme</label><div class="dx-themes" id="dxThemes"></div></div>
         </div>
@@ -28645,7 +29013,9 @@ function renderExcelDashboard(view) {
     try {
       setStatus('Reading ' + file.name + '…');
       const sheets = await DashGen.readFile(file);
-      S = { fileName: file.name, sheets, sheetIdx: 0, theme: 'corporate', grain: 'auto', title: '', currency: '₹', numfmt: 'in', dedupe: false };
+      const opts = DashGen.sheetOptions(sheets);
+      if (!opts.length) throw new Error('No table with a header row and data under it was found in this file.');
+      S = { fileName: file.name, sheets: opts, sheetIdx: 0, theme: 'corporate', grain: 'auto', title: '', currency: '₹', numfmt: 'in', dedupe: false };
       useSheet(0);
       $('#dxStart').classList.add('hidden'); $('#dxWork').classList.remove('hidden');
       setStatus('');
@@ -28656,10 +29026,14 @@ function renderExcelDashboard(view) {
     S.sheetIdx = i;
     const sh = S.sheets[i];
     S.sheet = S.sheets.length > 1 ? sh.name : '';
-    S.table = DashGen.table(sh.aoa);
+    S.table = sh.table;
     if (!S.table.rows.length) throw new Error('That sheet has a header but no rows under it.');
     S.cols = DashGen.profile(S.table);
-    S.title = (sh.name && !/^sheet\s*\d*$/i.test(sh.name) ? sh.name : S.fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ')).replace(/\b\w/g, c => c.toUpperCase()) + ' Dashboard';
+    // quarterly or yearly data is shown by quarter or year, not by an automatic month view with gaps
+    S.grain = S.table.grainHint && S.table.grainHint !== 'day' ? S.table.grainHint : 'auto';
+    S.fiscal = !!S.table.fiscal;
+    const nm = sh.name.includes(' + ') ? '' : sh.name;
+    S.title = (nm && !/^sheet\s*\d*$/i.test(nm) ? nm : S.fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ')).replace(/\b\w/g, c => c.toUpperCase()).replace(/\s+dashboard$/i, '') + ' Dashboard';
     S.health = DashGen.health(S.table, S.cols);
     analyse(true);
   }
@@ -28668,7 +29042,7 @@ function renderExcelDashboard(view) {
     if (S.dedupe) rows = DashGen.dedupe(rows);
     S.rows = rows;
     const asked = (S.sugg || []).filter(x => x.group === 'Your questions' || x.group === 'From your saved design');
-    const sg = DashGen.suggest(S.cols, S.rows, S.sheets[S.sheetIdx].name);
+    const sg = DashGen.suggest(S.cols, S.rows, S.sheets[S.sheetIdx].name.split(' + ')[0]);
     S.sugg = asked.concat(sg.items); S.dateCol = sg.dateCol; S.filters = sg.filters; S.labels = sg.labels;
     if (resetPick || !S.chosen) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id);
     else { const keep = new Set(S.chosen); S.chosen = S.chosen.filter(id => S.sugg.some(x => x.id === id)); sg.items.forEach(x => { if (keep.has(x.id) && !S.chosen.includes(x.id)) S.chosen.push(x.id); }); if (!S.chosen.length) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id); }
@@ -28684,8 +29058,9 @@ function renderExcelDashboard(view) {
   function drawData() {
     const c = S.cols, n = S.rows.length;
     $('#dxData').innerHTML = `
-      ${S.sheets.length > 1 ? `<div class="field" style="max-width:320px"><label for="dxSheet">Sheet</label><select id="dxSheet">${S.sheets.map((s, i) => `<option value="${i}"${i === S.sheetIdx ? ' selected' : ''}>${esc(s.name)} (${s.aoa.length - 1} rows)</option>`).join('')}</select></div>` : ''}
+      ${S.sheets.length > 1 ? `<div class="field" style="max-width:520px"><label for="dxSheet">Table to use</label><select id="dxSheet">${S.sheets.map((s, i) => `<option value="${i}"${i === S.sheetIdx ? ' selected' : ''}>${esc(s.label)}</option>`).join('')}</select></div>` : ''}
       <p class="dx-sum"><b>${n.toLocaleString('en-IN')}</b> rows · <b>${c.filter(x => x.type !== 'empty').length}</b> columns in <b>${esc(S.fileName)}</b>${S.table.headerRow ? ` · header found on row ${S.table.headerRow + 1}` : ''}. Check how each column was understood; change any that are wrong.</p>
+      ${(S.table.notes || []).length || S.table.scale ? `<div class="dx-notes"><b>How your file was read</b><ul>${(S.table.notes || []).map(x => `<li>${esc(x)}</li>`).join('')}${S.table.scale ? `<li>The title says the amounts are in ${esc(S.table.scale.word)}: they are shown in full (×${S.table.scale.k.toLocaleString('en-IN')}).</li>` : ''}</ul></div>` : ''}
       <div class="dx-cols">${c.map((col, i) => col.type === 'empty' ? '' : `<label class="dx-col dx-${col.type}"><span data-icon="${TYPE_ICON[col.type]}" data-icon-size="14"></span><b title="${esc(col.label)}">${esc(col.label)}</b>
         <select data-ci="${i}" aria-label="Type of ${esc(col.label)}">${['date', 'measure', 'category', 'entity', 'id', 'text'].map(t => `<option value="${t}"${t === col.type ? ' selected' : ''}>${TYPE_LABEL[t]}</option>`).join('')}</select>
         ${col.type === 'measure' ? `<select data-unit="${i}" aria-label="Unit of ${esc(col.label)}"><option value="inr"${col.unit === 'inr' ? ' selected' : ''}>Money</option><option value="num"${col.unit === 'num' ? ' selected' : ''}>123</option><option value="pct"${col.unit === 'pct' ? ' selected' : ''}>%</option></select>
@@ -28745,7 +29120,7 @@ function renderExcelDashboard(view) {
   function drawDesign() {
     $('#dxTitle').value = S.title;
     $('#dxGrain').value = S.grain;
-    $('#dxCur').value = S.currency; $('#dxNum').value = S.numfmt;
+    $('#dxCur').value = S.currency; $('#dxNum').value = S.numfmt; $('#dxFy').value = S.fiscal ? '1' : '0';
     $('#dxThemes').innerHTML = Object.entries(RT.THEMES).map(([k, t]) => `<button type="button" class="dx-theme${k === S.theme ? ' on' : ''}" data-theme="${k}" aria-pressed="${k === S.theme}" title="${esc(t.name)}">
       <i style="background:${t.head}"></i><i style="background:${t.pal[0]}"></i><i style="background:${t.pal[1]}"></i><i style="background:${t.pal[3]}"></i><span>${esc(t.name)}</span></button>`).join('');
     $$('#dxThemes [data-theme]').forEach(b => b.addEventListener('click', () => { S.theme = b.dataset.theme; drawDesign(); preview(); }));
@@ -28803,6 +29178,7 @@ function renderExcelDashboard(view) {
   $('#dxGrain').addEventListener('change', () => { S.grain = $('#dxGrain').value; filt = null; preview(); });
   $('#dxCur').addEventListener('change', () => { S.currency = $('#dxCur').value; drawKpis(); preview(); });
   $('#dxNum').addEventListener('change', () => { S.numfmt = $('#dxNum').value; drawKpis(); preview(); });
+  $('#dxFy').addEventListener('change', () => { S.fiscal = $('#dxFy').value === '1'; filt = null; preview(); });
   $('#dxSaveTpl').addEventListener('click', () => {
     try { const t = DashGen.saveTemplate(S); dbToast(`Design saved as "${t.name}". Next time you upload a file with the same columns, it is offered automatically.`, 5000); }
     catch (e) { showError(e.message); }
