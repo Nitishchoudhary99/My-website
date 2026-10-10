@@ -184,7 +184,7 @@
      "name": "Is DocBrisk free?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Yes for almost everything. 47 of the 56 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times."
+      "text": "Yes for almost everything. 47 of the 56 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR, Mail Merge and the Dashboard Maker's Excel, PowerPoint and Power BI exports 3 times."
      }
     },
     {
@@ -2475,6 +2475,32 @@ input.calc-big{font-size:1.35rem;font-weight:700;font-variant-numeric:tabular-nu
 .dx-exp b{font-size:.92rem}.dx-exp small{font-size:.75rem;color:var(--ink-500,#6b6357);line-height:1.4}
 .dx-exp[disabled]{opacity:.6;cursor:progress}
 @media (max-width:560px){.dx-col b{max-width:110px}.dx-items{grid-template-columns:1fr 1fr}.dx-item{padding:9px 10px 9px 32px}.dx-item input{left:10px}}
+.dx-askp{border:1.5px solid color-mix(in srgb,var(--brand-600,#4f46e5) 35%,var(--line,#e7e2d9))}
+.dx-ask{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line,#e7e2d9);border-radius:14px;padding:6px 6px 6px 12px;background:var(--paper,#fff)}
+.dx-ask:focus-within{border-color:var(--brand-600,#4f46e5);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand-600,#4f46e5) 15%,transparent)}
+.dx-ask [data-icon]{color:var(--ink-500,#6b6357);flex:none}
+.dx-ask input{flex:1;min-width:0;border:0!important;outline:0;box-shadow:none!important;background:transparent;font-size:.95rem;padding:8px 4px}
+.dx-ex{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.dx-exq{font:inherit;font-size:.78rem;border:1px solid var(--line,#e7e2d9);background:var(--paper-2,#f8f7f4);border-radius:999px;padding:5px 11px;cursor:pointer;color:inherit}
+.dx-exq:hover{border-color:var(--brand-600,#4f46e5)}
+.dx-health{margin-top:12px;border:1px solid var(--line,#e7e2d9);border-radius:12px;padding:10px 14px;font-size:.84rem;background:var(--paper,#fff)}
+.dx-health summary{cursor:pointer;display:flex;gap:10px;flex-wrap:wrap;align-items:baseline}
+.dx-health summary span{color:var(--ink-500,#6b6357)}
+.dx-health.ok summary b{color:#15803d}.dx-health.warn summary b{color:#b45309}.dx-health.bad summary b{color:#b91c1c}
+.dx-health ul{margin:8px 0 0;padding-left:18px}.dx-health li{margin:3px 0}
+.dx-dedupe{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:.84rem}
+.dx-tplbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:color-mix(in srgb,var(--brand-600,#4f46e5) 8%,var(--paper,#fff));border:1px solid color-mix(in srgb,var(--brand-600,#4f46e5) 30%,transparent);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:.85rem}
+.dx-tplbar small{color:var(--ink-500,#6b6357)}
+.dx-design .dx-span{grid-column:1/-1}
+.dx-preview .dbx-ch,.dx-preview .dbx-card{position:relative}
+.dx-tb{position:absolute;top:8px;right:8px;display:flex;gap:3px;opacity:0;transition:opacity .15s;z-index:2}
+.dx-preview [data-id]:hover .dx-tb,.dx-preview [data-id]:focus-within .dx-tb{opacity:1}
+@media (hover:none){.dx-tb{opacity:.9}}
+.dx-tb select,.dx-tb button{font:inherit;font-size:.72rem;border:1px solid var(--line,#e2e8f0);background:#fff;color:#0f172a;border-radius:7px;padding:3px 7px;cursor:pointer;min-height:0;width:auto}
+.dx-tb select{padding-right:20px}
+.dx-preview figcaption[contenteditable],.dx-preview .dbx-card span[contenteditable]{outline:none;border-radius:4px;cursor:text}
+.dx-preview figcaption[contenteditable]:focus,.dx-preview .dbx-card span[contenteditable]:focus{box-shadow:0 0 0 2px var(--brand-600,#4f46e5)}
+.dx-exp .tag-pro{margin-left:6px;vertical-align:1px}
 
 /* amount in words */
 .words-out{margin-top:16px;display:flex;flex-direction:column;gap:10px}
@@ -3222,10 +3248,10 @@ main:has(~#seo-about){padding-bottom:8px}
       <section id="emi-calculator"><h3><a href="/tool/emi-calculator" tabindex="-1">EMI Calculator for Home, Car &amp; Personal Loans</a></h3><p>Work out the monthly EMI, total interest and full amortisation schedule of any loan. Add a part payment to see the interest and months you save, and export the schedule to Excel.</p></section>
       <section id="sip-calculator"><h3><a href="/tool/sip-calculator" tabindex="-1">SIP Calculator: Mutual Fund Returns</a></h3><p>See what a monthly SIP or a lumpsum could grow to, plan a step-up SIP, or find the SIP you need for a goal such as ₹1 crore. Year-by-year growth, with inflation if you want it.</p></section>
       <section id="fd-calculator"><h3><a href="/tool/fd-calculator" tabindex="-1">FD Calculator, RD &amp; PPF Maturity Calculator</a></h3><p>Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table.</p></section>
-      <section id="excel-dashboard"><h3><a href="/tool/excel-dashboard" tabindex="-1">Excel Dashboard Maker: Automatic KPIs, Charts and Insights</a></h3><p>Upload an Excel or CSV file: DocBrisk reads your columns, suggests the KPIs and charts that matter, and builds the dashboard. Download it as a live Excel dashboard, HTML, PDF, PNG or a Power BI / Looker Studio kit.</p></section>
+      <section id="excel-dashboard"><h3><a href="/tool/excel-dashboard" tabindex="-1">Excel Dashboard Maker: Automatic KPIs, Charts and Insights</a></h3><p>Upload an Excel or CSV file: DocBrisk checks it, suggests the KPIs and charts that matter, answers questions in plain English and builds a click-to-filter dashboard with projections and insights. Download it as a live Excel dashboard, PowerPoint, HTML, PDF, PNG or a Power BI / Looker Studio kit.</p></section>
   </section>
   <section><h2>Frequently asked questions</h2>
-      <section><h3>Is DocBrisk free?</h3><p>Yes for almost everything. 47 of the 56 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times.</p></section>
+      <section><h3>Is DocBrisk free?</h3><p>Yes for almost everything. 47 of the 56 tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds 9 advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR, Mail Merge and the Dashboard Maker's Excel, PowerPoint and Power BI exports 3 times.</p></section>
       <section><h3>Are my documents uploaded to a server?</h3><p>No. All processing happens inside your browser using client-side JavaScript. Your files are read from disk into browser memory and written back out as a download — they are never transmitted. The single exception is Translate PDF, which sends extracted text (not your file) to a public translation service, and says so on the tool page.</p></section>
       <section><h3>Can I edit the existing text in a PDF?</h3><p>Yes. In the PDF Editor choose Edit text, click any line and type. DocBrisk matches the size, colour and font style, removes the original words from the page itself and checks the result pixel by pixel before saving. On scanned pages, or where a font makes in-place removal unsafe, the old line is covered with a matching background colour instead, and the export tells you which lines were handled that way. Replacement text uses the closest standard font: Helvetica, Times or Courier.</p></section>
       <section><h3>How is your redaction different from drawing a black box?</h3><p>Pages containing redactions are rasterised to an image with the black boxes permanently burned in, then re-embedded. The original text objects are discarded entirely, so nothing can be selected, searched, copied or recovered from the exported file.</p></section>
@@ -6847,7 +6873,7 @@ const TOOLS = [
   {"slug":"emi-calculator","name":"EMI Calculator","tint":"t-cyan","icon":"calculator","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"EMI Calculator for Home, Car & Personal Loans","blurb":"Work out the monthly EMI, total interest and full amortisation schedule of any loan. Add a part payment to see the interest and months you save, and export the schedule to Excel."},
   {"slug":"sip-calculator","name":"SIP Calculator","tint":"t-lime","icon":"trending-up","featured":true,"badge":"New","isNew":true,"calc":true,"h1":"SIP Calculator: Mutual Fund Returns","blurb":"See what a monthly SIP or a lumpsum could grow to, plan a step-up SIP, or find the SIP you need for a goal such as ₹1 crore. Year-by-year growth, with inflation if you want it."},
   {"slug":"fd-calculator","name":"FD, RD & PPF Calculator","tint":"t-teal","icon":"landmark","badge":"New","isNew":true,"calc":true,"h1":"FD Calculator, RD & PPF Maturity Calculator","blurb":"Find the maturity amount and interest of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a 15-year PPF account, with a year-by-year PPF table."},
-  {"slug": "excel-dashboard", "name": "Excel Dashboard Maker", "tint": "t-indigo", "icon": "bar-chart", "badge": "New", "isNew": true, "h1": "Excel Dashboard Maker: Automatic KPIs, Charts and Insights", "blurb": "Upload an Excel or CSV file: DocBrisk reads your columns, suggests the KPIs and charts that matter, and builds the dashboard. Download it as a live Excel dashboard, HTML, PDF, PNG or a Power BI / Looker Studio kit."}
+  {"slug": "excel-dashboard", "name": "Excel Dashboard Maker", "tint": "t-indigo", "icon": "bar-chart", "badge": "New", "isNew": true, "h1": "Excel Dashboard Maker: Automatic KPIs, Charts and Insights", "blurb": "Upload an Excel or CSV file: DocBrisk checks it, suggests the KPIs and charts that matter, answers questions in plain English and builds a click-to-filter dashboard with projections and insights. Download it as a live Excel dashboard, PowerPoint, HTML, PDF, PNG or a Power BI / Looker Studio kit."}
 ];
 
 /* Browsing category per tool, kept as a lookup separate from the TOOLS data
@@ -18016,7 +18042,7 @@ const SEO_PAGES = {
   "emi-calculator": {"t":"EMI Calculator: Home, Car & Personal Loan EMI | DocBrisk","d":"Calculate the EMI, total interest and amortisation schedule of a home, car, personal or education loan. See how much a part payment saves. Free, no sign-up.","h":"How to calculate a loan EMI","s":["Enter the loan amount, the interest rate and the tenure","Read the EMI, total interest and the year-wise schedule","Add a monthly or one-time prepayment to see the interest and months saved"],"f":[["How is EMI calculated?","EMI = P × r × (1 + r)^n ÷ ((1 + r)^n − 1), where P is the loan amount, r the monthly interest rate (annual rate ÷ 12 ÷ 100) and n the number of months. A ₹30 lakh loan at 8.5% for 20 years has an EMI of ₹26,035."],["Does prepaying a home loan save interest?","Yes. A part payment goes straight to the principal, so every later EMI carries less interest. On a ₹30 lakh, 20-year loan at 8.5%, paying ₹5 lakh extra after the first year cuts about ₹14 lakh of interest and 6 years of EMIs."],["Can I download the EMI schedule?","Yes. The schedule button saves every EMI with its principal, interest, prepayment and balance as a CSV file that opens in Excel or Google Sheets."]]},
   "sip-calculator": {"t":"SIP Calculator: Mutual Fund SIP & Lumpsum Returns | DocBrisk","d":"Estimate the returns of a monthly SIP, a lumpsum or a step-up SIP, or find the SIP you need for a goal like ₹1 crore. Year-by-year growth. Free and private.","h":"How to use the SIP calculator","s":["Pick SIP, lumpsum, step-up SIP or the goal planner","Enter the amount, the expected return and the number of years","Read the invested amount, the estimated returns and the year-by-year growth"],"f":[["How is SIP return calculated?","FV = P × ((1 + i)^n − 1) ÷ i × (1 + i), where P is the monthly SIP, i the monthly return (annual rate ÷ 12 ÷ 100) and n the number of months. ₹5,000 a month for 10 years at 12% comes to about ₹11.6 lakh on ₹6 lakh invested."],["How much SIP is needed for ₹1 crore?","At an assumed 12% a year, about ₹10,000 a month for 20 years, ₹19,800 a month for 15 years or ₹43,000 a month for 10 years. The goal planner works it out for any target."],["What is a step-up SIP?","A SIP that grows by a fixed percentage every year, usually in line with your salary. ₹10,000 a month raised 10% every year for 20 years at 12% grows to about ₹1.99 crore, double a flat SIP."]]},
   "fd-calculator": {"t":"FD Calculator, RD & PPF Calculator: Maturity Amount | DocBrisk","d":"Calculate the maturity amount of a fixed deposit with quarterly or monthly compounding, a recurring deposit, or a PPF account at 7.1%. Free, instant, private.","h":"How to calculate FD, RD or PPF maturity","s":["Choose FD, RD or PPF","Enter the amount, the interest rate and the period","Read the maturity value and the interest earned"],"f":[["How is FD interest calculated?","Most banks compound FD interest every quarter: maturity = P × (1 + r ÷ 400)^(4 × years). ₹1 lakh at 7% for 1 year becomes ₹1,07,186."],["How is RD maturity calculated?","Each monthly instalment earns quarterly compounded interest for the months it stays in the account, and the instalments are added up. ₹5,000 a month for 24 months at 7% matures at about ₹1,29,100."],["What will ₹1.5 lakh a year in PPF give after 15 years?","At the current 7.1%, about ₹40.68 lakh: ₹22.5 lakh deposited and ₹18.18 lakh of tax-free interest."]]},
-  "excel-dashboard": {"t": "Excel Dashboard Maker: Auto KPI Dashboard from Excel or CSV | DocBrisk", "d": "Turn any Excel or CSV file into a dashboard in seconds: suggested KPIs, trend and breakdown charts, filters and insights. Download a live Excel dashboard, HTML, PDF or a Power BI kit. Free and private.", "h": "How to make a dashboard from an Excel sheet", "s": ["Upload your Excel or CSV file, or try the sample sales data", "Tick the suggested KPIs and charts, and pick a theme", "Download a live Excel dashboard, an HTML dashboard, a PDF, a PNG, or a Power BI / Looker Studio kit"], "f": [["Which files work?", "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."], ["Is the Excel dashboard live?", "Yes. The KPI cards and charts are formulas over the Data sheet, so when you paste new rows and recalculate, every number and chart updates."], ["Can I use it with Power BI or Looker Studio?", "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."], ["Is my data uploaded?", "No. The file is read and the dashboard is built inside your browser."]]}
+  "excel-dashboard": {"t": "Excel Dashboard Maker: Auto KPI Dashboard from Excel or CSV | DocBrisk", "d": "Turn any Excel or CSV file into a dashboard in seconds: suggested KPIs, plain-English questions, click-to-filter charts, projections and insights. Download live Excel, PowerPoint, HTML, PDF or a Power BI kit. Private.", "h": "How to make a dashboard from an Excel sheet", "s": ["Upload your Excel or CSV file, or try the sample sales data", "Tick the suggested KPIs and charts, and pick a theme", "Download a live Excel dashboard, an HTML dashboard, a PDF, a PNG, or a Power BI / Looker Studio kit"], "f": [["Which files work?", "Any .xlsx, .xls or .csv with a header row and one row per record: sales, invoices, expenses, attendance, leads, stock or marks. A title block above the header row is fine."], ["Is the Excel dashboard live?", "Yes. The KPI cards and charts are formulas over the Data sheet, so when you paste new rows and recalculate, every number and chart updates."], ["Can I use it with Power BI or Looker Studio?", "Yes. The Power BI kit has clean data, DAX measures, a theme file and a step-by-step build guide; the Looker Studio kit has the data, calculated fields and a guide."], ["Can I ask questions about my data?", "Yes. Type a question such as \"top 5 products by profit in 2026\" or \"monthly sales trend for South\" and the chart is added to the dashboard. Questions are answered on your device."], ["Which downloads are free?", "HTML, PDF and PNG are free. Excel, PowerPoint and the Power BI / Looker Studio kits are part of DocBrisk Pro, and every free account can try them 3 times."], ["Is my data uploaded?", "No. The file is read and the dashboard is built inside your browser."]]}
 };
 
 /* The privacy question every tool gets, phrased for that tool. */
@@ -19121,7 +19147,7 @@ const Palette = (() => {
 
 const FAQ = [
   { q: 'Is DocBrisk free?',
-    a: `Yes for almost everything. ${TOOLS.filter(t => !t.pro).length} of the ${TOOLS.length} tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds ${TOOLS.filter(t => t.pro).length} advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR and Mail Merge 3 times.` },
+    a: `Yes for almost everything. ${TOOLS.filter(t => !t.pro).length} of the ${TOOLS.length} tools are free with no signup, no page limits and no watermark. DocBrisk Pro costs ₹99 a month and adds ${TOOLS.filter(t => t.pro).length} advanced tools, including OCR, mail merge, batch processing and smart redaction, plus 20 more resume templates. Every free account can try OCR, Mail Merge and the Dashboard Maker's Excel, PowerPoint and Power BI exports 3 times.` },
   { q: 'Are my documents uploaded to a server?',
     a: 'No. All processing happens inside your browser using client-side JavaScript. Your files are read from disk into browser memory and written back out as a download — they are never transmitted. The single exception is Translate PDF, which sends extracted text (not your file) to a public translation service, and says so on the tool page.' },
   { q: 'Can I edit the existing text in a PDF?',
@@ -26963,8 +26989,17 @@ const DASH_RUNTIME = function () {
   const trunc = (s, n) => { s = String(s == null ? '' : s); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
 
   /* ---------------- numbers ---------------- */
+  // set per dashboard by prime(): currency symbol and Indian (lakh, crore) or international (K, M, B) style
+  let CUR = '₹', SYS = 'in';
   function compact(n) {
     const a = Math.abs(n), s = n < 0 ? '-' : '';
+    if (SYS === 'intl') {
+      const g = (v, u) => s + (v >= 100 ? Math.round(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)).toString().replace(/\.0+$|(\.\d*?)0+$/, '$1') + u;
+      if (a >= 1e9) return g(a / 1e9, 'B');
+      if (a >= 1e6) return g(a / 1e6, 'M');
+      if (a >= 1e4) return g(a / 1e3, 'K');
+      return s + (a >= 100 ? Math.round(a) : +a.toFixed(2)).toLocaleString('en-US');
+    }
     const f = (v, u) => s + (v >= 100 ? Math.round(v) : v >= 10 ? v.toFixed(1) : v.toFixed(2)).toString().replace(/\.0+$|(\.\d*?)0+$/, '$1') + u;
     if (a >= 1e7) return f(a / 1e7, ' Cr');
     if (a >= 1e5) return f(a / 1e5, ' L');
@@ -26974,8 +27009,8 @@ const DASH_RUNTIME = function () {
   function fmt(n, unit, full) {
     if (n == null || !isFinite(n)) return '–';
     if (unit === 'pct') return (Math.abs(n) >= 100 ? Math.round(n) : n.toFixed(1)) + '%';
-    const body = full ? (Math.abs(n) >= 100 ? Math.round(n) : +n.toFixed(2)).toLocaleString('en-IN') : compact(n);
-    return unit === 'inr' ? (n < 0 ? '-₹' + body.replace(/^-/, '') : '₹' + body) : body;
+    const body = full ? (Math.abs(n) >= 100 ? Math.round(n) : +n.toFixed(2)).toLocaleString(SYS === 'intl' ? 'en-US' : 'en-IN') : compact(n);
+    return unit === 'inr' ? (n < 0 ? '-' + CUR + body.replace(/^-/, '') : CUR + body) : body;
   }
 
   /* ---------------- time ---------------- */
@@ -26997,6 +27032,26 @@ const DASH_RUNTIME = function () {
     if (g === 'month') return MON[+k.slice(5, 7) - 1] + ' ' + k.slice(0, 4);
     return (+k.slice(8, 10)) + ' ' + MON[+k.slice(5, 7) - 1] + (g === 'week' ? '' : '');
   }
+  function yearAgo(k, g) {
+    if (g === 'month') return (+k.slice(0, 4) - 1) + k.slice(4);
+    if (g === 'quarter') return (+k.slice(0, 4) - 1) + k.slice(4);
+    return null;
+  }
+  function nextKey(k, g) {
+    if (g === 'year') return String(+k + 1);
+    if (g === 'quarter') { let y = +k.slice(0, 4), q = +k.slice(6) + 1; if (q > 4) { q = 1; y++; } return y + '-Q' + q; }
+    if (g === 'month') { let y = +k.slice(0, 4), m = +k.slice(5, 7) + 1; if (m > 12) { m = 1; y++; } return y + '-' + String(m).padStart(2, '0'); }
+    const d = new Date(k + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + (g === 'week' ? 7 : 1)); return d.toISOString().slice(0, 10);
+  }
+  /* Holt's linear trend (double exponential smoothing): a cautious projection of the next periods. */
+  function forecast(vals, h) {
+    if (vals.length < 6) return null;
+    const a = 0.5, b = 0.3;
+    let lvl = vals[0], tr = (vals[Math.min(3, vals.length - 1)] - vals[0]) / Math.min(3, vals.length - 1);
+    for (let i = 1; i < vals.length; i++) { const pl = lvl; lvl = a * vals[i] + (1 - a) * (lvl + tr); tr = b * (lvl - pl) + (1 - b) * tr; }
+    const out = []; for (let i = 1; i <= h; i++) out.push(Math.max(0, lvl + i * tr));
+    return out;
+  }
   const GRAIN_WORD = { year: 'year', quarter: 'quarter', month: 'month', week: 'week', day: 'day' };
 
   /* ---------------- measures ---------------- */
@@ -27017,11 +27072,11 @@ const DASH_RUNTIME = function () {
       default: return null;
     }
   }
-  function groupBy(rows, ci, v, top, others) {
+  function groupBy(rows, ci, v, top, others, asc) {
     const g = new Map();
     rows.forEach(r => { const k = r[ci] === '' || r[ci] == null ? '(blank)' : r[ci]; if (!g.has(k)) g.set(k, []); g.get(k).push(r); });
     let out = [...g.entries()].map(([k, rs]) => ({ k, label: String(k), v: measure(rs, v), rows: rs.length }));
-    out.sort((a, b) => (b.v || 0) - (a.v || 0));
+    out.sort((a, b) => asc ? (a.v == null ? 1 : b.v == null ? -1 : a.v - b.v) : (b.v || 0) - (a.v || 0));
     if (top && out.length > top) {
       const head = out.slice(0, others ? top - 1 : top);
       if (others && ['sum', 'count'].includes(v.calc)) {
@@ -27061,13 +27116,15 @@ const DASH_RUNTIME = function () {
     for (let x = a; x <= b + step / 2; x += step) out.push(+x.toFixed(10));
     return out;
   }
-  const W = 640, H = 300;
+  let W = 640; const H = 300;   // W widens for full-width charts so they stay short
   const svgOpen = (t, extra) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="100%" role="img" font-family="Inter,Segoe UI,Roboto,Helvetica,Arial,sans-serif" ${extra || ''}><desc>${escH(t || '')}</desc>`;
   function yAxis(ticks, y, L, R, th, unit) {
     return ticks.map(t => `<line x1="${L}" x2="${W - R}" y1="${y(t).toFixed(1)}" y2="${y(t).toFixed(1)}" stroke="${th.line}" stroke-width="1"/>` +
       `<text x="${L - 8}" y="${(y(t) + 4).toFixed(1)}" text-anchor="end" font-size="11" fill="${th.mute}">${escH(fmt(t, unit))}</text>`).join('');
   }
-  function bar(series, th, unit, title) {
+  // data-x / data-v: click a bar or slice to filter the whole dashboard by it
+  const hitAttr = (dim, d) => dim != null && d.k !== '__others' ? ` class="dbx-hit" data-x="${dim}" data-v="${escH(d.label)}"` : '';
+  function bar(series, th, unit, title, dim) {
     const L = 64, R = 14, T = 18, B = series.length > 7 ? 74 : 44, n = Math.max(1, series.length);
     const vals = series.map(s => s.v || 0), lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
     const ticks = niceTicks(lo, hi, 4), y0 = ticks[0], y1 = ticks[ticks.length - 1];
@@ -27076,7 +27133,7 @@ const DASH_RUNTIME = function () {
     let s = svgOpen(title) + yAxis(ticks, y, L, R, th, unit);
     series.forEach((d, i) => {
       const x = L + slot * i + (slot - bw) / 2, v = d.v || 0, top = y(Math.max(v, 0)), h = Math.abs(y(v) - y(0));
-      s += `<rect x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.5, h).toFixed(1)}" rx="3" fill="${d.k === '__others' ? th.mute : th.pal[0]}"><title>${escH(d.label)}: ${escH(fmt(v, unit, true))}</title></rect>`;
+      s += `<rect${hitAttr(dim, d)}${d.p ? ` class="dbx-hit" data-p="${d.p}"` : ''} x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0.5, h).toFixed(1)}" rx="3" fill="${d.k === '__others' ? th.mute : th.pal[0]}"><title>${escH(d.label)}: ${escH(fmt(v, unit, true))}</title></rect>`;
       if (n <= 12) s += `<text x="${(x + bw / 2).toFixed(1)}" y="${(v >= 0 ? top - 5 : top + h + 13).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="600" fill="${th.ink}">${escH(fmt(v, unit))}</text>`;
       const lx = x + bw / 2, ly = H - B + 16;
       s += n > 7 ? `<text transform="translate(${lx.toFixed(1)},${ly}) rotate(-35)" text-anchor="end" font-size="11" fill="${th.mute}">${escH(trunc(d.label, 14))}</text>`
@@ -27084,50 +27141,59 @@ const DASH_RUNTIME = function () {
     });
     return s + `<line x1="${L}" x2="${W - R}" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}" stroke="${th.mute}" stroke-width="1"/></svg>`;
   }
-  function hbar(series, th, unit, title) {
+  function hbar(series, th, unit, title, dim) {
     const L = 150, R = 70, T = 10, B = 10, n = Math.max(1, series.length), rowH = (H - T - B) / n, bh = Math.min(24, rowH * 0.66);
     const hi = Math.max(0, ...series.map(s => s.v || 0)) || 1;
     let s = svgOpen(title);
     series.forEach((d, i) => {
       const yy = T + rowH * i + (rowH - bh) / 2, w = Math.max(1, (W - L - R) * Math.max(0, d.v || 0) / hi);
       s += `<text x="${L - 10}" y="${(yy + bh / 2 + 4).toFixed(1)}" text-anchor="end" font-size="12" fill="${th.ink}">${escH(trunc(d.label, 22))}</text>` +
-        `<rect x="${L}" y="${yy.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" rx="3" fill="${th.pal[i === 0 ? 0 : 1] || th.pal[0]}" opacity="${i === 0 ? 1 : 0.85}"><title>${escH(d.label)}: ${escH(fmt(d.v, unit, true))}</title></rect>` +
+        `<rect${hitAttr(dim, d)} x="${L}" y="${yy.toFixed(1)}" width="${w.toFixed(1)}" height="${bh.toFixed(1)}" rx="3" fill="${th.pal[i === 0 ? 0 : 1] || th.pal[0]}" opacity="${i === 0 ? 1 : 0.85}"><title>${escH(d.label)}: ${escH(fmt(d.v, unit, true))}</title></rect>` +
         `<text x="${(L + w + 6).toFixed(1)}" y="${(yy + bh / 2 + 4).toFixed(1)}" font-size="12" font-weight="600" fill="${th.ink}">${escH(fmt(d.v, unit))}</text>`;
     });
     return s + '</svg>';
   }
-  function line(multi, th, unit, title) {
-    // multi: [{name, pts:[{label, v}]}], all on the same x labels
-    const L = 64, R = 16, T = multi.length > 1 ? 34 : 18, B = 40, labels = (multi[0] || { pts: [] }).pts.map(p => p.label), n = labels.length;
-    const all = [].concat(...multi.map(m => m.pts.map(p => p.v || 0))), lo = Math.min(0, ...all), hi = Math.max(0, ...all);
+  function line(multi, th, unit, title, fc, clickable) {
+    // multi: [{name, pts:[{k, label, v}]}] on the same x labels; fc: {labels, vals} projected after the last point
+    const L = 64, R = 16, T = multi.length > 1 || fc ? 34 : 18, B = 40, labels = (multi[0] || { pts: [] }).pts.map(p => p.label);
+    const fl = fc ? fc.labels : [], n = labels.length + fl.length, allLabels = labels.concat(fl);
+    const all = [].concat(...multi.map(m => m.pts.map(p => p.v || 0)), fc ? fc.vals : []), lo = Math.min(0, ...all), hi = Math.max(0, ...all);
     const ticks = niceTicks(lo, hi, 4), y0 = ticks[0], y1 = ticks[ticks.length - 1];
     const y = (v) => T + (H - T - B) * (1 - (v - y0) / (y1 - y0 || 1));
     const x = (i) => L + (n <= 1 ? (W - L - R) / 2 : (W - L - R) * i / (n - 1));
-    let s = svgOpen(title, '') + `<defs><linearGradient id="dbxg${title.length}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${th.pal[0]}" stop-opacity="0.28"/><stop offset="1" stop-color="${th.pal[0]}" stop-opacity="0"/></linearGradient></defs>` + yAxis(ticks, y, L, R, th, unit);
+    const gid = 'dbxg' + Math.abs([...title].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7));
+    let s = svgOpen(title, '') + `<defs><linearGradient id="${gid}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${th.pal[0]}" stop-opacity="0.28"/><stop offset="1" stop-color="${th.pal[0]}" stop-opacity="0"/></linearGradient></defs>` + yAxis(ticks, y, L, R, th, unit);
     const every = Math.max(1, Math.ceil(n / 8));
-    labels.forEach((lb, i) => {
+    allLabels.forEach((lb, i) => {
       const lastOne = i === n - 1, show = lastOne || (i % every === 0 && i <= n - 1 - every * 0.6);
-      if (show) s += `<text x="${x(i).toFixed(1)}" y="${H - B + 18}" text-anchor="${n > 1 && lastOne ? 'end' : 'middle'}" font-size="11" fill="${th.mute}">${escH(lb)}</text>`;
+      if (show) s += `<text x="${x(i).toFixed(1)}" y="${H - B + 18}" text-anchor="${n > 1 && lastOne ? 'end' : 'middle'}" font-size="11" fill="${i >= labels.length ? th.accent : th.mute}">${escH(lb)}</text>`;
     });
+    if (fc) s += `<rect x="${x(labels.length - 1).toFixed(1)}" y="${T}" width="${(x(n - 1) - x(labels.length - 1)).toFixed(1)}" height="${H - T - B}" fill="${th.pal[0]}" opacity="0.05"/>`;
     multi.forEach((m, si) => {
       const col = th.pal[si % th.pal.length], pts = m.pts.map((p, i) => [x(i), y(p.v || 0)]);
       if (!pts.length) return;
       const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
-      if (si === 0 && multi.length === 1) s += `<path d="${d} L ${pts[pts.length - 1][0].toFixed(1)} ${y(Math.max(0, y0)).toFixed(1)} L ${pts[0][0].toFixed(1)} ${y(Math.max(0, y0)).toFixed(1)} Z" fill="url(#dbxg${title.length})"/>`;
+      if (si === 0 && multi.length === 1) s += `<path d="${d} L ${pts[pts.length - 1][0].toFixed(1)} ${y(Math.max(0, y0)).toFixed(1)} L ${pts[0][0].toFixed(1)} ${y(Math.max(0, y0)).toFixed(1)} Z" fill="url(#${gid})"/>`;
       s += `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>`;
-      if (n <= 40) m.pts.forEach((p, i) => { s += `<circle cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="${n <= 16 ? 3.6 : 2.4}" fill="${th.card}" stroke="${col}" stroke-width="2"><title>${escH(p.label)}: ${escH(fmt(p.v, unit, true))}</title></circle>`; });
+      if (si === 0 && fc) {
+        const fp = [pts[pts.length - 1]].concat(fc.vals.map((v, i) => [x(labels.length + i), y(v)]));
+        s += `<path d="${fp.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ')}" fill="none" stroke="${col}" stroke-width="2.4" stroke-dasharray="6 5" stroke-linecap="round"/>`;
+        fc.vals.forEach((v, i) => { s += `<circle cx="${x(labels.length + i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3.4" fill="${th.card}" stroke="${col}" stroke-width="2" stroke-dasharray="2 2"><title>${escH(fl[i])} (projection): ${escH(fmt(v, unit, true))}</title></circle>`; });
+      }
+      if (n <= 40) m.pts.forEach((p, i) => { s += `<circle${clickable && p.k ? ` class="dbx-hit" data-p="${p.k}"` : ''} cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="${n <= 16 ? 3.6 : 2.6}" fill="${th.card}" stroke="${col}" stroke-width="2"><title>${escH(p.label)}: ${escH(fmt(p.v, unit, true))}</title></circle>`; });
       if (multi.length > 1) s += `<rect x="${L + si * 170}" y="8" width="12" height="12" rx="2" fill="${col}"/><text x="${L + si * 170 + 18}" y="18" font-size="12" fill="${th.ink}">${escH(trunc(m.name, 22))}</text>`;
     });
+    if (fc) s += `<line x1="${W - R - 150}" x2="${W - R - 128}" y1="14" y2="14" stroke="${th.pal[0]}" stroke-width="2.4" stroke-dasharray="5 4"/><text x="${W - R - 122}" y="18" font-size="12" fill="${th.mute}">Projection</text>`;
     return s + '</svg>';
   }
-  function donut(series, th, unit, title) {
+  function donut(series, th, unit, title, dim) {
     const cx = 150, cy = 150, r = 118, ir = 72, total = series.reduce((a, d) => a + Math.max(0, d.v || 0), 0) || 1;
     let s = svgOpen(title), ang = -Math.PI / 2;
     series.forEach((d, i) => {
       const v = Math.max(0, d.v || 0), a2 = ang + (v / total) * Math.PI * 2, big = a2 - ang > Math.PI ? 1 : 0, col = d.k === '__others' ? th.mute : th.pal[i % th.pal.length];
       const p = (a, rr) => (cx + rr * Math.cos(a)).toFixed(2) + ' ' + (cy + rr * Math.sin(a)).toFixed(2);
       if (v / total > 0.9999) s += `<circle cx="${cx}" cy="${cy}" r="${(r + ir) / 2}" fill="none" stroke="${col}" stroke-width="${r - ir}"/>`;
-      else if (v > 0) s += `<path d="M ${p(ang, r)} A ${r} ${r} 0 ${big} 1 ${p(a2, r)} L ${p(a2, ir)} A ${ir} ${ir} 0 ${big} 0 ${p(ang, ir)} Z" fill="${col}"><title>${escH(d.label)}: ${escH(fmt(d.v, unit, true))} (${(v / total * 100).toFixed(1)}%)</title></path>`;
+      else if (v > 0) s += `<path${hitAttr(dim, d)} d="M ${p(ang, r)} A ${r} ${r} 0 ${big} 1 ${p(a2, r)} L ${p(a2, ir)} A ${ir} ${ir} 0 ${big} 0 ${p(ang, ir)} Z" fill="${col}"><title>${escH(d.label)}: ${escH(fmt(d.v, unit, true))} (${(v / total * 100).toFixed(1)}%)</title></path>`;
       const ly = 40 + i * 30;
       if (i < 8) s += `<rect x="300" y="${ly - 11}" width="14" height="14" rx="3" fill="${col}"/><text x="322" y="${ly}" font-size="13" fill="${th.ink}">${escH(trunc(d.label, 20))}</text>` +
         `<text x="${W - 16}" y="${ly}" text-anchor="end" font-size="13" font-weight="600" fill="${th.ink}">${(v / total * 100).toFixed(1)}%</text>`;
@@ -27161,27 +27227,62 @@ const DASH_RUNTIME = function () {
     return `<svg class="dbx-spark" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
   }
 
+  /* An item's own filter (from a typed question): { f: {col: value}, from: 'YYYY-MM-DD', to: 'YYYY-MM-DD' } */
+  function whereRows(p, rows, w) {
+    if (!w) return rows;
+    const di = p.dateCol;
+    return rows.filter(r => {
+      for (const ci in (w.f || {})) { const x = r[ci] === '' || r[ci] == null ? '(blank)' : String(r[ci]); if (x !== w.f[ci]) return false; }
+      if (di != null && (w.from || w.to)) { const d = r[di]; if (!d || (w.from && d < w.from) || (w.to && d > w.to)) return false; }
+      return true;
+    });
+  }
+
   /* ---------------- computing one item ---------------- */
   function compute(p, rows, it) {
+    W = it.wide && it.kind !== 'donut' ? 1100 : 640;
+    try { return computeAt(p, rows, it); } finally { W = 640; }
+  }
+  function computeAt(p, rows, it) {
+    rows = whereRows(p, rows, it.where);
     const th = THEMES[p.theme] || THEMES.corporate, v = it.value, unit = v.unit;
     const di = it.date != null ? it.date : p.dateCol, grain = it.grain || p.grain;
     if (it.kind === 'card') {
       const val = measure(rows, v);
-      let delta = null, sp = null;
+      let delta = null, sp = null, yoy = null;
       if (di != null && grain) {
         let ts = timeSeries(rows, di, v, grain);
         ts = dropPartial(rows, di, grain, ts);
         if (ts.length >= 2) {
           const cur = ts[ts.length - 1], prev = ts[ts.length - 2];
-          if (cur.v != null && prev.v != null) delta = { d: unit === 'pct' ? cur.v - prev.v : prev.v ? (cur.v - prev.v) / Math.abs(prev.v) * 100 : null, cur: cur.label, prev: prev.label, pts: unit === 'pct' };
+          const ch = (a, b) => unit === 'pct' ? a - b : b ? (a - b) / Math.abs(b) * 100 : null;
+          if (cur.v != null && prev.v != null) delta = { d: ch(cur.v, prev.v), cur: cur.label, prev: prev.label, pts: unit === 'pct' };
+          // the same period a year earlier, when the data goes back that far
+          const back = grain === 'month' ? 12 : grain === 'quarter' ? 4 : grain === 'week' ? 52 : 0;
+          if (back) { const ly = ts.find(t => t.k === (grain === 'week' ? null : yearAgo(cur.k, grain))); if (ly && ly.v != null && cur.v != null) yoy = { d: ch(cur.v, ly.v), prev: ly.label, pts: unit === 'pct' }; }
           if (['sum', 'count', 'distinct', 'diff'].includes(v.calc) || unit === 'pct' || v.calc === 'avg') sp = ts.slice(-12).map(x => x.v || 0);
         }
       }
-      return { val, delta, sp, th };
+      return { val, delta, yoy, sp, th };
     }
     if (it.kind === 'line') {
       const series = (it.values || [v]).map(vv => ({ name: vv.name || it.title, pts: timeSeries(rows, di, vv, grain) }));
-      return { svg: line(series, th, unit, it.title), data: series };
+      let fc = null;
+      // a projection for single-series totals over time (never for averages or rates)
+      if (it.forecast !== false && series.length === 1 && ['sum', 'count', 'diff', 'distinct'].includes(v.calc) && ['week', 'month', 'quarter'].includes(grain) && di === p.dateCol) {
+        const full = dropPartial(rows, di, grain, series[0].pts), vals = forecast(full.map(x => x.v || 0), 3);
+        if (vals && full.length) {
+          let k = full[full.length - 1].k; const labels = [];
+          series[0].pts = full;
+          for (let i = 0; i < 3; i++) { k = nextKey(k, grain); labels.push(periodLabel(k, grain)); }
+          fc = { labels, vals };
+        }
+      }
+      return { svg: line(series, th, unit, it.title, fc, di === p.dateCol), data: series, fc };
+    }
+    if (it.kind === 'tbar') {
+      const ts = timeSeries(rows, di, v, grain).map(x => Object.assign({}, x, { p: di === p.dateCol ? x.k : '' }));
+      return { svg: bar(ts, th, unit, it.title), data: ts };
     }
     if (it.kind === 'stack') {
       const topCats = groupBy(rows, it.dim, v, it.top || 5, false).map(x => x.k);
@@ -27202,16 +27303,17 @@ const DASH_RUNTIME = function () {
       return { html: `<div class="dbx-tbl"><table><thead><tr><th>${escH(p.cols[it.dim].label)}</th>${vals.map(vv => `<th>${escH(vv.name || it.title)}</th>`).join('')}</tr></thead><tbody>${rowsHtml}</tbody></table></div>`, data: g };
     }
     const top = it.top || (it.kind === 'donut' ? 6 : it.kind === 'hbar' ? 10 : 12);
-    const g = groupBy(rows, it.dim, v, top, it.kind === 'donut');
+    let g = groupBy(rows, it.dim, v, top, it.kind === 'donut' && !it.asc, it.asc);
+    if (it.sort && p.cols[it.dim] && p.cols[it.dim].type === 'category') g = g.slice().sort((a, b) => String(a.label).localeCompare(String(b.label), undefined, { numeric: true }));
     const fn = it.kind === 'donut' ? donut : it.kind === 'hbar' ? hbar : bar;
-    return { svg: fn(g, th, unit, it.title), data: g };
+    return { svg: fn(g, th, unit, it.title, it.dim), data: g };
   }
 
   /* ---------------- filters and insights ---------------- */
   function filtered(p, st) {
     const di = p.dateCol, g = p.grain;
     return p.rows.filter(r => {
-      for (const ci in st.f) if (st.f[ci] !== '' && String(r[ci]) !== st.f[ci]) return false;
+      for (const ci in st.f) if (st.f[ci] !== '' && (r[ci] === '' || r[ci] == null ? '(blank)' : String(r[ci])) !== st.f[ci]) return false;
       if (di != null && (st.from || st.to)) { const k = periodKey(r[di], g); if (!k || (st.from && k < st.from) || (st.to && k > st.to)) return false; }
       return true;
     });
@@ -27232,10 +27334,24 @@ const DASH_RUNTIME = function () {
           const h = Math.floor(ts.length / 2), s1 = ts.slice(0, h).reduce((t, x) => t + x.v, 0) / h, s2 = ts.slice(-h).reduce((t, x) => t + x.v, 0) / h;
           if (s1) out.push(`Average per ${GRAIN_WORD[p.grain]} in the latest ${h} ${GRAIN_WORD[p.grain]}s is ${s2 >= s1 ? 'up' : 'down'} <strong>${Math.abs((s2 - s1) / Math.abs(s1) * 100).toFixed(1)}%</strong> on the ${h} before.`);
         }
+        const ly = ts.find(t => t.k === yearAgo(a.k, p.grain));
+        if (ly && ly.v) out.push(`Against ${escH(ly.label)}, ${escH(low(name))} is ${a.v >= ly.v ? 'up' : 'down'} <strong>${Math.abs((a.v - ly.v) / Math.abs(ly.v) * 100).toFixed(1)}%</strong> year on year.`);
+        // outliers: far from the running median of their neighbours
+        if (ts.length >= 8) {
+          const med = (arr) => { const s = arr.slice().sort((x, y) => x - y); return s[s.length >> 1]; };
+          const res = ts.map((t, i) => { const m = med(ts.slice(Math.max(0, i - 2), i + 3).map(x => x.v)); return { t, m, r: t.v - m }; });
+          const mad = med(res.map(x => Math.abs(x.r))) * 1.4826 || 0;
+          res.filter(x => mad && Math.abs(x.r) > 3 * mad && x.m && Math.abs(x.r / x.m) > 0.25).sort((x, y) => Math.abs(y.r) - Math.abs(x.r)).slice(0, 2)
+            .forEach(x => out.push(`Unusual ${GRAIN_WORD[p.grain]}: <strong>${escH(x.t.label)}</strong> was ${Math.abs(x.r / x.m * 100).toFixed(0)}% ${x.r < 0 ? 'below' : 'above'} the usual level (${escH(fmt(x.t.v, v.unit))} against about ${escH(fmt(x.m, v.unit))}). Worth a look.`));
+        }
+        if (['sum', 'count', 'diff'].includes(v.calc) && ['week', 'month', 'quarter'].includes(p.grain)) {
+          const f = forecast(ts.map(x => x.v), 1);
+          if (f) out.push(`On the current trend, ${escH(periodLabel(nextKey(a.k, p.grain), p.grain))} would come in around <strong>${escH(fmt(f[0], v.unit))}</strong> (a projection, not a promise).`);
+        }
       }
     }
     if (['sum', 'count'].includes(v.calc)) {
-      const dims = [...new Set(p.items.filter(i => i.dim != null && ['bar', 'donut', 'hbar'].includes(i.kind)).map(i => i.dim))].slice(0, 2);
+      const dims = [...new Set(p.items.filter(i => i.dim != null && !i.where && ['bar', 'donut', 'hbar'].includes(i.kind)).map(i => i.dim))].slice(0, 3);
       const total = measure(rows, v);
       dims.forEach(ci => {
         const g = groupBy(rows, ci, v, 0, false);
@@ -27245,6 +27361,10 @@ const DASH_RUNTIME = function () {
           (share > 40 && g.length > 3 ? ' That is a heavy dependence on one.' : ''));
         const last = g[g.length - 1];
         if (g.length >= 4) out.push(`Smallest ${escH(low(p.cols[ci].label))}: ${escH(last.label)} (${escH(fmt(last.v, v.unit))}).`);
+        if (g.length >= 10) {
+          const k = Math.max(1, Math.round(g.length * 0.2)), sh = g.slice(0, k).reduce((a, x) => a + x.v, 0) / total * 100;
+          out.push(`80/20 check: the top ${k} of ${g.length} ${escH(low(p.cols[ci].label))} values (20%) bring <strong>${sh.toFixed(0)}%</strong> of ${escH(low(name))}.`);
+        }
       });
     }
     // averages and rates by group: who is highest and lowest
@@ -27255,7 +27375,7 @@ const DASH_RUNTIME = function () {
     p.items.filter(i => i.kind === 'card' && ['margin', 'ratio', 'share'].includes(i.value.calc)).slice(0, 2).forEach(i => {
       const x = measure(rows, i.value); if (x != null) out.push(`${escH(i.title)} stands at <strong>${escH(fmt(x, 'pct'))}</strong> for the selection.`);
     });
-    return out.slice(0, 7);
+    return out.slice(0, 9);
   }
 
   /* ---------------- the page ---------------- */
@@ -27277,6 +27397,11 @@ const DASH_RUNTIME = function () {
 .dbx-card em{font-style:normal;font-size:.76rem;font-weight:650}
 .dbx-card em small{font-weight:500;color:var(--mute)}
 .dbx-card .up{color:#16a34a}.dbx-card .down{color:#dc2626}
+.dbx-card em b{font-weight:700}.dbx-card .dbx-yoy{display:block;margin-top:2px;font-size:.7rem}
+.dbx-chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 18px 0}
+.dbx-chip{font:inherit;font-size:.76rem;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
+.dbx-chip:hover{border-color:var(--acc)}.dbx-chip-all{color:var(--mute)}
+.dbx .dbx-hit{cursor:pointer}.dbx rect.dbx-hit:hover,.dbx path.dbx-hit:hover{opacity:.8}.dbx circle.dbx-hit:hover{r:6}
 .dbx-spark{position:absolute;right:12px;top:12px;opacity:.85;width:84px;height:26px}
 .dbx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:14px;padding:14px 18px 0}
 .dbx-ch{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 8px;min-width:0}
@@ -27303,12 +27428,14 @@ const DASH_RUNTIME = function () {
     if (!rows.length) return { cards: '<div class="dbx-empty">No rows match these filters.</div>', charts: '', ins: [] };
     const cards = p.items.filter(i => i.kind === 'card').map(it => {
       const r = compute(p, rows, it);
-      const dl = r.delta && r.delta.d != null ? `<em class="${r.delta.d >= 0 ? 'up' : 'down'}">${r.delta.d >= 0 ? '▲' : '▼'} ${Math.abs(r.delta.d).toFixed(1)}${r.delta.pts ? ' pts' : '%'} <small>${escH(r.delta.cur)} vs ${escH(r.delta.prev)}</small></em>` : '';
-      return `<div class="dbx-card"><span>${escH(it.title)}</span><strong>${escH(fmt(r.val, it.value.unit))}</strong>${dl}${spark(r.sp, th.pal[0])}</div>`;
+      const arrow = (d) => `<b class="${d.d >= 0 ? 'up' : 'down'}">${d.d >= 0 ? '▲' : '▼'} ${Math.abs(d.d).toFixed(1)}${d.pts ? ' pts' : '%'}</b>`;
+      const dl = r.delta && r.delta.d != null ? `<em>${arrow(r.delta)} <small>${escH(r.delta.cur)} vs ${escH(r.delta.prev)}</small></em>` : '';
+      const yy = r.yoy && r.yoy.d != null ? `<em class="dbx-yoy">${arrow(r.yoy)} <small>vs ${escH(r.yoy.prev)}</small></em>` : '';
+      return `<div class="dbx-card" data-id="${escH(it.id)}"><span>${escH(it.title)}</span><strong>${escH(fmt(r.val, it.value.unit))}</strong>${dl}${yy}${spark(r.sp, th.pal[0])}</div>`;
     }).join('');
     const charts = p.items.filter(i => i.kind !== 'card').map(it => {
       const r = compute(p, rows, it);
-      return `<figure class="dbx-ch${it.wide ? ' wide' : ''}"><figcaption>${escH(it.title)}</figcaption>${r.svg || r.html || ''}</figure>`;
+      return `<figure class="dbx-ch${it.wide ? ' wide' : ''}" data-id="${escH(it.id)}"><figcaption>${escH(it.title)}</figcaption>${r.svg || r.html || ''}</figure>`;
     }).join('');
     return { cards, charts, ins: insights(p, rows), n: rows.length };
   }
@@ -27323,8 +27450,11 @@ const DASH_RUNTIME = function () {
     const fl = (p.filters || []).map(ci => `<label>${escH(trunc(p.cols[ci].label, 18))}<select data-f="${ci}"><option value="">All</option>${opts(ci).map(v => `<option${st.f[ci] === String(v) ? ' selected' : ''}>${escH(v)}</option>`).join('')}</select></label>`).join('') +
       (periods.length > 1 ? `<label>From<select data-from><option value="">Start</option>${periods.map(k => `<option value="${k}"${st.from === k ? ' selected' : ''}>${escH(periodLabel(k, p.grain))}</option>`).join('')}</select></label>` +
         `<label>To<select data-to><option value="">Latest</option>${periods.map(k => `<option value="${k}"${st.to === k ? ' selected' : ''}>${escH(periodLabel(k, p.grain))}</option>`).join('')}</select></label>` : '');
+    const chips = Object.entries(st.f).filter(([, v]) => v !== '').map(([ci, v]) => `<button type="button" class="dbx-chip" data-clear="${ci}">${escH(p.cols[ci] ? p.cols[ci].label : '')}: ${escH(v)} ✕</button>`)
+      .concat(st.from || st.to ? [`<button type="button" class="dbx-chip" data-clear="period">${escH(st.from ? periodLabel(st.from, p.grain) : 'Start')}${st.to !== st.from ? ' – ' + escH(st.to ? periodLabel(st.to, p.grain) : 'Latest') : ''} ✕</button>`] : []);
     root.innerHTML = `<style>${CSS}</style><div class="dbx" style="${themeVars(th)}">
       <div class="dbx-head"><div><h1>${escH(p.title)}</h1><p>${escH(p.subtitle || '')}${b.n != null && b.n !== p.rows.length ? ` · showing ${b.n.toLocaleString('en-IN')} of ${p.rows.length.toLocaleString('en-IN')} rows` : ''}</p></div><div class="dbx-filters">${fl}</div></div>
+      ${chips.length ? `<div class="dbx-chips">${chips.join('')}<button type="button" class="dbx-chip dbx-chip-all" data-clear="all">Clear all filters</button></div>` : ''}
       <div class="dbx-cards">${b.cards}</div><div class="dbx-grid">${b.charts}</div>
       ${b.ins.length ? `<div class="dbx-ins"><h2>Key insights</h2><ul>${b.ins.map(x => `<li>${x}</li>`).join('')}</ul></div>` : ''}
       <p class="dbx-foot">${escH(p.foot || 'Made with DocBrisk Excel Dashboard Maker')}</p></div>`;
@@ -27332,6 +27462,21 @@ const DASH_RUNTIME = function () {
     const fr = root.querySelector('[data-from]'), to = root.querySelector('[data-to]');
     if (fr) fr.addEventListener('change', () => { st.from = fr.value; render(root, p, st); });
     if (to) to.addEventListener('change', () => { st.to = to.value; render(root, p, st); });
+    // click a bar, slice or point to filter everything by it (click again to undo)
+    if (!root.__dbxClick) {
+      root.__dbxClick = true;
+      root.addEventListener('click', (e) => {
+        const S = root.__dbxState, P = root.__dbxP; if (!S || !P) return;
+        const c = e.target.closest('[data-clear]');
+        if (c) { const k = c.dataset.clear; if (k === 'all') { S.f = {}; S.from = S.to = ''; } else if (k === 'period') S.from = S.to = ''; else S.f[k] = ''; render(root, P, S); return; }
+        const h = e.target.closest('.dbx-hit'); if (!h) return;
+        if (h.dataset.x != null) { const k = h.dataset.x, v = h.getAttribute('data-v'); S.f[k] = S.f[k] === v ? '' : v; }
+        else if (h.dataset.p) { const k = h.dataset.p; if (S.from === k && S.to === k) S.from = S.to = ''; else S.from = S.to = k; }
+        render(root, P, S);
+      });
+    }
+    root.__dbxState = st; root.__dbxP = p;
+    if (st.after) st.after(root);
     return st;
   }
 
@@ -27386,10 +27531,11 @@ const DASH_RUNTIME = function () {
 
   function mount(root, p) { return render(root, p, { f: {}, from: '', to: '' }); }
   function prime(p) {
+    CUR = p.currency == null ? '₹' : p.currency; SYS = p.numfmt === 'intl' ? 'intl' : 'in';
     maxDate = ''; monthly = p.dateCol != null;
     if (p.dateCol != null) p.rows.forEach(r => { const v = r[p.dateCol]; if (v) { if (v > maxDate) maxDate = v; if (!/-01$/.test(v)) monthly = false; } });
   }
-  return { mount, render, poster, prime, compute, measure, groupBy, timeSeries, periodKey, periodLabel, grainFor, fmt, THEMES, CSS, filtered, insights };
+  return { mount, render, poster, prime, compute, whereRows, forecast, nextKey, measure, groupBy, timeSeries, periodKey, periodLabel, grainFor, fmt, THEMES, CSS, filtered, insights };
 };
 
 /* ==========================================================================
@@ -27684,6 +27830,165 @@ const DashGen = (() => {
     return { items: out, dateCol: di, filters: C.filter(c => c.distinct <= 40 && c.role !== 'time').slice(0, 3).map(c => c.i), labels: cols.map(c => c.label) };
   }
 
+  /* ---------------- ask in plain English ----------------
+     "top 5 products by profit in 2026", "monthly sales trend for South",
+     "average order value by channel", "share of revenue by region last 6 months",
+     "region wise units", "how many orders were returned". Rules, not a cloud
+     model: the question never leaves the device, and the answer is exact. */
+  const MON_RE = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?\s*'?(\d{2}|\d{4})\b/;
+  const WORDNUM = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, twelve: 12, fifteen: 15, twenty: 20 };
+  const SYN = {
+    revenue: ['revenue', 'sales', 'turnover', 'income', 'billing', 'gmv', 'amount', 'value', 'business', 'earning', 'earnings'],
+    profit: ['profit', 'profits', 'net income', 'gain'], cost: ['cost', 'costs', 'expense', 'expenses', 'spend', 'spending', 'expenditure'],
+    qty: ['units', 'unit', 'quantity', 'qty', 'volume', 'pieces', 'items sold'], target: ['target', 'targets', 'budget', 'goal'],
+    salary: ['salary', 'salaries', 'ctc', 'pay', 'payroll', 'wages'], score: ['marks', 'score', 'scores', 'rating', 'ratings']
+  };
+  const DSYN = {
+    region: ['region', 'regions', 'zone', 'zones', 'state', 'states', 'city', 'cities', 'area', 'location', 'locations', 'branch', 'branches', 'territory'],
+    product: ['product', 'products', 'item', 'items', 'sku', 'skus'], customer: ['customer', 'customers', 'client', 'clients', 'party', 'parties', 'dealer', 'dealers'],
+    person: ['rep', 'reps', 'salesperson', 'salespeople', 'sales person', 'employee', 'employees', 'agent', 'agents', 'staff', 'executive', 'executives', 'teacher', 'student', 'students'],
+    category: ['category', 'categories', 'segment', 'segments', 'type', 'types', 'channel', 'channels', 'department', 'departments', 'brand', 'brands'],
+    status: ['status', 'stage', 'stages']
+  };
+  const GRAINS = [[/\b(daily|day wise|per day|by day|each day)\b/, 'day'], [/\b(weekly|week wise|per week|by week)\b/, 'week'], [/\b(monthly|month wise|per month|by month|each month|mom|month on month)\b/, 'month'],
+    [/\b(quarterly|quarter wise|per quarter|by quarter|qoq)\b/, 'quarter'], [/\b(yearly|annual|annually|year wise|per year|by year|yoy|year on year)\b/, 'year']];
+  function nlq(question, S) {
+    const q0 = String(question || '').trim();
+    if (!q0) return { error: 'Type a question first.' };
+    let t = ' ' + q0.toLowerCase().replace(/[“”"?!,;()]/g, ' ').replace(/\s+/g, ' ') + ' ';
+    const cols = S.cols.map((c, i) => Object.assign({ i }, c, { label: (S.labels && S.labels[i]) || c.label }));
+    const di = S.dateCol, rows = S.rows, said = [];
+    const where = { f: {} };
+    // --- time window
+    let maxD = ''; if (di != null) rows.forEach(r => { if (r[di] > maxD) maxD = r[di]; });
+    const iso = (d) => d.toISOString().slice(0, 10);
+    const endOfMonth = (y, m) => iso(new Date(Date.UTC(y, m, 0)));
+    if (di != null && maxD) {
+      const md = new Date(maxD + 'T00:00:00Z');
+      let m;
+      if ((m = t.match(/\b(?:last|past|previous)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twelve)\s+(day|week|month|quarter|year)s?\b/))) {
+        const n = +m[1] || WORDNUM[m[1]] || 1, d = new Date(md); 
+        if (m[2] === 'day') d.setUTCDate(d.getUTCDate() - n + 1); else if (m[2] === 'week') d.setUTCDate(d.getUTCDate() - 7 * n + 1);
+        else { d.setUTCMonth(d.getUTCMonth() - (m[2] === 'year' ? 12 : m[2] === 'quarter' ? 3 : 1) * n + 1); d.setUTCDate(1); }
+        where.from = iso(d); where.to = maxD; said.push(m[0].trim()); t = t.replace(m[0], ' ');
+      } else if ((m = t.match(/\b(?:fy|financial year|f\.y\.)\s*'?(20)?(\d{2})\s*[-–/]\s*(20)?(\d{2})\b/)) || (m = t.match(/\bfy\s*'?(20)?(\d{2})\b/))) {
+        const endY = 2000 + +(m[4] || m[2]);
+        where.from = `${endY - 1}-04-01`; where.to = `${endY}-03-31`; said.push(`FY ${endY - 1}-${String(endY).slice(2)}`); t = t.replace(m[0], ' ');
+      } else if ((m = t.match(MON_RE))) {
+        const mo = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'].indexOf(m[1].slice(0, 3)) + 1, y = m[2].length === 2 ? 2000 + +m[2] : +m[2];
+        where.from = `${y}-${String(mo).padStart(2, '0')}-01`; where.to = endOfMonth(y, mo); said.push(m[0].trim()); t = t.replace(m[0], ' ');
+      } else if ((m = t.match(/\b(?:in|for|during|of)?\s*(20\d{2})\b/))) {
+        where.from = m[1] + '-01-01'; where.to = m[1] + '-12-31'; said.push(m[1]); t = t.replace(m[0], ' ');
+      } else if (/\bthis year\b/.test(t)) { where.from = maxD.slice(0, 4) + '-01-01'; where.to = maxD; said.push('this year'); t = t.replace('this year', ' '); }
+      else if (/\blast year\b/.test(t)) { const y = +maxD.slice(0, 4) - 1; where.from = y + '-01-01'; where.to = y + '-12-31'; said.push('last year'); t = t.replace('last year', ' '); }
+      else if (/\bthis month\b/.test(t)) { where.from = maxD.slice(0, 8) + '01'; where.to = maxD; said.push('this month'); t = t.replace('this month', ' '); }
+      else if (/\blast month\b/.test(t)) { const d = new Date(Date.UTC(+maxD.slice(0, 4), +maxD.slice(5, 7) - 2, 1)); where.from = iso(d); where.to = endOfMonth(d.getUTCFullYear(), d.getUTCMonth() + 1); said.push('last month'); t = t.replace('last month', ' '); }
+    }
+    // --- shape words
+    let grain = null; for (const [re, g] of GRAINS) if (re.test(t)) { grain = g; t = t.replace(re, ' '); break; }
+    const trend = grain || /\b(trend|trends|over time|timeline|growth|grow|history|progress|month|months)\b/.test(t);
+    let top = 0, asc = false, m;
+    if ((m = t.match(/\b(top|best|highest|largest|biggest|leading|bottom|worst|lowest|smallest|least)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten|twenty)?\b/))) {
+      top = +m[2] || WORDNUM[m[2]] || (/^(top|bottom|best|worst)$/.test(m[1]) ? 10 : 1); asc = /bottom|worst|lowest|smallest|least/.test(m[1]); t = t.replace(m[0], ' ');
+    }
+    const share = /\b(share|percentage|percent|split|mix|distribution|contribution|breakup|break up|proportion|pie|donut)\b/.test(t);
+    const avg = /\b(average|avg|mean|per order|per unit|typical)\b/.test(t);
+    const count = /\b(how many|number of|count|no of|no\.)\b/.test(t);
+    const distinct = /\b(unique|distinct|different)\b/.test(t);
+    const tableW = /\b(table|list|summary|details)\b/.test(t);
+    const vs = /\b(vs|versus|compared|against|and)\b/.test(t);
+    // --- category values named in the question ("South", "Online", "Electronics")
+    const cats = cols.filter(c => (c.type === 'category' || c.type === 'entity') && c.distinct <= 400);
+    const valHits = [];
+    cats.forEach(c => {
+      const seen = new Set();
+      rows.forEach(r => { const v = r[c.i]; if (v === '' || v == null || seen.has(v)) return; seen.add(v);
+        const lv = String(v).toLowerCase(); if (lv.length < 2 || /^\d+$/.test(lv)) return;
+        const at = t.indexOf(' ' + lv + ' '); if (at >= 0) valHits.push({ c, v: String(v), lv, at }); });
+    });
+    valHits.sort((a, b) => b.lv.length - a.lv.length);
+    const taken = [];
+    valHits.forEach(h => { if (taken.some(x => h.at < x.at + x.lv.length + 1 && x.at < h.at + h.lv.length + 1)) return; if (where.f[h.c.i] != null) return; taken.push(h); where.f[h.c.i] = h.v; said.push(h.v); });
+    taken.forEach(h => { t = t.replace(' ' + h.lv + ' ', '  '); });
+    // --- columns named in the question: exact labels first, then meanings
+    const phrases = [];
+    cols.forEach(c => {
+      if (['id', 'text', 'empty'].includes(c.type)) return;
+      const l = c.label.toLowerCase(), base = l.replace(/\s*name$/, '');
+      [l, base, base + 's', base.replace(/y$/, 'ies'), base + ' wise'].forEach(w => { if (w.length >= 2) phrases.push({ c, w, exact: true }); });
+      const syn = c.type === 'measure' ? SYN[c.role] : DSYN[c.role];
+      (syn || []).forEach(w => phrases.push({ c, w, exact: false }));
+    });
+    phrases.sort((a, b) => (b.exact - a.exact) || b.w.length - a.w.length);
+    const hits = [];
+    phrases.forEach(ph => {
+      const at = t.indexOf(' ' + ph.w + ' ');
+      if (at < 0 || hits.some(h => h.c.i === ph.c.i) || hits.some(h => at < h.at + h.w.length + 1 && h.at < at + ph.w.length + 1)) return;
+      // a meaning word ("sales") may point at several columns; use the best-scored one
+      if (!ph.exact && phrases.some(o => o.exact && o.c.i === ph.c.i && t.includes(' ' + o.w + ' '))) return;
+      hits.push({ c: ph.c, w: ph.w, at, exact: ph.exact });
+    });
+    hits.sort((a, b) => a.at - b.at);
+    const measures = hits.filter(h => h.c.type === 'measure');
+    // a dimension: after by/per/across/for each/wise, or any category named
+    const dimHit = hits.find(h => h.c.type !== 'measure' && h.c.type !== 'date' && (new RegExp('\\b(by|per|across|for each|each|every|among|of|in)\\s+' + h.w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(t) || t.includes(' ' + h.w + ' wise '))) ||
+      hits.find(h => h.c.type !== 'measure' && h.c.type !== 'date');
+    // --- the value to show
+    const nice = (s) => s.replace(/\b\w/g, c => c.toUpperCase());
+    const byRole = (r) => cols.find(c => c.type === 'measure' && c.role === r);
+    const rev = byRole('revenue') || byRole('total'), cost = byRole('cost'), profitCol = byRole('profit'), target = byRole('target');
+    let value = null, vname = '';
+    const mv = (c, how) => ({ calc: how, m: c.i, unit: c.unit, name: (how === 'avg' ? 'Average ' : 'Total ') + c.label });
+    if (/\bmargin\b/.test(t) && rev && (cost || profitCol)) { value = profitCol ? { calc: 'ratio', a: profitCol.i, b: rev.i, unit: 'pct', name: 'Profit Margin' } : { calc: 'margin', a: rev.i, b: cost.i, unit: 'pct', name: 'Profit Margin' }; vname = 'Profit Margin'; }
+    else if (/\bprofit\b/.test(t) && !profitCol && rev && cost) { value = { calc: 'diff', a: rev.i, b: cost.i, unit: rev.unit, name: 'Profit' }; vname = 'Profit'; }
+    else if (/\b(achievement|achieved vs target|vs target|against target)\b/.test(t) && target && rev && rev.i !== target.i) { value = { calc: 'ratio', a: rev.i, b: target.i, unit: 'pct', name: 'Target Achievement' }; vname = 'Target Achievement'; }
+    else if (/\b(aov|average order value|average bill|average ticket|basket size)\b/.test(t) && rev) { value = mv(rev, 'avg'); vname = 'Average ' + rev.label; }
+    else if (measures.length) { const c = measures[0].c; value = mv(c, avg ? 'avg' : (c.agg || 'sum')); vname = value.name; }
+    else if (distinct && dimHit) { value = { calc: 'distinct', c: dimHit.c.i, unit: 'num', name: 'Unique ' + dimHit.c.label }; vname = value.name; }
+    else if (count || !rev) { value = { calc: 'count', unit: 'num', name: 'Count' }; vname = /\border/.test(t) ? 'Orders' : 'Records'; value.name = vname; }
+    else { value = mv(rev, 'sum'); vname = value.name; }
+    const second = measures[1] && vs ? mv(measures[1].c, avg ? 'avg' : (measures[1].c.agg || 'sum')) : null;
+    // --- the chart
+    let kind, dim = dimHit && !(share && !dimHit) ? dimHit.c.i : null;
+    const timeAsked = trend && di != null && !(dimHit && /\b(by|per|across|wise)\b/.test(t) && !grain && !/\btrend|over time\b/.test(t));
+    if (timeAsked) kind = 'line';
+    else if (dim != null) {
+      const nd = new Set(whereRowsLocal(S, where).map(r => r[dim])).size;
+      kind = tableW ? 'table' : share && nd <= 8 ? 'donut' : top || nd > 8 ? 'hbar' : 'bar';
+    } else kind = tableW ? 'table' : 'card';
+    if (kind === 'table' && dim == null) kind = 'card';
+    const item = { group: 'Your questions', kind, value, asked: q0 };
+    if (kind === 'line') { item.grain = grain && grain !== 'auto' ? grain : undefined; if (second) item.values = [value, second]; if (dimHit && !second && dimHit.c.distinct <= 8) { item.kind = 'stack'; item.dim = dimHit.c.i; item.top = 5; } item.wide = true; }
+    if (dim != null && kind !== 'line') { item.dim = dim; item.top = top || (kind === 'donut' ? 6 : kind === 'hbar' ? 10 : 12); if (asc) item.asc = true; if (kind === 'table') item.values = [value].concat(second ? [second] : []).concat([{ calc: 'count', unit: 'num', name: 'Rows' }]); }
+    if (Object.keys(where.f).length || where.from) item.where = where;
+    // --- a readable title
+    const dimLabel = item.dim != null ? cols[item.dim].label : '';
+    const plural = (s) => /s$/i.test(s) ? s : /y$/i.test(s) ? s.slice(0, -1) + 'ies' : s + 's';
+    let title = item.kind === 'line' ? (second ? `${vname} vs ${second.name}` : `${vname} trend`) :
+      item.kind === 'stack' ? `${vname} by ${dimLabel} over time` :
+      top ? `${asc ? 'Bottom' : 'Top'} ${item.top} ${plural(dimLabel.replace(/\s*name$/i, ''))} by ${vname.replace(/^Total /, '')}` :
+      item.kind === 'donut' ? `${vname.replace(/^Total /, '')} share by ${dimLabel}` : dimLabel ? `${vname} by ${dimLabel}` : vname;
+    const ctx = said.filter(Boolean);
+    if (ctx.length) title += ' · ' + ctx.map(nice).join(' · ');
+    item.title = title;
+    item.understood = { value: vname, dim: dimLabel, time: (where.from ? `${where.from} to ${where.to}` : ''), filters: Object.entries(where.f).map(([ci, v]) => `${cols[ci].label} = ${v}`), top: top ? (asc ? 'bottom ' : 'top ') + item.top : '', chart: item.kind };
+    return { item };
+  }
+  function whereRowsLocal(S, w) { return RT.whereRows({ dateCol: S.dateCol }, S.rows, w); }
+  function askExamples(S) {
+    const cols = S.cols.map((c, i) => Object.assign({ i }, c, { label: (S.labels && S.labels[i]) || c.label }));
+    const M = cols.filter(c => c.type === 'measure').sort((a, b) => (b.score || 0) - (a.score || 0)), C = cols.filter(c => c.type === 'category' && c.distinct >= 2 && c.role !== 'time');
+    const E = cols.filter(c => c.type === 'entity'), m0 = M[0] ? M[0].label.toLowerCase() : 'records', out = [];
+    let maxY = ''; if (S.dateCol != null) S.rows.forEach(r => { const d = r[S.dateCol]; if (d && d.slice(0, 4) > maxY) maxY = d.slice(0, 4); });
+    if (E[0] || C[1]) out.push(`top 5 ${(E[0] || C[1]).label.toLowerCase().replace(/\s*name$/, '')}s by ${M[1] && /profit|cost/i.test(M[1].label) ? M[1].label.toLowerCase() : m0}${maxY ? ' in ' + maxY : ''}`);
+    if (S.dateCol != null) out.push(`monthly ${m0} trend` + (C[0] ? ` for ${String(S.rows.find(r => r[C[0].i])[C[0].i] || '').toLowerCase()}` : ''));
+    if (C[0]) out.push(`share of ${m0} by ${C[0].label.toLowerCase()}`);
+    if (M[0] && C[1]) out.push(`average ${m0} by ${C[1].label.toLowerCase()}`);
+    if (S.dateCol != null) out.push(`${m0} last 6 months`);
+    if (cols.some(c => c.role === 'cost') && C[0]) out.push(`margin by ${C[0].label.toLowerCase()}`);
+    return out.slice(0, 5);
+  }
+
   /* ---------------- payload ---------------- */
   function payload(state) {
     const cols = state.cols.map((c, i) => ({ label: (state.labels && state.labels[i]) || c.label, type: c.type, unit: c.unit, agg: c.agg }));
@@ -27692,12 +27997,139 @@ const DashGen = (() => {
     const grain = state.grain && state.grain !== 'auto' ? state.grain : (minD ? RT.grainFor(minD, maxD) : null);
     const items = state.chosen.map(id => state.sugg.find(s => s.id === id)).filter(Boolean).map(s => {
       const it = Object.assign({}, s);
-      if (it.kind === 'bar-time') { it.kind = 'line'; }
+      if (it.kind === 'bar-time') { it.kind = 'tbar'; }
       return it;
     });
     const span = minD ? ` · ${RT.periodLabel(RT.periodKey(minD, 'month'), 'month')} to ${RT.periodLabel(RT.periodKey(maxD, 'month'), 'month')}` : '';
     return { title: state.title, subtitle: `${state.rows.length.toLocaleString('en-IN')} rows from ${state.fileName}${state.sheet ? ' · ' + state.sheet : ''}${span}`,
-      theme: state.theme, cols, rows: state.rows, items, filters: state.filters, dateCol: state.dateCol, grain };
+      theme: state.theme, cols, rows: state.rows, items, filters: state.filters, dateCol: state.dateCol, grain,
+      currency: state.currency == null ? '₹' : state.currency, numfmt: state.numfmt || 'in' };
+  }
+
+  /* ---------------- data health ---------------- */
+  function health(t, cols) {
+    const N = t.rows.length, issues = [];
+    let penalty = 0;
+    const seen = new Map(); let dup = 0;
+    t.rows.forEach(r => { const k = JSON.stringify(r); if (seen.has(k)) dup++; else seen.set(k, 1); });
+    if (dup) { issues.push({ kind: 'dup', n: dup, msg: `${dup.toLocaleString('en-IN')} duplicate row${dup === 1 ? '' : 's'} (exactly the same in every column)` }); penalty += Math.min(25, dup / N * 100 * 2); }
+    cols.forEach(c => {
+      if (['empty', 'id', 'text'].includes(c.type)) return;
+      const vals = t.rows.map(r => r[c.c]);
+      const blank = vals.filter(v => v === '' || v == null).length;
+      if (blank) { issues.push({ kind: 'blank', col: c.label, n: blank, msg: `"${c.label}" has ${blank.toLocaleString('en-IN')} empty cell${blank === 1 ? '' : 's'} (${(blank / N * 100).toFixed(1)}%)` }); penalty += Math.min(8, blank / N * 40); }
+      if (c.type === 'measure') {
+        const bad = vals.filter(v => v !== '' && v != null && parseNum(v) == null);
+        if (bad.length) { issues.push({ kind: 'mixed', col: c.label, n: bad.length, msg: `"${c.label}" has ${bad.length} cell${bad.length === 1 ? '' : 's'} that are not numbers (e.g. "${String(bad[0]).slice(0, 20)}"); they are left out of totals` }); penalty += Math.min(10, bad.length / N * 60); }
+        const ns = vals.map(parseNum).filter(v => v != null).sort((a, b) => a - b);
+        if (ns.length >= 20) {
+          const q1 = ns[Math.floor(ns.length * 0.25)], q3 = ns[Math.floor(ns.length * 0.75)], iqr = q3 - q1;
+          const out = iqr > 0 ? ns.filter(v => v > q3 + 4 * iqr || v < q1 - 4 * iqr) : [];
+          if (out.length) issues.push({ kind: 'outlier', col: c.label, n: out.length, msg: `"${c.label}" has ${out.length} unusually large or small value${out.length === 1 ? '' : 's'} (e.g. ${out[out.length - 1].toLocaleString('en-IN')}); check for typing mistakes` });
+          if (ns[0] < 0 && !/profit|margin|change|growth|variance|diff|balance|net/i.test(c.label)) issues.push({ kind: 'negative', col: c.label, n: ns.filter(v => v < 0).length, msg: `"${c.label}" has negative values (returns or credit notes?)` });
+        }
+      }
+      if (c.type === 'date') {
+        const bad = vals.filter(v => v !== '' && v != null && !(v instanceof Date) && !(c.serial && parseNum(v) != null) && !parseDate(v));
+        if (bad.length) { issues.push({ kind: 'mixed', col: c.label, n: bad.length, msg: `"${c.label}" has ${bad.length} value${bad.length === 1 ? '' : 's'} that are not dates (e.g. "${String(bad[0]).slice(0, 20)}")` }); penalty += Math.min(10, bad.length / N * 60); }
+      }
+      if (c.type === 'category') {
+        // the same label written two ways: "Delhi" and "delhi ", "North" and "NORTH"
+        const groups = new Map();
+        vals.forEach(v => { if (v === '' || v == null) return; const k = String(v).trim().toLowerCase().replace(/\s+/g, ' '); if (!groups.has(k)) groups.set(k, new Set()); groups.get(k).add(String(v)); });
+        const mixed = [...groups.values()].filter(x => x.size > 1);
+        if (mixed.length) { issues.push({ kind: 'spelling', col: c.label, n: mixed.length, msg: `"${c.label}" writes ${mixed.length} value${mixed.length === 1 ? '' : 's'} in more than one way (e.g. ${[...mixed[0]].slice(0, 2).map(x => '"' + x + '"').join(' and ')}); merged automatically` }); penalty += Math.min(6, mixed.length); }
+      }
+    });
+    return { score: Math.max(0, Math.round(100 - penalty)), dup, issues };
+  }
+  function dedupe(rows) { const seen = new Set(); return rows.filter(r => { const k = JSON.stringify(r); if (seen.has(k)) return false; seen.add(k); return true; }); }
+
+  /* ---------------- saved designs: apply last month's dashboard to this month's file ---------------- */
+  const TPL_KEY = 'docbrisk:dash-templates';
+  const tplList = () => { try { return JSON.parse(localStorage.getItem(TPL_KEY) || '[]'); } catch (e) { return []; } };
+  function saveTemplate(S, name) {
+    const L = (i) => (i == null ? null : S.cols[i].label);
+    const mapV = (v) => v && Object.assign({}, v, { m: L(v.m), a: L(v.a), b: L(v.b), c: L(v.c) });
+    const items = S.chosen.map(id => S.sugg.find(x => x.id === id)).filter(Boolean).map(it => Object.assign({}, it, {
+      value: mapV(it.value), values: it.values && it.values.map(mapV), dim: L(it.dim), date: L(it.date),
+      where: it.where && Object.assign({}, it.where, { f: Object.fromEntries(Object.entries(it.where.f || {}).map(([k, v]) => [L(+k), v])) })
+    }));
+    const tpl = { name: name || S.title, savedAt: new Date().toISOString().slice(0, 10), title: S.title, theme: S.theme, grain: S.grain, currency: S.currency, numfmt: S.numfmt, items };
+    const list = tplList().filter(x => x.name !== tpl.name); list.unshift(tpl);
+    try { localStorage.setItem(TPL_KEY, JSON.stringify(list.slice(0, 12))); } catch (e) { throw new Error('Your browser would not save it (private mode or storage full).'); }
+    return tpl;
+  }
+  function matchTemplates(S) {
+    const have = new Map(S.cols.map((c, i) => [c.label.trim().toLowerCase(), i]));
+    return tplList().filter(tp => tp.items.every(it => [it.dim, it.date, ...[it.value].concat(it.values || []).flatMap(v => v ? [v.m, v.a, v.b, v.c] : [])].filter(x => x != null).every(l => have.has(String(l).trim().toLowerCase()))));
+  }
+  function applyTemplate(S, tp) {
+    const have = new Map(S.cols.map((c, i) => [c.label.trim().toLowerCase(), i]));
+    const I = (l) => (l == null ? undefined : have.get(String(l).trim().toLowerCase()));
+    const mapV = (v) => v && Object.assign({}, v, { m: I(v.m), a: I(v.a), b: I(v.b), c: I(v.c) });
+    const items = tp.items.map((it, k) => Object.assign({}, it, { id: 't' + k + '_' + Date.now().toString(36), group: 'From your saved design', rec: false,
+      value: mapV(it.value), values: it.values && it.values.map(mapV), dim: I(it.dim), date: I(it.date),
+      where: it.where && Object.assign({}, it.where, { f: Object.fromEntries(Object.entries(it.where.f || {}).map(([k2, v]) => [I(k2), v]).filter(([k2]) => k2 != null)) }) }));
+    S.sugg = items.concat(S.sugg.filter(x => x.group !== 'From your saved design'));
+    S.chosen = items.map(x => x.id);
+    Object.assign(S, { title: tp.title, theme: tp.theme || S.theme, grain: tp.grain || 'auto', currency: tp.currency == null ? S.currency : tp.currency, numfmt: tp.numfmt || S.numfmt });
+  }
+  function deleteTemplate(name) { try { localStorage.setItem(TPL_KEY, JSON.stringify(tplList().filter(x => x.name !== name))); } catch (e) {} }
+
+  /* ---------------- exports: PowerPoint (native, editable charts) ---------------- */
+  async function pptx(p) {
+    if (typeof JSZip === 'undefined') await window.ensureLib('JSZip');
+    if (typeof PptxGenJS === 'undefined') { const ok = await window.ensureLib('PptxGenJS', 8000); if (!ok || typeof PptxGenJS === 'undefined') throw new Error('The PowerPoint writer could not be downloaded. Check your connection and try again.'); }
+    RT.prime(p);
+    const th = RT.THEMES[p.theme] || RT.THEMES.corporate, hx = (c) => c.replace('#', '').toUpperCase(), pal = th.pal.map(hx);
+    const deck = new PptxGenJS(); deck.layout = 'LAYOUT_WIDE'; deck.title = p.title; deck.company = 'DocBrisk';
+    const ink = hx(th.ink), mute = hx(th.mute), card = hx(th.card), bg = hx(th.bg), head = hx(th.head), headInk = hx(th.headInk);
+    const money = p.currency || '', fmtCode = (u) => u === 'pct' ? '0.0%' : u === 'inr' ? (money ? `"${money}"#,##0` : '#,##0') : '#,##0';
+    const bar = (s, text) => { s.background = { color: bg }; s.addShape(deck.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.9, fill: { color: head } }); s.addText(text, { x: 0.5, y: 0.12, w: 12.3, h: 0.66, fontSize: 24, bold: true, color: headInk, fontFace: 'Segoe UI' }); };
+    // title
+    let s = deck.addSlide(); s.background = { color: head };
+    s.addText(p.title, { x: 0.7, y: 2.4, w: 12, h: 1.2, fontSize: 40, bold: true, color: headInk, fontFace: 'Segoe UI' });
+    s.addText(p.subtitle || '', { x: 0.7, y: 3.6, w: 12, h: 0.6, fontSize: 16, color: headInk, fontFace: 'Segoe UI' });
+    // KPI cards
+    const cards = p.items.filter(i => i.kind === 'card');
+    if (cards.length) {
+      s = deck.addSlide(); bar(s, 'Key numbers');
+      const per = cards.length <= 4 ? cards.length : Math.ceil(cards.length / 2), w = (12.33 - (per - 1) * 0.25) / per, h = cards.length <= 4 ? 2.6 : 2.2;
+      cards.slice(0, 8).forEach((it, k) => {
+        const r = RT.compute(p, p.rows, it), x = 0.5 + (k % per) * (w + 0.25), y = 1.4 + Math.floor(k / per) * (h + 0.35);
+        s.addShape(deck.ShapeType.roundRect, { x, y, w, h, fill: { color: card }, line: { color: hx(th.line), width: 1 }, rectRadius: 0.12 });
+        s.addText(it.title.toUpperCase(), { x: x + 0.25, y: y + 0.2, w: w - 0.5, h: 0.4, fontSize: 11, bold: true, color: mute, fontFace: 'Segoe UI' });
+        s.addText(RT.fmt(r.val, it.value.unit), { x: x + 0.25, y: y + 0.65, w: w - 0.5, h: 0.9, fontSize: 32, bold: true, color: ink, fontFace: 'Segoe UI' });
+        if (r.delta && r.delta.d != null) s.addText(`${r.delta.d >= 0 ? '▲' : '▼'} ${Math.abs(r.delta.d).toFixed(1)}${r.delta.pts ? ' pts' : '%'}  ${r.delta.cur} vs ${r.delta.prev}`, { x: x + 0.25, y: y + 1.55, w: w - 0.5, h: 0.4, fontSize: 11, color: r.delta.d >= 0 ? '16A34A' : 'DC2626', fontFace: 'Segoe UI' });
+      });
+    }
+    // one slide per chart: real PowerPoint charts, so they can be restyled and edited
+    for (const it of p.items.filter(i => i.kind !== 'card')) {
+      s = deck.addSlide(); bar(s, it.title);
+      const r = RT.compute(p, p.rows, it), u = it.value.unit, sc = (v) => (v == null ? 0 : u === 'pct' ? v / 100 : v);
+      const base = { x: 0.5, y: 1.2, w: 12.33, h: 5.9, fontFace: 'Segoe UI', chartColors: pal, valAxisLabelFormatCode: fmtCode(u), dataLabelFormatCode: fmtCode(u), catAxisLabelFontSize: 11, valAxisLabelFontSize: 10, catAxisLabelColor: mute, valAxisLabelColor: mute, valGridLine: { color: hx(th.line), size: 0.75 }, plotArea: { fill: { color: card } } };
+      if (it.kind === 'line') {
+        const data = r.data.map(sr => ({ name: sr.name, labels: sr.pts.map(x => x.label), values: sr.pts.map(x => sc(x.v)) }));
+        if (r.fc) { const lab = data[0].labels.concat(r.fc.labels); data.forEach(d0 => { d0.labels = lab; d0.values = d0.values.concat(r.fc.labels.map(() => null)); }); data.push({ name: 'Projection', labels: lab, values: data[0].values.slice(0, data[0].values.length - r.fc.labels.length).map((v, i, a) => (i === a.length - 1 ? v : null)).concat(r.fc.vals.map(sc)) }); }
+        s.addChart(deck.ChartType.line, data, Object.assign({}, base, { lineSize: 3, lineDataSymbol: 'circle', lineDataSymbolSize: 6, showLegend: data.length > 1, legendPos: 't', legendFontSize: 11 }));
+      } else if (it.kind === 'stack') {
+        const dd = r.data, labels = dd.keys.map(k => RT.periodLabel(k, p.grain));
+        s.addChart(deck.ChartType.bar, dd.cats.map((c, j) => ({ name: c, labels, values: dd.cells.map(x => sc(x[j])) })), Object.assign({}, base, { barDir: 'col', barGrouping: 'stacked', showLegend: true, legendPos: 't', barGapWidthPct: 55 }));
+      } else if (it.kind === 'table') {
+        const vals = it.values || [it.value];
+        const rowsT = [[p.cols[it.dim].label].concat(vals.map(v => v.name || it.title)).map(t => ({ text: t, options: { bold: true, color: headInk, fill: { color: head } } }))]
+          .concat(r.data.map(x => { const rs = p.rows.filter(rr => String(rr[it.dim] === '' || rr[it.dim] == null ? '(blank)' : rr[it.dim]) === x.label); return [x.label].concat(vals.map(v => RT.fmt(RT.measure(RT.whereRows(p, rs, it.where), v), v.unit, true))); }));
+        s.addTable(rowsT, { x: 0.5, y: 1.2, w: 12.33, fontSize: 12, fontFace: 'Segoe UI', color: ink, border: { type: 'solid', color: hx(th.line), pt: 0.75 }, autoPage: true });
+      } else {
+        const g = r.data.filter(x => x.v != null), d0 = [{ name: it.value.name || it.title, labels: g.map(x => x.label), values: g.map(x => sc(x.v)) }];
+        if (it.kind === 'donut') s.addChart(deck.ChartType.doughnut, d0, Object.assign({}, base, { holeSize: 58, showPercent: true, showValue: false, showLegend: true, legendPos: 'r', legendFontSize: 13, dataLabelColor: 'FFFFFF', dataLabelFontSize: 12, dataLabelFormatCode: '0%' }));
+        else s.addChart(deck.ChartType.bar, d0, Object.assign({}, base, { barDir: it.kind === 'hbar' ? 'bar' : 'col', showValue: g.length <= 15, dataLabelFontSize: 10, dataLabelColor: ink, catAxisOrientation: it.kind === 'hbar' ? 'maxMin' : 'minMax', barGapWidthPct: 60, chartColors: [pal[0]] }));
+      }
+    }
+    const ins = RT.insights(p, p.rows).map(x => x.replace(/<[^>]+>/g, ''));
+    if (ins.length) { s = deck.addSlide(); bar(s, 'Key insights'); s.addText(ins.map(t => ({ text: t, options: { bullet: true, breakLine: true } })), { x: 0.7, y: 1.3, w: 12, h: 5.6, fontSize: 18, color: ink, fontFace: 'Segoe UI', valign: 'top', paraSpaceAfter: 10 }); }
+    return deck.write({ outputType: 'blob' });
   }
 
   /* ---------------- exports: HTML ---------------- */
@@ -27751,9 +28183,13 @@ DASH_RUNTIME().mount(document.getElementById('app'), ${json});
   const qs = (name) => "'" + String(name).replace(/'/g, "''") + "'";
   // style ids (see styles below)
   const S = { hdr: 1, date: 2, inr: 3, num: 4, title: 5, sub: 6, cardLabel: 7, cardInr: 8, cardNum: 9, cardPct: 10, cardNote: 11, month: 12, pct: 13, bold: 14, dec: 15, cardDec: 16, text: 17, wrap: 18 };
-  const STYLES = (accent, soft) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  const moneyFmt = (cur, sys) => {
+    const q = cur ? `&quot;${X(cur)}&quot;` : '';
+    return sys === 'intl' ? `${q}#,##0` : `[&gt;=10000000]${q}#\\,##\\,##\\,##0;[&gt;=100000]${q}#\\,##\\,##0;${q}#,##0`;
+  };
+  const STYLES = (accent, soft, cur, sys) => `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
-<numFmts count="6"><numFmt numFmtId="164" formatCode="dd\\-mmm\\-yyyy"/><numFmt numFmtId="165" formatCode="[&gt;=10000000]&quot;₹&quot;#\\,##\\,##\\,##0;[&gt;=100000]&quot;₹&quot;#\\,##\\,##0;&quot;₹&quot;#,##0"/><numFmt numFmtId="166" formatCode="[&gt;=10000000]#\\,##\\,##\\,##0;[&gt;=100000]#\\,##\\,##0;#,##0"/><numFmt numFmtId="167" formatCode="0.0%"/><numFmt numFmtId="168" formatCode="mmm\\ yyyy"/><numFmt numFmtId="169" formatCode="#,##0.00"/></numFmts>
+<numFmts count="6"><numFmt numFmtId="164" formatCode="dd\\-mmm\\-yyyy"/><numFmt numFmtId="165" formatCode="${moneyFmt(cur, sys)}"/><numFmt numFmtId="166" formatCode="${moneyFmt('', sys)}"/><numFmt numFmtId="167" formatCode="0.0%"/><numFmt numFmtId="168" formatCode="mmm\\ yyyy"/><numFmt numFmtId="169" formatCode="#,##0.00"/></numFmts>
 <fonts count="7"><font><sz val="11"/><color theme="1"/><name val="Calibri"/><family val="2"/><scheme val="minor"/></font><font><b/><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="20"/><color rgb="FF${accent}"/><name val="Calibri"/><family val="2"/></font><font><sz val="10"/><color rgb="FF64748B"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="20"/><color rgb="FF0F172A"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/><family val="2"/></font><font><i/><sz val="10"/><color rgb="FF64748B"/><name val="Calibri"/><family val="2"/></font></fonts>
 <fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF${soft}"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FF${accent}"/><bgColor indexed="64"/></patternFill></fill></fills>
 <borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left/><right/><top/><bottom style="thin"><color rgb="FFE2E8F0"/></bottom><diagonal/></border></borders>
@@ -27851,6 +28287,11 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
     const acc = (p.theme === 'midnight' ? '1E3A5F' : th.head.replace('#', '').toUpperCase()), soft = 'F1F5F9';
     const pal = th.pal.map(c => c.replace('#', '').toUpperCase());
     const cols = p.cols, nRows = p.rows.length, last = nRows + 1;
+    const MF = (p.currency == null ? '"₹"' : p.currency ? '"' + p.currency.replace(/"/g, '') + '"' : '') + '#,##0';
+    // an item's own filter as extra SUMIFS criteria
+    const dt = (iso) => `DATE(${+iso.slice(0, 4)},${+iso.slice(5, 7)},${+iso.slice(8, 10)})`;
+    const whereCrit = (w) => !w ? '' : Object.entries(w.f || {}).map(([ci, v]) => `,Data!$${colL(+ci)}:$${colL(+ci)},"${String(v).replace(/"/g, '""')}"`).join('') +
+      (p.dateCol != null && w.from ? `,Data!$${colL(p.dateCol)}:$${colL(p.dateCol)},">="&${dt(w.from)}` : '') + (p.dateCol != null && w.to ? `,Data!$${colL(p.dateCol)}:$${colL(p.dateCol)},"<="&${dt(w.to)}` : '');
     const colRef = (i) => colL(i);
     const zip = new JSZip();
     /* --- Data sheet --- */
@@ -27876,25 +28317,25 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
     const nextOf = (ref, g0) => { const g = grainStep[g0 || p.grain] || grainStep.month; return g.includes('%') ? g.replace('%', ref) : ref + g; };
     const startOf = (k, g0) => { const g = g0 || p.grain; return g === 'quarter' ? k.slice(0, 4) + '-' + String((+k.slice(6) - 1) * 3 + 1).padStart(2, '0') + '-01' : g === 'year' ? k + '-01-01' : g === 'month' ? k + '-01' : k; };
     for (const it of p.items.filter(i => i.kind !== 'card')) {
-      const r0 = cr, vals = it.values || [it.value];
+      const r0 = cr, vals = it.values || [it.value], base = RT.whereRows(p, p.rows, it.where), wc = whereCrit(it.where);
       calcRows.push(row(cr, [cellXml('A' + cr, it.title, S.bold)])); cr++;
       const hdrRow = cr;
-      if (it.kind === 'line') {
+      if (it.kind === 'line' || it.kind === 'tbar') {
         // A: the period's name (chart labels), B: its first day (what the formulas compare against)
         const dI = it.date != null ? it.date : p.dateCol, gI = it.grain || p.grain;
-        const ts = vals.map(v => RT.timeSeries(p.rows, dI, v, gI));
+        const ts = vals.map(v => RT.timeSeries(base, dI, v, gI));
         calcRows.push(row(cr, [cellXml('A' + cr, 'Period', S.hdr), cellXml('B' + cr, 'Starts', S.hdr)].concat(vals.map((v, j) => cellXml(colL(j + 2) + cr, v.name || it.title, S.hdr))))); cr++;
         const first = cr;
         ts[0].forEach((pt, k) => {
           const bref = '$B$' + cr, cells = [cellXml('A' + cr, pt.label), cellXml('B' + cr, serial(startOf(pt.k, gI)), S.date)];
           vals.forEach((v, j) => {
             const dcol = `Data!$${colRef(dI)}:$${colRef(dI)}`;
-            const f = fx(v, colRef, `,${dcol},">="&${bref},${dcol},"<"&${nextOf(bref, gI)}`), cv = ts[j][k] ? ts[j][k].v : null;
+            const f = fx(v, colRef, `,${dcol},">="&${bref},${dcol},"<"&${nextOf(bref, gI)}${wc}`), cv = ts[j][k] ? ts[j][k].v : null;
             cells.push(cellXml(colL(j + 2) + cr, cv == null ? 0 : (v.unit === 'pct' ? cv / 100 : cv), v.unit === 'pct' ? S.pct : v.unit === 'inr' ? S.inr : S.num, f || undefined));
           });
           calcRows.push(row(cr, cells)); cr++;
         });
-        charts.push({ type: 'line', title: it.title, fmt: vals[0].unit === 'pct' ? '0%' : vals[0].unit === 'inr' ? '"₹"#,##0' : '#,##0',
+        charts.push({ type: it.kind === 'tbar' ? 'col' : 'line', title: it.title, fmt: vals[0].unit === 'pct' ? '0%' : vals[0].unit === 'inr' ? MF : '#,##0',
           cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: ts[0].map(x => x.label) },
           series: vals.map((v, j) => ({ name: v.name || it.title, nameRef: `Calc!$${colL(j + 2)}$${hdrRow}`, ref: `Calc!$${colL(j + 2)}$${first}:$${colL(j + 2)}$${cr - 1}`, vals: ts[j].map(x => x.v == null ? null : v.unit === 'pct' ? x.v / 100 : x.v), color: pal[j % pal.length] })) });
       } else if (it.kind === 'stack') {
@@ -27902,7 +28343,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
         calcRows.push(row(cr, [cellXml('A' + cr, 'Period', S.hdr)].concat(d.cats.map((c, j) => cellXml(colL(j + 1) + cr, c, S.hdr))))); cr++;
         const first = cr;
         d.keys.forEach((k, pi) => { calcRows.push(row(cr, [cellXml('A' + cr, RT.periodLabel(k, p.grain))].concat(d.cats.map((c, j) => cellXml(colL(j + 1) + cr, d.cells[pi][j] || 0, it.value.unit === 'inr' ? S.inr : S.num))))); cr++; });
-        charts.push({ type: 'stack', title: it.title, fmt: it.value.unit === 'inr' ? '"₹"#,##0' : '#,##0', cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: d.keys.map(k => RT.periodLabel(k, p.grain)) },
+        charts.push({ type: 'stack', title: it.title, fmt: it.value.unit === 'inr' ? MF : '#,##0', cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: d.keys.map(k => RT.periodLabel(k, p.grain)) },
           series: d.cats.map((c, j) => ({ name: c, nameRef: `Calc!$${colL(j + 1)}$${hdrRow}`, ref: `Calc!$${colL(j + 1)}$${first}:$${colL(j + 1)}$${cr - 1}`, vals: d.cells.map(x => x[j] || 0), color: c === 'Others' ? '94A3B8' : pal[j % pal.length] })) });
       } else {
         const r = RT.compute(p, p.rows, it), g = (r.data || []).filter(x => x.k !== undefined);
@@ -27913,14 +28354,14 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
           const a = '$A$' + cr, isOthers = x.k === '__others';
           const cells = [cellXml('A' + cr, x.label)];
           vv.forEach((v, j) => {
-            const rows2 = isOthers ? null : p.rows.filter(rr => String(rr[it.dim] === '' || rr[it.dim] == null ? '(blank)' : rr[it.dim]) === x.label);
+            const rows2 = isOthers ? null : base.filter(rr => String(rr[it.dim] === '' || rr[it.dim] == null ? '(blank)' : rr[it.dim]) === x.label);
             const cv = isOthers ? x.v : RT.measure(rows2, v);
-            const f = isOthers || x.label === '(blank)' ? null : fx(v, colRef, crit(it.dim, a));
+            const f = isOthers || x.label === '(blank)' ? null : fx(v, colRef, crit(it.dim, a) + wc);
             cells.push(cellXml(colL(j + 1) + cr, cv == null ? 0 : v.unit === 'pct' ? cv / 100 : cv, v.unit === 'pct' ? S.pct : v.unit === 'inr' ? S.inr : S.num, f || undefined));
           });
           calcRows.push(row(cr, cells)); cr++;
         });
-        if (it.kind !== 'table') charts.push({ type: it.kind === 'donut' ? 'donut' : it.kind === 'hbar' ? 'bar' : 'col', title: it.title, fmt: it.value.unit === 'pct' ? '0%' : it.value.unit === 'inr' ? '"₹"#,##0' : '#,##0',
+        if (it.kind !== 'table') charts.push({ type: it.kind === 'donut' ? 'donut' : it.kind === 'hbar' ? 'bar' : 'col', title: it.title, fmt: it.value.unit === 'pct' ? '0%' : it.value.unit === 'inr' ? MF : '#,##0',
           cats: { ref: `Calc!$A$${first}:$A$${cr - 1}`, vals: g.map(x => x.label) }, colors: pal.concat(['94A3B8']),
           series: [{ name: it.value.name || it.title, nameRef: `Calc!$B$${hdrRow}`, ref: `Calc!$B$${first}:$B$${cr - 1}`, vals: g.map(x => x.v == null ? null : it.value.unit === 'pct' ? x.v / 100 : x.v), color: pal[0] }] });
         else charts.push({ table: true, title: it.title, from: r0, to: cr - 1, width: vv.length + 1 });
@@ -27938,9 +28379,11 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
       const lab = [], valc = [], note = [];
       cards.slice(i, i + 4).forEach((it, k) => {
         const c0 = 1 + k * 3, a = colL(c0), b = colL(c0 + 1), v = it.value, rc = RT.compute(p, p.rows, it);
-        let f = fx(v, colRef);
-        if (v.calc === 'count') f = `COUNTA(Data!$${colRef(countCol)}:$${colRef(countCol)})-1`;
-        if (v.calc === 'distinct') f = nRows <= 5000 ? `SUMPRODUCT((Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}<>"")/COUNTIF(Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last},Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}&""))` : null;
+        const wcc = whereCrit(it.where);
+        let f = fx(v, colRef, wcc || undefined);
+        if (v.calc === 'count') f = wcc ? `COUNTIFS(${wcc.slice(1)})` : `COUNTA(Data!$${colRef(countCol)}:$${colRef(countCol)})-1`;
+        if (v.calc === 'distinct' && wcc) f = null;
+        if (v.calc === 'distinct' && !wcc) f = nRows <= 5000 ? `SUMPRODUCT((Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}<>"")/COUNTIF(Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last},Data!$${colRef(v.c)}$2:$${colRef(v.c)}$${last}&""))` : null;
         const cached = rc.val == null ? 0 : v.unit === 'pct' ? rc.val / 100 : rc.val;
         lab.push(cellXml(a + rr, it.title.toUpperCase(), S.cardLabel), cellXml(b + rr, '', S.cardLabel));
         valc.push(cellXml(a + (rr + 1), cached, v.unit === 'pct' ? S.cardPct : v.unit === 'inr' ? S.cardInr : Number.isInteger(cached) ? S.cardNum : S.cardDec, f || undefined), cellXml(b + (rr + 1), '', S.cardNum));
@@ -27989,7 +28432,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${anchors.map(a => `<Relationship Id="rId${a.n}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="../charts/chart${a.n}.xml"/>`).join('')}</Relationships>`);
       anchors.forEach(a => zip.file(`xl/charts/chart${a.n}.xml`, chartXml(a.ch)));
     }
-    zip.file('xl/styles.xml', STYLES(acc, soft));
+    zip.file('xl/styles.xml', STYLES(acc, soft, p.currency == null ? '₹' : p.currency, p.numfmt));
     zip.file('xl/workbook.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView activeTab="0"/></bookViews><sheets><sheet name="Dashboard" sheetId="1" r:id="rId1"/><sheet name="Calc" sheetId="2" r:id="rId2"/><sheet name="Data" sheetId="3" r:id="rId3"/><sheet name="Insights" sheetId="4" r:id="rId4"/></sheets><calcPr calcId="191029" fullCalcOnLoad="1"/></workbook>`);
     zip.file('xl/_rels/workbook.xml.rels', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -28026,10 +28469,17 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
       }
     };
     const seen = new Set(), lines = ['// DAX measures for Power BI Desktop. In the Data table: Modelling > New measure, then paste one block at a time.', '// Percentages: set the measure format to Percentage in the ribbon.', ''];
+    const dax = (iso) => `DATE(${+iso.slice(0, 4)}, ${+iso.slice(5, 7)}, ${+iso.slice(8, 10)})`;
+    const wrap = (expr, w) => {
+      if (!w) return expr;
+      const f = Object.entries(w.f || {}).map(([ci, v]) => `${col(+ci)} = "${String(v).replace(/"/g, '""')}"`)
+        .concat(p.dateCol != null && w.from ? [`${col(p.dateCol)} >= ${dax(w.from)}`] : []).concat(p.dateCol != null && w.to ? [`${col(p.dateCol)} <= ${dax(w.to)}`] : []);
+      return f.length ? `CALCULATE(${expr}, ${f.join(', ')})` : expr;
+    };
     p.items.forEach(it => (it.values || [it.value]).forEach(v => {
-      const n = name(it.kind === 'card' ? it.title : (v.name || it.title));
+      const n = name(it.kind === 'card' ? it.title : (it.where ? it.title : (v.name || it.title)));
       if (seen.has(n)) return; seen.add(n);
-      lines.push(`${n} = ${one(v)}`, '');
+      lines.push(`${n} = ${wrap(one(v), it.where)}`, '');
       if (p.dateCol != null && it.kind === 'card' && ['sum', 'count', 'diff', 'distinct'].includes(v.calc)) lines.push(`${n} MoM % =\nVAR cur = [${n}]\nVAR prev = CALCULATE([${n}], DATEADD('Date'[Date], -1, MONTH))\nRETURN DIVIDE(cur - prev, prev)`, '');
     }));
     if (p.dateCol != null) lines.push(`// Date table (Modelling > New table), then mark it as a date table and relate 'Date'[Date] to ${col(p.dateCol)}:`,
@@ -28054,7 +28504,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
     return ['Looker Studio calculated fields (Resource > Manage added data sources > Edit > Add a field):', ''].concat(
       p.items.map(it => `${it.kind === 'card' ? it.title : (it.value.name || it.title)}\n  Formula: ${one(it.value)}${it.value.unit === 'pct' ? '\n  Type: Number > Percent' : it.value.unit === 'inr' ? '\n  Type: Currency > Indian Rupee (INR)' : ''}\n`)).join('\n');
   }
-  const VISUAL = { card: ['Card', 'Scorecard'], line: ['Line chart', 'Time series chart'], bar: ['Clustered column chart', 'Column chart'], hbar: ['Clustered bar chart', 'Bar chart'], donut: ['Donut chart', 'Donut chart'], stack: ['Stacked column chart', 'Stacked column chart'], table: ['Table', 'Table'] };
+  const VISUAL = { card: ['Card', 'Scorecard'], line: ['Line chart', 'Time series chart'], tbar: ['Clustered column chart', 'Column chart'], bar: ['Clustered column chart', 'Column chart'], hbar: ['Clustered bar chart', 'Bar chart'], donut: ['Donut chart', 'Donut chart'], stack: ['Stacked column chart', 'Stacked column chart'], table: ['Table', 'Table'] };
   function themeJson(p) {
     const th = RT.THEMES[p.theme] || RT.THEMES.corporate;
     return JSON.stringify({ name: 'DocBrisk ' + th.name, dataColors: th.pal, background: th.card, foreground: th.ink, tableAccent: th.accent,
@@ -28063,7 +28513,7 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
   function guideHtml(p, tool) {
     const th = RT.THEMES[p.theme] || RT.THEMES.corporate;
     const e = (s) => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-    const fields = (it) => it.kind === 'card' ? `Fields: measure <b>${e(it.title)}</b>` : it.kind === 'line' || it.kind === 'stack' ? `X-axis: <b>${tool === 'pbi' ? "'Date'[Month]" : e(p.cols[p.dateCol].label) + ' (Year Month)'}</b> · Y-axis: <b>${e((it.values || [it.value]).map(v => v.name || it.title).join(', '))}</b>${it.kind === 'stack' ? ` · Legend: <b>${e(p.cols[it.dim].label)}</b>` : ''}`
+    const fields = (it) => it.kind === 'card' ? `Fields: measure <b>${e(it.title)}</b>` : it.kind === 'line' || it.kind === 'stack' || it.kind === 'tbar' ? `X-axis: <b>${tool === 'pbi' ? "'Date'[Month]" : e(p.cols[p.dateCol].label) + ' (Year Month)'}</b> · Y-axis: <b>${e((it.values || [it.value]).map(v => v.name || it.title).join(', '))}</b>${it.kind === 'stack' ? ` · Legend: <b>${e(p.cols[it.dim].label)}</b>` : ''}`
       : `Axis / dimension: <b>${e(p.cols[it.dim].label)}</b> · Value: <b>${e(it.value.name || it.title)}</b>${it.top ? ` · Top ${it.top} (filter: Top N by value)` : ''}`;
     const steps = tool === 'pbi' ? [
       'Open <b>Power BI Desktop</b> (free from Microsoft). Choose <b>Get data &gt; Text/CSV</b> and pick <b>data.csv</b> from this folder. Click <b>Transform data</b>, check the column types (dates as Date, amounts as Decimal number), rename the query to <b>Data</b>, then <b>Close &amp; Apply</b>.',
@@ -28131,51 +28581,62 @@ ${opt.tab ? `<sheetPr><tabColor rgb="FF${opt.tab}"/></sheetPr>` : ''}<sheetViews
     return new File([out], 'sample-sales-data.xlsx', { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   }
 
-  return { RT, readFile, table, profile, clean, suggest, payload, htmlFile, png, pdf, xlsx, kit, csv, daxFor, sampleFile, parseDate, parseNum };
+  return { RT, readFile, table, profile, clean, suggest, payload, htmlFile, png, pdf, xlsx, pptx, kit, csv, daxFor, sampleFile, parseDate, parseNum,
+    nlq, askExamples, health, dedupe, saveTemplate, matchTemplates, applyTemplate, deleteTemplate, tplList };
 })();
 
 /* ---------------- Excel Dashboard Maker: the tool page ---------------- */
 function renderExcelDashboard(view) {
   const TYPE_LABEL = { date: 'Date', measure: 'Number to total', category: 'Category', entity: 'Name / item', id: 'ID (ignore)', text: 'Free text (ignore)', empty: 'Empty' };
   const TYPE_ICON = { date: 'calendar', measure: 'trending-up', category: 'layers', entity: 'users', id: 'hash', text: 'file-text', empty: 'x' };
-  const KIND_LABEL = { card: 'KPI card', line: 'Line chart', 'bar-time': 'Column chart', bar: 'Column chart', hbar: 'Bar chart', donut: 'Donut chart', stack: 'Stacked columns', table: 'Table' };
+  const KIND_LABEL = { card: 'KPI card', line: 'Line chart', tbar: 'Columns over time', 'bar-time': 'Columns over time', bar: 'Column chart', hbar: 'Bar chart', donut: 'Donut chart', stack: 'Stacked columns', table: 'Table' };
+  const PRO = new Set(['xlsx', 'pptx', 'pbi', 'looker']);
+  const proTag = '<span class="tag-pro">Pro</span>';
   view.innerHTML = toolShell('excel-dashboard', `
     <div id="dxStart">
       ${dropzoneMarkup('Excel (.xlsx, .xls) or CSV file', '.xlsx,.xls,.xlsm,.xlsb,.csv,.ods')}
       <div class="dx-try"><button type="button" class="btn btn-primary" id="dxTry"><span data-icon="sparkles" data-icon-size="16"></span> Try it with sample sales data</button>
         <button type="button" class="btn btn-ghost" id="dxSampleDl"><span data-icon="download" data-icon-size="16"></span> Download the sample Excel</button></div>
       <ol class="dx-how">
-        <li><b>Upload</b><span>Any Excel or CSV export: sales, expenses, HR, inventory, marks, leads.</span></li>
-        <li><b>KPIs found for you</b><span>Totals, growth, margins, top performers and trends, picked from your columns.</span></li>
-        <li><b>Pick and design</b><span>Tick what matters, choose a theme, filter by region, product or month.</span></li>
-        <li><b>Download</b><span>A live Excel dashboard, an HTML dashboard, PDF, PNG, or a Power BI / Looker Studio kit.</span></li>
+        <li><b>Upload</b><span>Any Excel or CSV export: sales, expenses, HR, inventory, marks, leads. Checked for blanks, duplicates and typos.</span></li>
+        <li><b>KPIs found for you</b><span>Totals, growth, margins, top performers, trends and projections, picked from your columns.</span></li>
+        <li><b>Ask and design</b><span>Type questions like "top 5 products by profit in 2026", click any bar to filter, choose a theme.</span></li>
+        <li><b>Download</b><span>Live Excel dashboard, PowerPoint with editable charts, HTML, PDF, PNG, Power BI or Looker Studio kit.</span></li>
       </ol>
     </div>
     <div id="dxWork" class="hidden">
-      <section class="panel"><div class="panel-title dx-pt"><span>1 · Your data</span><button type="button" class="btn btn-ghost btn-sm" id="dxNew">Use another file</button></div><div id="dxData"></div></section>
+      <section class="panel"><div class="panel-title dx-pt"><span>1 · Your data</span><button type="button" class="btn btn-ghost btn-sm" id="dxNew">Use another file</button></div><div id="dxTpl"></div><div id="dxData"></div><div id="dxHealth"></div></section>
       <section class="panel"><div class="panel-title dx-pt"><span>2 · Suggested KPIs and charts</span><span class="dx-acts"><button type="button" class="btn btn-ghost btn-sm" data-pick="rec">Recommended</button><button type="button" class="btn btn-ghost btn-sm" data-pick="all">All</button><button type="button" class="btn btn-ghost btn-sm" data-pick="none">None</button></span></div><div id="dxKpis"></div></section>
-      <section class="panel"><div class="panel-title">3 · Design</div>
+      <section class="panel dx-askp"><div class="panel-title">Ask your data</div>
+        <form class="dx-ask" id="dxAskForm" autocomplete="off"><span data-icon="search" data-icon-size="18"></span><input id="dxAsk" type="text" placeholder="e.g. top 5 products by profit in 2026" aria-label="Ask a question about your data"><button type="submit" class="btn btn-primary btn-sm">Add chart</button></form>
+        <div class="dx-ex" id="dxAskEx"></div><p class="hint" id="dxAskMsg" aria-live="polite" style="margin:8px 0 0"></p></section>
+      <section class="panel"><div class="panel-title dx-pt"><span>3 · Design</span><button type="button" class="btn btn-ghost btn-sm" id="dxSaveTpl" title="Reuse this layout next month: upload the new file and it is applied automatically"><span data-icon="save" data-icon-size="14"></span> Save this design</button></div>
         <div class="dx-design">
           <div class="field"><label for="dxTitle">Dashboard title</label><input id="dxTitle" type="text" maxlength="90"></div>
           <div class="field"><label for="dxGrain">Show time by</label><select id="dxGrain"><option value="auto">Automatic</option><option value="day">Day</option><option value="week">Week</option><option value="month">Month</option><option value="quarter">Quarter</option><option value="year">Year</option></select></div>
-          <div class="field"><label>Theme</label><div class="dx-themes" id="dxThemes"></div></div>
-        </div></section>
+          <div class="field"><label for="dxCur">Currency</label><select id="dxCur"><option value="₹">₹ Indian rupee</option><option value="$">$ US dollar</option><option value="€">€ Euro</option><option value="£">£ Pound</option><option value="AED ">AED Dirham</option><option value="SAR ">SAR Riyal</option><option value="S$">S$ Singapore dollar</option><option value="A$">A$ Australian dollar</option><option value="">No symbol</option></select></div>
+          <div class="field"><label for="dxNum">Number style</label><select id="dxNum"><option value="in">Indian: 12.5 L, 1.2 Cr</option><option value="intl">International: 125K, 1.2M</option></select></div>
+          <div class="field dx-span"><label>Theme</label><div class="dx-themes" id="dxThemes"></div></div>
+        </div>
+        <p class="hint" style="margin:10px 0 0">In the preview: click a bar, slice or point to filter the whole dashboard; use the small toolbar on each chart to change its type, widen, move or remove it; click a chart title to rename it.</p></section>
       <section class="dx-preview" id="dxPreview" aria-live="polite"></section>
       <section class="panel"><div class="panel-title">4 · Download your dashboard</div>
         <div class="dx-exports">
-          <button type="button" class="dx-exp" data-exp="xlsx"><span data-icon="table" data-icon-size="22"></span><b>Excel dashboard</b><small>KPI cards and native charts driven by live formulas: paste new data and it updates</small></button>
-          <button type="button" class="dx-exp" data-exp="html"><span data-icon="code" data-icon-size="22"></span><b>HTML dashboard</b><small>One file, works offline in any browser, with the same filters. Share it or host it</small></button>
+          <button type="button" class="dx-exp" data-exp="xlsx"><span data-icon="table" data-icon-size="22"></span><b>Excel dashboard ${proTag}</b><small>KPI cards and native charts driven by live formulas: paste new data and it updates</small></button>
+          <button type="button" class="dx-exp" data-exp="pptx"><span data-icon="layers" data-icon-size="22"></span><b>PowerPoint ${proTag}</b><small>A slide per chart with real, editable PowerPoint charts, plus KPI and insight slides</small></button>
+          <button type="button" class="dx-exp" data-exp="html"><span data-icon="code" data-icon-size="22"></span><b>HTML dashboard</b><small>One file, works offline in any browser, with filters and click-to-filter. Share it or host it</small></button>
           <button type="button" class="dx-exp" data-exp="pdf"><span data-icon="file-text" data-icon-size="22"></span><b>PDF report</b><small>A4 landscape pages for email and print (uses the filters you set above)</small></button>
           <button type="button" class="dx-exp" data-exp="png"><span data-icon="image" data-icon-size="22"></span><b>PNG image</b><small>One picture of the whole dashboard for slides and WhatsApp</small></button>
-          <button type="button" class="dx-exp" data-exp="pbi"><span data-icon="layers" data-icon-size="22"></span><b>Power BI kit</b><small>Clean data, DAX measures, theme file and a step-by-step build guide</small></button>
-          <button type="button" class="dx-exp" data-exp="looker"><span data-icon="globe" data-icon-size="22"></span><b>Looker Studio kit</b><small>Clean data, calculated fields and a build guide for Google Looker Studio</small></button>
+          <button type="button" class="dx-exp" data-exp="pbi"><span data-icon="bar-chart" data-icon-size="22"></span><b>Power BI kit ${proTag}</b><small>Clean data, DAX measures, date table, theme file and a step-by-step build guide</small></button>
+          <button type="button" class="dx-exp" data-exp="looker"><span data-icon="globe" data-icon-size="22"></span><b>Looker Studio kit ${proTag}</b><small>Clean data, calculated fields and a build guide for Google Looker Studio</small></button>
         </div>
-        <p class="hint" id="dxStatus" aria-live="polite" style="text-align:center;margin:12px 0 0"></p></section>
-      <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span><span>Your spreadsheet is read and turned into a dashboard inside your browser. It is never uploaded.</span></div>
+        <p class="hint" style="margin:10px 0 0;text-align:center">HTML, PDF and PNG are free. Excel, PowerPoint and the Power BI / Looker Studio kits are part of Pro; every free account can try them ${3} times.</p>
+        <p class="hint" id="dxStatus" aria-live="polite" style="text-align:center;margin:8px 0 0"></p></section>
+      <div class="privacy-note"><span data-icon="shield" data-icon-size="17"></span><span>Your spreadsheet is read and turned into a dashboard inside your browser. It is never uploaded, and your questions are answered on your device too.</span></div>
     </div>`);
   hydrateIcons(view);
   const RT = DashGen.RT;
-  let S = null, filt = null;
+  let S = null, filt = null, qn = 0;
   const drop = initDropzone({ accept: '.xlsx,.xls,.xlsm,.xlsb,.csv,.ods', onChange: (files) => { if (files[0]) load(files[0]); } });
   const busy = (m) => { $('#dxStatus').textContent = m || ''; };
 
@@ -28184,7 +28645,7 @@ function renderExcelDashboard(view) {
     try {
       setStatus('Reading ' + file.name + '…');
       const sheets = await DashGen.readFile(file);
-      S = { fileName: file.name, sheets, sheetIdx: 0, theme: 'corporate', grain: 'auto', title: '' };
+      S = { fileName: file.name, sheets, sheetIdx: 0, theme: 'corporate', grain: 'auto', title: '', currency: '₹', numfmt: 'in', dedupe: false };
       useSheet(0);
       $('#dxStart').classList.add('hidden'); $('#dxWork').classList.remove('hidden');
       setStatus('');
@@ -28198,17 +28659,27 @@ function renderExcelDashboard(view) {
     S.table = DashGen.table(sh.aoa);
     if (!S.table.rows.length) throw new Error('That sheet has a header but no rows under it.');
     S.cols = DashGen.profile(S.table);
-    S.title = S.title || (sh.name && !/^sheet\s*\d*$/i.test(sh.name) ? sh.name : S.fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ')).replace(/\b\w/g, c => c.toUpperCase()) + ' Dashboard';
+    S.title = (sh.name && !/^sheet\s*\d*$/i.test(sh.name) ? sh.name : S.fileName.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ')).replace(/\b\w/g, c => c.toUpperCase()) + ' Dashboard';
+    S.health = DashGen.health(S.table, S.cols);
     analyse(true);
   }
   function analyse(resetPick) {
-    S.rows = DashGen.clean(S.table, S.cols);
+    let rows = DashGen.clean(S.table, S.cols);
+    if (S.dedupe) rows = DashGen.dedupe(rows);
+    S.rows = rows;
+    const asked = (S.sugg || []).filter(x => x.group === 'Your questions' || x.group === 'From your saved design');
     const sg = DashGen.suggest(S.cols, S.rows, S.sheets[S.sheetIdx].name);
-    S.sugg = sg.items; S.dateCol = sg.dateCol; S.filters = sg.filters; S.labels = sg.labels;
+    S.sugg = asked.concat(sg.items); S.dateCol = sg.dateCol; S.filters = sg.filters; S.labels = sg.labels;
     if (resetPick || !S.chosen) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id);
-    else { const keep = new Set(S.chosen); S.chosen = S.sugg.filter(x => keep.has(x.id)).map(x => x.id); if (!S.chosen.length) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id); }
+    else { const keep = new Set(S.chosen); S.chosen = S.chosen.filter(id => S.sugg.some(x => x.id === id)); sg.items.forEach(x => { if (keep.has(x.id) && !S.chosen.includes(x.id)) S.chosen.push(x.id); }); if (!S.chosen.length) S.chosen = S.sugg.filter(x => x.rec).map(x => x.id); }
     filt = null;
-    drawData(); drawKpis(); drawDesign(); preview();
+    drawTpl(); drawData(); drawHealth(); drawKpis(); drawAsk(); drawDesign(); preview();
+  }
+  function drawTpl() {
+    const m = DashGen.matchTemplates(S), box = $('#dxTpl');
+    box.innerHTML = m.length ? `<div class="dx-tplbar"><span data-icon="sparkles" data-icon-size="16"></span><span>This file fits your saved design${m.length > 1 ? 's' : ''}:</span>${m.slice(0, 3).map((t, k) => `<button type="button" class="btn btn-primary btn-sm" data-tpl="${k}">Apply "${esc(t.name)}"</button>`).join('')}<small>saved ${esc(m[0].savedAt)}</small></div>` : '';
+    hydrateIcons(box);
+    $$('[data-tpl]', box).forEach(b => b.addEventListener('click', () => { DashGen.applyTemplate(S, m[+b.dataset.tpl]); filt = null; box.innerHTML = '<p class="hint" style="margin:0 0 10px">Saved design applied. Every number is recalculated from this file.</p>'; drawKpis(); drawDesign(); preview(); }));
   }
   function drawData() {
     const c = S.cols, n = S.rows.length;
@@ -28217,49 +28688,125 @@ function renderExcelDashboard(view) {
       <p class="dx-sum"><b>${n.toLocaleString('en-IN')}</b> rows · <b>${c.filter(x => x.type !== 'empty').length}</b> columns in <b>${esc(S.fileName)}</b>${S.table.headerRow ? ` · header found on row ${S.table.headerRow + 1}` : ''}. Check how each column was understood; change any that are wrong.</p>
       <div class="dx-cols">${c.map((col, i) => col.type === 'empty' ? '' : `<label class="dx-col dx-${col.type}"><span data-icon="${TYPE_ICON[col.type]}" data-icon-size="14"></span><b title="${esc(col.label)}">${esc(col.label)}</b>
         <select data-ci="${i}" aria-label="Type of ${esc(col.label)}">${['date', 'measure', 'category', 'entity', 'id', 'text'].map(t => `<option value="${t}"${t === col.type ? ' selected' : ''}>${TYPE_LABEL[t]}</option>`).join('')}</select>
-        ${col.type === 'measure' ? `<select data-unit="${i}" aria-label="Unit of ${esc(col.label)}"><option value="inr"${col.unit === 'inr' ? ' selected' : ''}>₹</option><option value="num"${col.unit === 'num' ? ' selected' : ''}>123</option><option value="pct"${col.unit === 'pct' ? ' selected' : ''}>%</option></select>
+        ${col.type === 'measure' ? `<select data-unit="${i}" aria-label="Unit of ${esc(col.label)}"><option value="inr"${col.unit === 'inr' ? ' selected' : ''}>Money</option><option value="num"${col.unit === 'num' ? ' selected' : ''}>123</option><option value="pct"${col.unit === 'pct' ? ' selected' : ''}>%</option></select>
           <select data-agg="${i}" aria-label="How to combine ${esc(col.label)}"><option value="sum"${col.agg !== 'avg' ? ' selected' : ''}>Sum</option><option value="avg"${col.agg === 'avg' ? ' selected' : ''}>Average</option></select>` : ''}</label>`).join('')}</div>`;
     hydrateIcons($('#dxData'));
-    const sh = $('#dxSheet'); if (sh) sh.addEventListener('change', () => { S.title = ''; try { useSheet(+sh.value); } catch (e) { showError(e.message); } });
+    const sh = $('#dxSheet'); if (sh) sh.addEventListener('change', () => { try { useSheet(+sh.value); } catch (e) { showError(e.message); } });
     $$('#dxData [data-ci]').forEach(s => s.addEventListener('change', () => {
       const col = S.cols[+s.dataset.ci]; col.type = s.value;
       if (col.type === 'measure') { col.agg = col.agg || 'sum'; col.unit = col.unit || 'num'; col.score = col.score > 0 ? col.score : 5; }
       if (col.type === 'category' || col.type === 'entity') { col.score = col.score > 0 ? col.score : 4; col.distinct = col.distinct || new Set(S.table.rows.map(r => r[col.c])).size; }
+      if (col.type === 'date') col.attr = false;
       analyse(false);
     }));
     $$('#dxData [data-unit]').forEach(s => s.addEventListener('change', () => { S.cols[+s.dataset.unit].unit = s.value; analyse(false); }));
     $$('#dxData [data-agg]').forEach(s => s.addEventListener('change', () => { S.cols[+s.dataset.agg].agg = s.value; analyse(false); }));
   }
+  function drawHealth() {
+    const h = S.health, tone = h.score >= 90 ? 'ok' : h.score >= 70 ? 'warn' : 'bad';
+    $('#dxHealth').innerHTML = `<details class="dx-health ${tone}"${h.issues.length && h.score < 90 ? ' open' : ''}><summary><b>Data health ${h.score}/100</b> <span>${h.issues.length ? h.issues.length + ' thing' + (h.issues.length === 1 ? '' : 's') + ' to know' : 'No problems found: no blanks, duplicates or mixed-up values'}</span></summary>
+      ${h.issues.length ? `<ul>${h.issues.slice(0, 12).map(x => `<li>${esc(x.msg)}</li>`).join('')}</ul>` : ''}
+      ${h.dup ? `<label class="dx-dedupe"><input type="checkbox" id="dxDedupe"${S.dedupe ? ' checked' : ''}> Leave out the ${h.dup} duplicate row${h.dup === 1 ? '' : 's'}</label>` : ''}</details>`;
+    const dd = $('#dxDedupe'); if (dd) dd.addEventListener('change', () => { S.dedupe = dd.checked; analyse(false); });
+  }
   function drawKpis() {
-    const groups = [...new Set(S.sugg.map(x => x.group))], chosen = new Set(S.chosen), p = DashGen.payload(Object.assign({}, S, { chosen: [] }));
+    const groups = [...new Set(S.sugg.map(x => x.group))], chosen = new Set(S.chosen);
+    RT.prime({ currency: S.currency, numfmt: S.numfmt, dateCol: null, rows: [] });
     $('#dxKpis').innerHTML = !S.sugg.length ? '<p class="hint">No numbers or categories to build KPIs from. Mark at least one column as "Number to total" or "Category" above.</p>' :
       groups.map(g => `<div class="dx-group"><h4>${esc(g)}</h4><div class="dx-items">${S.sugg.filter(x => x.group === g).map(x => {
         let val = '';
-        if (x.kind === 'card') { try { val = RT.fmt(RT.measure(S.rows, x.value), x.value.unit); } catch (e) { val = ''; } }
+        if (x.kind === 'card') { try { val = RT.fmt(RT.measure(RT.whereRows({ dateCol: S.dateCol }, S.rows, x.where), x.value), x.value.unit); } catch (e) { val = ''; } }
         return `<label class="dx-item${chosen.has(x.id) ? ' on' : ''}"><input type="checkbox" value="${x.id}"${chosen.has(x.id) ? ' checked' : ''}>
-          <span class="dx-kind">${KIND_LABEL[x.kind] || x.kind}${x.rec ? ' · <em>recommended</em>' : ''}</span><b>${esc(x.title)}</b>${val ? `<strong>${esc(val)}</strong>` : ''}${x.why ? `<small>${esc(x.why)}</small>` : ''}</label>`;
+          <span class="dx-kind">${KIND_LABEL[x.kind] || x.kind}${x.rec ? ' · <em>recommended</em>' : ''}</span><b>${esc(x.title)}</b>${val ? `<strong>${esc(val)}</strong>` : ''}${x.why ? `<small>${esc(x.why)}</small>` : x.asked ? `<small>You asked: "${esc(x.asked)}"</small>` : ''}</label>`;
       }).join('')}</div></div>`).join('');
-    void p;
     $$('#dxKpis input').forEach(cb => cb.addEventListener('change', () => {
       cb.closest('.dx-item').classList.toggle('on', cb.checked);
-      S.chosen = $$('#dxKpis input:checked').map(x => x.value);
+      const id = cb.value;
+      if (cb.checked) { if (!S.chosen.includes(id)) S.chosen.push(id); } else S.chosen = S.chosen.filter(x => x !== id);
       preview();
     }));
   }
+  function drawAsk() {
+    $('#dxAskEx').innerHTML = DashGen.askExamples(S).map(q => `<button type="button" class="dx-exq">${esc(q)}</button>`).join('');
+    $$('#dxAskEx .dx-exq').forEach(b => b.addEventListener('click', () => { $('#dxAsk').value = b.textContent; ask(); }));
+  }
+  function ask() {
+    const q = $('#dxAsk').value, r = DashGen.nlq(q, S), msg = $('#dxAskMsg');
+    if (r.error) { msg.textContent = r.error; return; }
+    const it = Object.assign(r.item, { id: 'q' + (++qn) + '_' + Date.now().toString(36) });
+    S.sugg.unshift(it); S.chosen.unshift(it.id);
+    const u = it.understood;
+    msg.innerHTML = `Added <b>${esc(it.title)}</b> (${esc(KIND_LABEL[it.kind] || it.kind)}). Read as: ${esc(u.value)}${u.dim ? ' by ' + esc(u.dim) : ''}${u.top ? ', ' + esc(u.top) : ''}${u.filters.length ? ', only ' + esc(u.filters.join(', ')) : ''}${u.time ? ', ' + esc(u.time) : ''}. Not right? Name the column as it appears in your sheet.`;
+    $('#dxAsk').value = '';
+    drawKpis(); preview();
+    const el = document.querySelector(`#dxPreview [data-id="${it.id}"]`); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  $('#dxAskForm').addEventListener('submit', (e) => { e.preventDefault(); ask(); });
   function drawDesign() {
     $('#dxTitle').value = S.title;
     $('#dxGrain').value = S.grain;
+    $('#dxCur').value = S.currency; $('#dxNum').value = S.numfmt;
     $('#dxThemes').innerHTML = Object.entries(RT.THEMES).map(([k, t]) => `<button type="button" class="dx-theme${k === S.theme ? ' on' : ''}" data-theme="${k}" aria-pressed="${k === S.theme}" title="${esc(t.name)}">
       <i style="background:${t.head}"></i><i style="background:${t.pal[0]}"></i><i style="background:${t.pal[1]}"></i><i style="background:${t.pal[3]}"></i><span>${esc(t.name)}</span></button>`).join('');
     $$('#dxThemes [data-theme]').forEach(b => b.addEventListener('click', () => { S.theme = b.dataset.theme; drawDesign(); preview(); }));
   }
+  /* toolbar on every chart and card in the preview */
+  const TIME_KINDS = ['line', 'tbar'], DIM_KINDS = ['bar', 'hbar', 'donut', 'table'];
+  function decorate(root) {
+    root.querySelectorAll('[data-id]').forEach(el => {
+      if (el.querySelector(':scope > .dx-tb')) return;
+      const it = S.sugg.find(x => x.id === el.dataset.id); if (!it) return;
+      const kinds = it.kind === 'card' ? [] : it.kind === 'stack' ? ['stack', 'line', 'tbar'] : it.dim != null ? DIM_KINDS : TIME_KINDS;
+      const tb = document.createElement('div'); tb.className = 'dx-tb';
+      tb.innerHTML = (kinds.length ? `<select aria-label="Chart type">${kinds.map(k => `<option value="${k}"${k === it.kind ? ' selected' : ''}>${KIND_LABEL[k]}</option>`).join('')}</select>` : '') +
+        (it.kind !== 'card' ? `<button type="button" data-act="wide" title="${it.wide ? 'Half width' : 'Full width'}" aria-label="Toggle width">${it.wide ? '⇤' : '↔'}</button>` : '') +
+        `<button type="button" data-act="up" title="Move earlier" aria-label="Move earlier">↑</button><button type="button" data-act="down" title="Move later" aria-label="Move later">↓</button><button type="button" data-act="del" title="Remove" aria-label="Remove">✕</button>`;
+      el.appendChild(tb);
+      const sel = tb.querySelector('select');
+      if (sel) sel.addEventListener('change', () => {
+        const k = sel.value;
+        if (it.kind === 'stack' && k !== 'stack') { it._dim = it.dim; it.dim = undefined; } else if (k === 'stack' && it._dim != null) it.dim = it._dim;
+        it.kind = k; if (k === 'table' && !it.values) it.values = [it.value];
+        preview();
+      });
+      tb.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-act]'); if (!b) return;
+        e.stopPropagation();
+        const i = S.chosen.indexOf(it.id), a = b.dataset.act;
+        if (a === 'del') S.chosen.splice(i, 1);
+        else if (a === 'wide') it.wide = !it.wide;
+        else {
+          // move among items of the same kind group (cards with cards, charts with charts)
+          const same = S.chosen.filter(id => { const x = S.sugg.find(y => y.id === id); return x && (x.kind === 'card') === (it.kind === 'card'); });
+          const j = same.indexOf(it.id), k = a === 'up' ? j - 1 : j + 1;
+          if (k >= 0 && k < same.length) { const other = same[k], oi = S.chosen.indexOf(other); S.chosen[i] = other; S.chosen[oi] = it.id; }
+        }
+        drawKpis(); preview();
+      });
+      const cap = el.querySelector('figcaption') || el.querySelector('span');
+      if (cap) {
+        cap.contentEditable = 'true'; cap.spellcheck = false; cap.title = 'Click to rename';
+        cap.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); cap.blur(); } });
+        cap.addEventListener('blur', () => { const t = cap.textContent.trim(); if (t && t !== it.title) { it.title = t; drawKpis(); preview(); } });
+        cap.addEventListener('click', (e) => e.stopPropagation());
+      }
+    });
+  }
   function preview() {
     const el = $('#dxPreview');
-    if (!S.chosen.length) { el.innerHTML = '<div class="panel"><p class="hint" style="margin:0">Tick at least one KPI or chart above to see the dashboard.</p></div>'; return; }
-    filt = RT.render(el, DashGen.payload(S), filt || undefined);
+    if (!S.chosen.length) { el.innerHTML = '<div class="panel"><p class="hint" style="margin:0">Tick at least one KPI or chart above, or ask a question, to see the dashboard.</p></div>'; return; }
+    const st = filt || { f: {}, from: '', to: '' };
+    st.after = decorate;
+    filt = RT.render(el, DashGen.payload(S), st);
   }
   $('#dxTitle').addEventListener('input', () => { S.title = $('#dxTitle').value.trim() || 'Dashboard'; preview(); });
   $('#dxGrain').addEventListener('change', () => { S.grain = $('#dxGrain').value; filt = null; preview(); });
+  $('#dxCur').addEventListener('change', () => { S.currency = $('#dxCur').value; drawKpis(); preview(); });
+  $('#dxNum').addEventListener('change', () => { S.numfmt = $('#dxNum').value; drawKpis(); preview(); });
+  $('#dxSaveTpl').addEventListener('click', () => {
+    try { const t = DashGen.saveTemplate(S); dbToast(`Design saved as "${t.name}". Next time you upload a file with the same columns, it is offered automatically.`, 5000); }
+    catch (e) { showError(e.message); }
+  });
   $$('[data-pick]').forEach(b => b.addEventListener('click', () => {
     const m = b.dataset.pick;
     S.chosen = m === 'none' ? [] : S.sugg.filter(x => m === 'all' || x.rec).map(x => x.id);
@@ -28272,14 +28819,18 @@ function renderExcelDashboard(view) {
   const stemOf = () => (S.title || 'dashboard').replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '-').toLowerCase().slice(0, 60) || 'dashboard';
   $$('[data-exp]').forEach(b => b.addEventListener('click', () => runTask(b, async () => {
     if (!S || !S.chosen.length) throw new Error('Tick at least one KPI or chart first.');
-    const p = DashGen.payload(S), kind = b.dataset.exp, t0 = performance.now();
-    busy({ xlsx: 'Building the Excel workbook with live formulas and charts…', html: 'Packing the HTML dashboard…', pdf: 'Laying out the PDF pages…', png: 'Drawing the image…', pbi: 'Preparing the Power BI kit…', looker: 'Preparing the Looker Studio kit…' }[kind]);
+    const kind = b.dataset.exp;
+    if (PRO.has(kind) && !(await Trials.allow('excel-dashboard'))) return;
+    const p = DashGen.payload(S), t0 = performance.now();
+    busy({ xlsx: 'Building the Excel workbook with live formulas and charts…', pptx: 'Building the PowerPoint deck with editable charts…', html: 'Packing the HTML dashboard…', pdf: 'Laying out the PDF pages…', png: 'Drawing the image…', pbi: 'Preparing the Power BI kit…', looker: 'Preparing the Looker Studio kit…' }[kind]);
     if (kind === 'xlsx') downloadBlob(await DashGen.xlsx(p), stemOf() + '.xlsx');
+    else if (kind === 'pptx') downloadBlob(await DashGen.pptx(p), stemOf() + '.pptx');
     else if (kind === 'html') downloadBlob(new Blob([DashGen.htmlFile(p)], { type: 'text/html' }), stemOf() + '.html');
     else if (kind === 'pdf') downloadBytes(await DashGen.pdf(p, filt), 'application/pdf', stemOf() + '.pdf');
     else if (kind === 'png') downloadBlob(await DashGen.png(p, filt), stemOf() + '.png');
     else downloadBlob(await DashGen.kit(p, kind), stemOf() + (kind === 'pbi' ? '-power-bi-kit.zip' : '-looker-studio-kit.zip'));
     busy(`Done in ${((performance.now() - t0) / 1000).toFixed(1)}s, made on your device.`);
+    if (PRO.has(kind)) await Trials.used('excel-dashboard');
   })));
 }
 
@@ -31207,7 +31758,7 @@ function renderSmartRedact(view) {
    browser instead, so the site keeps working either way. */
 const Trials = (() => {
   const LIMIT = 3;
-  const TOOLS = { 'ocr-pdf': 'OCR Scanner', 'mail-merge': 'Mail Merge' };
+  const TOOLS = { 'ocr-pdf': 'OCR Scanner', 'mail-merge': 'Mail Merge', 'excel-dashboard': 'Dashboard Pro exports (Excel, PowerPoint, Power BI)' };
   const email = () => { const u = Auth.current(); return (u && u.email) || ''; };
   const lk = (slug) => 'docbrisk_trial:' + slug + ':' + email();
   const localUsed = (slug) => { try { return +localStorage.getItem(lk(slug)) || 0; } catch (e) { return 0; } };
