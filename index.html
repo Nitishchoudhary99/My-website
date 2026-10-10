@@ -9510,6 +9510,8 @@ const DocxEngine = (() => {
     ['languages',      /\b(languages?(\s+(known|spoken|proficiency))?|linguistic)\b/i],
     ['personal',       /\b(personal\s+(details|information|info|data|particulars|profile|dossier)|bio[-\s]?data)\b/i],
     ['interests',      /\b(hobbies|interests|pastimes)\b/i],
+    ['volunteer',      /\b(volunteer(ing)?(\s+(experience|work|activities))?|social\s+(work|service)|community\s+(service|work|involvement)|ngo\s+work)\b/i],
+    ['publications',   /\b(publications?|research\s+papers?|papers?\s+published|patents?|conferences?\s+attended)\b/i],
     ['references',     /\b(references?|referees?)\b/i],
     ['declaration',    /\b(declaration)\b/i],
     ['contact',        /\b(contact(\s+(me|details|info|information))?|get\s+in\s+touch|reach\s+me)\b/i]
@@ -9517,6 +9519,7 @@ const DocxEngine = (() => {
   /* Blocks that have no slot in the CV model are kept as custom sections
      rather than thrown away or forced into skills. */
   const CUSTOM_KEYS = { personal: 'Personal Details', interests: 'Hobbies & Interests',
+                        volunteer: 'Volunteer Experience', publications: 'Publications',
                         references: 'References', declaration: 'Declaration' };
 
   const RE = {
@@ -9663,7 +9666,11 @@ const DocxEngine = (() => {
     'declaration', 'contact', 'awards', 'training', 'internships', 'activities', 'strengths', 'expertise', 'competencies', 'proficiency'];
   function despace(t) {
     const s = String(t || '').trim();
-    if (!/^(?:[A-Za-z&]\s+){2,}[A-Za-z&]$/.test(s)) return t;
+    const toks = s.split(/\s+/);
+    // Letter-spaced design headings: mostly single letters; a kerned pair ("AT", "RT", "UA") may stay joined.
+    const spaced = /^(?:[A-Za-z&]\s+){2,}[A-Za-z&]$/.test(s) ||
+      (toks.length >= 4 && toks.every(x => /^[A-Za-z&]{1,2}$/.test(x)) && toks.filter(x => x.length === 1).length >= toks.length * 0.6);
+    if (!spaced) return t;
     const words = s.split(/\s{2,}/).map(w => w.replace(/\s+/g, ''));
     if (words.length === 1 && words[0].length > 8) {
       const low = words[0].toLowerCase();
@@ -10125,6 +10132,17 @@ const DocxEngine = (() => {
 
   /* ---------------- section parsers ---------------- */
 
+  // Cities and regions that turn up beside employers ("Wipro — Bengaluru", "Infosys, Mysuru").
+  const PLACES = new RegExp('^(?:' + ('mumbai|bombay|delhi|new delhi|ncr|delhi ncr|noida|greater noida|gurgaon|gurugram|faridabad|ghaziabad|bengaluru|bangalore|' +
+    'chennai|madras|hyderabad|secunderabad|kolkata|calcutta|pune|ahmedabad|surat|vadodara|baroda|rajkot|jaipur|lucknow|kanpur|nagpur|indore|bhopal|' +
+    'patna|ranchi|bhubaneswar|cuttack|guwahati|chandigarh|mohali|ludhiana|amritsar|jalandhar|dehradun|shimla|srinagar|jammu|kochi|cochin|' +
+    'thiruvananthapuram|trivandrum|kozhikode|calicut|coimbatore|madurai|tiruchirappalli|trichy|salem|mysuru|mysore|mangaluru|mangalore|hubli|belgaum|' +
+    'visakhapatnam|vizag|vijayawada|guntur|warangal|nashik|aurangabad|thane|navi mumbai|goa|panaji|raipur|bilaspur|jabalpur|gwalior|agra|varanasi|' +
+    'prayagraj|allahabad|meerut|udaipur|jodhpur|kota|ajmer|siliguri|durgapur|asansol|jamshedpur|dhanbad|remote|india|dubai|abu dhabi|sharjah|' +
+    'doha|riyadh|jeddah|muscat|kuwait|bahrain|singapore|london|new york|san francisco|seattle|toronto|sydney|melbourne|berlin|tokyo|hong kong') +
+    ')(?:\\s*,\\s*[A-Za-z .]{2,30})?$', 'i');
+  const isPlace = (p) => PLACES.test(String(p || '').trim().replace(/[()]/g, ''));
+
   function parseExperience(lines) {
     const out = [];
     let entry = null, inBody = false;
@@ -10167,6 +10185,8 @@ const DocxEngine = (() => {
         // Split on a dash only when the other side is plainly an employer or
         // "Employer, City" — "Executive - SCM Operations" is one job title.
         const dm = part.match(/^(.+?)\s+[–—-]\s+(.+)$/);
+        // "Company — City": the short side is a place, not a job
+        if (dm && isPlace(dm[2]) && !ROLE_WORDS.test(dm[1]) && !e.company) { e.company = dm[1].trim(); if (!e.location) e.location = dm[2].trim(); return; }
         if (dm && (ORG_WORDS.test(dm[2]) || ORG_WORDS.test(dm[1]) || /,\s*[A-Za-z]/.test(dm[2]))) {
           const [a, b] = ORG_WORDS.test(dm[1]) && !ORG_WORDS.test(dm[2]) ? [dm[2], dm[1]] : [dm[1], dm[2]];
           assign(e, a, false);
@@ -10340,8 +10360,10 @@ const DocxEngine = (() => {
         p.bullets.push(stripBullet(t));
         return;
       }
-      const long = t.split(/\s+/).length > 12 || /[.!?]$/.test(t);
+      const long = t.split(/\s+/).length > 12 || /[.!?]$/.test(t) ||
+        (p && p.name && !p.bullets.length && t.split(/\s+/).length > 6) || (p && /^[a-z(&,]/.test(t));
       if (long && p) {
+        if (p.desc && !p.bullets.length && !/[.!?]$/.test(p.desc)) { p.desc += ' ' + t; return; }    // a wrapped description
         if (!p.desc && !p.bullets.length) p.desc = t;
         else if (p.bullets.length && /^[a-z]/.test(t)) p.bullets[p.bullets.length - 1] += ' ' + t;
         else p.bullets.push(t);
@@ -10352,7 +10374,14 @@ const DocxEngine = (() => {
       p = { name: cells[0].trim(), desc: cells.slice(1).join(' · ').trim(), bullets: [] };
     });
     if (p) out.push(p);
-    return out.filter(x => x.name || x.bullets.length);
+    // Unnamed list of "Title: what it does" bullets = one project per bullet.
+    const split = [];
+    out.forEach(x => {
+      const named = x.bullets.map(b => b.match(/^([^:–—]{3,70}?)\s*(?::|\s[–—-]\s)\s*(.{8,})$/));
+      if (!x.name && x.bullets.length && named.every(Boolean)) named.forEach(m => split.push({ name: m[1].trim(), desc: m[2].trim(), bullets: [] }));
+      else split.push(x);
+    });
+    return split.filter(x => x.name || x.bullets.length);
   }
 
   function parseCertifications(lines) {
@@ -15545,6 +15574,100 @@ const CV_SAMPLE = {
   achievements:['Winner, Freightly Innovation Award 2023','Speaker, ProductCon India 2022'],
   custom:[]
 };
+
+
+/* More ready-made CVs: one per common career stage and field, each written the
+   way recruiters want it (quantified bullets, clear skill groups). */
+const cvx = (role, company, location, start, end, bullets) => ({ role, company, location, start, end, current: !end, bullets });
+const CV_SAMPLES = [
+  { id: 'pm', label: 'Product Manager (8 years)', tpl: 'ats-classic', data: CV_SAMPLE },
+  { id: 'fresher', label: 'Fresher: B.Tech graduate', tpl: 'fresher-clean', data: {
+    basics: { name: 'Rohit Kulkarni', title: 'Graduate Software Engineer', email: 'rohit.kulkarni@email.com', phone: '+91 98220 11223', location: 'Pune, India', website: 'github.com/rohitk', linkedin: 'linkedin.com/in/rohitkulkarni', photo: null },
+    summary: 'Computer Engineering graduate (CGPA 8.6) with internship experience in full-stack web development. Built and deployed 4 projects used by 1,500+ students; strong in Java, Python, React and SQL.',
+    experience: [cvx('Software Development Intern', 'Persistent Systems', 'Pune', 'Jan 2024', 'Jun 2024', ['Built 6 REST APIs in Spring Boot for an internal HR portal used by 3,000 employees.', 'Raised unit-test coverage of the leave module from 41% to 83%.', 'Cut page load time by 35% by adding caching and lazy loading in React.'])],
+    education: [
+      { degree: 'B.E. Computer Engineering', school: 'Pune Institute of Computer Technology', location: 'Pune', start: '2020', end: '2024', score: 'CGPA 8.6/10' },
+      { degree: 'HSC (Science)', school: 'Fergusson College', location: 'Pune', start: '2018', end: '2020', score: '91.2%' },
+      { degree: 'SSC', school: 'St. Vincent High School', location: 'Pune', start: '', end: '2018', score: '94.4%' }],
+    skills: [{ group: 'Languages', items: 'Java, Python, JavaScript, SQL' }, { group: 'Frameworks', items: 'Spring Boot, React, Node.js, Flask' }, { group: 'Tools', items: 'Git, Docker, Postman, AWS (EC2, S3), Linux' }],
+    projects: [
+      { name: 'CampusConnect', desc: 'Event and club platform for students (React, Node.js, MongoDB)', bullets: ['Adopted by 12 college clubs and 1,500+ students in the first semester.'] },
+      { name: 'Smart Attendance', desc: 'Face-recognition attendance (Python, OpenCV, Flask)', bullets: ['97% recognition accuracy on a 120-student class; saved 10 minutes per lecture.'] }],
+    certifications: [{ name: 'Oracle Certified Associate, Java SE 8', issuer: 'Oracle', year: '2023' }, { name: 'AWS Certified Cloud Practitioner', issuer: 'Amazon Web Services', year: '2024' }],
+    languages: [{ name: 'English', level: 'Fluent' }, { name: 'Marathi', level: 'Native' }, { name: 'Hindi', level: 'Fluent' }],
+    achievements: ['Finalist, Smart India Hackathon 2023 (software edition)', '450+ problems solved on LeetCode (top 8%)', 'Technical head, college coding club (2022 – 2023)'],
+    custom: [] } },
+  { id: 'swe', label: 'Software Engineer (4 years)', tpl: 'ats-minimal', data: {
+    basics: { name: 'Karthik Subramanian', title: 'Software Engineer II, Backend', email: 'karthik.s@email.com', phone: '+91 99400 55667', location: 'Bengaluru, India', website: 'github.com/karthiks', linkedin: 'linkedin.com/in/karthiksubramanian', photo: null },
+    summary: 'Backend engineer with 4 years building high-traffic payment and order systems in Go and Java. Designed services handling 12,000 requests a second at 99.99% uptime; mentor to 3 junior engineers.',
+    experience: [
+      cvx('Software Engineer II', 'Razorpay', 'Bengaluru', 'Jul 2022', '', ['Designed the payouts reconciliation service in Go, settling ₹2,000 crore a month with zero manual matching.', 'Cut p99 latency of the order API from 480 ms to 120 ms by moving hot reads to Redis.', 'Led the migration of 14 services to Kubernetes, lowering infrastructure cost by 22%.']),
+      cvx('Software Engineer', 'Infosys', 'Mysuru', 'Aug 2020', 'Jun 2022', ['Built Spring Boot microservices for a US retail client’s order management system.', 'Automated regression testing with JUnit and Jenkins, cutting release time from 2 days to 4 hours.'])],
+    education: [{ degree: 'B.Tech Information Technology', school: 'National Institute of Technology, Tiruchirappalli', location: 'Tiruchirappalli', start: '2016', end: '2020', score: 'CGPA 8.4/10' }],
+    skills: [{ group: 'Languages', items: 'Go, Java, Python, SQL' }, { group: 'Backend', items: 'Microservices, gRPC, Kafka, Redis, PostgreSQL' }, { group: 'Cloud & DevOps', items: 'AWS, Kubernetes, Docker, Terraform, Prometheus' }],
+    projects: [{ name: 'Open-source: go-ratelimit', desc: 'Distributed rate limiter library', bullets: ['1.2k GitHub stars; used in production by 3 startups.'] }],
+    certifications: [{ name: 'Certified Kubernetes Application Developer (CKAD)', issuer: 'CNCF', year: '2023' }],
+    languages: [{ name: 'English', level: 'Fluent' }, { name: 'Tamil', level: 'Native' }, { name: 'Hindi', level: 'Conversational' }],
+    achievements: ['Razorpay Engineering Excellence Award, 2023', 'Speaker, GopherCon India 2024'],
+    custom: [] } },
+  { id: 'data', label: 'Data Analyst (3 years)', tpl: 'compact-one', data: {
+    basics: { name: 'Neha Agarwal', title: 'Data Analyst', email: 'neha.agarwal@email.com', phone: '+91 98110 44556', location: 'Gurugram, India', website: '', linkedin: 'linkedin.com/in/nehaagarwal', photo: null },
+    summary: 'Data analyst with 3 years turning sales and customer data into decisions for e-commerce teams. Built Power BI dashboards used daily by 60+ managers and models that lifted repeat purchases by 9%.',
+    experience: [
+      cvx('Data Analyst', 'Zomato', 'Gurugram', 'Mar 2023', '', ['Built a churn model (Python, XGBoost) that flagged at-risk customers; targeted offers cut churn by 9%.', 'Created 12 Power BI dashboards for city teams, replacing 30 hours of weekly Excel reporting.', 'Ran 40+ A/B tests on the checkout flow with product teams.']),
+      cvx('Business Analyst', 'Genpact', 'Noida', 'Jul 2021', 'Feb 2023', ['Automated monthly MIS for a banking client with SQL and Python, saving 5 days of work each month.', 'Analysed 2 million collection records to redesign call priority, raising recovery by 6%.'])],
+    education: [{ degree: 'B.Sc. (Hons) Statistics', school: 'Hindu College, University of Delhi', location: 'Delhi', start: '2018', end: '2021', score: '8.9 CGPA' }],
+    skills: [{ group: 'Analysis', items: 'SQL, Python (pandas, scikit-learn), Excel (Power Query, pivot tables), Statistics' }, { group: 'BI & Visualisation', items: 'Power BI (DAX), Tableau, Looker Studio' }, { group: 'Data', items: 'BigQuery, PostgreSQL, Airflow, A/B testing' }],
+    projects: [{ name: 'Delhi AQI Forecast', desc: 'Time-series model of air quality (Prophet)', bullets: ['Forecast next-day AQI band with 82% accuracy; published as a public dashboard.'] }],
+    certifications: [{ name: 'Microsoft Certified: Power BI Data Analyst Associate (PL-300)', issuer: 'Microsoft', year: '2023' }, { name: 'Google Data Analytics Professional Certificate', issuer: 'Google', year: '2022' }],
+    languages: [{ name: 'English', level: 'Fluent' }, { name: 'Hindi', level: 'Native' }],
+    achievements: ['Zomato Star of the Quarter, Q2 2024'], custom: [] } },
+  { id: 'finance', label: 'Chartered Accountant / Finance', tpl: 'ats-serif', data: {
+    basics: { name: 'Aditya Mehta', title: 'Chartered Accountant | Financial Reporting & Tax', email: 'aditya.mehta@email.com', phone: '+91 98200 77889', location: 'Mumbai, India', website: '', linkedin: 'linkedin.com/in/adityamehtaca', photo: null },
+    summary: 'Chartered Accountant with 6 years in statutory audit, Ind AS reporting and GST. Led month-end close for a ₹1,800 crore manufacturer and cut the close from 9 days to 5.',
+    experience: [
+      cvx('Finance Manager, Reporting', 'Asian Paints Limited', 'Mumbai', 'Apr 2021', '', ['Own monthly and quarterly Ind AS financial statements for 4 legal entities.', 'Cut month-end close from 9 to 5 working days by automating 25 reconciliations in SAP.', 'Managed GST compliance across 18 states with zero penalties in 3 years.']),
+      cvx('Audit Senior', 'Deloitte Haskins & Sells LLP', 'Mumbai', 'Jan 2018', 'Mar 2021', ['Led statutory audits of 6 listed clients with revenues up to ₹5,000 crore.', 'Reviewed internal financial controls and reported 30+ findings to audit committees.'])],
+    education: [
+      { degree: 'Chartered Accountant (CA)', school: 'Institute of Chartered Accountants of India', location: '', start: '', end: '2017', score: 'All India Rank 38' },
+      { degree: 'B.Com', school: 'Narsee Monjee College of Commerce and Economics', location: 'Mumbai', start: '2012', end: '2015', score: '84%' }],
+    skills: [{ group: 'Finance', items: 'Ind AS, IFRS, Consolidation, Statutory Audit, GST, Direct Tax, Budgeting' }, { group: 'Systems', items: 'SAP FICO, Tally Prime, Advanced Excel, Power BI' }],
+    projects: [], certifications: [{ name: 'Certificate Course on Ind AS', issuer: 'ICAI', year: '2019' }, { name: 'Diploma in IFRS', issuer: 'ACCA', year: '2020' }],
+    languages: [{ name: 'English', level: 'Fluent' }, { name: 'Hindi', level: 'Fluent' }, { name: 'Gujarati', level: 'Native' }],
+    achievements: ['Asian Paints CFO Award for process automation, 2023'], custom: [] } },
+  { id: 'sales', label: 'Sales & Marketing Manager', tpl: 'ats-classic', data: {
+    basics: { name: 'Simran Kaur', title: 'Regional Sales Manager, FMCG', email: 'simran.kaur@email.com', phone: '+91 98720 33445', location: 'Chandigarh, India', website: '', linkedin: 'linkedin.com/in/simrankaur', photo: null },
+    summary: 'Sales leader with 9 years in FMCG general and modern trade across North India. Grew regional revenue from ₹120 crore to ₹210 crore and built a team of 45 sales officers and 300 distributors.',
+    experience: [
+      cvx('Regional Sales Manager, North', 'Dabur India Limited', 'Chandigarh', 'Apr 2020', '', ['Grew regional revenue 75% in 4 years (₹120 crore to ₹210 crore), ahead of target every year.', 'Expanded direct retail reach from 38,000 to 61,000 outlets in Punjab, Haryana and Himachal.', 'Launched a distributor app that cut order-to-delivery time from 3 days to 1.']),
+      cvx('Area Sales Manager', 'ITC Limited', 'Ludhiana', 'Jun 2015', 'Mar 2020', ['Ranked #1 of 22 area managers for biscuits volume growth in 2018 and 2019.', 'Hired and trained 18 sales officers; attrition fell from 35% to 12%.'])],
+    education: [{ degree: 'MBA (Marketing)', school: 'Institute of Management Technology', location: 'Ghaziabad', start: '2013', end: '2015', score: '' }, { degree: 'B.Com', school: 'Panjab University', location: 'Chandigarh', start: '2010', end: '2013', score: '' }],
+    skills: [{ group: 'Sales', items: 'Distribution Management, Key Accounts, Trade Marketing, Channel Expansion, Forecasting' }, { group: 'Tools', items: 'Salesforce, SAP SD, Excel, Power BI' }],
+    projects: [], certifications: [], languages: [{ name: 'English', level: 'Fluent' }, { name: 'Hindi', level: 'Fluent' }, { name: 'Punjabi', level: 'Native' }],
+    achievements: ['Dabur Chairman’s Club, 2022 and 2023', 'ITC Best Area Manager, North, 2019'], custom: [] } },
+  { id: 'teacher', label: 'Teacher / Educator', tpl: 'ats-serif', data: {
+    basics: { name: 'Meera Nair', title: 'Senior Secondary Mathematics Teacher', email: 'meera.nair@email.com', phone: '+91 94470 12312', location: 'Kochi, India', website: '', linkedin: '', photo: null },
+    summary: 'CBSE mathematics teacher with 10 years teaching Classes 9–12. My board classes have averaged 89% for five years, and I run the school’s olympiad programme.',
+    experience: [
+      cvx('PGT Mathematics', 'Choice School', 'Kochi', 'Jun 2017', '', ['Class 12 board average of 89% for five consecutive years (school average 78%).', 'Coached 26 students to qualify for the Regional Mathematics Olympiad.', 'Introduced GeoGebra-based lessons now used across the maths department.']),
+      cvx('TGT Mathematics', 'Kendriya Vidyalaya', 'Ernakulam', 'Jun 2014', 'May 2017', ['Taught Classes 6–10; raised Class 10 pass rate in mathematics from 86% to 98%.'])],
+    education: [{ degree: 'M.Sc. Mathematics', school: 'Cochin University of Science and Technology', location: 'Kochi', start: '2010', end: '2012', score: 'First Class' }, { degree: 'B.Ed.', school: 'Mahatma Gandhi University', location: 'Kottayam', start: '2012', end: '2013', score: '' }],
+    skills: [{ group: 'Teaching', items: 'CBSE curriculum, Lesson planning, Differentiated instruction, Assessment design, Olympiad coaching' }, { group: 'Digital', items: 'GeoGebra, Google Classroom, Microsoft Teams, Smart boards' }],
+    projects: [], certifications: [{ name: 'CTET (Paper II), Mathematics and Science', issuer: 'CBSE', year: '2013' }],
+    languages: [{ name: 'English', level: 'Fluent' }, { name: 'Malayalam', level: 'Native' }, { name: 'Hindi', level: 'Intermediate' }],
+    achievements: ['CBSE Teacher Award nominee, 2022'], custom: [] } },
+  { id: 'nurse', label: 'Staff Nurse / Healthcare', tpl: 'ats-classic', data: {
+    basics: { name: 'Jincy Thomas', title: 'Registered Staff Nurse (ICU)', email: 'jincy.thomas@email.com', phone: '+91 97450 66778', location: 'Bengaluru, India', website: '', linkedin: '', photo: null },
+    summary: 'Registered nurse with 5 years in adult ICU and cardiac care at NABH-accredited hospitals. Trained in ACLS, ventilator care and infection control; preceptor for new ICU nurses.',
+    experience: [
+      cvx('Staff Nurse, Medical ICU', 'Manipal Hospitals', 'Bengaluru', 'Feb 2021', '', ['Care for 2–3 critically ill patients per shift in a 24-bed ICU, including ventilated patients.', 'Cut central-line infections on my unit to zero for 14 months as infection-control champion.', 'Preceptor for 9 newly joined nurses.']),
+      cvx('Staff Nurse, Cardiology Ward', 'Amrita Institute of Medical Sciences', 'Kochi', 'Jul 2019', 'Jan 2021', ['Managed pre- and post-operative care for cardiac surgery patients in a 30-bed ward.'])],
+    education: [{ degree: 'B.Sc. Nursing', school: 'Government College of Nursing', location: 'Kottayam', start: '2015', end: '2019', score: '78%' }],
+    skills: [{ group: 'Clinical', items: 'Critical care, Ventilator management, ECG interpretation, IV cannulation, Medication administration' }, { group: 'Systems', items: 'HIS / EMR documentation, NABH protocols, Infection control' }],
+    projects: [], certifications: [{ name: 'Advanced Cardiac Life Support (ACLS)', issuer: 'American Heart Association', year: '2023' }, { name: 'Basic Life Support (BLS)', issuer: 'American Heart Association', year: '2023' }, { name: 'Registered Nurse and Midwife', issuer: 'Karnataka State Nursing Council', year: '2019' }],
+    languages: [{ name: 'English', level: 'Fluent' }, { name: 'Malayalam', level: 'Native' }, { name: 'Kannada', level: 'Conversational' }, { name: 'Hindi', level: 'Intermediate' }],
+    achievements: ['Best Nurse Award, Manipal Hospitals, 2023'], custom: [] } }
+];
 
 /* --------------------------- render options --------------------------- */
 const CV_DEFAULT_OPTS = {
@@ -22631,7 +22754,11 @@ function renderCvStudio(view, initialTab) {
           <label class="btn btn-ghost btn-sm" style="margin:0">Load data
             <input type="file" id="cvLoadJson" accept=".json" hidden></label>
         </div>
-        <button class="btn btn-ghost btn-sm btn-block" id="cvReset" style="margin-top:8px">Reset to sample</button>
+        <label for="cvSamplePick" style="display:block;font-size:.75rem;color:var(--ink-500);margin-top:10px">Start from a sample CV</label>
+        <div style="display:flex;gap:6px;margin-top:4px">
+          <select id="cvSamplePick" class="mini-select" style="flex:1;min-width:0">${CV_SAMPLES.map(x => `<option value="${x.id}">${esc(x.label)}</option>`).join('')}</select>
+          <button class="btn btn-ghost btn-sm" id="cvReset">Load</button>
+        </div>
         <p id="status" class="status hidden"></p>
         <div id="errorBox" class="alert alert-err hidden" role="alert"></div>
       </aside>
@@ -22972,9 +23099,10 @@ function renderCvStudio(view, initialTab) {
     r.readAsText(f); e.target.value = '';
   });
   $('#cvReset').addEventListener('click', () => {
-    if (!confirm('Replace your current CV with the sample data?')) return;
-    data = JSON.parse(JSON.stringify(CV_SAMPLE));
-    opts = Object.assign({}, CV_DEFAULT_OPTS);
+    const pick = CV_SAMPLES.find(x => x.id === $('#cvSamplePick').value) || CV_SAMPLES[0];
+    if (!confirm(`Replace your current CV with the "${pick.label}" sample?`)) return;
+    data = JSON.parse(JSON.stringify(pick.data));
+    opts = Object.assign({}, CV_DEFAULT_OPTS, { templateId: pick.tpl });
     persist(); location.reload();
   });
 
