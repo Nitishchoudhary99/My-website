@@ -27073,7 +27073,9 @@ const DASH_RUNTIME = function () {
         if (v.calc === 'diff') return sa - sb;
         if (v.calc === 'ratio') return sb ? sa / sb * (v.unit === 'pct' ? 100 : 1) : null;
         return sa ? (sa - sb) / sa * 100 : null;
-      case 'share': { const set = new Set(v.vals || []); rows.forEach(r => { if (set.has(r[v.c])) hit++; }); return rows.length ? hit / rows.length * 100 : null; }
+      case 'share': { const set = new Set(v.vals || []), ex = new Set(v.excl || []); let base = 0; rows.forEach(r => { if (ex.has(r[v.c])) return; base++; if (set.has(r[v.c])) hit++; }); return base ? hit / base * 100 : null; }
+      // Net Promoter Score: % of 9-10 minus % of 0-6, from -100 to 100
+      case 'nps': { let pr = 0, de = 0, c = 0; rows.forEach(r => { const x = num(r[v.m]); if (x == null) return; c++; if (x >= 9) pr++; else if (x <= 6) de++; }); return c ? (pr - de) / c * 100 : null; }
       // a balance or stock level is never added up over time: the closing figure is the last one
       case 'last': { let best = null, bd = ''; rows.forEach(r => { const x = num(r[v.m]); if (x == null) return; const dd = v.d != null ? String(r[v.d] || '') : ''; if (best == null || dd >= bd) { best = x; bd = dd; } }); return best; }
       // snapshot data (stock per SKU per week): the total of the latest snapshot
@@ -27289,6 +27291,11 @@ const DASH_RUNTIME = function () {
       }
       return { svg: line(series, th, unit, it.title, fc, di === p.dateCol), data: series, fc };
     }
+    if (it.kind === 'mbar') {
+      // several measures side by side (Revenue, Expenses, Profit)
+      const ser = (it.values || [v]).map(vv => ({ k: vv.name, label: vv.name, v: measure(rows, vv) }));
+      return { svg: bar(ser, th, unit, it.title), data: ser };
+    }
     if (it.kind === 'tbar') {
       const ts = timeSeries(rows, di, v, grain).map(x => Object.assign({}, x, { p: di === p.dateCol ? x.k : '' }));
       return { svg: bar(ts, th, unit, it.title), data: ts };
@@ -27313,7 +27320,7 @@ const DASH_RUNTIME = function () {
     }
     const top = it.top || (it.kind === 'donut' ? 6 : it.kind === 'hbar' ? 10 : 12);
     let g = groupBy(rows, it.dim, v, top, it.kind === 'donut' && !it.asc, it.asc);
-    if (it.sort && p.cols[it.dim] && p.cols[it.dim].type === 'category') g = g.slice().sort((a, b) => String(a.label).localeCompare(String(b.label), undefined, { numeric: true }));
+    if (it.sort && p.cols[it.dim]) g = g.slice().sort((a, b) => String(a.label).localeCompare(String(b.label), undefined, { numeric: true }));
     const fn = it.kind === 'donut' ? donut : it.kind === 'hbar' ? hbar : bar;
     return { svg: fn(g, th, unit, it.title, it.dim), data: g };
   }
@@ -27667,6 +27674,8 @@ const DashGen = (() => {
     let s = String(v).trim();
     if (!s || EMPTY_TOK.test(s)) return null;
     if (/^[-–—]$/.test(s)) return 0;
+    // "1,23,456.00 Dr" / "4,500.00 Cr": an accounting side marker, not crores (the sign is set per column)
+    if (/^[₹\s]*(rs\.?\s*)?[\d,]+\.\d{2}\s*(dr|cr)\.?$/i.test(s) || /^[₹\s]*(rs\.?\s*)?\d{1,3}(,\d{2,3})+\s*(dr|cr)\.?$/i.test(s) || /\bdr\.?$/i.test(s)) s = s.replace(/\s*(dr|cr)\.?$/i, '');
     const neg = /^\(.*\)$/.test(s) || /^-/.test(s.replace(/^[₹$€£\s]+|rs\.?\s*/i, ''));
     const pct = /%$/.test(s);
     s = s.replace(/^\(|\)$/g, '').replace(/₹|rs\.?|inr|\$|€|£|,|\s|%|\/-$/gi, '').replace(/^-/, '');
@@ -27688,7 +27697,8 @@ const DashGen = (() => {
      party. Every change is reported to the user. */
   const MONTHS3 = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
   const EMPTY_TOK = /^(n\/?a|nil|null|none|#n\/a|#value!|#ref!|#div\/0!|#name\?|not available|na\.)$/i;
-  const TOTAL_RE = /^(grand\s*total|sub\s*-?\s*total|total|totals|net\s*total|overall)\b|\b(sub\s*)?total$/i;
+  // a total row, not a line item called "Total Revenue": "Total", "Grand Total", "North Total", "Total for North", "Total (A)"
+  const TOTAL_RE = /^(grand\s*total|sub\s*-?\s*total|total|totals|net\s*total|overall(\s+total)?|sum)\s*[:.\-]?$|\btotal\s*[:.\-]?$|^(grand\s*|sub\s*)?total\s+(for|of)\b|^total\s*\([^)]{1,6}\)$|^grand\s*total\b/i;
   const SUMMARY_HEAD = /^(total|grand\s*total|ytd|ytd\s*total|average|avg|mean|sum|full\s*year|fy\s*total|annual\s*total|cumulative|variance|var\.?|growth|change|%\s*change|yoy|mom|cagr|share|%|remarks?|notes?|comments?)\b/i;
   const METRIC_WORD = /revenue|sales|income|turnover|cost|cogs|expense|expenditure|spend|profit|ebitda|ebit|\bpat\b|\bpbt\b|margin|units|qty|quantity|orders|volume|gross|net|tax|salary|payroll|budget|target|actual|achieved|collection|receipts|payments|cash|headcount|customers|leads|visits|conversion|interest|depreciation|amortisation|amortization|dividend|eps|capex|opex|footfall|bills|invoices/i;
   const fy0 = (y) => (y < 100 ? 2000 + y : y);
@@ -27728,6 +27738,14 @@ const DashGen = (() => {
     const s = String(h == null ? '' : h).trim();
     const whole = parsePeriod(h);
     if (whole) return { p: whole, metric: '' };
+    // tokens anywhere in a combined heading
+    const q = s.match(/\bq(?:tr)?\s*([1-4])\b/i), fy = s.match(/\b(?:fy|f\.y\.?)\s*'?(\d{4})\s*[-–/]\s*(\d{2,4})\b|\b(?:fy|f\.y\.?)\s*'?(\d{2,4})\b/i);
+    const mon = s.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\b/i), yr = s.match(/\b(19\d{2}|20\d{2})\b/) || s.match(/'(\d{2})\b/);
+    let p = null, rest = s;
+    if (q && fy) { const end = fy[1] ? (fy[2].length === 2 ? +(fy[1].slice(0, 2) + fy[2]) : +fy[2]) : fy0(+fy[3]); p = parsePeriod(`Q${q[1]} FY${String(end).slice(2)}`); rest = rest.replace(q[0], ' ').replace(fy[0], ' '); }
+    else if (q && yr) { p = parsePeriod(`Q${q[1]} ${yr[1].length === 2 ? '20' + yr[1] : yr[1]}`); rest = rest.replace(q[0], ' ').replace(yr[0], ' '); }
+    else if (mon && yr && monthIdx(mon[1])) { p = parsePeriod(`${mon[1]} ${yr[1].length === 2 ? '20' + yr[1] : yr[1]}`); rest = rest.replace(mon[0], ' ').replace(yr[0], ' '); }
+    if (p) { const metric = rest.replace(/[-–:()]+/g, ' ').replace(/\s+/g, ' ').trim(); return { p, metric }; }
     const words = s.split(/\s+/);
     for (let k = 1; k < words.length && k <= 3; k++) {
       const a = words.slice(0, k).join(' '), b = words.slice(k).join(' ');
@@ -27779,7 +27797,10 @@ const DashGen = (() => {
     // 2. header row(s)
     let hi = 0, bestScore = -1;
     for (let i = 0; i < Math.min(15, block.length - 1); i++) {
-      const r = block[i], filled = r.filter(v => v !== '' && v != null), hd = filled.filter(headerish);
+      const r = block[i], filled = r.filter(v => v !== '' && v != null);
+      const ints = filled.map(v => (typeof v === 'number' ? v : /^\d{1,2}$/.test(String(v).trim()) ? +v : NaN));
+      let run = 0, bestRun = 0; ints.forEach((n, k) => { run = k && n === ints[k - 1] + 1 ? run + 1 : 1; if (n >= 1 && n <= 31) bestRun = Math.max(bestRun, run); });
+      const hd = filled.filter((v, k) => headerish(v) || (bestRun >= 10 && ints[k] >= 1 && ints[k] <= 31));
       const next = block[i + 1] || [], nf = next.filter(v => v !== '' && v != null).length;
       const score = hd.length * 2 + (filled.length >= 2 ? 3 : 0) + (nf >= filled.length * 0.5 ? 2 : 0) - (filled.length - hd.length) * 2;
       if (filled.length >= 2 && hd.length >= filled.length * 0.7 && score > bestScore) { bestScore = score; hi = i; if (filled.length >= Math.max(...block.slice(0, 15).map(x => x.filter(v => v !== '').length)) * 0.8) break; }
@@ -27788,19 +27809,43 @@ const DashGen = (() => {
     let head = block[hi].map(v => (v instanceof Date ? v : v == null ? '' : v));
     let body = block.slice(hi + 1);
     // a second header row: under columns that hold numbers further down, it is all text ("Sales", "Units")
-    const numericCol = head.map((h, c) => { const vs = body.slice(1, 25).map(r => r[c]).filter(v => v !== '' && v != null); return vs.length >= 2 && vs.filter(isNumCell).length >= vs.length * 0.7; });
-    if (body.length > 2) {
+    const numCols = () => head.map((h, c) => { const vs = body.slice(2, 40).map(r => r[c]).filter(v => v !== '' && v != null); return vs.length >= 2 && vs.filter(isNumCell).length >= vs.length * 0.7; });
+    let numericCol = numCols(), levels = 1;
+    // more header rows: under the columns that hold numbers further down, the row is all text ("Q1", then "Target")
+    while (body.length > 2 && levels < 4) {
       const r1 = body[0], cand = numericCol.map((isN, c) => isN ? r1[c] : null).filter(v => v !== null);
-      if (cand.length >= 2 && cand.every(v => typeof v === 'string' && v.trim() && !isNumCell(v)) && new Set(cand.map(String)).size < cand.length + 1) {
-        head = head.map((h, c) => {
-          const sub = r1[c] == null ? '' : String(r1[c]).trim(), top = h instanceof Date ? h : String(h == null ? '' : h).trim();
-          if (!sub || String(top) === sub) return top || sub;
-          if (!top) return sub;
-          return (top instanceof Date ? iso(top).slice(0, 7) : top) + ' ' + sub;
-        });
-        body = body.slice(1);
-        notes.push('Combined the two header rows (for example "' + head.find((h, c) => numericCol[c] && String(h).includes(' ')) + '").');
-      }
+      if (!(cand.length >= 2 && cand.every(v => (typeof v === 'string' && v.trim() && !isNumCell(v)) || v instanceof Date))) break;
+      head = head.map((h, c) => {
+        const sub = r1[c] == null ? '' : r1[c] instanceof Date ? iso(r1[c]).slice(0, 7) : String(r1[c]).trim(), top = h instanceof Date ? iso(h).slice(0, 7) : String(h == null ? '' : h).trim();
+        if (!sub || top === sub) return top || sub;
+        if (!top) return sub;
+        return top + ' ' + sub;
+      });
+      body = body.slice(1); levels++;
+    }
+    if (levels > 1) notes.push(`Combined ${levels} header rows into one (for example "${head.find((h, c) => numericCol[c] && String(h).includes(' ')) || head[head.length - 1]}").`);
+    // the header repeated on every printed page, "Page 2 of 5" lines, notes and signatures
+    const headSig = head.map(h => String(h instanceof Date ? iso(h) : h).trim().toLowerCase()).join('|');
+    let rep = 0, pageLines = 0;
+    body = body.filter(r => {
+      const sig = r.map(v => String(v instanceof Date ? iso(v) : v == null ? '' : v).trim().toLowerCase()).join('|');
+      if (sig === headSig) { rep++; return false; }
+      const filled = r.filter(v => v !== '' && v != null);
+      if (filled.length === 1 && typeof filled[0] === 'string' && /^(page\s*\d+(\s*(of|\/)\s*\d+)?|continued|contd\.?|\(?continued\)?|authori[sz]ed\s+signator(y|ies)|for\s+.+|e\.?\s*&\s*o\.?\s*e\.?|this is a (computer|system)[- ]generated.*|note[s]?\s*[:-].*|prepared by.*|checked by.*|approved by.*|signature.*|\*.*)$/i.test(filled[0].trim())) { pageLines++; return false; }
+      return true;
+    });
+    if (rep) notes.push(`Left out the header row repeated ${rep} more time${rep === 1 ? '' : 's'} (page breaks).`);
+    if (pageLines) notes.push(`Left out ${pageLines} page, note or signature line${pageLines === 1 ? '' : 's'}.`);
+    numericCol = numCols();
+    // section rows: one label alone on its row ("North Region") with data rows under it -> a column
+    const sectionRows = body.map((r, i) => { const f = r.map((v, c) => [v, c]).filter(([v]) => v !== '' && v != null); return f.length === 1 && typeof f[0][0] === 'string' && f[0][0].trim().length >= 2 && !TOTAL_RE.test(f[0][0].trim()) && !numericCol[f[0][1]] && body[i + 1] && body[i + 1].filter(v => v !== '' && v != null).length >= 2 ? i : -1; }).filter(i => i >= 0);
+    if (sectionRows.length >= 2) {
+      const name = /region|zone/i.test(body[sectionRows[0]].find(v => v)) ? 'Region' : /branch/i.test(body[sectionRows[0]].find(v => v)) ? 'Branch' : 'Group';
+      let cur = '';
+      const set = new Set(sectionRows);
+      body = body.map((r, i) => { if (set.has(i)) { cur = String(r.find(v => v !== '' && v != null)).trim(); return null; } return r.concat([cur]); }).filter(Boolean);
+      head = head.concat([name]); numericCol.push(false);
+      notes.push(`${sectionRows.length} section headings (${body.length ? [...new Set(body.map(r => r[r.length - 1]))].slice(0, 3).join(', ') : ''}…) became a "${name}" column.`);
     }
     // 3. pivot-table words in headings
     const aggHint = {};
@@ -27821,6 +27866,37 @@ const DashGen = (() => {
       return true;
     });
     if (dropped) notes.push(`Left out ${dropped} total and subtotal row${dropped === 1 ? '' : 's'}, so nothing is counted twice.`);
+    // groups in a ledger list: rows indented less than the rows under them (Tally, trial balances), or rows
+    // whose amount is exactly the sum of the rows that follow. They become a Group column, not extra amounts.
+    {
+      const lc = dimCols.find(c => body.some(r => typeof r[c] === 'string' && r[c].trim()));
+      const nc = numericCol.map((x, c) => x ? c : -1).filter(c => c >= 0);
+      if (lc != null && nc.length) {
+        const ind = body.map(r => (typeof r[lc] === 'string' ? (r[lc].match(/^[\s\u00a0]*/)[0].length) : 0));
+        const levelsSeen = new Set(ind.filter((x, i) => typeof body[i][lc] === 'string' && body[i][lc].trim()));
+        let groups = new Set();
+        if (levelsSeen.size >= 2) body.forEach((r, i) => { if (i + 1 < body.length && ind[i + 1] > ind[i]) groups.add(i); });
+        else {
+          // no indentation: a group row's amount equals the sum of the rows under it, group after group
+          const val = (r) => nc.reduce((a, c) => a + (parseNum(r[c]) || 0), 0);
+          const big = body.filter(r => Math.abs(val(r)) >= 100).length >= body.length * 0.8;
+          let i = 0, covered = 0;
+          while (big && i < body.length - 2) {
+            const v = val(body[i]); let acc = 0, end = -1;
+            for (let j = i + 1; j < Math.min(body.length, i + 80); j++) { acc += val(body[j]); if (Math.abs(acc - v) < 0.01 && j - i >= 2) { end = j; break; } if (Math.abs(acc) > Math.abs(v) + 0.01) break; }
+            if (end < 0) break;
+            groups.add(i); covered += end - i + 1; i = end + 1;
+          }
+          if (groups.size < 2 || covered < body.length * 0.8) groups = new Set();
+        }
+        if (groups.size) {
+          let cur = '';
+          body = body.map((r, i) => { if (groups.has(i)) { cur = String(r[lc]).trim(); return null; } const o = r.slice(); o[lc] = typeof o[lc] === 'string' ? o[lc].trim() : o[lc]; return o.concat([cur]); }).filter(Boolean);
+          head = head.concat(['Group']); numericCol.push(false);
+          notes.push(`${groups.size} group rows (their amounts add up the lines under them) became a Group column, so nothing is counted twice.`);
+        }
+      }
+    }
     // empty headings get a name from what is in the column
     const REGION_V = /^(north|south|east|west|central|north[\s-]?east|north[\s-]?west|south[\s-]?east|south[\s-]?west|ne|nw|se|sw)(\s+(zone|region|india))?$/i;
     const STATE_V = /^(andhra pradesh|arunachal pradesh|assam|bihar|chhattisgarh|goa|gujarat|haryana|himachal pradesh|jharkhand|karnataka|kerala|madhya pradesh|maharashtra|manipur|meghalaya|mizoram|nagaland|odisha|orissa|punjab|rajasthan|sikkim|tamil nadu|telangana|tripura|uttar pradesh|uttarakhand|west bengal|delhi|jammu (and|&) kashmir|ladakh|puducherry|chandigarh|ap|up|mp|tn|wb)$/i;
@@ -27851,9 +27927,33 @@ const DashGen = (() => {
         notes.push(`Filled in "${head[c] || 'the first column'}" where it was written only once per group.`);
       }
     });
+    // a key-value sheet ("Total Revenue | 1,25,00,000" per line) is one record: each line becomes a KPI
+    {
+      const live = head.map((h, c) => c).filter(c => body.some(r => r[c] !== '' && r[c] != null));
+      if (live.length === 2 && body.length >= 2 && body.length <= 80) {
+        const [a, b] = live, labs = body.map(r => String(r[a] == null ? '' : r[a]).trim());
+        if (labs.every(Boolean) && new Set(labs).size === labs.length && body.every(r => isNumCell(r[b]) || r[b] === '' || r[b] == null) && labs.every(l => !isNumCell(l))) {
+          notes.push(`Read as a list of ${labs.length} figures (one per line) and turned each into a KPI.`);
+          return finish({ headers: labs, rows: [body.map(r => r[b])], notes, grainHint: null, scale: scaleOf(titleText), sheet, title: titleText, aggHint: {}, keyValue: true });
+        }
+      }
+    }
     // 6. periods across the columns -> one Period column
     const sp = head.map(h => (h === '' ? null : splitPeriod(h)));
-    const pcols = sp.map((x, c) => (x && numericCol[c] ? c : -1)).filter(c => c >= 0);
+    // day numbers 1..31 across the top (attendance, daily registers): the month comes from the title
+    {
+      const dayC = head.map((h, c) => { const n = typeof h === 'number' ? h : /^\d{1,2}$/.test(String(h).trim()) ? +String(h).trim() : 0; return n >= 1 && n <= 31 && Number.isInteger(n) ? [c, n] : null; }).filter(Boolean);
+      const mm = titleText.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?[\s\-',]*(\d{4}|\d{2})\b/i);
+      if (dayC.length >= 15 && mm && dayC.every(([c, n], k) => k === 0 || n === dayC[k - 1][1] + 1)) {
+        const y = fy0(+mm[2]), mo = MONTHS3.indexOf(mm[1].slice(0, 3).toLowerCase()) + 1;
+        dayC.forEach(([c, n]) => { sp[c] = { p: { iso: `${y}-${String(mo).padStart(2, '0')}-${String(n).padStart(2, '0')}`, grain: 'day' }, metric: '' }; });
+      }
+    }
+    // short codes under the periods (P, A, L, WO): a status per day, not a number
+    const CODE = { p: 'Present', a: 'Absent', l: 'Leave', cl: 'Leave', sl: 'Leave', el: 'Leave', pl: 'Leave', ml: 'Leave', lwp: 'Leave Without Pay', h: 'Holiday', ph: 'Holiday', wo: 'Week Off', 'w/o': 'Week Off', w: 'Week Off', off: 'Week Off', hd: 'Half Day', 'h/d': 'Half Day', od: 'On Duty', wfh: 'Work From Home', '½': 'Half Day', x: 'Absent', '✓': 'Present', '√': 'Present' };
+    const codeCol = head.map((h, c) => { if (!sp[c]) return false; const vs = body.map(r => r[c]).filter(v => v !== '' && v != null).map(v => String(v).trim()); return vs.length >= body.length * 0.5 && vs.every(v => v.length <= 4) && vs.filter(v => CODE[v.toLowerCase()] || /^[a-z]{1,3}$/i.test(v)).length >= vs.length * 0.9; });
+    const pcols = sp.map((x, c) => (x && (numericCol[c] || codeCol[c]) ? c : -1)).filter(c => c >= 0);
+    const coded = pcols.length && pcols.every(c => codeCol[c]);
     let grainHint = null, scale = scaleOf(titleText);
     const periodsDistinct = new Set(pcols.map(c => sp[c].p.iso)).size;
     if (pcols.length >= 3 && periodsDistinct >= 2 || (periodsDistinct >= 2 && pcols.length >= 2 && pcols.every(c => sp[c].metric))) {
@@ -27869,7 +27969,7 @@ const DashGen = (() => {
       // a statement layout: the first label column names the measures (Revenue, Cost, EBITDA …)
       const mCol = idCols.find(c => { const vs = [...new Set(body.map(r => String(r[c] || '').trim()).filter(Boolean))]; return vs.length >= 2 && vs.length <= 40 && vs.filter(v => METRIC_WORD.test(v)).length >= vs.length * 0.5; });
       const restIds = idCols.filter(c => c !== mCol);
-      const valueName = (() => {
+      const valueName = coded ? 'Status' : (() => {
         const w = titleText.match(/\b(sales|revenue|turnover|collections?|expenses?|spend|production|purchases?|orders|units|volume|profit|footfall|attendance|budget|target|headcount)\b/i);
         return w ? w[1].charAt(0).toUpperCase() + w[1].slice(1).toLowerCase() : sheet.name && !/sheet\s*\d*/i.test(sheet.name) && METRIC_WORD.test(sheet.name) ? sheet.name : 'Value';
       })();
@@ -27887,13 +27987,14 @@ const DashGen = (() => {
           metricNames.add(metric);
           const key = JSON.stringify(ids) + '|' + sp[c].p.iso;
           if (!out.has(key)) { out.set(key, { ids, period: sp[c].p.iso, m: {} }); order.push(key); }
-          out.get(key).m[metric] = raw;
+          out.get(key).m[metric] = coded ? (CODE[String(raw).trim().toLowerCase()] || String(raw).trim()) : raw;
         });
       });
       const mlist = [...metricNames];
       const headers = restIds.map(c => String(head[c])).concat(['Period'], mlist);
       const rows = order.map(k => { const o = out.get(k); return o.ids.concat([o.period], mlist.map(m => (o.m[m] === undefined ? '' : o.m[m]))); });
       const plab = { month: 'months', quarter: 'quarters', year: 'years', day: 'dates' }[grainHint] || 'periods';
+      if (coded) notes.push(`Read the day-by-day codes (${[...new Set(rows.map(r => r[r.length - 1]))].slice(0, 5).join(', ')}) as a Status for each day.`);
       notes.push(mCol != null
         ? `Read as a statement: ${mlist.length} line items (${mlist.slice(0, 4).join(', ')}${mlist.length > 4 ? '…' : ''}) across ${periodsDistinct} ${plab}, turned into one row per period.`
         : `${periodsDistinct} ${plab} were spread across the columns; turned them into a Period column${metrics.filter(Boolean).length ? ' with ' + metrics.filter(Boolean).join(', ') : ''} (${rows.length} rows).`);
@@ -27908,7 +28009,7 @@ const DashGen = (() => {
     const used = new Set();
     headers = headers.map((h, c) => { let k = String(h || '').replace(/\s+/g, ' ').trim() || 'Column ' + (c + 1), n = 2; const b = k; while (used.has(k.toLowerCase())) k = b + ' ' + n++; used.add(k.toLowerCase()); return k; });
     const keep = headers.map((h, c) => rows.some(r => r[c] !== '' && r[c] != null));
-    const t = { headers: headers.filter((h, c) => keep[c]), rows: rows.map(r => headers.map((h, c) => (r[c] == null ? '' : r[c])).filter((v, c) => keep[c])), notes: o.notes, grainHint: o.grainHint, headerRow: o.headerRow || 0, aggHint: {}, fiscal: !!o.fiscal };
+    const t = { headers: headers.filter((h, c) => keep[c]), rows: rows.map(r => headers.map((h, c) => (r[c] == null ? '' : r[c])).filter((v, c) => keep[c])), notes: o.notes, grainHint: o.grainHint, headerRow: o.headerRow || 0, aggHint: {}, fiscal: !!o.fiscal, keyValue: !!o.keyValue };
     Object.entries(o.aggHint || {}).forEach(([c, a]) => { const nc = keep.slice(0, +c).filter(Boolean).length; if (keep[c]) t.aggHint[nc] = a; });
     // "₹ in lakhs" in the title: amounts are scaled to real rupees
     if (o.scale) t.scale = o.scale;
@@ -27993,10 +28094,12 @@ const DashGen = (() => {
         if (ints && /year|fy/i.test(label) && ns.every(n => n >= 1990 && n <= 2100)) { col.type = 'category'; col.role = 'time'; col.sortNum = true; return col; }
         if (ints && /month/i.test(label) && ns.every(n => n >= 1 && n <= 12)) { col.type = 'category'; col.role = 'time'; col.sortNum = true; return col; }
         if (ints && distinct === nonEmpty && nonEmpty > 20 && ns.every((n, i) => i === 0 || Math.abs(n - ns[i - 1]) <= 2)) { col.type = 'id'; return col; }   // 1, 2, 3 … row numbers
+        if (ints && ns.every(n => n >= 0 && n <= 10) && /recommend|likely|nps|net\s*promoter/i.test(label)) { col.type = 'measure'; col.role = 'nps'; col.agg = 'avg'; col.unit = 'num'; col.score = 14; col.min = 0; col.max = 10; return col; }
         col.type = 'measure';
-        const rr = ROLE.find(([, re]) => re.test(label));
+        // "Avg Order Value", "Average Bill" are rates, not totals (checked before "value" makes them revenue)
+        const rr = /\b(avg|average|mean|per\s+(unit|order|customer|head|bill|invoice)|aov)\b/i.test(label) ? ROLE.find(([k]) => k === 'price') : ROLE.find(([, re]) => re.test(label));
         col.role = rr ? rr[0] : '';
-        col.score = (rr ? rr[2] : 3) + (ns.some(n => n !== ns[0]) ? 1 : -5);
+        col.score = (rr ? rr[2] : 3) + (ns.some(n => n !== ns[0]) || t.keyValue || t.rows.length <= 2 ? 1 : -5);
         col.agg = t.aggHint && t.aggHint[c] === 'avg' ? 'avg' : AVG_HINT.test(label) && !/total/i.test(label) ? 'avg' : 'sum';
         if (col.role === 'balance') { col.agg = 'last'; col.score = 7; }
         col.unit = /percent|%|ratio|rate\b|margin\s*%/i.test(label) && ns.every(n => Math.abs(n) <= 100) ? 'pct'
@@ -28081,6 +28184,46 @@ const DashGen = (() => {
     const monthlyData = D.length > 0 && rows.every(r => !r[D[0].i] || /-01$/.test(r[D[0].i]));
     const transactional = !snapshot && (cols.some(c => c.type === 'id') || (D.length > 0 && !monthlyData) || perEntity);
     // headline numbers
+    // a single record (key-value sheet): every figure is a KPI, money ones compared side by side
+    if (rows.length === 1) {
+      M.forEach((m, k) => add({ group: 'Headline numbers', kind: 'card', title: m.label, value: { calc: 'sum', m: m.i, unit: m.unit, name: m.label }, score: 30 - k * 0.1 }));
+      const money = M.filter(m => m.unit === 'inr');
+      if (money.length >= 2) add({ group: 'Breakdowns', kind: 'mbar', title: money.map(m => m.label).slice(0, 4).join(' vs ') + (money.length > 4 ? '…' : ''), value: { calc: 'sum', m: money[0].i, unit: 'inr', name: money[0].label }, values: money.map(m => ({ calc: 'sum', m: m.i, unit: 'inr', name: m.label })), score: 25, wide: true });
+    }
+    // attendance: Present / Absent / Leave per person per day
+    const stc = cols.map((c, i) => Object.assign({ i }, c)).find(c => c.type === 'category' && rows.some(r => r[c.i] === 'Present') && rows.some(r => ['Absent', 'Leave'].includes(r[c.i])));
+    if (stc) {
+      const OFF = ['Week Off', 'Holiday'], ON = ['Present', 'On Duty', 'Work From Home'];
+      const per = cols.map((c, i) => Object.assign({ i }, c)).filter(c => (c.type === 'entity' || c.type === 'category') && c.i !== stc.i && /name|employee|staff|student|emp/i.test(c.label));
+      const dept = cols.map((c, i) => Object.assign({ i }, c)).filter(c => c.type === 'category' && c.i !== stc.i && !per.includes(c) && c.distinct <= 20 && !/code|id/i.test(c.label));
+      const att = { calc: 'share', c: stc.i, vals: ON, excl: OFF, unit: 'pct', name: 'Attendance %' };
+      add({ group: 'Headline numbers', kind: 'card', title: 'Attendance %', value: att, score: 22, why: 'present days ÷ working days (week offs and holidays left out)' });
+      add({ group: 'Headline numbers', kind: 'card', title: 'Absent days', value: { calc: 'count', unit: 'num', name: 'Absent days' }, where: { f: { [stc.i]: 'Absent' } }, score: 21 });
+      add({ group: 'Headline numbers', kind: 'card', title: 'Leave days', value: { calc: 'count', unit: 'num', name: 'Leave days' }, where: { f: { [stc.i]: 'Leave' } }, score: 20.5 });
+      if (per[0]) add({ group: 'Headline numbers', kind: 'card', title: 'People', value: { calc: 'distinct', c: per[0].i, unit: 'num', name: 'People' }, score: 20 });
+      if (di != null) add({ group: 'Trends over time', kind: 'line', title: 'Attendance % by day', value: att, grain: 'day', score: 19.5, wide: true, forecast: false });
+      if (per[0]) add({ group: 'Rankings', kind: 'hbar', title: 'Lowest attendance', value: att, dim: per[0].i, top: 10, asc: true, score: 19 });
+      if (dept[0]) add({ group: 'Breakdowns', kind: 'bar', title: `Attendance % by ${dept[0].label}`, value: att, dim: dept[0].i, top: 12, score: 18.5 });
+      add({ group: 'Breakdowns', kind: 'donut', title: 'Days by status', value: { calc: 'count', unit: 'num', name: 'Days' }, dim: stc.i, top: 8, score: 18 });
+    }
+    // survey exports (Google / Microsoft Forms): responses, NPS, the share of positive answers
+    const isSurvey = cols.some(c => /timestamp|submitted|response\s*time/i.test(c.label)) && cols.filter(c => /\?$|^(how|what|which|would|do|did|are|is|please|rate|overall)\b/i.test(c.label)).length >= 2;
+    if (isSurvey) {
+      const nps = M.find(m => m.role === 'nps');
+      add({ group: 'Headline numbers', kind: 'card', title: 'Responses', value: { calc: 'count', unit: 'num', name: 'Responses' }, score: 22 });
+      if (nps) {
+        add({ group: 'Headline numbers', kind: 'card', title: 'NPS (Net Promoter Score)', value: { calc: 'nps', m: nps.i, unit: 'num', name: 'NPS' }, score: 21.5, why: '% promoters (9-10) minus % detractors (0-6)' });
+        add({ group: 'Breakdowns', kind: 'bar', title: 'Recommendation scores (0-10)', value: { calc: 'count', unit: 'num', name: 'Responses' }, dim: nps.i, top: 11, sort: true, score: 17, numDim: true });
+        if (di != null) add({ group: 'Trends over time', kind: 'line', title: 'NPS over time', value: { calc: 'nps', m: nps.i, unit: 'num', name: 'NPS' }, score: 15, forecast: false });
+      }
+      const POS = /^(very satisfied|extremely satisfied|satisfied|strongly agree|agree|excellent|very good|good|yes|very likely|likely|definitely)$/i;
+      C.filter(c => /\?$|^(how|what|which|would|do|did|are|is|please|rate|overall)\b/i.test(c.label) || c.distinct <= 7).slice(0, 4).forEach((c, k) => {
+        const vals = [...new Set(rows.map(r => r[c.i]).filter(Boolean))], pos = vals.filter(v => POS.test(String(v).trim()));
+        const short = c.label.replace(/\?$/, '').replace(/^(how|what|which)\s+(satisfied|happy|likely)\s+are\s+you\s+(with\s+)?/i, '').slice(0, 48);
+        if (pos.length && pos.length < vals.length) add({ group: 'Headline numbers', kind: 'card', title: `% positive: ${short}`, value: { calc: 'share', c: c.i, vals: pos, unit: 'pct', name: '% positive' }, score: 20 - k, why: pos.join(' or ') });
+        add({ group: 'Breakdowns', kind: c.distinct <= 6 ? 'donut' : 'hbar', title: c.label.length > 70 ? c.label.slice(0, 67) + '…' : c.label, value: { calc: 'count', unit: 'num', name: 'Responses' }, dim: c.i, top: 10, score: 16 - k });
+      });
+    }
     const titleOf = (m) => m.agg === 'last' ? vOf(m).name : /^(total|grand total)$/i.test(m.label) ? (m.agg === 'avg' ? 'Average Total' : 'Grand Total') : (m.agg === 'avg' ? 'Average ' : 'Total ') + m.label;
     // bank statements: money in, money out, net flow, closing balance; spend by party and mode
     if (isBank) {
